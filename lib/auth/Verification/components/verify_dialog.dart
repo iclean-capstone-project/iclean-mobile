@@ -1,0 +1,97 @@
+import 'package:flutter/material.dart';
+import 'package:iclean_mobile_app/utils/color_palette.dart';
+import 'package:iclean_mobile_app/view/user/home/home_screen.dart';
+
+import '../../../view/user/set_up_new_account/update_new_proflie/update_new_profile_screen.dart';
+import '../../../widgets/main_color_inkwell_full_size.dart';
+
+class VerifyDialog extends StatelessWidget {
+  const VerifyDialog({super.key, required this.isNew});
+  final bool isNew;
+
+  @override
+  Widget build(BuildContext context) {
+    void navigateScreen() {
+      Future.delayed(const Duration(seconds: 1), () {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) {
+              return const HomeScreen();
+            },
+          ),
+        );
+      });
+    }
+
+    if (!isNew) {
+      navigateScreen();
+    }
+
+    return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      child: Container(
+        width: 310,
+        padding: const EdgeInsets.all(24.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(
+              width: double.infinity,
+              child: Image.asset(
+                "assets/images/Confirmed.png",
+                fit: BoxFit.cover,
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.only(top: 16),
+              child: Text(
+                "Xác thực thành công",
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Lato',
+                  color: ColorPalette.mainColor,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: Text(
+                isNew
+                    ? "Có vẻ đây là lần đầu của bạn, hãy cung cấp thêm thông tin để sử dụng dịch vụ của chúng tôi nhé!"
+                    : "Chào mừng bạn trở lại! Bạn sẽ được chuyển đến trang chủ sau một vài giây..",
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontFamily: 'Lato',
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            isNew
+                ? Padding(
+                    padding: const EdgeInsets.only(top: 16),
+                    child: MainColorInkWellFullSize(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const UpdateNewProfileScreen()));
+                      },
+                      text: "Cập nhập hồ sơ",
+                    ),
+                  )
+                : const Padding(
+                    padding: EdgeInsets.only(top: 16.0),
+                    child: CircularProgressIndicator(
+                      color: ColorPalette.mainColor,
+                    ),
+                  ),
+          ],
+        ),
+      ),
+    );
+  }
+}
