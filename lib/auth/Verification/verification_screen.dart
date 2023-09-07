@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:iclean_mobile_app/auth/Verification/components/verify_dialog.dart';
+import 'package:iclean_mobile_app/auth/verification/components/verify_dialog.dart';
 
 import '../../utils/color_palette.dart';
 import '../../widgets/main_color_inkwell_full_size.dart';
