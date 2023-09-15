@@ -119,8 +119,7 @@ class _UpdateNewLocationScreenState extends State<UpdateNewLocationScreen> {
               Expanded(
                 child: GoogleMap(
                   initialCameraPosition: CameraPosition(
-                    target: LatLng(latitude,
-                        longitude), //Default Location: Tan Son Nhat AirPort
+                    target: LatLng(latitude, longitude),
                     zoom: 14,
                   ),
                   markers: _markers,

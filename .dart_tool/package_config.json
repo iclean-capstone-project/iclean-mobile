@@ -14,6 +14,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "carousel_slider",
+      "rootUri": "file:///D:/Tools/Android/flutter/.pub-cache/hosted/pub.dartlang.org/carousel_slider-4.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "characters",
       "rootUri": "file:///D:/Tools/Android/flutter/.pub-cache/hosted/pub.dartlang.org/characters-1.2.1",
       "packageUri": "lib/",
@@ -150,6 +156,12 @@
       "rootUri": "file:///D:/Tools/Android/flutter/.pub-cache/hosted/pub.dartlang.org/google_maps_flutter_web-0.5.3",
       "packageUri": "lib/",
       "languageVersion": "2.18"
+    },
+    {
+      "name": "google_nav_bar",
+      "rootUri": "file:///D:/Tools/Android/flutter/.pub-cache/hosted/pub.dartlang.org/google_nav_bar-5.0.6",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "html",
@@ -368,7 +380,7 @@
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2023-09-07T05:21:19.640684Z",
+  "generated": "2023-09-15T17:33:06.159848Z",
   "generator": "pub",
   "generatorVersion": "2.18.6"
 }

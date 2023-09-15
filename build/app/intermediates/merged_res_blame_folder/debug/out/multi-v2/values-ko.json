@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "D:\\Workspace\\Flutter\\iclean_mobile_app\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-ko\\values-ko.xml",
+            "outputFile": "D:\\Workspace\\Flutter\\CapstoneProject\\iclean_mobile_app\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-ko\\values-ko.xml",
             "map": [
                 {
                     "source": "C:\\Users\\PC\\.gradle\\caches\\transforms-3\\3fe06534e27d21d8c603aba09c0ec99d\\transformed\\jetified-ucrop-2.2.8\\res\\values-ko\\values-ko.xml",

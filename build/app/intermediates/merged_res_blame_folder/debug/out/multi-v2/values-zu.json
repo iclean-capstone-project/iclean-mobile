@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "D:\\Workspace\\Flutter\\iclean_mobile_app\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-zu\\values-zu.xml",
+            "outputFile": "D:\\Workspace\\Flutter\\CapstoneProject\\iclean_mobile_app\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-zu\\values-zu.xml",
             "map": [
                 {
                     "source": "C:\\Users\\PC\\.gradle\\caches\\transforms-3\\de9b5e5883d1dab66071297016f6a094\\transformed\\jetified-play-services-basement-18.0.0\\res\\values-zu\\values.xml",

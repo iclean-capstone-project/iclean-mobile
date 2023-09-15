@@ -13,8 +13,8 @@
 13         to allow setting breakpoints, to provide hot reload, etc.
 14    -->
 15    <uses-permission android:name="android.permission.INTERNET" />
-15-->D:\Workspace\Flutter\iclean_mobile_app\android\app\src\debug\AndroidManifest.xml:7:5-66
-15-->D:\Workspace\Flutter\iclean_mobile_app\android\app\src\debug\AndroidManifest.xml:7:22-64
+15-->D:\Workspace\Flutter\CapstoneProject\iclean_mobile_app\android\app\src\debug\AndroidManifest.xml:7:5-66
+15-->D:\Workspace\Flutter\CapstoneProject\iclean_mobile_app\android\app\src\debug\AndroidManifest.xml:7:22-64
 16    <!-- Include required permissions for Google Maps API to run. -->
 17    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 17-->[com.google.android.gms:play-services-maps:18.1.0] C:\Users\PC\.gradle\caches\transforms-3\5eeb26b6673527bf3788c5d0ab90a955\transformed\jetified-play-services-maps-18.1.0\AndroidManifest.xml:23:5-79
@@ -95,21 +95,21 @@
 79            android:value="AIzaSyBVDt9l1pW7A0mmNvaQStnd5OGEQcyrBHY" />
 80
 81        <provider
-81-->[:image_picker_android] D:\Workspace\Flutter\iclean_mobile_app\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:10:9-18:20
+81-->[:image_picker_android] D:\Workspace\Flutter\CapstoneProject\iclean_mobile_app\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:10:9-18:20
 82            android:name="io.flutter.plugins.imagepicker.ImagePickerFileProvider"
-82-->[:image_picker_android] D:\Workspace\Flutter\iclean_mobile_app\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:11:13-82
+82-->[:image_picker_android] D:\Workspace\Flutter\CapstoneProject\iclean_mobile_app\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:11:13-82
 83            android:authorities="com.example.iclean_mobile_app.flutter.image_provider"
-83-->[:image_picker_android] D:\Workspace\Flutter\iclean_mobile_app\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:12:13-74
+83-->[:image_picker_android] D:\Workspace\Flutter\CapstoneProject\iclean_mobile_app\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:12:13-74
 84            android:exported="false"
-84-->[:image_picker_android] D:\Workspace\Flutter\iclean_mobile_app\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:13:13-37
+84-->[:image_picker_android] D:\Workspace\Flutter\CapstoneProject\iclean_mobile_app\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:13:13-37
 85            android:grantUriPermissions="true" >
-85-->[:image_picker_android] D:\Workspace\Flutter\iclean_mobile_app\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:14:13-47
+85-->[:image_picker_android] D:\Workspace\Flutter\CapstoneProject\iclean_mobile_app\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:14:13-47
 86            <meta-data
-86-->[:image_picker_android] D:\Workspace\Flutter\iclean_mobile_app\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:15:13-17:75
+86-->[:image_picker_android] D:\Workspace\Flutter\CapstoneProject\iclean_mobile_app\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:15:13-17:75
 87                android:name="android.support.FILE_PROVIDER_PATHS"
-87-->[:image_picker_android] D:\Workspace\Flutter\iclean_mobile_app\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:16:17-67
+87-->[:image_picker_android] D:\Workspace\Flutter\CapstoneProject\iclean_mobile_app\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:16:17-67
 88                android:resource="@xml/flutter_image_picker_file_paths" />
-88-->[:image_picker_android] D:\Workspace\Flutter\iclean_mobile_app\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:17:17-72
+88-->[:image_picker_android] D:\Workspace\Flutter\CapstoneProject\iclean_mobile_app\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:17:17-72
 89        </provider> <!-- Needs to be explicitly declared on P+ -->
 90        <uses-library
 90-->[com.google.android.gms:play-services-maps:18.1.0] C:\Users\PC\.gradle\caches\transforms-3\5eeb26b6673527bf3788c5d0ab90a955\transformed\jetified-play-services-maps-18.1.0\AndroidManifest.xml:39:9-41:40

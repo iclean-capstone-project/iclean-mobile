@@ -14,7 +14,7 @@ class VerificationScreen extends StatelessWidget {
     void verifyChecking() {
       showDialog(
         context: context,
-        builder: (BuildContext context) => const VerifyDialog(isNew: true),
+        builder: (BuildContext context) => const VerifyDialog(isNew: false),
       );
     }
 
