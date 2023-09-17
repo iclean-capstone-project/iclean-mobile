@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:iclean_mobile_app/view/user/nav_bar_bottom/nav_bar_bottom.dart';
 
 import '../../../../../utils/color_palette.dart';
-import '../../../home/home_screen.dart';
 
 class ConfirmDialog extends StatelessWidget {
   const ConfirmDialog({super.key});
@@ -13,7 +13,7 @@ class ConfirmDialog extends StatelessWidget {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (context) {
-              return const HomeScreen();
+              return const UserScreens();
             },
           ),
         );

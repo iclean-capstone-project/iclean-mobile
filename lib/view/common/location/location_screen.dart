@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
+import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
 
 import '../../../models/address.dart';
 
@@ -166,48 +167,7 @@ class LocationScreen extends StatelessWidget {
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Divider(
-              thickness: 0.5,
-              color: Colors.grey[400],
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: InkWell(
-                onTap: () {},
-                child: Container(
-                  height: 48,
-                  decoration: BoxDecoration(
-                    color: ColorPalette.mainColor,
-                    borderRadius: BorderRadius.circular(50),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: ColorPalette.mainColor,
-                        offset: Offset(0, 2),
-                        blurRadius: 3.0,
-                        spreadRadius: 0.0,
-                      ),
-                    ],
-                  ),
-                  child: const Center(
-                    child: Text(
-                      "Tiếp tục",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: 'Lato',
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 1,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
+        child: MainColorInkWellFullSize(onTap: (){}, text: "Thêm vị trí mới",),
       ),
     );
   }
