@@ -2,16 +2,16 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/view/user/set_up_new_account/update_new_location/update_new_location_screen.dart';
-import 'package:image_cropper/image_cropper.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
+import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
+import 'package:iclean_mobile_app/widgets/my_textfield.dart';
+import 'package:iclean_mobile_app/widgets/select_photo_options_screen.dart';
+import 'package:iclean_mobile_app/widgets/top_bar.dart';
 
-import '../../../../widgets/main_color_inkwell_full_size.dart';
-import '../../../../widgets/my_textfield.dart';
-import '../../../../widgets/top_bar.dart';
-import '../../../../widgets/select_photo_options_screen.dart';
+import 'package:intl/intl.dart';
 
 class UpdateNewProfileScreen extends StatefulWidget {
   const UpdateNewProfileScreen({super.key});

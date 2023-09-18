@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../../utils/color_palette.dart';
+import 'package:iclean_mobile_app/utils/color_palette.dart';
 
 class DigitTextField extends StatefulWidget {
   const DigitTextField({

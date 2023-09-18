@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:iclean_mobile_app/models/account.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
+import 'package:iclean_mobile_app/view/user/profile/my_profile_screen/profile_screen.dart';
 import '../home/home_screen.dart';
 
 class UserScreens extends StatefulWidget {
   //final Account account;
-  const UserScreens({Key? key}) : super(key: key);
+  const UserScreens({super.key});
 
   @override
   State<UserScreens> createState() => _UserScreensState();
@@ -14,16 +16,26 @@ class UserScreens extends StatefulWidget {
 class _UserScreensState extends State<UserScreens> {
   int _selectedIndex = 0;
   late List<Widget> _screenOptions;
+  Account userLogin = Account(
+      id: 1,
+      fullname: "Quang Linh",
+      profilePicture: "assets/images/bp.jpg",
+      dateOfBirth: DateTime.now(),
+      phone: "0123456789",
+      email: "linhlt28@gmail.com",
+      role: "user",
+      address:
+          "S102 Vinhomes Grand Park, Nguyễn Xiễn, P. Long Thạnh Mỹ, Tp. Thủ Đức");
 
   @override
   void initState() {
     super.initState();
     _screenOptions = <Widget>[
-      HomeScreen(),
-      HomeScreen(),
-      HomeScreen(),
-      HomeScreen(),
-      HomeScreen(),
+      HomeScreen(userLogin: userLogin),
+      HomeScreen(userLogin: userLogin),
+      HomeScreen(userLogin: userLogin),
+      HomeScreen(userLogin: userLogin),
+      ProfileScreen(account: userLogin),
     ];
   }
 
