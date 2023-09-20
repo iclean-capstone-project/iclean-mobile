@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:iclean_mobile_app/view/user/set_up_new_account/update_new_location/components/comfirm_dialog.dart';
 import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
 import 'package:iclean_mobile_app/widgets/my_textfield.dart';
 import 'package:iclean_mobile_app/widgets/top_bar.dart';
+
+import 'components/comfirm_dialog.dart';
 
 class UpdateNewLocationScreen extends StatefulWidget {
   const UpdateNewLocationScreen({super.key});

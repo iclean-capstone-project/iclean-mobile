@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:iclean_mobile_app/models/address.dart';
 
 import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
-import 'package:iclean_mobile_app/widgets/my_textfield.dart';
 import 'package:iclean_mobile_app/widgets/top_bar.dart';
+import 'package:iclean_mobile_app/widgets/update_textfield.dart';
 
-class AddLocationScreen extends StatefulWidget {
-  const AddLocationScreen({super.key});
+class UpdateLocationScreen extends StatefulWidget {
+  const UpdateLocationScreen({super.key, required this.address});
+  final Address address;
 
   @override
-  State<AddLocationScreen> createState() => _AddLocationScreenState();
+  State<UpdateLocationScreen> createState() => _UpdateLocationScreenState();
 }
 
-class _AddLocationScreenState extends State<AddLocationScreen> {
+class _UpdateLocationScreenState extends State<UpdateLocationScreen> {
   final Set<Marker> _markers = {};
   late final dynamic nameController;
   late final dynamic descriptionController;
@@ -24,8 +26,9 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
     super.initState();
     latitude = 10.837167851789406;
     longitude = 106.83900985399156;
-    nameController = TextEditingController();
-    descriptionController = TextEditingController();
+    nameController = TextEditingController(text: widget.address.addressName);
+    descriptionController =
+        TextEditingController(text: widget.address.description);
     _markers.add(
       Marker(
         markerId: const MarkerId('selected_location'),
@@ -70,14 +73,15 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const TopBar(text: "Thêm vị trí mới"),
+              const TopBar(text: "Chỉnh sửa vị trí"),
               Padding(
                 padding: const EdgeInsets.only(top: 24),
                 child: SizedBox(
                   height: 48,
-                  child: MyTextField(
+                  child: UpdateTextField(
                     controller: nameController,
                     hintText: 'Tên vị trí',
+                    text: widget.address.addressName,
                   ),
                 ),
               ),
@@ -85,9 +89,10 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
                 padding: const EdgeInsets.only(top: 16),
                 child: SizedBox(
                   height: 48,
-                  child: MyTextField(
+                  child: UpdateTextField(
                     controller: descriptionController,
                     hintText: 'Địa chỉ cụ thể',
+                    text: widget.address.description,
                   ),
                 ),
               ),

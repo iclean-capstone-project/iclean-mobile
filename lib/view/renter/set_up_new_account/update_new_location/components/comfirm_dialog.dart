@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:iclean_mobile_app/view/user/nav_bar_bottom/nav_bar_bottom.dart';
+import 'package:iclean_mobile_app/view/renter/nav_bar_bottom/nav_bar_bottom.dart';
 
 import '../../../../../utils/color_palette.dart';
 
