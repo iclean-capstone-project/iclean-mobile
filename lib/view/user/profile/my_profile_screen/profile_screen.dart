@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/account.dart';
 import 'package:iclean_mobile_app/view/user/profile/my_profile_screen/components/profile_inkwell.dart';
+import 'package:iclean_mobile_app/view/user/profile/update_profile_screen/update_profile_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   final Account account;
@@ -65,7 +66,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ProfileInkWell(
                 icon: const Icon(Icons.person_outline),
                 text: "Cập nhật hồ sơ",
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                               UpdateProfileScreen(account: widget.account)));
+                },
               ),
               ProfileInkWell(
                 icon: const Icon(Icons.location_on_outlined),
