@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:iclean_mobile_app/utils/color_palette.dart';
+import 'package:iclean_mobile_app/models/address.dart';
+import 'package:iclean_mobile_app/view/common/location/add_location/add_location_screen.dart';
+import 'package:iclean_mobile_app/view/common/location/update_location/update_location_screen.dart';
 import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
-
-import '../../../models/address.dart';
+import 'package:iclean_mobile_app/widgets/top_bar.dart';
 
 class LocationScreen extends StatelessWidget {
   LocationScreen({super.key});
@@ -40,32 +41,7 @@ class LocationScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  InkWell(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Icon(
-                      Icons.arrow_back_ios,
-                      size: 18,
-                    ),
-                  ),
-                  const Text(
-                    "Vị trí của bạn",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontFamily: 'Lato',
-                    ),
-                  ),
-                  const Icon(
-                    Icons.arrow_back_ios,
-                    size: 18,
-                    color: Colors.white,
-                  ),
-                ],
-              ),
+              const TopBar(text: "Vị trí của bạn"),
               Padding(
                 padding: const EdgeInsets.only(top: 8.0),
                 child: Divider(
@@ -112,18 +88,19 @@ class LocationScreen extends StatelessWidget {
                                               ),
                                             ),
                                             GestureDetector(
-                                              // onTap: () {
-                                              //   Navigator.push(
-                                              //       context,
-                                              //       MaterialPageRoute(
-                                              //           builder: (context) =>
-                                              //               UpdateLocationScreen(
-                                              //                   address:
-                                              //                       listAddressSaved[
-                                              //                           i])));
-                                              // },
+                                              onTap: () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            UpdateLocationScreen(
+                                                              address:
+                                                                  listAddressSaved[
+                                                                      i],
+                                                            )));
+                                              },
                                               child: const Text(
-                                                "Edit",
+                                                "Sửa",
                                                 style: TextStyle(
                                                   fontSize: 14,
                                                   color: Colors.blue,
@@ -167,7 +144,15 @@ class LocationScreen extends StatelessWidget {
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-        child: MainColorInkWellFullSize(onTap: (){}, text: "Thêm vị trí mới",),
+        child: MainColorInkWellFullSize(
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const AddLocationScreen()));
+          },
+          text: "Thêm vị trí mới",
+        ),
       ),
     );
   }

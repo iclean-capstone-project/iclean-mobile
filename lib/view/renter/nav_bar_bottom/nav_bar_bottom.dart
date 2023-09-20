@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:iclean_mobile_app/models/account.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
-import 'package:iclean_mobile_app/view/user/profile/my_profile_screen/profile_screen.dart';
+import 'package:iclean_mobile_app/view/renter/profile/my_profile_screen/profile_screen.dart';
 import '../home/home_screen.dart';
 
 class UserScreens extends StatefulWidget {

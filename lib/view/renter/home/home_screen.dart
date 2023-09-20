@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/account.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
-import 'package:iclean_mobile_app/view/user/home/components/banner_slider.dart';
+import 'package:iclean_mobile_app/view/renter/home/components/banner_slider.dart';
 
 import '../../../models/services.dart';
 import 'components/welcome_content.dart';

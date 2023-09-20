@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/account.dart';
-import 'package:iclean_mobile_app/view/user/profile/my_profile_screen/components/profile_inkwell.dart';
-import 'package:iclean_mobile_app/view/user/profile/update_profile_screen/update_profile_screen.dart';
+import 'package:iclean_mobile_app/view/common/location/location_screen.dart';
+import 'package:iclean_mobile_app/view/renter/profile/my_profile_screen/components/profile_inkwell.dart';
+import 'package:iclean_mobile_app/view/renter/profile/update_profile_screen/update_profile_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   final Account account;
@@ -62,7 +63,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ],
               ),
-
+              const SizedBox(height: 8),
               ProfileInkWell(
                 icon: const Icon(Icons.person_outline),
                 text: "Cập nhật hồ sơ",
@@ -71,13 +72,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                               UpdateProfileScreen(account: widget.account)));
+                              UpdateProfileScreen(account: widget.account)));
                 },
               ),
               ProfileInkWell(
                 icon: const Icon(Icons.location_on_outlined),
                 text: "Vị trí",
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => LocationScreen()));
+                },
               ),
               ProfileInkWell(
                 icon: const Icon(Icons.notifications_outlined),
