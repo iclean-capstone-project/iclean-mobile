@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:iclean_mobile_app/auth/verification/components/verify_dialog.dart';
+import 'package:iclean_mobile_app/utils/color_palette.dart';
+import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
+import 'package:iclean_mobile_app/widgets/top_bar.dart';
 
-import '../../utils/color_palette.dart';
-import '../../widgets/main_color_inkwell_full_size.dart';
-import '../../widgets/top_bar.dart';
 import 'components/digit_textfield.dart';
+import 'components/verify_dialog.dart';
 
 class VerificationScreen extends StatelessWidget {
   const VerificationScreen({super.key});

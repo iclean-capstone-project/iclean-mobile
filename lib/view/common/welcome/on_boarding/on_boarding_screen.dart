@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:iclean_mobile_app/view/common/welcome/welcome/welcome_screen.dart';
+import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
 
-import '../../../../widgets/main_color_inkwell_full_size.dart';
+import '../welcome/welcome_screen.dart';
 import 'components/dot_indicator.dart';
 import 'components/on_boarding_content.dart';
 

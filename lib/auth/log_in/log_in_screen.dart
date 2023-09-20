@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:iclean_mobile_app/auth/verification/verification_screen.dart';
+import 'package:iclean_mobile_app/utils/color_palette.dart';
+import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
+import 'package:iclean_mobile_app/widgets/my_textfield.dart';
+import 'package:iclean_mobile_app/widgets/top_bar.dart';
 
-import '../../utils/color_palette.dart';
-import '../../widgets/main_color_inkwell_full_size.dart';
-import '../../widgets/my_textfield.dart';
-import '../../widgets/top_bar.dart';
+import '../verification/verification_screen.dart';
 import 'components/logo_inkwell.dart';
 import 'components/or_divider.dart';
 

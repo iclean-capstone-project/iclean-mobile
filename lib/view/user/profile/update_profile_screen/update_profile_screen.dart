@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:iclean_mobile_app/models/account.dart';
+import 'package:iclean_mobile_app/widgets/update_textfield.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
@@ -13,25 +15,34 @@ import 'package:iclean_mobile_app/widgets/top_bar.dart';
 
 import 'package:intl/intl.dart';
 
-class UpdateNewProfileScreen extends StatefulWidget {
-  const UpdateNewProfileScreen({super.key});
+class UpdateProfileScreen extends StatefulWidget {
+  const UpdateProfileScreen({super.key, required this.account});
+  final Account account;
 
   @override
-  State<UpdateNewProfileScreen> createState() => _UpdateNewProfileScreenState();
+  State<UpdateProfileScreen> createState() => _UpdateProfileScreenState();
 }
 
-class _UpdateNewProfileScreenState extends State<UpdateNewProfileScreen> {
+class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
+  dynamic nameController = TextEditingController();
+  dynamic emailController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-
   File? _image;
-  final nameController = TextEditingController();
-  final emailController = TextEditingController();
   bool initDateTime = false;
   DateTime? _selectedDate;
 
   @override
   void initState() {
-    super.initState;
+    super.initState();
+    nameController = TextEditingController(text: widget.account.fullname);
+    emailController = TextEditingController(text: widget.account.email);
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    super.dispose();
   }
 
   Future _pickImage(ImageSource source) async {
@@ -175,9 +186,9 @@ class _UpdateNewProfileScreenState extends State<UpdateNewProfileScreen> {
                               ),
                               child: Center(
                                 child: _image == null
-                                    ? const CircleAvatar(
+                                    ? CircleAvatar(
                                         backgroundImage: AssetImage(
-                                            "assets/images/default_profile.jpg"),
+                                            widget.account.profilePicture),
                                         radius: 72,
                                       )
                                     : CircleAvatar(
@@ -210,7 +221,8 @@ class _UpdateNewProfileScreenState extends State<UpdateNewProfileScreen> {
                       child: TextFormField(
                         controller: TextEditingController(
                             text: _selectedDate == null
-                                ? ''
+                                ? DateFormat('dd/MM/yyyy')
+                              .format(widget.account.dateOfBirth)
                                 : DateFormat('dd/MM/yyyy')
                                     .format(_selectedDate!)),
                         obscureText: false,
@@ -272,7 +284,8 @@ class _UpdateNewProfileScreenState extends State<UpdateNewProfileScreen> {
                   //Email TextField
                   Padding(
                     padding: const EdgeInsets.only(top: 8.0),
-                    child: MyTextField(
+                    child: UpdateTextField(
+                        text: widget.account.email,
                         controller: emailController,
                         hintText: 'Email',
                         validator: (value) => validateEmail(value)),

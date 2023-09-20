@@ -39,21 +39,21 @@
     },
     {
       "name": "cross_file",
-      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/cross_file-0.3.3+5",
+      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/cross_file-0.3.3+4",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "2.17"
     },
     {
       "name": "csslib",
-      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/csslib-1.0.0",
+      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/csslib-0.17.2",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "2.12"
     },
     {
       "name": "cupertino_icons",
-      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/cupertino_icons-1.0.6",
+      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/cupertino_icons-1.0.5",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "2.12"
     },
     {
       "name": "fake_async",
@@ -63,27 +63,27 @@
     },
     {
       "name": "file_selector_linux",
-      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/file_selector_linux-0.9.2+1",
+      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/file_selector_linux-0.9.2",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "2.18"
     },
     {
       "name": "file_selector_macos",
-      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/file_selector_macos-0.9.3+2",
+      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/file_selector_macos-0.9.3+1",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "2.18"
     },
     {
       "name": "file_selector_platform_interface",
-      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/file_selector_platform_interface-2.6.1",
+      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/file_selector_platform_interface-2.6.0",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "2.18"
     },
     {
       "name": "file_selector_windows",
-      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/file_selector_windows-0.9.3+1",
+      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/file_selector_windows-0.9.3",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "2.18"
     },
     {
       "name": "flutter",
@@ -93,15 +93,15 @@
     },
     {
       "name": "flutter_lints",
-      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_lints-2.0.3",
+      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_lints-2.0.2",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "2.18"
     },
     {
       "name": "flutter_plugin_android_lifecycle",
-      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.16",
+      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.15",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "2.18"
     },
     {
       "name": "flutter_spinkit",
@@ -135,27 +135,27 @@
     },
     {
       "name": "google_maps_flutter_android",
-      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/google_maps_flutter_android-2.5.1",
+      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/google_maps_flutter_android-2.4.16",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "2.18"
     },
     {
       "name": "google_maps_flutter_ios",
-      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/google_maps_flutter_ios-2.3.1",
+      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/google_maps_flutter_ios-2.2.3",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "2.18"
     },
     {
       "name": "google_maps_flutter_platform_interface",
-      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/google_maps_flutter_platform_interface-2.4.1",
+      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/google_maps_flutter_platform_interface-2.4.0",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "2.18"
     },
     {
       "name": "google_maps_flutter_web",
-      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/google_maps_flutter_web-0.5.4+1",
+      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/google_maps_flutter_web-0.5.3",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "2.18"
     },
     {
       "name": "google_nav_bar",
@@ -165,15 +165,15 @@
     },
     {
       "name": "html",
-      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/html-0.15.4",
+      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/html-0.15.3",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "2.17"
     },
     {
       "name": "http",
-      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/http-0.13.6",
+      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/http-0.13.5",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "2.14"
     },
     {
       "name": "http_parser",
@@ -207,9 +207,9 @@
     },
     {
       "name": "image_picker_android",
-      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/image_picker_android-0.8.8",
+      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/image_picker_android-0.8.7+4",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "2.18"
     },
     {
       "name": "image_picker_for_web",
@@ -219,33 +219,33 @@
     },
     {
       "name": "image_picker_ios",
-      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/image_picker_ios-0.8.8+2",
+      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/image_picker_ios-0.8.8",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "2.18"
     },
     {
       "name": "image_picker_linux",
-      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/image_picker_linux-0.2.1+1",
+      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/image_picker_linux-0.2.1",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "2.18"
     },
     {
       "name": "image_picker_macos",
-      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/image_picker_macos-0.2.1+1",
+      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/image_picker_macos-0.2.1",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "2.18"
     },
     {
       "name": "image_picker_platform_interface",
-      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/image_picker_platform_interface-2.9.1",
+      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/image_picker_platform_interface-2.9.0",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "2.18"
     },
     {
       "name": "image_picker_windows",
-      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/image_picker_windows-0.2.1+1",
+      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/image_picker_windows-0.2.1",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "2.18"
     },
     {
       "name": "intl",
@@ -303,9 +303,9 @@
     },
     {
       "name": "plugin_platform_interface",
-      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/plugin_platform_interface-2.1.6",
+      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/plugin_platform_interface-2.1.5",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "2.18"
     },
     {
       "name": "sanitize_html",
@@ -380,7 +380,7 @@
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2023-09-16T06:49:03.094327Z",
+  "generated": "2023-09-20T03:34:07.997797Z",
   "generator": "pub",
   "generatorVersion": "2.19.1"
 }
