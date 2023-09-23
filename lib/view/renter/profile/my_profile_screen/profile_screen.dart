@@ -28,21 +28,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
       body: SingleChildScrollView(
         child: SafeArea(
             child: Padding(
-          padding: const EdgeInsets.only(top: 18, left: 24, right: 24),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             children: [
               //Tittle
-              Row(
-                children: const [
-                  Text(
-                    "Profile",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Lato',
+              Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: Row(
+                  children: const [
+                    Text(
+                      "Profile",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Lato',
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               const SizedBox(height: 8),
               //Avatar
@@ -108,6 +111,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ProfileInkWell(
                 icon: const Icon(Icons.policy_outlined),
                 text: "Privacy Policy",
+                onTap: () {},
+              ),
+              ProfileInkWell(
+                icon: const Icon(Icons.list_alt_outlined),
+                text: "Điều khoản sử dụng",
                 onTap: () {},
               ),
               TextButton(
