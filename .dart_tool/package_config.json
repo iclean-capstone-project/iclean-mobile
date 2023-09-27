@@ -8,6 +8,18 @@
       "languageVersion": "2.18"
     },
     {
+      "name": "barcode",
+      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/barcode-2.2.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "barcode_widget",
+      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/barcode_widget-2.0.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "boolean_selector",
       "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/boolean_selector-2.1.1",
       "packageUri": "lib/",
@@ -120,6 +132,12 @@
       "rootUri": "file:///E:/Tools/Android/flutter/packages/flutter_web_plugins",
       "packageUri": "lib/",
       "languageVersion": "2.17"
+    },
+    {
+      "name": "font_awesome_flutter",
+      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/font_awesome_flutter-10.4.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "google_maps",
@@ -308,6 +326,12 @@
       "languageVersion": "2.18"
     },
     {
+      "name": "qr",
+      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/qr-3.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.16"
+    },
+    {
       "name": "sanitize_html",
       "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/sanitize_html-2.0.0",
       "packageUri": "lib/",
@@ -362,6 +386,18 @@
       "languageVersion": "2.18"
     },
     {
+      "name": "timeline_tile",
+      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/timeline_tile-2.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "timelines",
+      "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/timelines-0.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "typed_data",
       "rootUri": "file:///C:/Users/ngula/AppData/Local/Pub/Cache/hosted/pub.dev/typed_data-1.3.2",
       "packageUri": "lib/",
@@ -380,7 +416,7 @@
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2023-09-20T03:34:07.997797Z",
+  "generated": "2023-09-27T09:51:19.220691Z",
   "generator": "pub",
   "generatorVersion": "2.19.1"
 }

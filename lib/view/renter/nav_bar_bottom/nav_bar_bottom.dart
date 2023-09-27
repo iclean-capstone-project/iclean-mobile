@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:iclean_mobile_app/models/account.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
+import 'package:iclean_mobile_app/view/renter/my_booking/my_booking_screen.dart';
 import 'package:iclean_mobile_app/view/renter/notification/notification_screen.dart';
 import 'package:iclean_mobile_app/view/renter/profile/my_profile_screen/profile_screen.dart';
 import '../home/home_screen.dart';
@@ -33,7 +34,7 @@ class _UserScreensState extends State<UserScreens> {
     super.initState();
     _screenOptions = <Widget>[
       HomeScreen(userLogin: userLogin),
-      HomeScreen(userLogin: userLogin),
+      const MyBookingsScreen(),
       HomeScreen(userLogin: userLogin),
       const NotificationScreen(),
       ProfileScreen(account: userLogin),
@@ -59,15 +60,7 @@ class _UserScreensState extends State<UserScreens> {
         },
         tabs: [
           GButton(
-            icon: _selectedIndex == 0 ? Icons.home : Icons.home_outlined,
-            textStyle: const TextStyle(
-              fontFamily: 'Lato',
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          GButton(
-            icon: _selectedIndex == 1
+            icon: _selectedIndex == 0
                 ? Icons.calendar_month
                 : Icons.calendar_month_outlined,
             textStyle: const TextStyle(
@@ -77,9 +70,17 @@ class _UserScreensState extends State<UserScreens> {
             ),
           ),
           GButton(
-            icon: _selectedIndex == 2
+            icon: _selectedIndex == 1
                 ? Icons.work_history
                 : Icons.work_history_outlined,
+            textStyle: const TextStyle(
+              fontFamily: 'Lato',
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          GButton(
+            icon: _selectedIndex == 2 ? Icons.home : Icons.home_outlined,
             textStyle: const TextStyle(
               fontFamily: 'Lato',
               color: Colors.white,
