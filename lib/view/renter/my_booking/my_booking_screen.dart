@@ -130,7 +130,7 @@ class _MyBookingsScreenState extends State<MyBookingsScreen>
         description: "1233321123321",
         jobImage: "assets/images/jennie_worker.jpg"),
   ];
-  
+
   List<Booking> upcomingBookings = [
     Booking(
         id: 1,
@@ -138,7 +138,7 @@ class _MyBookingsScreenState extends State<MyBookingsScreen>
         renterName: "Linh",
         empId: 1,
         empName: "Lisa Manobal",
-        status: "Đang đến",
+        status: "Sắp đến",
         workTime: DateTime.august,
         timestamp: DateTime.now(),
         price: 1000000000,
@@ -154,7 +154,7 @@ class _MyBookingsScreenState extends State<MyBookingsScreen>
         renterName: "Linh",
         empId: 1,
         empName: "Jennie Kim",
-        status: "Đang đến",
+        status: "Sắp đến",
         workTime: DateTime.august,
         timestamp: DateTime.now(),
         price: 1000000000,
@@ -169,7 +169,7 @@ class _MyBookingsScreenState extends State<MyBookingsScreen>
         renterName: "Linh",
         empId: 1,
         empName: "Park Cheayoung",
-        status: "Đang đến",
+        status: "Sắp đến",
         workTime: DateTime.august,
         timestamp: DateTime.now(),
         price: 1000000000,

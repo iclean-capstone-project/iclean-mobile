@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:iclean_mobile_app/view/renter/my_booking/components/completed_booking/history_screen.dart';
+
 import 'view/common/welcome/splash/splash_screen.dart';
 
 void main() {
@@ -15,7 +17,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       //theme: lightTheme,
       //darkTheme: darkTheme,
-      home: SplashScreen(),
+      home: HistoryScreen(),
     );
   }
 }

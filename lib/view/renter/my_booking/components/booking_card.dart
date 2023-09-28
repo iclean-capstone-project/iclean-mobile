@@ -1,14 +1,13 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/bookings.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
-import 'package:iclean_mobile_app/view/renter/my_booking/components/history_screen.dart';
 
+import 'completed_booking/history_screen.dart';
 import 'components/avatar_widget.dart';
+
 import 'components/info_booking.dart';
 
-import 'request_screen.dart';
+import 'pending_request/request_screen.dart';
 
 class BookingCard extends StatefulWidget {
   final List<Booking> listBookings;
@@ -28,7 +27,7 @@ class _BookingCardCardState extends State<BookingCard>
     switch (status) {
       case 'Đang xử lí':
         return ColorPalette.mainColor;
-      case 'Đang đến':
+      case 'Sắp đến':
         return Colors.lightBlueAccent;
       case 'Hoàn thành':
         return Colors.greenAccent;

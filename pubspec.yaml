@@ -44,9 +44,8 @@ dependencies:
   google_nav_bar: ^5.0.6
   carousel_slider: ^4.2.1
   barcode_widget: ^2.0.4
-  timeline_tile: ^2.0.0
   timelines: ^0.1.0
-  font_awesome_flutter: ^10.4.0
+  table_calendar: ^3.0.9
 
 dev_dependencies:
   flutter_test:
