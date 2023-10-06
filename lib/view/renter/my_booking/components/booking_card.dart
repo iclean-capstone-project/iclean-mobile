@@ -50,7 +50,7 @@ class _BookingCardCardState extends State<BookingCard>
       case 'Hoàn thành':
       case 'Đã hủy':
         Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-          return const HistoryScreen();
+          return  HistoryScreen(booking: booking);
         }));
         break;
       default:

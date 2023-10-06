@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:iclean_mobile_app/models/account.dart';
+import 'package:iclean_mobile_app/schedule_screen.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/view/renter/my_booking/my_booking_screen.dart';
 import 'package:iclean_mobile_app/view/renter/notification/notification_screen.dart';
@@ -25,7 +26,7 @@ class _UserScreensState extends State<UserScreens> {
       dateOfBirth: DateTime.now(),
       phone: "0123456789",
       email: "linhlt28@gmail.com",
-      role: "user",
+      role: "renter",
       address:
           "S102 Vinhomes Grand Park, Nguyễn Xiễn, P. Long Thạnh Mỹ, Tp. Thủ Đức");
 
@@ -35,7 +36,7 @@ class _UserScreensState extends State<UserScreens> {
     _screenOptions = <Widget>[
       HomeScreen(userLogin: userLogin),
       const MyBookingsScreen(),
-      HomeScreen(userLogin: userLogin),
+      const ScheduleScreen(),
       const NotificationScreen(),
       ProfileScreen(account: userLogin),
     ];
@@ -60,7 +61,15 @@ class _UserScreensState extends State<UserScreens> {
         },
         tabs: [
           GButton(
-            icon: _selectedIndex == 0
+            icon: _selectedIndex == 0 ? Icons.home : Icons.home_outlined,
+            textStyle: const TextStyle(
+              fontFamily: 'Lato',
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          GButton(
+            icon: _selectedIndex == 1
                 ? Icons.calendar_month
                 : Icons.calendar_month_outlined,
             textStyle: const TextStyle(
@@ -70,7 +79,7 @@ class _UserScreensState extends State<UserScreens> {
             ),
           ),
           GButton(
-            icon: _selectedIndex == 1
+            icon: _selectedIndex == 2
                 ? Icons.work_history
                 : Icons.work_history_outlined,
             textStyle: const TextStyle(
@@ -79,14 +88,7 @@ class _UserScreensState extends State<UserScreens> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          GButton(
-            icon: _selectedIndex == 2 ? Icons.home : Icons.home_outlined,
-            textStyle: const TextStyle(
-              fontFamily: 'Lato',
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+          
           GButton(
             icon: _selectedIndex == 3
                 ? Icons.notifications_sharp

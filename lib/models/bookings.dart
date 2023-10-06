@@ -1,7 +1,9 @@
 class Booking {
   int id, renterId, empId, jobId, workTime, price;
+  int? discount;
   String renterName, empName, status, location, jobName, description, jobImage;
-  DateTime timestamp;
+  DateTime timeCreateBooking, timestamp;
+  DateTime? workStart, workEnd;
   Booking({
     required this.id,
     required this.renterId,
@@ -11,6 +13,10 @@ class Booking {
     required this.status,
     required this.workTime,
     required this.timestamp,
+    required this.discount,
+    required this.timeCreateBooking,
+    required this.workStart,
+    required this.workEnd,
     required this.price,
     required this.location,
     required this.jobId,

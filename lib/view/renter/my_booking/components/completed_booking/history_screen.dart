@@ -1,257 +1,105 @@
 import 'package:flutter/material.dart';
+import 'package:iclean_mobile_app/models/bookings.dart';
+import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/view/renter/my_booking/components/completed_booking/components/my_timeline.dart';
-import 'package:iclean_mobile_app/widgets/top_bar.dart';
+import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
+
+import 'components/address_content.dart';
+import 'components/components/details_fields.dart';
+import 'components/detail_content.dart';
+import 'components/employee_content.dart';
+import 'components/payment_content.dart';
 
 class HistoryScreen extends StatelessWidget {
-  const HistoryScreen({super.key});
+  final Booking booking;
+  const HistoryScreen({super.key, required this.booking});
 
   @override
   Widget build(BuildContext context) {
+    int daysBetween(DateTime from, DateTime to) {
+      from = DateTime(from.year, from.month, from.day);
+      to = DateTime(to.year, to.month, to.day);
+      return (to.difference(from).inHours / 24).round();
+    }
+
     return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          "Chi tiết đơn",
+          style: TextStyle(
+            color: Colors.black,
+            fontFamily: 'Lato',
+          ),
+        ),
+        centerTitle: true,
+        iconTheme: const IconThemeData(color: Colors.black),
+        backgroundColor: Colors.white,
+      ),
       body: SingleChildScrollView(
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const TopBar(text: "Chi tiết đơn"),
-                const SizedBox(
-                  height: 140,
-                  child: MyTimeline(),
+                SizedBox(
+                  height: 160,
+                  child: MyTimeline(booking: booking),
                 ),
-                Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade200,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 16),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
-                            Text(
-                              "Service",
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontFamily: 'Lato',
-                              ),
-                            ),
-                            Text(
-                              "House Cleaning",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontFamily: 'Lato',
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 16),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
-                            Text(
-                              "Worker",
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontFamily: 'Lato',
-                              ),
-                            ),
-                            Text(
-                              "Lisa",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontFamily: 'Lato',
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 16),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
-                            Text(
-                              "Date & Time",
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontFamily: 'Lato',
-                              ),
-                            ),
-                            Text(
-                              "Dec 23, 2024 | 10:00 AM",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontFamily: 'Lato',
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          Text(
-                            "Working Hours",
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontFamily: 'Lato',
-                            ),
-                          ),
-                          Text(
-                            "2 Hours",
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontFamily: 'Lato',
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  child: DetailsContentField(
+                      text: "Mã đặt dịch vụ", text2: "ádsadsadsadsadsa"),
                 ),
+                EmployeeContent(booking: booking),
+                const SizedBox(height: 16),
+                AddressContent(booking: booking),
                 const SizedBox(height: 24),
-                Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade200,
-                    borderRadius: BorderRadius.circular(20),
+                DetailContent(booking: booking),
+                const SizedBox(height: 24),
+                PaymentContent(booking: booking),
+                const SizedBox(height: 24),
+                if (daysBetween(booking.workEnd!, DateTime.now()) > 7)
+                  MainColorInkWellFullSize(
+                    onTap: () {
+                      // Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: (context) =>
+                      //             const UpdateNewLocationScreen()));
+                    },
+                    text: "Đặt lại",
                   ),
-                  child: Column(
+                if (daysBetween(booking.workEnd!, DateTime.now()) < 7)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 16),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
-                            Text(
-                              "House Cleaning",
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontFamily: 'Lato',
-                              ),
-                            ),
-                            Text(
-                              "\$100",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontFamily: 'Lato',
-                              ),
-                            ),
-                          ],
-                        ),
+                      MainColorInkWellFullSize(
+                        onTap: () {
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //         builder: (context) =>
+                          //             const UpdateNewLocationScreen()));
+                        },
+                        text: "Đánh giá",
+                        backgroundColor: Colors.white,
+                        textColor: ColorPalette.mainColor,
+                        width: MediaQuery.of(context).size.width * 0.43,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 8),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Promo',
-                              style: TextStyle(
-                                color: Colors.deepPurple.shade300,
-                                fontSize: 14,
-                                fontFamily: 'Lato',
-                              ),
-                            ),
-                            Text(
-                              "- \$20",
-                              style: TextStyle(
-                                color: Colors.deepPurple.shade300,
-                                fontSize: 16,
-                                fontFamily: 'Lato',
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 8),
-                        child: Divider(
-                          thickness: 0.5,
-                          color: Colors.grey[400],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 16),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
-                            Text(
-                              "Total",
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontFamily: 'Lato',
-                              ),
-                            ),
-                            Text(
-                              "\$80",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontFamily: 'Lato',
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 16),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
-                            Text(
-                              "Date",
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontFamily: 'Lato',
-                              ),
-                            ),
-                            Text(
-                              "Dec 23, 2024 | 10:00 AM",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontFamily: 'Lato',
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            "Status",
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontFamily: 'Lato',
-                            ),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              color: Colors.deepPurple.shade100,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Text(
-                              "Paid",
-                              style: TextStyle(
-                                color: Colors.deepPurple.shade400,
-                                fontSize: 15,
-                                fontFamily: 'Lato',
-                              ),
-                            ),
-                          )
-                        ],
+                      MainColorInkWellFullSize(
+                        onTap: () {
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //         builder: (context) =>
+                          //             const UpdateNewLocationScreen()));
+                        },
+                        text: "Đặt lại",
+                        width: MediaQuery.of(context).size.width * 0.43,
                       ),
                     ],
                   ),
-                ),
               ],
             ),
           ),

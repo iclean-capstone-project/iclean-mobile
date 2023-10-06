@@ -16,73 +16,93 @@ class ScheduleScreen extends StatefulWidget {
 class _ScheduleScreenState extends State<ScheduleScreen> {
   List<Booking> myBookings = [
     Booking(
-        id: 1,
-        renterId: 1,
-        renterName: "Linh",
-        empId: 1,
-        empName: "Lisa Manobal",
-        status: "Sắp đến",
-        workTime: 2,
-        timestamp: DateTime(
-            2023, 9, 30, 9, 0), // Example: September 30, 2023, 9:00 (9:30 AM)
-        price: 1000000000,
-        location: "Thủ Đức, Thành phố Hồ Chí Minh",
-        jobId: 1,
-        jobName: "Giặt ủi",
-        description: "1233321123321",
-        jobImage:
-            "https://toigingiuvedep.vn/wp-content/uploads/2021/07/hinh-anh-lisa-blackpink-sieu-dang-yeu.jpg"),
+      id: 1,
+      renterId: 1,
+      renterName: "Linh",
+      empId: 1,
+      empName: "Lisa Manobal",
+      status: "Sắp đến",
+      workTime: 2,
+      timestamp: DateTime(
+          2023, 9, 30, 9, 0), // Example: September 30, 2023, 9:00 (9:30 AM)
+      price: 1000000000,
+      location: "Thủ Đức, Thành phố Hồ Chí Minh",
+      jobId: 1,
+      jobName: "Giặt ủi",
+      description: "1233321123321",
+      jobImage:
+          "https://toigingiuvedep.vn/wp-content/uploads/2021/07/hinh-anh-lisa-blackpink-sieu-dang-yeu.jpg",
+      timeCreateBooking: DateTime.now(),
+      discount: 0,
+      workEnd: null,
+      workStart: null,
+    ),
     Booking(
-        id: 2,
-        renterId: 1,
-        renterName: "Linh",
-        empId: 1,
-        empName: "Jennie Kim",
-        status: "Sắp đến",
-        workTime: 1,
-        timestamp: DateTime(2023, 9, 30, 12,
-            0), // Example: September 30, 2023, 12:00 (12:00 PM)
-        price: 1000000000,
-        location: "Thủ Đức, Thành phố Hồ Chí Minh",
-        jobId: 2,
-        jobName: "Decor",
-        description: "1233321123321",
-        jobImage:
-            "https://avatar-ex-swe.nixcdn.com/singer/avatar/2022/09/16/2/e/3/c/1663304261229_600.jpg"),
+      id: 2,
+      renterId: 1,
+      renterName: "Linh",
+      empId: 1,
+      empName: "Jennie Kim",
+      status: "Sắp đến",
+      workTime: 1,
+      timestamp: DateTime(
+          2023, 9, 30, 12, 0), // Example: September 30, 2023, 12:00 (12:00 PM)
+      price: 1000000000,
+      location: "Thủ Đức, Thành phố Hồ Chí Minh",
+      jobId: 2,
+      jobName: "Decor",
+      description: "1233321123321",
+      jobImage:
+          "https://avatar-ex-swe.nixcdn.com/singer/avatar/2022/09/16/2/e/3/c/1663304261229_600.jpg",
+      timeCreateBooking: DateTime.now(),
+      discount: 0,
+      workEnd: null,
+      workStart: null,
+    ),
     Booking(
-        id: 3,
-        renterId: 1,
-        renterName: "Linh",
-        empId: 1,
-        empName: "Park Cheayoung",
-        status: "Sắp đến",
-        workTime: 4,
-        timestamp: DateTime(2023, 9, 29, 12,
-            0), // Example: September 29, 2023, 12:00 (12:00 PM)
-        price: 1000000000,
-        location: "Thủ Đức, Thành phố Hồ Chí Minh",
-        jobId: 3,
-        jobName: "Nấu ăn",
-        description: "1233321123321",
-        jobImage:
-            "https://avatar-ex-swe.nixcdn.com/singer/avatar/2022/09/16/2/e/3/c/1663304261229_600.jpg"),
+      id: 3,
+      renterId: 1,
+      renterName: "Linh",
+      empId: 1,
+      empName: "Park Cheayoung",
+      status: "Sắp đến",
+      workTime: 4,
+      timestamp: DateTime(
+          2023, 9, 29, 12, 0), // Example: September 29, 2023, 12:00 (12:00 PM)
+      price: 1000000000,
+      location: "Thủ Đức, Thành phố Hồ Chí Minh",
+      jobId: 3,
+      jobName: "Nấu ăn",
+      description: "1233321123321",
+      jobImage:
+          "https://avatar-ex-swe.nixcdn.com/singer/avatar/2022/09/16/2/e/3/c/1663304261229_600.jpg",
+      timeCreateBooking: DateTime.now(),
+      discount: 0,
+      workEnd: null,
+      workStart: null,
+    ),
     Booking(
-        id: 4,
-        renterId: 1,
-        renterName: "Linh",
-        empId: 1,
-        empName: "Kim Jisoo",
-        status: "Sắp đến",
-        workTime: 3,
-        timestamp: DateTime(2023, 9, 28, 12,
-            0), // Example: September 28, 2023, 12:00 (12:00 PM)
-        price: 1000000000,
-        location: "Thủ Đức, Thành phố Hồ Chí Minh",
-        jobId: 3,
-        jobName: "Nấu ăn",
-        description: "1233321123321",
-        jobImage:
-            "https://static-images.vnncdn.net/files/publish/2023/5/3/avatar-jisoo-448.png?width=600"),
+      id: 4,
+      renterId: 1,
+      renterName: "Linh",
+      empId: 1,
+      empName: "Kim Jisoo",
+      status: "Sắp đến",
+      workTime: 3,
+      timestamp: DateTime(
+          2023, 9, 28, 12, 0), // Example: September 28, 2023, 12:00 (12:00 PM)
+      price: 1000000000,
+      location: "Thủ Đức, Thành phố Hồ Chí Minh",
+      jobId: 3,
+      jobName: "Nấu ăn",
+      description: "1233321123321",
+      jobImage:
+          "https://static-images.vnncdn.net/files/publish/2023/5/3/avatar-jisoo-448.png?width=600",
+      timeCreateBooking: DateTime.now(),
+      discount: 0,
+      workEnd: null,
+      workStart: null,
+    ),
   ];
 
   CalendarFormat _calendarFormat = CalendarFormat.month;
