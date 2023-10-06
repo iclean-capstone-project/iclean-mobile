@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iclean_mobile_app/view/renter/my_booking/my_booking_screen.dart';
 
 import 'view/common/welcome/splash/splash_screen.dart';
 
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       //theme: lightTheme,
       //darkTheme: darkTheme,
-      home: SplashScreen(),
+      home: MyBookingsScreen(),
     );
   }
 }

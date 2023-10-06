@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/bookings.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
-import 'package:iclean_mobile_app/view/renter/my_booking/components/completed_booking/components/my_timeline.dart';
 import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
 
 import 'components/address_content.dart';
@@ -9,10 +8,11 @@ import 'components/components/details_fields.dart';
 import 'components/detail_content.dart';
 import 'components/employee_content.dart';
 import 'components/payment_content.dart';
+import 'components/timeline_content/timeline_content.dart';
 
-class HistoryScreen extends StatelessWidget {
+class DetailsBookingScreen extends StatelessWidget {
   final Booking booking;
-  const HistoryScreen({super.key, required this.booking});
+  const DetailsBookingScreen({super.key, required this.booking});
 
   @override
   Widget build(BuildContext context) {
@@ -40,12 +40,8 @@ class HistoryScreen extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                  height: 160,
-                  child: MyTimeline(booking: booking),
-                ),
+                TimelineContent(booking: booking),
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16.0),
                   child: DetailsContentField(

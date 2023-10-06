@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/bookings.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
 
-import 'completed_booking/history_screen.dart';
+import 'completed_booking/details_booking_screen.dart';
 import 'components/avatar_widget.dart';
 
 import 'components/info_booking.dart';
@@ -28,12 +28,12 @@ class _BookingCardCardState extends State<BookingCard>
       case 'Đang xử lí':
         return ColorPalette.mainColor;
       case 'Sắp đến':
-        return Colors.lightBlueAccent;
+        return Colors.lightBlue;
       case 'Hoàn thành':
-        return Colors.greenAccent;
+        return Colors.green;
       case 'Bị từ chối':
       case 'Đã hủy':
-        return Colors.redAccent;
+        return Colors.red;
       default:
         return ColorPalette.mainColor;
     }
@@ -44,13 +44,13 @@ class _BookingCardCardState extends State<BookingCard>
     switch (status) {
       case 'Đang xử lí':
         Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-          return RequestScreen(booking: booking);
+          return DetailsBookingScreen(booking: booking);
         }));
         break;
       case 'Hoàn thành':
       case 'Đã hủy':
         Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-          return  HistoryScreen(booking: booking);
+          return DetailsBookingScreen(booking: booking);
         }));
         break;
       default:

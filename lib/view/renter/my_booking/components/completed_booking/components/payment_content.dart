@@ -27,9 +27,9 @@ class PaymentContent extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  "House Cleaning",
-                  style: TextStyle(
+                Text(
+                  booking.jobName,
+                  style: const TextStyle(
                     fontSize: 14,
                     fontFamily: 'Lato',
                   ),

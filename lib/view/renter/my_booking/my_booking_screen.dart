@@ -235,8 +235,7 @@ class _MyBookingsScreenState extends State<MyBookingsScreen>
       empName: "Lisa Manobal",
       status: "Hoàn thành",
       workTime: 2,
-      timestamp: DateTime(
-          2023, 9, 10, 9, 0),
+      timestamp: DateTime(2023, 9, 10, 9, 0),
       price: 100,
       location:
           "Thủ Đức, Thành phố Hồ Chí Minh,Thủ Đức, Thành phố Hồ Chí Minh,Thủ Đức, Thành phố Hồ Chí Minh,Thủ Đức, Thành phố Hồ Chí Minh",
@@ -248,7 +247,7 @@ class _MyBookingsScreenState extends State<MyBookingsScreen>
       timeCreateBooking: DateTime(2023, 9, 29, 11, 0),
       discount: 30,
       workStart: DateTime(
-          2023, 9, 9, 9, 0), // Example: September 30, 2023, 9:00 (9:30 AM),
+          2023, 9, 10, 9, 0), // Example: September 30, 2023, 9:00 (9:30 AM),
       workEnd: DateTime(2023, 9, 10, 11, 0),
     ),
     Booking(
@@ -259,8 +258,7 @@ class _MyBookingsScreenState extends State<MyBookingsScreen>
       empName: "Jennie Kim",
       status: "Đã hủy",
       workTime: 2,
-      timestamp: DateTime(
-          2023, 9, 30, 9, 0),
+      timestamp: DateTime(2023, 9, 30, 9, 0),
       price: 80,
       location: "Thủ Đức, Thành phố Hồ Chí Minh",
       jobId: 2,
@@ -281,8 +279,7 @@ class _MyBookingsScreenState extends State<MyBookingsScreen>
       empName: "Park Cheayoung",
       status: "Hoàn thành",
       workTime: 2,
-      timestamp: DateTime(
-          2023, 9, 30, 9, 0),
+      timestamp: DateTime(2023, 9, 30, 9, 0),
       price: 200,
       location: "Thủ Đức, Thành phố Hồ Chí Minh",
       jobId: 3,
