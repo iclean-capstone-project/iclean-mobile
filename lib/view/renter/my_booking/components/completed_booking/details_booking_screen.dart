@@ -40,6 +40,7 @@ class DetailsBookingScreen extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TimelineContent(booking: booking),
                 const Padding(
@@ -55,7 +56,7 @@ class DetailsBookingScreen extends StatelessWidget {
                 const SizedBox(height: 24),
                 PaymentContent(booking: booking),
                 const SizedBox(height: 24),
-                if (daysBetween(booking.workEnd!, DateTime.now()) > 7)
+                if (daysBetween(booking.timeEnd!, DateTime.now()) > 7)
                   MainColorInkWellFullSize(
                     onTap: () {
                       // Navigator.push(
@@ -66,7 +67,7 @@ class DetailsBookingScreen extends StatelessWidget {
                     },
                     text: "Đặt lại",
                   ),
-                if (daysBetween(booking.workEnd!, DateTime.now()) < 7)
+                if (daysBetween(booking.timeEnd!, DateTime.now()) < 7)
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

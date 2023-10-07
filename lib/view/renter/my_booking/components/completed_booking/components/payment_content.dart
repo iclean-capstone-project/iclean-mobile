@@ -28,14 +28,14 @@ class PaymentContent extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  booking.jobName,
+                  "name service",
                   style: const TextStyle(
                     fontSize: 14,
                     fontFamily: 'Lato',
                   ),
                 ),
                 Text(
-                  "${booking.price} VNĐ",
+                  "price service VNĐ",
                   style: const TextStyle(
                     fontSize: 16,
                     fontFamily: 'Lato',
@@ -55,11 +55,11 @@ class PaymentContent extends StatelessWidget {
           ),
           DetailsContentField(
               text: "Tổng cộng",
-              text2: "${booking.price - (booking.discount ?? 0)} VNĐ"),
+              text2: "${booking.totalPrice} VNĐ"),
           DetailsContentField(
             text: "Thời gian",
             text2: DateFormat('d/MM/yyyy | hh:mm aaa')
-                .format(booking.timeCreateBooking),
+                .format(booking.timeCreated),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

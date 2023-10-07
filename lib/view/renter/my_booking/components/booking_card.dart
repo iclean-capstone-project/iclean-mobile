@@ -23,16 +23,17 @@ class BookingCard extends StatefulWidget {
 
 class _BookingCardCardState extends State<BookingCard>
     with TickerProviderStateMixin {
-  Color getColorForStatus(String status) {
-    switch (status) {
-      case 'Đang xử lí':
-        return ColorPalette.mainColor;
-      case 'Sắp đến':
+  Color getColorForStatus(int statusId) {
+    switch (statusId) {
+      case 4:
         return Colors.lightBlue;
-      case 'Hoàn thành':
+      case 6:
         return Colors.green;
-      case 'Bị từ chối':
-      case 'Đã hủy':
+      case 0:
+      case 8:
+      case 9:
+      case 10:
+      case 11:
         return Colors.red;
       default:
         return ColorPalette.mainColor;
@@ -40,15 +41,19 @@ class _BookingCardCardState extends State<BookingCard>
   }
 
   void navigateToScreenBasedOnStatus(Booking booking) {
-    String status = booking.status;
+    int status = booking.statusId;
     switch (status) {
-      case 'Đang xử lí':
+      case 0: //admin reject request
         Navigator.of(context).push(MaterialPageRoute(builder: (context) {
           return DetailsBookingScreen(booking: booking);
         }));
         break;
-      case 'Hoàn thành':
-      case 'Đã hủy':
+      case 6:
+      case 7:
+      case 8:
+      case 9:
+      case 10:
+      case 11: 
         Navigator.of(context).push(MaterialPageRoute(builder: (context) {
           return DetailsBookingScreen(booking: booking);
         }));
@@ -85,15 +90,15 @@ class _BookingCardCardState extends State<BookingCard>
                       children: [
                         //avatar
                         AvatarWidget(
-                            imagePath: widget.listBookings[i].jobImage),
+                            imagePath: "widget.listBookings[i].jobImage"),
                         const SizedBox(width: 16),
                         //Info
                         InfoBooking(
-                          empName: widget.listBookings[i].empName,
-                          jobName: widget.listBookings[i].jobName,
-                          status: widget.listBookings[i].status,
+                          empName: "widget.listBookings[i].empName",
+                          jobName: "widget.listBookings[i].jobName",
+                          status: "widget.listBookings[i].status",
                           colorStatus:
-                              getColorForStatus(widget.listBookings[i].status),
+                              getColorForStatus(widget.listBookings[i].statusId),
                         ),
                       ],
                     ),

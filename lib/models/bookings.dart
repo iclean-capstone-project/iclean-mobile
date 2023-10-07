@@ -1,27 +1,25 @@
 class Booking {
-  int id, renterId, empId, jobId, workTime, price;
+  int id, renterId, empId, jobId, workTime, statusId;
+  String location, description;
+  double totalPrice;
+  DateTime timeCreated, timeWork;
+  DateTime? timeStart, timeEnd, timeCancel;
   int? discount;
-  String renterName, empName, status, location, jobName, description, jobImage;
-  DateTime timeCreateBooking, timestamp;
-  DateTime? workStart, workEnd;
   Booking({
     required this.id,
     required this.renterId,
-    required this.renterName,
     required this.empId,
-    required this.empName,
-    required this.status,
-    required this.workTime,
-    required this.timestamp,
-    required this.discount,
-    required this.timeCreateBooking,
-    required this.workStart,
-    required this.workEnd,
-    required this.price,
-    required this.location,
     required this.jobId,
-    required this.jobName,
+    required this.location,
+    required this.workTime,
     required this.description,
-    required this.jobImage,
+    required this.timeWork,
+    required this.totalPrice,
+    required this.timeCreated,
+    required this.timeStart,
+    required this.timeEnd,
+    required this.timeCancel,
+    required this.discount,
+    required this.statusId,
   });
 }
