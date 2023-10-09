@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iclean_mobile_app/models/account.dart';
-import 'package:iclean_mobile_app/view/renter/set_up_new_account/update_new_location/update_new_location_screen.dart';
 import 'package:iclean_mobile_app/widgets/update_textfield.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -11,7 +10,6 @@ import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
 import 'package:iclean_mobile_app/widgets/my_textfield.dart';
 import 'package:iclean_mobile_app/widgets/select_photo_options_screen.dart';
-import 'package:iclean_mobile_app/widgets/top_bar.dart';
 
 import 'package:intl/intl.dart';
 
@@ -157,168 +155,174 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          "Cập nhập hồ sơ",
+          style: TextStyle(
+            color: Colors.black,
+            fontFamily: 'Lato',
+          ),
+        ),
+        centerTitle: true,
+        iconTheme: const IconThemeData(color: Colors.black),
+        backgroundColor: Colors.white,
+      ),
       body: SingleChildScrollView(
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  //TopBar
-                  const TopBar(text: "Cập nhập hồ sơ"),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                //Avatar
+                Padding(
+                  padding: const EdgeInsets.only(top: 32),
+                  child: Center(
+                    child: GestureDetector(
+                      behavior: HitTestBehavior.translucent,
+                      onTap: () {
+                        _showSelectPhotoOptions(context);
+                      },
+                      child: Center(
+                        child: Container(
+                            height: 146,
+                            width: 146,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                            ),
+                            child: Center(
+                              child: _image == null
+                                  ? CircleAvatar(
+                                      backgroundImage: AssetImage(
+                                          widget.account.profilePicture),
+                                      radius: 72,
+                                    )
+                                  : CircleAvatar(
+                                      backgroundImage: FileImage(_image!),
+                                      radius: 200.0,
+                                    ),
+                            )),
+                      ),
+                    ),
+                  ),
+                ),
 
-                  //Avatar
-                  Padding(
-                    padding: const EdgeInsets.only(top: 32),
-                    child: Center(
-                      child: GestureDetector(
-                        behavior: HitTestBehavior.translucent,
-                        onTap: () {
-                          _showSelectPhotoOptions(context);
-                        },
-                        child: Center(
-                          child: Container(
-                              height: 146,
-                              width: 146,
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                              ),
-                              child: Center(
-                                child: _image == null
-                                    ? CircleAvatar(
-                                        backgroundImage: AssetImage(
-                                            widget.account.profilePicture),
-                                        radius: 72,
-                                      )
-                                    : CircleAvatar(
-                                        backgroundImage: FileImage(_image!),
-                                        radius: 200.0,
-                                      ),
-                              )),
+                //Name TextField
+                Padding(
+                  padding: const EdgeInsets.only(top: 32),
+                  child: SizedBox(
+                    height: 48,
+                    child: MyTextField(
+                      controller: nameController,
+                      hintText: 'Tên',
+                    ),
+                  ),
+                ),
+
+                //Dob TextField
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: SizedBox(
+                    height: 48,
+                    child: TextFormField(
+                      controller: TextEditingController(
+                          text: _selectedDate == null
+                              ? DateFormat('dd/MM/yyyy')
+                                  .format(widget.account.dateOfBirth)
+                              : DateFormat('dd/MM/yyyy')
+                                  .format(_selectedDate!)),
+                      obscureText: false,
+                      decoration: InputDecoration(
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 16),
+                        enabledBorder: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10),
+                          ),
+                          borderSide: BorderSide(color: ColorPalette.greyColor),
                         ),
-                      ),
-                    ),
-                  ),
-
-                  //Name TextField
-                  Padding(
-                    padding: const EdgeInsets.only(top: 32),
-                    child: SizedBox(
-                      height: 48,
-                      child: MyTextField(
-                        controller: nameController,
-                        hintText: 'Tên',
-                      ),
-                    ),
-                  ),
-
-                  //Dob TextField
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
-                    child: SizedBox(
-                      height: 48,
-                      child: TextFormField(
-                        controller: TextEditingController(
-                            text: _selectedDate == null
-                                ? DateFormat('dd/MM/yyyy')
-                                    .format(widget.account.dateOfBirth)
-                                : DateFormat('dd/MM/yyyy')
-                                    .format(_selectedDate!)),
-                        obscureText: false,
-                        decoration: InputDecoration(
-                          contentPadding:
-                              const EdgeInsets.symmetric(horizontal: 16),
-                          enabledBorder: const OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10),
-                            ),
-                            borderSide:
-                                BorderSide(color: ColorPalette.greyColor),
+                        focusedBorder: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10),
                           ),
-                          focusedBorder: const OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10),
-                            ),
-                            borderSide:
-                                BorderSide(color: ColorPalette.mainColor),
-                          ),
-                          fillColor: ColorPalette.textFieldColorLight,
-                          filled: true,
-                          hintText: 'Ngày sinh',
-                          hintStyle: const TextStyle(
-                            color: ColorPalette.greyColor,
-                            fontFamily: 'Lato',
-                          ),
-                          suffixIcon: GestureDetector(
-                            onTap: () {
-                              _selectDate(context);
-                              setState(() {
-                                initDateTime = true;
-                              });
-                            },
-                            child: const Padding(
-                              padding: EdgeInsets.only(right: 8),
-                              child: Icon(
-                                Icons.edit_calendar,
-                                size: 24,
-                              ),
-                            ),
-                          ),
-                          suffixIconColor: ColorPalette.greyColor,
-                          //focusColor: ColorPalette.mainColor,
+                          borderSide: BorderSide(color: ColorPalette.mainColor),
                         ),
+                        fillColor: ColorPalette.textFieldColorLight,
+                        filled: true,
+                        hintText: 'Ngày sinh',
+                        hintStyle: const TextStyle(
+                          color: ColorPalette.greyColor,
+                          fontFamily: 'Lato',
+                        ),
+                        suffixIcon: GestureDetector(
+                          onTap: () {
+                            _selectDate(context);
+                            setState(() {
+                              initDateTime = true;
+                            });
+                          },
+                          child: const Padding(
+                            padding: EdgeInsets.only(right: 8),
+                            child: Icon(
+                              Icons.edit_calendar,
+                              size: 24,
+                            ),
+                          ),
+                        ),
+                        suffixIconColor: ColorPalette.greyColor,
+                        //focusColor: ColorPalette.mainColor,
                       ),
                     ),
                   ),
-                  if (_selectedDate == null && initDateTime)
-                    const Text(
-                      'Please select a date',
-                      style: TextStyle(
-                        color: Colors.red,
-                        fontFamily: 'Lato',
-                        fontSize: 12,
-                      ),
+                ),
+                if (_selectedDate == null && initDateTime)
+                  const Text(
+                    'Please select a date',
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontFamily: 'Lato',
+                      fontSize: 12,
                     ),
+                  ),
 
-                  //Email TextField
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
-                    child: UpdateTextField(
-                        text: widget.account.email,
-                        controller: emailController,
-                        hintText: 'Email',
-                        validator: (value) => validateEmail(value)),
-                  ),
-                ],
-              ),
+                //Email TextField
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: UpdateTextField(
+                      text: widget.account.email,
+                      controller: emailController,
+                      hintText: 'Email',
+                      validator: (value) => validateEmail(value)),
+                ),
+              ],
             ),
           ),
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Divider(
-              thickness: 0.5,
-              color: Colors.grey[400],
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: MainColorInkWellFullSize(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              const UpdateNewLocationScreen()));
-                },
-                text: "Tiếp tục",
-              ),
-            ),
+      bottomNavigationBar: Container(
+        decoration: const BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black,
+              blurRadius: 6,
+              offset: Offset(0, 4),
+            )
           ],
+        ),
+        child: BottomAppBar(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: MainColorInkWellFullSize(
+              onTap: () {
+                // Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //         builder: (context) =>
+                //             const UpdateNewProfileScreen()));
+              },
+              text: "Tiếp tục",
+            ),
+          ),
         ),
       ),
     );

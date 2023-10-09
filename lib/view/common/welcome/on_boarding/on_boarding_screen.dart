@@ -44,66 +44,61 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 40),
-          child: Column(
+      body: Column(
+        children: [
+          const SizedBox(height: 48),
+          //content
+          Expanded(
+            child: PageView.builder(
+              itemCount: onboardData.length,
+              controller: _pageController,
+              onPageChanged: (index) {
+                setState(() {
+                  _pageIndex = index;
+                });
+              },
+              itemBuilder: (context, index) => OnBoardContent(
+                  image: onboardData[index].image,
+                  description: onboardData[index].description),
+            ),
+          ),
+
+          //Dot indicator
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              //content
-              Expanded(
-                child: PageView.builder(
-                  itemCount: onboardData.length,
-                  controller: _pageController,
-                  onPageChanged: (index) {
-                    setState(() {
-                      _pageIndex = index;
-                    });
-                  },
-                  itemBuilder: (context, index) => OnBoardContent(
-                      image: onboardData[index].image,
-                      description: onboardData[index].description),
-                ),
-              ),
-
-              //Dot indicator
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ...List.generate(
-                    onboardData.length,
-                    (index) => Padding(
-                      padding: const EdgeInsets.only(right: 4),
-                      child: DotIndicator(isActive: index == _pageIndex),
-                    ),
-                  ),
-                ],
-              ),
-
-              //Inkwell Next/Started
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 32),
-                child: MainColorInkWellFullSize(
-                  onTap: () {
-                    if (_pageIndex < onboardData.length - 1) {
-                      _pageController.nextPage(
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.ease);
-                    } else {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const WelcomeScreen()),
-                      );
-                    }
-                  },
-                  text: _pageIndex < onboardData.length - 1
-                      ? "Next"
-                      : "Get Started",
+              ...List.generate(
+                onboardData.length,
+                (index) => Padding(
+                  padding: const EdgeInsets.only(right: 4),
+                  child: DotIndicator(isActive: index == _pageIndex),
                 ),
               ),
             ],
           ),
-        ),
+
+          //Inkwell Next/Started
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+            child: MainColorInkWellFullSize(
+              onTap: () {
+                if (_pageIndex < onboardData.length - 1) {
+                  _pageController.nextPage(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.ease);
+                } else {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const WelcomeScreen()),
+                  );
+                }
+              },
+              text:
+                  _pageIndex < onboardData.length - 1 ? "Tiếp tục" : "Bắt đầu",
+            ),
+          ),
+        ],
       ),
     );
   }

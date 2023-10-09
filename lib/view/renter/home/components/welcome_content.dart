@@ -4,8 +4,8 @@ import 'package:iclean_mobile_app/utils/color_palette.dart';
 import '../../../../models/account.dart';
 import '../../../common/location/location_screen.dart';
 
-class welcome_content extends StatelessWidget {
-  const welcome_content({
+class WelcomeContent extends StatelessWidget {
+  const WelcomeContent({
     super.key,
     required this.userLogin,
   });
@@ -15,7 +15,7 @@ class welcome_content extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+      padding: const EdgeInsets.all(16),
       width: double.infinity,
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.only(
@@ -23,9 +23,9 @@ class welcome_content extends StatelessWidget {
           bottomRight: Radius.circular(20),
         ),
         image: DecorationImage(
-      image: AssetImage('assets/images/banner_1.jpg'), 
-      fit: BoxFit.cover, 
-    ),
+          image: AssetImage('assets/images/banner_1.png'),
+          fit: BoxFit.cover,
+        ),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -36,8 +36,7 @@ class welcome_content extends StatelessWidget {
               Row(
                 children: [
                   CircleAvatar(
-                    backgroundImage:
-                        AssetImage(userLogin.profilePicture),
+                    backgroundImage: AssetImage(userLogin.profilePicture),
                     radius: 24,
                   ),
                   Padding(
@@ -66,8 +65,7 @@ class welcome_content extends StatelessWidget {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          LocationScreen()));
+                                      builder: (context) => LocationScreen()));
                             },
                             child: Row(
                               children: [
@@ -86,7 +84,6 @@ class welcome_content extends StatelessWidget {
                                       color: Colors.white,
                                     ),
                                     overflow: TextOverflow.ellipsis,
-                                    
                                   ),
                                 ),
                               ],
@@ -104,14 +101,13 @@ class welcome_content extends StatelessWidget {
             margin: const EdgeInsets.only(top: 24),
             width: double.infinity,
             decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(
-                Radius.circular(20),
-              ),
-              border: Border.all(
-                color: ColorPalette.greyColor,
-              ),
-              color: Colors.white
-            ),
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(20),
+                ),
+                border: Border.all(
+                  color: ColorPalette.greyColor,
+                ),
+                color: Colors.white),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -127,7 +123,6 @@ class welcome_content extends StatelessWidget {
                     ),
                     textAlign: TextAlign.justify,
                   ),
-                  
                 ),
                 const Divider(color: ColorPalette.greyColor),
                 Row(

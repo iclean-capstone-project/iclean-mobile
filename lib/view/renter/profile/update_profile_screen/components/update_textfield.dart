@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class UpdateTextField extends StatelessWidget {
-  final controller;
+  final dynamic controller;
   final String hintText;
   final String labelText;
   final bool obscureText;
@@ -27,7 +27,7 @@ class UpdateTextField extends StatelessWidget {
         validator: validator ??
             (value) {
               if (value == null || value.isEmpty) {
-                return '$text';
+                return text;
               }
               return null;
             },

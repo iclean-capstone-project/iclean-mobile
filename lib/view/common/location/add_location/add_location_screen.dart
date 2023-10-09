@@ -3,7 +3,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
 import 'package:iclean_mobile_app/widgets/my_textfield.dart';
-import 'package:iclean_mobile_app/widgets/top_bar.dart';
 
 class AddLocationScreen extends StatefulWidget {
   const AddLocationScreen({super.key});
@@ -64,66 +63,88 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
     //double baseWidth = 430;
     //double fem = MediaQuery.of(context).size.width / baseWidth;
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const TopBar(text: "Thêm vị trí mới"),
-              Padding(
-                padding: const EdgeInsets.only(top: 24),
-                child: SizedBox(
-                  height: 48,
-                  child: MyTextField(
-                    controller: nameController,
-                    hintText: 'Tên vị trí',
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 16),
-                child: SizedBox(
-                  height: 48,
-                  child: MyTextField(
-                    controller: descriptionController,
-                    hintText: 'Địa chỉ cụ thể',
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 5, bottom: 10),
-                child: Divider(
-                  thickness: 0.5,
-                  color: Colors.grey[400],
-                ),
-              ),
-              Expanded(
-                child: GoogleMap(
-                  initialCameraPosition: CameraPosition(
-                    target: LatLng(latitude,
-                        longitude), //Default Location: Tan Son Nhat AirPort
-                    zoom: 14,
-                  ),
-                  markers: _markers,
-                  onTap: _onMapTapped,
-                ),
-              ),
-            ],
+      appBar: AppBar(
+        title: const Text(
+          "Thêm vị trí mới",
+          style: TextStyle(
+            color: Colors.black,
+            fontFamily: 'Lato',
           ),
         ),
+        centerTitle: true,
+        iconTheme: const IconThemeData(color: Colors.black),
+        backgroundColor: Colors.white,
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-        child: MainColorInkWellFullSize(
-          onTap: () {
-            // Navigator.push(
-            //             context,
-            //             MaterialPageRoute(
-            //                 builder: (context) =>
-            //                      const AddLocationScreen()));
-          },
-          text: "Tiếp tục",
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 16),
+              child: SizedBox(
+                height: 48,
+                child: MyTextField(
+                  controller: nameController,
+                  hintText: 'Tên vị trí',
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 16),
+              child: SizedBox(
+                height: 48,
+                child: MyTextField(
+                  controller: descriptionController,
+                  hintText: 'Địa chỉ cụ thể',
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Divider(
+                thickness: 0.5,
+                color: Colors.grey[400],
+              ),
+            ),
+            Expanded(
+              child: GoogleMap(
+                initialCameraPosition: CameraPosition(
+                  target: LatLng(latitude,
+                      longitude), //Default Location: Tan Son Nhat AirPort
+                  zoom: 14,
+                ),
+                markers: _markers,
+                onTap: _onMapTapped,
+              ),
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: Container(
+        decoration: const BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black,
+              blurRadius: 6,
+              offset: Offset(0, 4),
+            )
+          ],
+        ),
+        child: BottomAppBar(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: MainColorInkWellFullSize(
+              onTap: () {
+                // Navigator.push(
+                //             context,
+                //             MaterialPageRoute(
+                //                 builder: (context) =>
+                //                      const AddLocationScreen()));
+              },
+              text: "Tiếp tục",
+            ),
+          ),
         ),
       ),
     );

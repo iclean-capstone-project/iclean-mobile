@@ -11,33 +11,36 @@ class OnBoardContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 80),
-          child: SizedBox(
-            width: double.infinity,
-            child: Image.asset(
-              image,
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 16),
-          child: Center(
-            child: Text(
-              description,
-              style: const TextStyle(
-                fontFamily: 'Lato',
-                fontSize: 36,
-                fontWeight: FontWeight.bold,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 40),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 80),
+            child: SizedBox(
+              width: double.infinity,
+              child: Image.asset(
+                image,
+                fit: BoxFit.cover,
               ),
-              textAlign: TextAlign.center,
             ),
           ),
-        ),
-      ],
+          Padding(
+            padding: const EdgeInsets.only(top: 16),
+            child: Center(
+              child: Text(
+                description,
+                style: const TextStyle(
+                  fontFamily: 'Lato',
+                  fontSize: 36,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

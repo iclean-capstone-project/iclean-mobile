@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/bookings.dart';
 import 'package:intl/intl.dart';
 
-import 'components/details_fields.dart';
+import '../../../../../../widgets/details_fields.dart';
 
 class PaymentContent extends StatelessWidget {
   const PaymentContent({
@@ -22,45 +22,42 @@ class PaymentContent extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "name service",
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontFamily: 'Lato',
-                  ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: const [
+              Text(
+                "name service",
+                style: TextStyle(
+                  fontSize: 14,
+                  fontFamily: 'Lato',
                 ),
-                Text(
-                  "price service VNĐ",
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontFamily: 'Lato',
-                  ),
+              ),
+              Text(
+                "price service VNĐ",
+                style: TextStyle(
+                  fontSize: 16,
+                  fontFamily: 'Lato',
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
+          const SizedBox(height: 8),
           DetailsContentField(
               text: "Khuyến mãi", text2: "- ${booking.discount ?? 0} VNĐ"),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 8),
-            child: Divider(
-              thickness: 0.5,
-              color: Colors.grey[400],
-            ),
+          Divider(
+            thickness: 0.5,
+            color: Colors.grey[400],
           ),
+          const SizedBox(height: 8),
           DetailsContentField(
-              text: "Tổng cộng",
-              text2: "${booking.totalPrice} VNĐ"),
+              text: "Tổng cộng", text2: "${booking.totalPrice} VNĐ"),
+          const SizedBox(height: 8),
           DetailsContentField(
             text: "Thời gian",
-            text2: DateFormat('d/MM/yyyy | hh:mm aaa')
-                .format(booking.timeCreated),
+            text2:
+                DateFormat('d/MM/yyyy | hh:mm aaa').format(booking.timeCreated),
           ),
+          const SizedBox(height: 4),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

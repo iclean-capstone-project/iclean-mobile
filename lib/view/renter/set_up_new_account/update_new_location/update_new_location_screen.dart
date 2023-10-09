@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
 import 'package:iclean_mobile_app/widgets/my_textfield.dart';
-import 'package:iclean_mobile_app/widgets/top_bar.dart';
 
 import 'components/comfirm_dialog.dart';
 
@@ -73,15 +72,24 @@ class _UpdateNewLocationScreenState extends State<UpdateNewLocationScreen> {
     //double baseWidth = 430;
     //double fem = MediaQuery.of(context).size.width / baseWidth;
     return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          "Thêm vị trí",
+          style: TextStyle(
+            color: Colors.black,
+            fontFamily: 'Lato',
+          ),
+        ),
+        centerTitle: true,
+        iconTheme: const IconThemeData(color: Colors.black),
+        backgroundColor: Colors.white,
+      ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              //TopBar
-              const TopBar(text: "Thêm vị trí"),
-
               //NameAddress TextField
               Padding(
                 padding: const EdgeInsets.only(top: 24),
@@ -131,7 +139,7 @@ class _UpdateNewLocationScreenState extends State<UpdateNewLocationScreen> {
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [

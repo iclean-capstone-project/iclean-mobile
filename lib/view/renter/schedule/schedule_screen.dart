@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/view/renter/my_booking/components/components/avatar_widget.dart';
 import 'package:iclean_mobile_app/view/renter/my_booking/components/components/info_booking.dart';
-import 'package:iclean_mobile_app/widgets/top_bar.dart';
+
 import 'package:table_calendar/table_calendar.dart';
 
-import 'models/bookings.dart';
+import '../../../models/bookings.dart';
 
 class ScheduleScreen extends StatefulWidget {
   const ScheduleScreen({super.key});
@@ -17,7 +17,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   List<Booking> myBookings = [];
 
   CalendarFormat _calendarFormat = CalendarFormat.month;
-  DateTime _focusedDay = DateTime.now();
+  DateTime _today = DateTime.now();
   DateTime? _selectedDay;
   Map<DateTime, List<Booking>> events = {};
   late List<Booking> _selectedEvents;
@@ -25,7 +25,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   @override
   void initState() {
     super.initState();
-    _selectedDay = _focusedDay;
+    _selectedDay = _today;
     events = _getEventsFromBookings(myBookings);
     _selectedEvents = _getEventsForDay(_selectedDay!);
   }
@@ -35,11 +35,11 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
     super.dispose();
   }
 
-  void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
+  void _onDaySelected(DateTime selectedDay, DateTime today) {
     if (!isSameDay(_selectedDay, selectedDay)) {
       setState(() {
         _selectedDay = selectedDay;
-        _focusedDay = focusedDay;
+        _today = today;
         _selectedEvents = _getEventsForDay(selectedDay);
       });
     }
@@ -80,13 +80,20 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
       body: SingleChildScrollView(
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Padding(
-                  padding: EdgeInsets.only(top: 16),
-                  child: TopBar(text: "Schedule"),
+                  padding: EdgeInsets.only(top: 16.0),
+                  child: Text(
+                    "Schedule",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Lato',
+                    ),
+                  ),
                 ),
                 //calendar
                 Padding(
@@ -98,7 +105,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                     ),
                     child: TableCalendar(
                       firstDay: DateTime.utc(2023),
-                      focusedDay: _focusedDay,
+                      focusedDay: _today,
                       lastDay: DateTime.utc(2024),
                       headerStyle: const HeaderStyle(
                         formatButtonVisible: false,
@@ -109,9 +116,6 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                           weekdayStyle: TextStyle(fontWeight: FontWeight.bold),
                           weekendStyle: TextStyle(fontWeight: FontWeight.bold)),
                       availableGestures: AvailableGestures.all,
-                      onDaySelected: _onDaySelected,
-                      selectedDayPredicate: (day) =>
-                          isSameDay(_selectedDay, day),
                       calendarStyle: CalendarStyle(
                         outsideDaysVisible: false,
                         weekendTextStyle: const TextStyle(color: Colors.black),
@@ -124,6 +128,9 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                           shape: BoxShape.circle,
                         ),
                       ),
+                      onDaySelected: _onDaySelected,
+                      selectedDayPredicate: (day) =>
+                          isSameDay(_selectedDay, day),
                       calendarFormat: _calendarFormat,
                       onFormatChanged: (format) {
                         if (_calendarFormat != format) {
@@ -132,9 +139,9 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                           });
                         }
                       },
-                      onPageChanged: (focusedDay) {
-                        _focusedDay = focusedDay;
-                        _updateSelectedEvents(focusedDay);
+                      onPageChanged: (today) {
+                        _today = today;
+                        _updateSelectedEvents(today);
                       },
                       eventLoader: _getEventsForDay,
                     ),
@@ -186,7 +193,6 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                     shrinkWrap: true,
                     itemCount: _selectedEvents.length,
                     itemBuilder: (context, index) {
-                      final event = _selectedEvents[index];
                       return Container(
                         margin: const EdgeInsets.symmetric(vertical: 8),
                         decoration: BoxDecoration(

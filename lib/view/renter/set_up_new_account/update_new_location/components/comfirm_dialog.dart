@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:iclean_mobile_app/view/renter/nav_bar_bottom/nav_bar_bottom.dart';
+import 'package:iclean_mobile_app/view/renter/nav_bar_bottom/renter_screen.dart';
 
 import '../../../../../utils/color_palette.dart';
 
@@ -13,7 +13,7 @@ class ConfirmDialog extends StatelessWidget {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (context) {
-              return const UserScreens();
+              return const RenterScreens();
             },
           ),
         );

@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/account.dart';
-import 'package:iclean_mobile_app/utils/color_palette.dart';
-import 'package:iclean_mobile_app/view/renter/booking_service/service_details_screen.dart';
+
 import 'package:iclean_mobile_app/view/renter/home/components/banner_slider.dart';
 
 import '../../../models/services.dart';
+import 'components/list_service.dart';
+
 import 'components/welcome_content.dart';
 
 class HomeScreen extends StatelessWidget {
   final Account userLogin;
   HomeScreen({super.key, required this.userLogin});
 
-  List<Service> services = [
+  final List<Service> services = [
     Service(
       id: 1,
       name: "Vệ sinh Sofa - Rèm - Đệm - Thảm",
-      icon: "assets/images/clean_tham.jpg",
+      icon: "assets/images/clean_tham.png",
       imagePath:
           "https://media.product.which.co.uk/prod/images/original/gm-7085653b-1747-4e8d-a2e9-2f16e651b9a1-cleaning-a-sofa-2-002-vacuum.jpg",
     ),
@@ -65,12 +66,12 @@ class HomeScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               //top
-              welcome_content(userLogin: userLogin),
+              WelcomeContent(userLogin: userLogin),
 
               const Padding(
                 padding: EdgeInsets.only(top: 16.0, left: 24),
                 child: Text(
-                  "What's news?",
+                  "Có gì mới?",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Lato',
@@ -91,78 +92,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: GridView.count(
-                  crossAxisCount: 3,
-                  //physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  childAspectRatio: (80 / 72),
-                  children: [
-                    for (int i = 0; i < services.length; i++)
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ServiceDetailsScreen(
-                                service: services[i],
-                              ),
-                            ),
-                          );
-                        },
-                        child: Container(
-                          margin: const EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                              color: ColorPalette.greyColor,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(.1),
-                                blurRadius: 4.0,
-                                spreadRadius: .05,
-                              ),
-                            ],
-                          ),
-                          child: Column(
-                            children: [
-                              Container(
-                                margin: const EdgeInsets.all(8),
-                                child: Image.asset(
-                                  services[i].icon,
-                                  width: 40,
-                                  height: 40,
-                                  fit: BoxFit.contain,
-                                ),
-                              ),
-                              Flexible(
-                                child: LayoutBuilder(
-                                  builder: (BuildContext context,
-                                      BoxConstraints constraints) {
-                                    return Text(
-                                      services[i].name,
-                                      style: const TextStyle(
-                                        fontSize: 12,
-                                        fontFamily: 'Lato',
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      maxLines: 2,
-                                      softWrap: true,
-                                      textAlign: TextAlign.center,
-                                    );
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                  ],
-                ),
-              ),
+              ListService(services: services, userLogin: userLogin),
             ],
           ),
         ),

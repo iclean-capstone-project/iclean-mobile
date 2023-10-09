@@ -9,7 +9,6 @@ import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
 import 'package:iclean_mobile_app/widgets/my_textfield.dart';
 import 'package:iclean_mobile_app/widgets/select_photo_options_screen.dart';
-import 'package:iclean_mobile_app/widgets/top_bar.dart';
 
 import 'package:intl/intl.dart';
 
@@ -154,9 +153,6 @@ class _UpdateNewProfileScreenState extends State<UpdateNewProfileScreen> {
               key: _formKey,
               child: Column(
                 children: [
-                  //TopBar
-                  const TopBar(text: "Cập nhập hồ sơ"),
-
                   //Avatar
                   Padding(
                     padding: const EdgeInsets.only(top: 32),

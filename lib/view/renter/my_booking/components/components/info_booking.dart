@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:iclean_mobile_app/utils/color_palette.dart';
 
 class InfoBooking extends StatelessWidget {
   final String empName, jobName, status;

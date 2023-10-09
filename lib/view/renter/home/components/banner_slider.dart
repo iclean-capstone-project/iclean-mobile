@@ -14,10 +14,10 @@ class BannerSlider extends StatelessWidget {
         viewportFraction: 1.0,
       ),
       items: [
-        "assets/images/banner_1.jpg",
-        "assets/images/banner_2.jpg",
-        "assets/images/banner_3.jpg",
-        "assets/images/banner_4.jpg",
+        "assets/images/banner_1.png",
+        "assets/images/banner_2.png",
+        "assets/images/banner_3.png",
+        "assets/images/banner_4.png",
       ].map((String imagePath) {
         return Builder(
           builder: (BuildContext context) {

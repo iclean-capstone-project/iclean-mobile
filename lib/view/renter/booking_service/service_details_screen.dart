@@ -1,28 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:iclean_mobile_app/models/account.dart';
 import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
+import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 
 import '../../../models/services.dart';
-import 'booking_details_screen.dart';
+import 'booking_details/booking_details_screen.dart';
 
 class ServiceDetailsScreen extends StatelessWidget {
+  final Account account;
   final Service service;
-  const ServiceDetailsScreen({super.key, required this.service});
+  const ServiceDetailsScreen(
+      {super.key, required this.service, required this.account});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          service.name,
-          style: const TextStyle(
-            color: Colors.black,
-            fontFamily: 'Lato',
-          ),
-        ),
-        centerTitle: true,
-        iconTheme: const IconThemeData(color: Colors.black),
-        backgroundColor: Colors.white,
-      ),
+      appBar: MyAppBar(text: service.name),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,8 +43,8 @@ class ServiceDetailsScreen extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>
-                               BookingDetailsScreen(service: service,)));
+                          builder: (context) => BookingDetailsScreen(
+                              service: service, account: account)));
                 },
                 text: "Đặt dịch vụ",
               ),

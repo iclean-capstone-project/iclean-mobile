@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/account.dart';
 import 'package:iclean_mobile_app/view/common/location/location_screen.dart';
+import 'package:iclean_mobile_app/view/renter/profile/my_profile_screen/components/dark_mode.dart';
 import 'package:iclean_mobile_app/view/renter/profile/my_profile_screen/components/profile_inkwell.dart';
 import 'package:iclean_mobile_app/view/renter/profile/update_profile_screen/update_profile_screen.dart';
 
@@ -103,11 +104,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 text: "Ngôn ngữ",
                 onTap: () {},
               ),
-              ProfileInkWell(
-                icon: const Icon(Icons.remove_red_eye_outlined),
-                text: "Dark Mode",
-                onTap: () {},
-              ),
+
+              const DarkModeButton(),
               ProfileInkWell(
                 icon: const Icon(Icons.policy_outlined),
                 text: "Privacy Policy",

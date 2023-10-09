@@ -23,9 +23,9 @@ class EmployeeContent extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 "booking.empName",
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 16,
                   fontFamily: 'Lato',
                   fontWeight: FontWeight.bold,
@@ -50,7 +50,7 @@ class EmployeeContent extends StatelessWidget {
               )
             ],
           ),
-          CircleAvatar(
+          const CircleAvatar(
             backgroundImage: NetworkImage("booking.jobImage"),
             radius: 36,
           ),

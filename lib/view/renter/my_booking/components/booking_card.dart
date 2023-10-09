@@ -7,8 +7,6 @@ import 'components/avatar_widget.dart';
 
 import 'components/info_booking.dart';
 
-import 'pending_request/request_screen.dart';
-
 class BookingCard extends StatefulWidget {
   final List<Booking> listBookings;
 
@@ -53,7 +51,7 @@ class _BookingCardCardState extends State<BookingCard>
       case 8:
       case 9:
       case 10:
-      case 11: 
+      case 11:
         Navigator.of(context).push(MaterialPageRoute(builder: (context) {
           return DetailsBookingScreen(booking: booking);
         }));
@@ -89,7 +87,7 @@ class _BookingCardCardState extends State<BookingCard>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         //avatar
-                        AvatarWidget(
+                        const AvatarWidget(
                             imagePath: "widget.listBookings[i].jobImage"),
                         const SizedBox(width: 16),
                         //Info
@@ -97,8 +95,8 @@ class _BookingCardCardState extends State<BookingCard>
                           empName: "widget.listBookings[i].empName",
                           jobName: "widget.listBookings[i].jobName",
                           status: "widget.listBookings[i].status",
-                          colorStatus:
-                              getColorForStatus(widget.listBookings[i].statusId),
+                          colorStatus: getColorForStatus(
+                              widget.listBookings[i].statusId),
                         ),
                       ],
                     ),

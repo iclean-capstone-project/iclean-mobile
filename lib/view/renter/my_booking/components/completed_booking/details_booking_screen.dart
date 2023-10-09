@@ -4,7 +4,7 @@ import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
 
 import 'components/address_content.dart';
-import 'components/components/details_fields.dart';
+import '../../../../../widgets/details_fields.dart';
 import 'components/detail_content.dart';
 import 'components/employee_content.dart';
 import 'components/payment_content.dart';

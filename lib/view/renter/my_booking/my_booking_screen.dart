@@ -32,7 +32,7 @@ class _MyBookingsScreenState extends State<MyBookingsScreen>
 //   }
 
   List<Booking> requests = [
-        Booking(
+    Booking(
         id: 1,
         renterId: 1,
         empId: 1,
@@ -67,7 +67,7 @@ class _MyBookingsScreenState extends State<MyBookingsScreen>
   ];
 
   List<Booking> rejectedBookings = [
-        Booking(
+    Booking(
         id: 1,
         renterId: 1,
         empId: 1,
@@ -188,7 +188,7 @@ class _MyBookingsScreenState extends State<MyBookingsScreen>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Padding(
-                  padding: EdgeInsets.only(top: 16, left: 24, right: 24),
+                  padding: EdgeInsets.only(top: 16, left: 16, right: 16),
                   child: Text(
                     "My Booking",
                     style: TextStyle(

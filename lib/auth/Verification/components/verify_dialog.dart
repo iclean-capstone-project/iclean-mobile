@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
-import 'package:iclean_mobile_app/view/renter/nav_bar_bottom/nav_bar_bottom.dart';
+import 'package:iclean_mobile_app/view/renter/nav_bar_bottom/renter_screen.dart';
 import 'package:iclean_mobile_app/view/renter/set_up_new_account/update_new_proflie/update_new_profile_screen.dart';
 import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
 
@@ -15,7 +15,7 @@ class VerifyDialog extends StatelessWidget {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (context) {
-              return const UserScreens();
+              return const RenterScreens();
             },
           ),
         );
