@@ -72,8 +72,8 @@ class _BookingCardCardState extends State<BookingCard>
           Container(
             margin: const EdgeInsets.symmetric(vertical: 8),
             decoration: BoxDecoration(
-              color: Colors.grey.shade200,
               borderRadius: BorderRadius.circular(16),
+              color: Theme.of(context).colorScheme.background,
             ),
             child: Column(
               children: [

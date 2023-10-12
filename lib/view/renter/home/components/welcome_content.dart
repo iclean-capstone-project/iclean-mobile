@@ -119,6 +119,7 @@ class WelcomeContent extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 16,
                       fontFamily: 'Lato',
+                      color: Colors.black,
                       fontWeight: FontWeight.bold,
                     ),
                     textAlign: TextAlign.justify,
@@ -136,6 +137,7 @@ class WelcomeContent extends StatelessWidget {
                             fontFamily: 'MaterialIcons',
                           ),
                           size: 24,
+                          color: Colors.black,
                         ),
                         SizedBox(width: 8),
                         Text(
@@ -143,7 +145,7 @@ class WelcomeContent extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 16,
                             fontFamily: 'Lato',
-                            //fontWeight: FontWeight.bold,
+                            color: Colors.black,
                           ),
                         ),
                       ],
@@ -157,6 +159,7 @@ class WelcomeContent extends StatelessWidget {
                             fontFamily: 'MaterialIcons',
                           ),
                           size: 24,
+                          color: Colors.black,
                         ),
                         SizedBox(width: 8),
                         Text(
@@ -164,7 +167,7 @@ class WelcomeContent extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 16,
                             fontFamily: 'Lato',
-                            //fontWeight: FontWeight.bold,
+                            color: Colors.black,
                           ),
                         ),
                       ],

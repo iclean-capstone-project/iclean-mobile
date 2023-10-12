@@ -16,8 +16,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       title: Text(
         text,
-        style: const TextStyle(
-          color: Colors.black,
+        style:  TextStyle(
+          color: Theme.of(context).colorScheme.secondary,
           fontFamily: 'Lato',
         ),
       ),
@@ -27,8 +27,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             Navigator.pop(context);
           },
           child: const Icon(Icons.arrow_back_ios)),
-      iconTheme: const IconThemeData(color: Colors.black),
-      backgroundColor: Colors.white,
+      iconTheme:  IconThemeData(color: Theme.of(context).colorScheme.secondary),
+      backgroundColor: Theme.of(context).colorScheme.primary,
     );
   }
 }

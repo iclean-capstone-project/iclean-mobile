@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../booking_details_provider.dart';
@@ -14,22 +13,22 @@ class MyCalendar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.grey.shade200,
+        color: Theme.of(context).colorScheme.background,
         borderRadius: BorderRadius.circular(20),
       ),
       child: TableCalendar(
         firstDay: DateTime.utc(2023),
         focusedDay: _today,
         lastDay: DateTime.utc(2024),
-        headerStyle: const HeaderStyle(
+        headerStyle: HeaderStyle(
           leftChevronIcon: Icon(
             Icons.arrow_back_ios,
-            color: ColorPalette.mainColor,
+            color: Theme.of(context).colorScheme.secondary,
             size: 20,
           ),
           rightChevronIcon: Icon(
             Icons.arrow_forward_ios,
-            color: ColorPalette.mainColor,
+            color: Theme.of(context).colorScheme.secondary,
             size: 20,
           ),
           formatButtonVisible: false,
@@ -37,7 +36,7 @@ class MyCalendar extends StatelessWidget {
           titleTextStyle: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
-            color: ColorPalette.mainColor,
+            color: Theme.of(context).colorScheme.secondary,
           ),
         ),
         daysOfWeekStyle: const DaysOfWeekStyle(
@@ -54,7 +53,9 @@ class MyCalendar extends StatelessWidget {
         },
         calendarStyle: CalendarStyle(
           outsideDaysVisible: false,
-          weekendTextStyle: const TextStyle(color: Colors.black),
+          weekendTextStyle: TextStyle(
+            color: Theme.of(context).colorScheme.secondary,
+          ),
           todayDecoration: BoxDecoration(
             color: Colors.deepPurple.shade200,
             shape: BoxShape.circle,

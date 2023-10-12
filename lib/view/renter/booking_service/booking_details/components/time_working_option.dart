@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
-import 'package:provider/provider.dart';
 
 import '../booking_details_provider.dart';
 import 'option_content.dart';
@@ -14,15 +13,13 @@ class TimeWorkingOption extends StatefulWidget {
 }
 
 class _TimeWorkingOptionState extends State<TimeWorkingOption> {
-  //int selectedOption = 1;
-
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         Container(
           decoration: BoxDecoration(
-            color: Colors.grey.shade300,
+            color: Theme.of(context).colorScheme.background,
             borderRadius: BorderRadius.circular(10),
           ),
           child: Row(
@@ -44,7 +41,7 @@ class _TimeWorkingOptionState extends State<TimeWorkingOption> {
         const SizedBox(width: 16),
         Container(
           decoration: BoxDecoration(
-            color: Colors.grey.shade300,
+             color: Theme.of(context).colorScheme.background,
             borderRadius: BorderRadius.circular(10),
           ),
           child: Row(
@@ -66,7 +63,7 @@ class _TimeWorkingOptionState extends State<TimeWorkingOption> {
         const SizedBox(width: 16),
         Container(
           decoration: BoxDecoration(
-            color: Colors.grey.shade300,
+            color: Theme.of(context).colorScheme.background,
             borderRadius: BorderRadius.circular(10),
           ),
           child: Row(
