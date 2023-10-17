@@ -19,7 +19,7 @@ class _TimeWorkingOptionState extends State<TimeWorkingOption> {
       children: [
         Container(
           decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.primary,
             borderRadius: BorderRadius.circular(10),
           ),
           child: Row(
@@ -41,7 +41,7 @@ class _TimeWorkingOptionState extends State<TimeWorkingOption> {
         const SizedBox(width: 16),
         Container(
           decoration: BoxDecoration(
-             color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.primary,
             borderRadius: BorderRadius.circular(10),
           ),
           child: Row(
@@ -63,7 +63,7 @@ class _TimeWorkingOptionState extends State<TimeWorkingOption> {
         const SizedBox(width: 16),
         Container(
           decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.primary,
             borderRadius: BorderRadius.circular(10),
           ),
           child: Row(

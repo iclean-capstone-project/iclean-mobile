@@ -20,9 +20,8 @@ class InkWellNotiOption extends StatelessWidget {
       child: Row(
         children: [
           StatusNoti(
-              bgColor: Colors.white,
-              bgIconColor: Colors.grey.shade300,
-              iconColor: Colors.black,
+              bgIconColor: Theme.of(context).colorScheme.primary,
+              iconColor: Theme.of(context).colorScheme.secondary,
               icon: icon),
           const SizedBox(width: 8),
           Text(

@@ -44,7 +44,7 @@ class _StartTimeOptionState extends State<StartTimeOption> {
                       decoration: BoxDecoration(
                         color: _selectedTime == time
                             ? ColorPalette.mainColor
-                            : Theme.of(context).colorScheme.primary,
+                            : Theme.of(context).colorScheme.background,
                         borderRadius: BorderRadius.circular(50),
                         border:
                             Border.all(color: ColorPalette.mainColor, width: 2),

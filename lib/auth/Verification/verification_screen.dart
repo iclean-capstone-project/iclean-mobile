@@ -3,9 +3,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/auth/user_preferences.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
-import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
+import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
 
+// ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
 
 import 'components/digit_textfield.dart';
@@ -18,9 +19,9 @@ class VerificationScreen extends StatelessWidget {
 
   setToken(String phone, String accessToken, String refreshToken) async {
     await UserPreferences.setLoggedIn(true);
+    await UserPreferences.setPhone(phone);
     await UserPreferences.setAccessToken(accessToken);
     await UserPreferences.setRefreshToken(refreshToken);
-    await UserPreferences.setPhone(phone);
   }
 
   Future<void> handleLogin(
@@ -36,15 +37,15 @@ class VerificationScreen extends StatelessWidget {
       final data = jsonMap['data'];
       final accessToken = data['accessToken'];
       final refreshToken = data['refreshToken'];
-      print('Request was successful. Status code: ${response.statusCode}');
-      await setToken(accessToken, refreshToken, phone);
+
+      await setToken(phone, accessToken, refreshToken);
+
       showDialog(
         context: context,
         builder: (BuildContext context) => const VerifyDialog(isNew: false),
       );
     } else {
-      print('Request failed with status code: ${response.statusCode}');
-      print('Response body: ${response.body}');
+      throw Exception('status: ${response.statusCode}, body: ${response.body}');
     }
   }
 

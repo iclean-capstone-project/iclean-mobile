@@ -65,6 +65,7 @@ class _DigitTextFieldState extends State<DigitTextField> {
                 ),
                 style: const TextStyle(
                   fontSize: 16,
+                  color: Colors.black,
                   fontFamily: 'Lato',
                 ),
                 cursorColor: Colors.black,

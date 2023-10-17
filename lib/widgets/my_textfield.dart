@@ -80,6 +80,7 @@ class _MyTextFieldState extends State<MyTextField> {
       ),
       style: const TextStyle(
         fontSize: 16,
+        color: Colors.black,
         fontFamily: 'Lato',
       ),
       cursorColor: Colors.black,

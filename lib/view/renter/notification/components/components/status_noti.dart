@@ -3,20 +3,18 @@ import 'package:flutter/material.dart';
 class StatusNoti extends StatelessWidget {
   const StatusNoti({
     super.key,
-    required this.bgColor,
     required this.bgIconColor,
     required this.iconColor,
     required this.icon,
   });
-  final Color iconColor, bgIconColor, bgColor;
+  final Color iconColor, bgIconColor;
   final IconData icon;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: bgColor,
+      decoration: const BoxDecoration(
         shape: BoxShape.circle,
       ),
       child: CircleAvatar(

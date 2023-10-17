@@ -9,10 +9,10 @@ class NotiOptions extends StatelessWidget {
   //final Function() onTap;
   final Noti noti;
   const NotiOptions({
-    Key? key,
+    super.key,
     required this.noti,
     //required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -40,27 +40,11 @@ class NotiOptions extends StatelessWidget {
               const SizedBox(
                 height: 16,
               ),
-              if (noti.status == "unconfirm" || noti.status == "undone")
-                StatusNoti(
-                  bgColor: Colors.deepPurple.shade200,
-                  bgIconColor: ColorPalette.mainColor,
-                  iconColor: Colors.white,
-                  icon: Icons.check,
-                ),
-              if (noti.status == "done")
-                StatusNoti(
-                  bgColor: Colors.greenAccent.shade100,
-                  bgIconColor: Colors.greenAccent.shade400,
-                  iconColor: Colors.white,
-                  icon: Icons.check,
-                ),
-              if (noti.status == "cancel")
-                StatusNoti(
-                  bgColor: Colors.redAccent.shade100,
-                  bgIconColor: Colors.redAccent.shade100,
-                  iconColor: Colors.redAccent,
-                  icon: Icons.cancel,
-                ),
+              const StatusNoti(
+                bgIconColor: Colors.green,
+                iconColor: Colors.white,
+                icon: Icons.check,
+              ),
               const SizedBox(
                 height: 8,
               ),

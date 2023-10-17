@@ -4,8 +4,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 class UserPreferences {
   static SharedPreferences? _preferences;
   static const _keyLoggedIn = 'loggedIn';
-  static const _accessToken = '';
-  static const _refreshToken = '';
+  static const _accessToken = 'accessToken';
+  static const _refreshToken = 'refreshToken';
   static const _keyPhone = 'phone';
 
   //static const _keyUserInfo = 'infomation';
@@ -19,6 +19,16 @@ class UserPreferences {
   }
 
   static bool isLoggedIn() => _preferences?.getBool(_keyLoggedIn) ?? false;
+
+  static Future setPhone(String value) async {
+    const storage = FlutterSecureStorage();
+    await storage.write(key: _keyPhone, value: value);
+  }
+
+  static Future<String?> getPhone() async {
+    const storage = FlutterSecureStorage();
+    return await storage.read(key: _keyPhone);
+  }
 
   static Future setAccessToken(String value) async {
     const storage = FlutterSecureStorage();
@@ -38,16 +48,6 @@ class UserPreferences {
   static Future<String?> getRefreshToken() async {
     const storage = FlutterSecureStorage();
     return await storage.read(key: _refreshToken);
-  }
-
-  static Future setPhone(String value) async {
-    const storage = FlutterSecureStorage();
-    await storage.write(key: _keyPhone, value: value);
-  }
-
-  static Future<String?> getPhone() async {
-    const storage = FlutterSecureStorage();
-    return await storage.read(key: _keyPhone);
   }
 
   // static Future setUserInfomation(Account value) async {

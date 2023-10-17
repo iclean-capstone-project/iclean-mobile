@@ -1,15 +1,14 @@
 class Noti {
   int id;
-  String details, status;
+  String details, imgLink;
   DateTime timestamp;
-  bool isRead, deleted;
+  bool isRead;
 
   Noti({
     required this.id,
     required this.details,
-    required this.status,
+    required this.imgLink,
     required this.timestamp,
     required this.isRead,
-    required this.deleted,
   });
 }

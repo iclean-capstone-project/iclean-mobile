@@ -1,55 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:iclean_mobile_app/models/noti.dart';
+import 'package:iclean_mobile_app/services/api_noti_repo.dart';
+import 'package:iclean_mobile_app/view/renter/notification/notification_provider.dart';
 
 import 'components/noti_content.dart';
 
-class NotificationScreen extends StatefulWidget {
+class NotificationScreen extends StatelessWidget {
   const NotificationScreen({super.key});
 
   @override
-  State<NotificationScreen> createState() => _NotificationScreenState();
-}
-
-class _NotificationScreenState extends State<NotificationScreen> {
-  @override
   Widget build(BuildContext context) {
-    List<Noti> notis = [
-      Noti(
-        id: 1,
-        details: "Đơn #00834 của bạn đang được duyệt từ nhân viên",
-        status: 'unconfirm',
-        timestamp: DateTime.now(),
-        isRead: false,
-        deleted: false,
-      ),
-      Noti(
-        id: 2,
-        details:
-            "Đơn #98956 của bạn đã được xác nhận, vui lòng chờ nhân viên của chúng tôi!",
-        status: 'undone',
-        timestamp: DateTime.now(),
-        isRead: false,
-        deleted: false,
-      ),
-      Noti(
-        id: 3,
-        details:
-            "Công việc thuộc đơn #98442 đã được hoàn thành, bạn có thể đánh giá dịch vụ của chúng tôi!",
-        status: 'done',
-        timestamp: DateTime.now(),
-        isRead: false,
-        deleted: false,
-      ),
-      Noti(
-        id: 4,
-        details: "Đơn #95242 đã bị hủy từ nhân viên",
-        status: 'cancel',
-        timestamp: DateTime.now(),
-        isRead: false,
-        deleted: false,
-      ),
-    ];
+    Future<List<Noti>> fetchNotifications(
+        ApiNotiRepository repository, int page) async {
+      try {
+        final newNotifications = await repository.getNoti(page);
+        print("Notifications: $newNotifications");
+        return newNotifications;
+      } catch (e) {
+        // ignore: avoid_print
+        print(e);
+        return <Noti>[];
+      }
+    }
 
+    final ApiNotiRepository apiNotiRepository = ApiNotiRepository();
+    final notificationsProvider = Provider.of<NotificationsProvider>(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
@@ -61,29 +37,54 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   padding: const EdgeInsets.only(top: 16),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      Text(
-                        "Notification",
+                    children: [
+                      const Text(
+                        "Thông báo",
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                           fontFamily: 'Lato',
                         ),
                       ),
-                      Text(
-                        "See all",
-                        style: TextStyle(
+                      InkWell(
+                        onTap: () async {
+                          await notificationsProvider.readAll();
+                          //After marking notifications as read, fetch notifications again
+                          await notificationsProvider.fetchNotifications(
+                              apiNotiRepository, 1);
+                        },
+                        child: const Text(
+                          "Đọc hết",
+                          style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                             fontFamily: 'Lato',
-                            color: Colors.blue),
+                            color: Colors.blue,
+                          ),
+                        ),
                       ),
                     ],
                   ),
                 ),
               ),
               const SizedBox(height: 8),
-              NotiContent(notis: notis),
+              FutureBuilder<List<Noti>>(
+                // future: notificationsProvider.fetchNotifications(
+                //     apiNotiRepository, 1),
+                future: fetchNotifications(apiNotiRepository, 1),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else if (snapshot.hasData) {
+                    final notis = snapshot.data!;
+                    return NotiContent(notis: notis);
+                  } else {
+                    return const Text('No notifications found.');
+                  }
+                },
+              ),
             ],
           ),
         ),

@@ -1,11 +1,13 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:iclean_mobile_app/auth/user_preferences.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 import 'package:iclean_mobile_app/widgets/my_textfield.dart';
+// ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
 
 import '../verification/verification_screen.dart';
@@ -25,6 +27,7 @@ class LogInScreen extends StatelessWidget {
     );
     if (response.statusCode == 200) {
       print('Request was successful. Status code: ${response.statusCode}');
+
       // ignore: use_build_context_synchronously
       Navigator.push(
           context,
