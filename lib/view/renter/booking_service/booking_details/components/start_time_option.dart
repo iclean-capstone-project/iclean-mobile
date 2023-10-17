@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:provider/provider.dart';
 
 import '../booking_details_provider.dart';
@@ -42,11 +43,11 @@ class _StartTimeOptionState extends State<StartTimeOption> {
                           horizontal: 16, vertical: 6),
                       decoration: BoxDecoration(
                         color: _selectedTime == time
-                            ? Colors.deepPurple.shade300
-                            : Colors.white,
+                            ? ColorPalette.mainColor
+                            : Theme.of(context).colorScheme.primary,
                         borderRadius: BorderRadius.circular(50),
-                        border: Border.all(
-                            color: Colors.deepPurple.shade300, width: 2),
+                        border:
+                            Border.all(color: ColorPalette.mainColor, width: 2),
                       ),
                       child: Text(
                         time.format(context),
@@ -55,7 +56,7 @@ class _StartTimeOptionState extends State<StartTimeOption> {
                           fontFamily: 'Lato',
                           color: _selectedTime == time
                               ? Colors.white
-                              : Colors.deepPurple.shade300,
+                              : ColorPalette.mainColor,
                         ),
                       ),
                     ),

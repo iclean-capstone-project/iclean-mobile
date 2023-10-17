@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:iclean_mobile_app/auth/user_preferences.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 import 'package:iclean_mobile_app/widgets/my_textfield.dart';
+import 'package:http/http.dart' as http;
 
 import '../verification/verification_screen.dart';
 import 'components/logo_inkwell.dart';
@@ -12,6 +16,26 @@ class LogInScreen extends StatelessWidget {
   LogInScreen({super.key});
 
   final phoneController = TextEditingController();
+
+  Future<void> handleLogin(String phone, BuildContext context) async {
+    final response = await http.post(
+      Uri.parse("https://iclean.azurewebsites.net/api/v1/auth/phone-number"),
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode({'phoneNumber': phone}),
+    );
+    if (response.statusCode == 200) {
+      print('Request was successful. Status code: ${response.statusCode}');
+      // ignore: use_build_context_synchronously
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => VerificationScreen(phoneNumber: phone)));
+    } else {
+      print('Request failed with status code: ${response.statusCode}');
+      print('Response body: ${response.body}');
+      // Handle the error as needed
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +66,7 @@ class LogInScreen extends StatelessWidget {
                 child: SizedBox(
                   height: 48,
                   child: MyTextField(
+                    textType: TextInputType.number,
                     controller: phoneController,
                     hintText: 'Số điện thoại',
                   ),
@@ -66,10 +91,7 @@ class LogInScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 16),
                 child: MainColorInkWellFullSize(
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const VerificationScreen()));
+                    handleLogin(phoneController.text.toString(), context);
                   },
                   text: "Đăng nhập với số điện thoại",
                 ),

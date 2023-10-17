@@ -19,7 +19,7 @@ class _DigitTextFieldState extends State<DigitTextField> {
   @override
   void initState() {
     super.initState();
-    isFocused = List.generate(4, (index) => false);
+    isFocused = List.generate(6, (index) => false);
   }
 
   @override
@@ -27,7 +27,7 @@ class _DigitTextFieldState extends State<DigitTextField> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: List.generate(
-        4,
+        6,
         (index) => Focus(
           onFocusChange: (hasFocus) {
             setState(() {

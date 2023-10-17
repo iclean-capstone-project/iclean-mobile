@@ -1,3 +1,5 @@
+//import 'package:iclean_mobile_app/models/status.dart';
+
 class Booking {
   int id, renterId, empId, jobId, workTime, statusId;
   String location, description;
@@ -5,6 +7,8 @@ class Booking {
   DateTime timeCreated, timeWork;
   DateTime? timeStart, timeEnd, timeCancel;
   int? discount;
+  //Status? status;
+
   Booking({
     required this.id,
     required this.renterId,

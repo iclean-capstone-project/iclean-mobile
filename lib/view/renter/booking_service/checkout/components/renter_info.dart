@@ -15,7 +15,7 @@ class RenterInfo extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.grey.shade200,
+        color: Theme.of(context).colorScheme.background,
         borderRadius: BorderRadius.circular(20),
       ),
       child: Column(

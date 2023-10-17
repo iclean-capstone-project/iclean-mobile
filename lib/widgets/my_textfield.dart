@@ -4,12 +4,14 @@ import 'package:iclean_mobile_app/utils/color_palette.dart';
 class MyTextField extends StatefulWidget {
   final TextEditingController controller;
   final String hintText;
+  final TextInputType? textType;
   final String? Function(dynamic value)? validator;
 
   const MyTextField({
     super.key,
     required this.controller,
     required this.hintText,
+    this.textType,
     this.validator,
   });
 
@@ -49,6 +51,7 @@ class _MyTextFieldState extends State<MyTextField> {
     return TextField(
       controller: widget.controller,
       focusNode: focusNode, // Attach the FocusNode
+      keyboardType: widget.textType,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.symmetric(horizontal: 16),
         enabledBorder: const OutlineInputBorder(

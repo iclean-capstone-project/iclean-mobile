@@ -5,6 +5,8 @@ import 'package:iclean_mobile_app/view/renter/profile/my_profile_screen/componen
 import 'package:iclean_mobile_app/view/renter/profile/my_profile_screen/components/profile_inkwell.dart';
 import 'package:iclean_mobile_app/view/renter/profile/update_profile_screen/update_profile_screen.dart';
 
+import 'components/confirm_dialog.dart';
+
 class ProfileScreen extends StatefulWidget {
   final Account account;
   const ProfileScreen({super.key, required this.account});
@@ -14,14 +16,14 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  // Future<void> _logout() async {
-  //   Navigator.pushAndRemoveUntil(
-  //     context,
-  //     MaterialPageRoute(builder: (BuildContext context) => LogInScreen()),
-  //     (Route<dynamic> route) => false,
-  //   );
-  //   await UserPreferences.logout();
-  // }
+  void showLogoutConfirmationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const ConfirmDialog();
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -130,8 +132,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   mouseCursor: MaterialStateProperty.all<MouseCursor>(
                       SystemMouseCursors.click),
                 ),
-                //onPressed: () => showLogoutConfirmationDialog(context),
-                onPressed: () {},
+                onPressed: () => showLogoutConfirmationDialog(context),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -143,7 +144,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         SizedBox(width: 8),
                         Text(
-                          "Log out",
+                          "Đăng xuất",
                           style: TextStyle(
                             fontSize: 16,
                             fontFamily: 'Lato',
@@ -161,34 +162,4 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
     );
   }
-
-  // void showLogoutConfirmationDialog(BuildContext context) {
-  //   showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return AlertDialog(
-  //         title: const Text("Confirm Log Out"),
-  //         content: const Text("Are you sure you want to log out?"),
-  //         actions: [
-  //           TextButton(
-  //             onPressed: () => Navigator.of(context).pop(),
-  //             child: Text(
-  //               "Cancel",
-  //               style: TextStyle(color: Colors.deepPurple.shade300),
-  //             ),
-  //           ),
-  //           ElevatedButton(
-  //             style: ButtonStyle(
-  //               backgroundColor: MaterialStateProperty.all<Color>(
-  //                 Colors.deepPurple.shade300,
-  //               ),
-  //             ),
-  //             onPressed: _logout,
-  //             child: const Text("Log Out"),
-  //           ),
-  //         ],
-  //       );
-  //     },
-  //   );
-  // }
 }

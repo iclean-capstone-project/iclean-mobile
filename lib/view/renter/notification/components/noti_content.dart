@@ -44,15 +44,10 @@ class NotiContent extends StatelessWidget {
             onTap: () {},
             child: Container(
               decoration: BoxDecoration(
-                color: notis[i].isRead ? Colors.white : Colors.blue.shade50,
+                color: notis[i].isRead
+                    ? Theme.of(context).colorScheme.background
+                    : Colors.blue.shade50,
                 borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.shade200,
-                    blurRadius: 3,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
               ),
               padding: const EdgeInsets.all(8),
               margin: const EdgeInsets.symmetric(
