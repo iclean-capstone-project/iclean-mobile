@@ -5,13 +5,14 @@ import 'package:iclean_mobile_app/models/noti.dart';
 import 'package:iclean_mobile_app/repository/noti_repo.dart';
 // ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
+import 'package:iclean_mobile_app/services/constant.dart';
 
 class ApiNotiRepository implements NotiRepository {
-  static const String urlConstant = "https://iclean.azurewebsites.net/api/v1";
+  static const String urlConstant = "${BaseConstant.baseUrl}/notification";
 
   @override
   Future<List<Noti>> getNoti(int page) async {
-    final url = '$urlConstant/notification?page=$page';
+    final url = '$urlConstant?page=$page';
     final uri = Uri.parse(url);
     final accessToken = await UserPreferences.getAccessToken();
 
@@ -48,7 +49,7 @@ class ApiNotiRepository implements NotiRepository {
 
   @override
   Future<void> readAll() async {
-    const url = '$urlConstant/notification';
+    const url = urlConstant;
     final uri = Uri.parse(url);
     final accessToken = await UserPreferences.getAccessToken();
 
@@ -71,7 +72,7 @@ class ApiNotiRepository implements NotiRepository {
 
   @override
   Future<void> maskAsRead(int notiId) async {
-    final url = '$urlConstant/notification/$notiId';
+    final url = '$urlConstant/$notiId';
     final uri = Uri.parse(url);
     final accessToken = await UserPreferences.getAccessToken();
 
@@ -94,7 +95,7 @@ class ApiNotiRepository implements NotiRepository {
 
   @override
   Future<void> deleteNoti(int notiId) async {
-    final url = '$urlConstant/notification/$notiId';
+    final url = '$urlConstant/$notiId';
     final uri = Uri.parse(url);
     final accessToken = await UserPreferences.getAccessToken();
 
