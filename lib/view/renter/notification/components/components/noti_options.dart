@@ -6,12 +6,14 @@ import 'inkwell_noti_option.dart';
 import 'status_noti.dart';
 
 class NotiOptions extends StatelessWidget {
-  //final Function() onTap;
+  final Function() maskAsRead;
+  final Function() delete;
   final Noti noti;
   const NotiOptions({
     super.key,
     required this.noti,
-    //required this.onTap,
+    required this.maskAsRead,
+    required this.delete,
   });
 
   @override
@@ -64,11 +66,11 @@ class NotiOptions extends StatelessWidget {
                 thickness: 2,
               ),
               InkWellNotiOption(
-                  ontap: () {},
+                  ontap: maskAsRead,
                   icon: Icons.markunread,
-                  text: "Đánh dấu đã đọc"),
+                  text: noti.isRead ? "Đánh dấu chưa đọc" : "Đánh dấu đã đọc"),
               InkWellNotiOption(
-                ontap: () {},
+                ontap: delete,
                 icon: Icons.cancel,
                 text: "Gỡ thông báo này",
               ),

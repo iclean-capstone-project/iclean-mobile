@@ -15,7 +15,7 @@ class NotificationScreen extends StatelessWidget {
         ApiNotiRepository repository, int page) async {
       try {
         final newNotifications = await repository.getNoti(page);
-        print("Notifications: $newNotifications");
+        //print("Notifications: $newNotifications");
         return newNotifications;
       } catch (e) {
         // ignore: avoid_print
@@ -79,7 +79,11 @@ class NotificationScreen extends StatelessWidget {
                     return Text('Error: ${snapshot.error}');
                   } else if (snapshot.hasData) {
                     final notis = snapshot.data!;
-                    return NotiContent(notis: notis);
+                    return NotiContent(
+                      notis: notis,
+                      apiNotiRepository: apiNotiRepository,
+                      notificationsProvider: notificationsProvider,
+                    );
                   } else {
                     return const Text('No notifications found.');
                   }

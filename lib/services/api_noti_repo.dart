@@ -68,4 +68,50 @@ class ApiNotiRepository implements NotiRepository {
       throw Exception(e);
     }
   }
+
+  @override
+  Future<void> maskAsRead(int notiId) async {
+    final url = '$urlConstant/notification/$notiId';
+    final uri = Uri.parse(url);
+    final accessToken = await UserPreferences.getAccessToken();
+
+    Map<String, String> headers = {
+      "Authorization": "Bearer $accessToken",
+      "Content-Type": "application/json",
+    };
+    try {
+      final response = await http.put(uri, headers: headers);
+      if (response.statusCode == 200) {
+        print('update succesful');
+      } else {
+        throw Exception(
+            'Failed to update notifications. Status: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  @override
+  Future<void> deleteNoti(int notiId) async {
+    final url = '$urlConstant/notification/$notiId';
+    final uri = Uri.parse(url);
+    final accessToken = await UserPreferences.getAccessToken();
+
+    Map<String, String> headers = {
+      "Authorization": "Bearer $accessToken",
+      "Content-Type": "application/json",
+    };
+    try {
+      final response = await http.delete(uri, headers: headers);
+      if (response.statusCode == 200) {
+        print('deleted succesful');
+      } else {
+        throw Exception(
+            'Failed to update notifications. Status: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 }

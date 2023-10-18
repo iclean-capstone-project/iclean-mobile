@@ -27,4 +27,22 @@ class NotificationsProvider extends ChangeNotifier {
       print(e);
     }
   }
+
+  Future<void> maskAsRead(int notiId) async {
+    try {
+      await ApiNotiRepository().maskAsRead(notiId);
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+    }
+  }
+
+  Future<void> deleteNoti(int notiId) async {
+    try {
+      await ApiNotiRepository().deleteNoti(notiId);
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+    }
+  }
 }

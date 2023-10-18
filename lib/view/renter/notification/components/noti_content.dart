@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/noti.dart';
+import 'package:iclean_mobile_app/services/api_noti_repo.dart';
+import 'package:iclean_mobile_app/view/renter/notification/notification_provider.dart';
 
 import 'components/mess_noti.dart';
 import 'components/noti_options.dart';
@@ -9,9 +11,13 @@ class NotiContent extends StatelessWidget {
   const NotiContent({
     super.key,
     required this.notis,
+    required this.apiNotiRepository,
+    required this.notificationsProvider,
   });
 
   final List<Noti> notis;
+  final ApiNotiRepository apiNotiRepository;
+  final NotificationsProvider notificationsProvider;
 
   void showNotiOptions(BuildContext context, Noti noti) {
     showModalBottomSheet(
@@ -29,7 +35,26 @@ class NotiContent extends StatelessWidget {
           expand: false,
           builder: (context, scrollController) {
             return SingleChildScrollView(
-                controller: scrollController, child: NotiOptions(noti: noti));
+                controller: scrollController,
+                child: NotiOptions(
+                  noti: noti,
+                  maskAsRead: () async {
+                    if (noti.isRead == false) {
+                      await notificationsProvider.maskAsRead(noti.id);
+                      await notificationsProvider.fetchNotifications(
+                          apiNotiRepository, 1);
+                      // ignore: use_build_context_synchronously
+                      Navigator.pop(context);
+                    }
+                  },
+                  delete: () async {
+                    await notificationsProvider.deleteNoti(noti.id);
+                    await notificationsProvider.fetchNotifications(
+                        apiNotiRepository, 1);
+                    // ignore: use_build_context_synchronously
+                    Navigator.pop(context);
+                  },
+                ));
           }),
     );
   }
@@ -40,12 +65,18 @@ class NotiContent extends StatelessWidget {
       children: [
         for (int i = 0; i < notis.length; i++)
           InkWell(
-            onTap: () {},
+            onTap: () async {
+              if (notis[i].isRead == false) {
+                await notificationsProvider.maskAsRead(notis[i].id);
+                await notificationsProvider.fetchNotifications(
+                    apiNotiRepository, 1);
+              }
+            },
             child: Container(
               decoration: BoxDecoration(
                 color: notis[i].isRead
                     ? Theme.of(context).colorScheme.background
-                    : Colors.blueGrey.shade700,
+                    : Theme.of(context).colorScheme.surface,
                 borderRadius: BorderRadius.circular(10),
               ),
               padding: const EdgeInsets.all(8),

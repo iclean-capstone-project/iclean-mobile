@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
 
-class MyTextField extends StatefulWidget {
+class MyTextField extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
   final TextInputType? textType;
@@ -16,42 +16,10 @@ class MyTextField extends StatefulWidget {
   });
 
   @override
-  State<MyTextField> createState() => _MyTextFieldState();
-}
-
-class _MyTextFieldState extends State<MyTextField> {
-  late FocusNode focusNode;
-  Color backgroundColor = ColorPalette.textFieldColorLight;
-
-  @override
-  void initState() {
-    super.initState();
-    focusNode = FocusNode();
-    focusNode.addListener(() {
-      setState(() {
-        if (focusNode.hasFocus) {
-          backgroundColor = ColorPalette
-              .textFieldColorFocused; // Change to the desired focused color
-        } else {
-          backgroundColor = ColorPalette
-              .textFieldColorLight; // Revert to default color when not focused
-        }
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    focusNode.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return TextField(
-      controller: widget.controller,
-      focusNode: focusNode, // Attach the FocusNode
-      keyboardType: widget.textType,
+      controller: controller,
+      keyboardType: textType,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.symmetric(horizontal: 16),
         enabledBorder: const OutlineInputBorder(
@@ -70,20 +38,19 @@ class _MyTextFieldState extends State<MyTextField> {
             color: ColorPalette.mainColor,
           ),
         ),
-        fillColor: backgroundColor,
+        fillColor: Theme.of(context).colorScheme.primary,
         filled: true,
-        hintText: widget.hintText,
+        hintText: hintText,
         hintStyle: const TextStyle(
           color: ColorPalette.greyColor,
           fontFamily: 'Lato',
         ),
       ),
-      style: const TextStyle(
+      style:  const TextStyle(
         fontSize: 16,
-        color: Colors.black,
         fontFamily: 'Lato',
       ),
-      cursorColor: Colors.black,
+      cursorColor: Theme.of(context).colorScheme.secondary,
     );
   }
 }

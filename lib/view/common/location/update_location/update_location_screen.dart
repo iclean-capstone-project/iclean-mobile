@@ -3,7 +3,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:iclean_mobile_app/models/address.dart';
 
 import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
-import 'package:iclean_mobile_app/widgets/update_textfield.dart';
+import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
+import 'package:iclean_mobile_app/widgets/my_textfield.dart';
 
 class UpdateLocationScreen extends StatefulWidget {
   const UpdateLocationScreen({super.key, required this.address});
@@ -64,18 +65,7 @@ class _UpdateLocationScreenState extends State<UpdateLocationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Chỉnh sửa vị trí",
-          style: TextStyle(
-            color: Colors.black,
-            fontFamily: 'Lato',
-          ),
-        ),
-        centerTitle: true,
-        iconTheme: const IconThemeData(color: Colors.black),
-        backgroundColor: Colors.white,
-      ),
+      appBar: const MyAppBar(text: "Chỉnh sửa vị trí"),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
@@ -85,10 +75,9 @@ class _UpdateLocationScreenState extends State<UpdateLocationScreen> {
               padding: const EdgeInsets.only(top: 16),
               child: SizedBox(
                 height: 48,
-                child: UpdateTextField(
+                child: MyTextField(
                   controller: nameController,
                   hintText: 'Tên vị trí',
-                  text: widget.address.addressName,
                 ),
               ),
             ),
@@ -96,10 +85,9 @@ class _UpdateLocationScreenState extends State<UpdateLocationScreen> {
               padding: const EdgeInsets.only(top: 16),
               child: SizedBox(
                 height: 48,
-                child: UpdateTextField(
+                child: MyTextField(
                   controller: descriptionController,
                   hintText: 'Địa chỉ cụ thể',
-                  text: widget.address.description,
                 ),
               ),
             ),
@@ -129,14 +117,15 @@ class _UpdateLocationScreenState extends State<UpdateLocationScreen> {
           boxShadow: [
             BoxShadow(
               color: Colors.black,
-              blurRadius: 6,
-              offset: Offset(0, 4),
+              blurRadius: 10,
+              offset: Offset(0.5, 3),
             )
           ],
         ),
         child: BottomAppBar(
-          child: Padding(
+          child: Container(
             padding: const EdgeInsets.all(16),
+            color: Theme.of(context).colorScheme.background,
             child: MainColorInkWellFullSize(
               onTap: () {
                 // Navigator.push(

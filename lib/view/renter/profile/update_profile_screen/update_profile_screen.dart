@@ -5,7 +5,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iclean_mobile_app/models/account.dart';
-import 'package:iclean_mobile_app/widgets/update_textfield.dart';
+import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
@@ -157,18 +157,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Cập nhập hồ sơ",
-          style: TextStyle(
-            color: Colors.black,
-            fontFamily: 'Lato',
-          ),
-        ),
-        centerTitle: true,
-        iconTheme: const IconThemeData(color: Colors.black),
-        backgroundColor: Colors.white,
-      ),
+      appBar: const MyAppBar(text: "Cập nhập hồ sơ"),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -234,6 +223,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                               : DateFormat('dd/MM/yyyy')
                                   .format(_selectedDate!)),
                       obscureText: false,
+                      cursorColor: Theme.of(context).colorScheme.secondary,
                       decoration: InputDecoration(
                         contentPadding:
                             const EdgeInsets.symmetric(horizontal: 16),
@@ -249,7 +239,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                           ),
                           borderSide: BorderSide(color: ColorPalette.mainColor),
                         ),
-                        fillColor: ColorPalette.textFieldColorLight,
+                        fillColor: Theme.of(context).colorScheme.primary,
                         filled: true,
                         hintText: 'Ngày sinh',
                         hintStyle: const TextStyle(
@@ -272,7 +262,6 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                           ),
                         ),
                         suffixIconColor: ColorPalette.greyColor,
-                        //focusColor: ColorPalette.mainColor,
                       ),
                     ),
                   ),
@@ -290,8 +279,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                 //Email TextField
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
-                  child: UpdateTextField(
-                      text: widget.account.email,
+                  child: MyTextField(
                       controller: emailController,
                       hintText: 'Email',
                       validator: (value) => validateEmail(value)),
@@ -306,14 +294,15 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
           boxShadow: [
             BoxShadow(
               color: Colors.black,
-              blurRadius: 6,
-              offset: Offset(0, 4),
+              blurRadius: 10,
+              offset: Offset(0.5, 3),
             )
           ],
         ),
         child: BottomAppBar(
-          child: Padding(
+          child: Container(
             padding: const EdgeInsets.all(16),
+            color: Theme.of(context).colorScheme.background,
             child: MainColorInkWellFullSize(
               onTap: () {
                 // Navigator.push(

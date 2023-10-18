@@ -3,6 +3,7 @@ import 'package:iclean_mobile_app/models/address.dart';
 import 'package:iclean_mobile_app/view/common/location/add_location/add_location_screen.dart';
 import 'package:iclean_mobile_app/view/common/location/update_location/update_location_screen.dart';
 import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
+import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 
 class LocationScreen extends StatelessWidget {
   LocationScreen({super.key});
@@ -34,18 +35,7 @@ class LocationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Vị trí của bạn",
-          style: TextStyle(
-            color: Colors.black,
-            fontFamily: 'Lato',
-          ),
-        ),
-        centerTitle: true,
-        iconTheme: const IconThemeData(color: Colors.black),
-        backgroundColor: Colors.white,
-      ),
+      appBar: const MyAppBar(text: "Vị trí của bạn"),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: ListView(
@@ -140,14 +130,15 @@ class LocationScreen extends StatelessWidget {
           boxShadow: [
             BoxShadow(
               color: Colors.black,
-              blurRadius: 6,
-              offset: Offset(0, 4),
+              blurRadius: 10,
+              offset: Offset(0.5, 3),
             )
           ],
         ),
         child: BottomAppBar(
-          child: Padding(
+          child: Container(
             padding: const EdgeInsets.all(16),
+            color: Theme.of(context).colorScheme.background,
             child: MainColorInkWellFullSize(
               onTap: () {
                 Navigator.push(

@@ -28,7 +28,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           },
           child: const Icon(Icons.arrow_back_ios)),
       iconTheme:  IconThemeData(color: Theme.of(context).colorScheme.secondary),
-      backgroundColor: Theme.of(context).colorScheme.primary,
+      backgroundColor: Theme.of(context).colorScheme.background,
     );
   }
 }
