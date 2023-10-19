@@ -4,14 +4,15 @@ import '../utils/color_palette.dart';
 
 class MainColorInkWellFullSize extends StatelessWidget {
   const MainColorInkWellFullSize({
-    Key? key,
+    super.key,
     required this.onTap,
     required this.text,
     this.backgroundColor,
     this.borderColor,
     this.textColor,
     this.width,
-  }) : super(key: key);
+  });
+
   final void Function() onTap;
   final String text;
   final Color? backgroundColor, borderColor, textColor;

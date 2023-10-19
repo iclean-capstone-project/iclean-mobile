@@ -35,13 +35,20 @@ class MyCalendar extends StatelessWidget {
           titleCentered: true,
           titleTextStyle: TextStyle(
             fontSize: 18,
+            fontFamily: 'Lato',
             fontWeight: FontWeight.bold,
             color: Theme.of(context).colorScheme.secondary,
           ),
         ),
         daysOfWeekStyle: const DaysOfWeekStyle(
-            weekdayStyle: TextStyle(fontWeight: FontWeight.bold),
-            weekendStyle: TextStyle(fontWeight: FontWeight.bold)),
+            weekdayStyle: TextStyle(
+              fontFamily: 'Lato',
+              fontWeight: FontWeight.bold,
+            ),
+            weekendStyle: TextStyle(
+              fontFamily: 'Lato',
+              fontWeight: FontWeight.bold,
+            )),
         availableGestures: AvailableGestures.all,
         onDaySelected: (DateTime selectedDay, DateTime focusedDay) {
           // Update the selected day in the provider
@@ -54,6 +61,7 @@ class MyCalendar extends StatelessWidget {
         calendarStyle: CalendarStyle(
           outsideDaysVisible: false,
           weekendTextStyle: TextStyle(
+            fontFamily: 'Lato',
             color: Theme.of(context).colorScheme.secondary,
           ),
           todayDecoration: BoxDecoration(

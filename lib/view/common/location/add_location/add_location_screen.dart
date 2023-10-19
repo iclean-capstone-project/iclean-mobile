@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:iclean_mobile_app/models/address.dart';
+import 'package:iclean_mobile_app/services/api_location_repo.dart';
 
 import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
+import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
+import 'package:iclean_mobile_app/widgets/my_bottom_app_bar.dart';
 import 'package:iclean_mobile_app/widgets/my_textfield.dart';
 
+import '../location_screen.dart';
+
 class AddLocationScreen extends StatefulWidget {
-  const AddLocationScreen({super.key});
+  const AddLocationScreen({super.key, required this.apiLocationRepository});
+
+  final ApiLocationRepository apiLocationRepository;
 
   @override
   State<AddLocationScreen> createState() => _AddLocationScreenState();
@@ -58,94 +66,89 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
     });
   }
 
+  void _addNewLocation() {
+    // Get input values from text fields
+    String locationName = nameController.text;
+    String description = descriptionController.text;
+
+    // Create a new Address object
+    Address newLocation = Address(
+      id: null,
+      longitude: longitude,
+      latitude: latitude,
+      addressName: locationName,
+      description: description,
+      isDefault: false,
+    );
+    // Pass newLocation to your addLocation function
+    widget.apiLocationRepository.addLocation(newLocation).then((_) {
+      // Handle success, for example, by navigating to a new screen
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const LocationScreen()));
+    }).catchError((error) {
+      // Handle the error, for example, by displaying an error message
+      print('Failed to add location: $error');
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    //double baseWidth = 430;
-    //double fem = MediaQuery.of(context).size.width / baseWidth;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Thêm vị trí mới",
-          style: TextStyle(
-            color: Colors.black,
-            fontFamily: 'Lato',
+      appBar: const MyAppBar(text: "Thêm vị trí mới"),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: SizedBox(
+                  height: 48,
+                  child: MyTextField(
+                    controller: nameController,
+                    hintText: 'Tên vị trí',
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: SizedBox(
+                  height: 48,
+                  child: MyTextField(
+                    controller: descriptionController,
+                    hintText: 'Địa chỉ cụ thể',
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: Divider(
+                  thickness: 0.5,
+                  color: Colors.grey[400],
+                ),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                height: 320,
+                child: GoogleMap(
+                  initialCameraPosition: CameraPosition(
+                    target: LatLng(latitude, longitude),
+                    zoom: 14,
+                  ),
+                  markers: _markers,
+                  onTap: _onMapTapped,
+                ),
+              ),
+            ],
           ),
         ),
-        centerTitle: true,
-        iconTheme: const IconThemeData(color: Colors.black),
-        backgroundColor: Colors.white,
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 16),
-              child: SizedBox(
-                height: 48,
-                child: MyTextField(
-                  controller: nameController,
-                  hintText: 'Tên vị trí',
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 16),
-              child: SizedBox(
-                height: 48,
-                child: MyTextField(
-                  controller: descriptionController,
-                  hintText: 'Địa chỉ cụ thể',
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              child: Divider(
-                thickness: 0.5,
-                color: Colors.grey[400],
-              ),
-            ),
-            Expanded(
-              child: GoogleMap(
-                initialCameraPosition: CameraPosition(
-                  target: LatLng(latitude,
-                      longitude), //Default Location: Tan Son Nhat AirPort
-                  zoom: 14,
-                ),
-                markers: _markers,
-                onTap: _onMapTapped,
-              ),
-            ),
-          ],
-        ),
-      ),
-      bottomNavigationBar: Container(
-        decoration: const BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black,
-              blurRadius: 6,
-              offset: Offset(0, 4),
-            )
-          ],
-        ),
-        child: BottomAppBar(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: MainColorInkWellFullSize(
-              onTap: () {
-                // Navigator.push(
-                //             context,
-                //             MaterialPageRoute(
-                //                 builder: (context) =>
-                //                      const AddLocationScreen()));
-              },
-              text: "Tiếp tục",
-            ),
-          ),
-        ),
+      bottomNavigationBar: MyBottomAppBar(
+        text: "Thêm vị trí mới",
+        onTap: _addNewLocation,
       ),
     );
   }

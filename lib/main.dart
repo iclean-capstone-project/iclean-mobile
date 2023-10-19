@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/theme/theme_provider.dart';
 import 'package:iclean_mobile_app/auth/log_in/log_in_screen.dart';
+import 'package:iclean_mobile_app/view/common/location/location_provider.dart';
 import 'package:iclean_mobile_app/view/renter/booking_service/booking_details/booking_details_provider.dart';
 import 'package:iclean_mobile_app/view/renter/nav_bar_bottom/renter_screen.dart';
-import 'package:iclean_mobile_app/view/renter/notification/notification_provider.dart';
+import 'package:iclean_mobile_app/view/common/notification/notification_provider.dart';
 
 import 'package:provider/provider.dart';
 
@@ -17,6 +18,7 @@ Future<void> main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(create: (_) => BookingDetailsProvider()),
+        ChangeNotifierProvider(create: (_) => LocationsProvider()),
         ChangeNotifierProvider(create: (_) => NotificationsProvider()),
       ],
       child: app,

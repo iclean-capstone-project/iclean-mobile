@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:iclean_mobile_app/auth/log_in/log_in_screen.dart';
-import 'package:iclean_mobile_app/auth/user_preferences.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
 
 class ConfirmDialog extends StatelessWidget {
-  const ConfirmDialog({super.key});
+  const ConfirmDialog({
+    super.key,
+    required this.title,
+    required this.confirm,
+    required this.onTap,
+  });
+
+  final String title, confirm;
+  final void Function() onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +22,9 @@ class ConfirmDialog extends StatelessWidget {
           fontFamily: 'Lato',
         ),
       ),
-      content: const Text(
-        "Đăng xuất khỏi tài khoản của bạn?",
-        style: TextStyle(
+      content: Text(
+        title,
+        style: const TextStyle(
           fontWeight: FontWeight.bold,
           fontFamily: 'Lato',
         ),
@@ -40,18 +46,10 @@ class ConfirmDialog extends StatelessWidget {
               ColorPalette.mainColor,
             ),
           ),
-          onPressed: () async {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                  builder: (BuildContext context) => LogInScreen()),
-              (Route<dynamic> route) => false,
-            );
-            await UserPreferences.logout();
-          },
-          child: const Text(
-            "Đăng xuất",
-            style: TextStyle(
+          onPressed: onTap,
+          child: Text(
+            confirm,
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.white,
               fontFamily: 'Lato',

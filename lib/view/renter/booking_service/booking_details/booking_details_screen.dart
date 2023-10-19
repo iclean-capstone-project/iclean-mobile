@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/account.dart';
 import 'package:iclean_mobile_app/models/services.dart';
-import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
+import 'package:iclean_mobile_app/widgets/my_bottom_app_bar.dart';
 import 'package:provider/provider.dart';
 
 import '../checkout/checkout_screen.dart';
@@ -12,10 +12,14 @@ import 'components/start_time_option.dart';
 import 'components/time_working_option.dart';
 
 class BookingDetailsScreen extends StatefulWidget {
+  const BookingDetailsScreen({
+    super.key,
+    required this.service,
+    required this.account,
+  });
+
   final Account account;
   final Service service;
-  const BookingDetailsScreen(
-      {super.key, required this.service, required this.account});
 
   @override
   State<BookingDetailsScreen> createState() => _BookingDetailsScreenState();
@@ -110,33 +114,17 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: Container(
-        decoration: const BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black,
-              blurRadius: 6,
-              offset: Offset(0, 4),
-            )
-          ],
-        ),
-        child: BottomAppBar(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: MainColorInkWellFullSize(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => CheckoutScreen(
-                              account: widget.account,
-                              service: widget.service,
-                            )));
-              },
-              text: "Đặt dịch vụ",
-            ),
-          ),
-        ),
+      bottomNavigationBar: MyBottomAppBar(
+        text: "Đặt dịch vụ",
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => CheckoutScreen(
+                        account: widget.account,
+                        service: widget.service,
+                      )));
+        },
       ),
     );
   }

@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 
 import 'package:iclean_mobile_app/auth/user_preferences.dart';
@@ -24,11 +26,12 @@ class ApiNotiRepository implements NotiRepository {
 
     try {
       final response = await http.get(uri, headers: headers);
+
       if (response.statusCode == 200) {
         final jsonMap = json.decode(utf8.decode(response.bodyBytes));
         final data = jsonMap['data'];
-        final users = data['content'] as List<dynamic>;
-        final notifications = users.map((e) {
+        final content = data['content'] as List<dynamic>;
+        final notifications = content.map((e) {
           return Noti(
             id: e['notificationId'],
             details: e['content'],

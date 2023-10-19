@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:iclean_mobile_app/models/noti.dart';
 import 'package:iclean_mobile_app/services/api_noti_repo.dart';
-import 'package:iclean_mobile_app/view/renter/notification/notification_provider.dart';
+import 'package:iclean_mobile_app/view/common/notification/notification_provider.dart';
 
 import 'components/noti_content.dart';
 

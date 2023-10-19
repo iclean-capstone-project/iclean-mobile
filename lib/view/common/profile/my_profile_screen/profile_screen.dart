@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:iclean_mobile_app/auth/log_in/log_in_screen.dart';
+import 'package:iclean_mobile_app/auth/user_preferences.dart';
 import 'package:iclean_mobile_app/models/account.dart';
 import 'package:iclean_mobile_app/view/common/location/location_screen.dart';
-import 'package:iclean_mobile_app/view/renter/profile/my_profile_screen/components/dark_mode.dart';
-import 'package:iclean_mobile_app/view/renter/profile/my_profile_screen/components/profile_inkwell.dart';
-import 'package:iclean_mobile_app/view/renter/profile/update_profile_screen/update_profile_screen.dart';
+import 'package:iclean_mobile_app/view/common/profile/my_profile_screen/components/dark_mode.dart';
+import 'package:iclean_mobile_app/view/common/profile/my_profile_screen/components/profile_inkwell.dart';
+import 'package:iclean_mobile_app/view/common/profile/update_profile_screen/update_profile_screen.dart';
 
-import 'components/confirm_dialog.dart';
+import '../../../../widgets/confirm_dialog.dart';
 
 class ProfileScreen extends StatefulWidget {
   final Account account;
@@ -20,7 +22,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return const ConfirmDialog();
+        return ConfirmDialog(
+            title: "Đăng xuất khỏi tài khoản của bạn?",
+            confirm: "Đăng xuất",
+            onTap: () async {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                    builder: (BuildContext context) => LogInScreen()),
+                (Route<dynamic> route) => false,
+              );
+              await UserPreferences.logout();
+            });
       },
     );
   }

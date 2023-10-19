@@ -1,23 +1,24 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
 import 'package:provider/provider.dart';
 import 'package:iclean_mobile_app/models/account.dart';
 import 'package:iclean_mobile_app/models/services.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
+import 'package:iclean_mobile_app/widgets/my_bottom_app_bar.dart';
 import 'package:iclean_mobile_app/view/renter/booking_service/booking_details/booking_details_provider.dart';
 
+import 'components/point_button.dart';
 import 'components/renter_info.dart';
 import 'components/service_info.dart';
 
 class CheckoutScreen extends StatelessWidget {
-  final Account account;
-  final Service service;
   const CheckoutScreen({
     super.key,
     required this.account,
     required this.service,
   });
+
+  final Account account;
+  final Service service;
 
   @override
   Widget build(BuildContext context) {
@@ -79,74 +80,18 @@ class CheckoutScreen extends StatelessWidget {
             ),
           ),
         ),
-        bottomNavigationBar: Container(
-          decoration: const BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black,
-                blurRadius: 6,
-                offset: Offset(0, 4),
-              )
-            ],
-          ),
-          child: BottomAppBar(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: MainColorInkWellFullSize(
-                onTap: () {
-                  // Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //         builder: (context) => BookingDetailsScreen(
-                  //             service: service, account: account)));
-                },
-                text: "Đăng tin",
-              ),
-            ),
-          ),
+        bottomNavigationBar: MyBottomAppBar(
+          text: "Đăng tin",
+          onTap: () {
+            // Navigator.push(
+            //     context,
+            //     MaterialPageRoute(
+            //         builder: (context) => AddLocationScreen(
+            //               apiLocationRepository: apiLocationRepository,
+            //             )));
+          },
         ),
       );
     });
-  }
-}
-
-class PointButton extends StatefulWidget {
-  const PointButton({super.key});
-
-  @override
-  State<PointButton> createState() => _PointButtonState();
-}
-
-class _PointButtonState extends State<PointButton> {
-  bool isSwitched = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
-          children: const [
-            Icon(Icons.point_of_sale),
-            SizedBox(width: 16),
-            Text(
-              "Dùng Point",
-              style: TextStyle(
-                fontSize: 16,
-                fontFamily: 'Lato',
-              ),
-            ),
-          ],
-        ),
-        CupertinoSwitch(
-          value: isSwitched,
-          onChanged: (value) {
-            setState(() {
-              isSwitched = value;
-            });
-          },
-        ),
-      ],
-    );
   }
 }

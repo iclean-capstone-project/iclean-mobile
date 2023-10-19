@@ -9,8 +9,9 @@ import 'components/list_service.dart';
 import 'components/welcome_content.dart';
 
 class HomeScreen extends StatelessWidget {
-  final Account userLogin;
   HomeScreen({super.key, required this.userLogin});
+
+  final Account userLogin;
 
   final List<Service> services = [
     Service(

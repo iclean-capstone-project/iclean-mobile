@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/account.dart';
-import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
+import 'package:iclean_mobile_app/models/services.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
-
-import '../../../models/services.dart';
+import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
 import 'booking_details/booking_details_screen.dart';
 
 class ServiceDetailsScreen extends StatelessWidget {
+  const ServiceDetailsScreen({
+    super.key,
+    required this.service,
+    required this.account,
+  });
+
   final Account account;
   final Service service;
-  const ServiceDetailsScreen(
-      {super.key, required this.service, required this.account});
 
   @override
   Widget build(BuildContext context) {

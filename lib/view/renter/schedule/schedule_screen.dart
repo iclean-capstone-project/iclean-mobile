@@ -100,25 +100,49 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                   padding: const EdgeInsets.only(top: 16),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.deepPurple.shade100,
+                      color: Theme.of(context).colorScheme.primary,
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: TableCalendar(
                       firstDay: DateTime.utc(2023),
                       focusedDay: _today,
                       lastDay: DateTime.utc(2024),
-                      headerStyle: const HeaderStyle(
+                      headerStyle: HeaderStyle(
+                        leftChevronIcon: Icon(
+                          Icons.arrow_back_ios,
+                          color: Theme.of(context).colorScheme.secondary,
+                          size: 20,
+                        ),
+                        rightChevronIcon: Icon(
+                          Icons.arrow_forward_ios,
+                          color: Theme.of(context).colorScheme.secondary,
+                          size: 20,
+                        ),
                         formatButtonVisible: false,
+                        titleCentered: true,
                         titleTextStyle: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
+                          fontSize: 18,
+                          fontFamily: 'Lato',
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
                       ),
                       daysOfWeekStyle: const DaysOfWeekStyle(
-                          weekdayStyle: TextStyle(fontWeight: FontWeight.bold),
-                          weekendStyle: TextStyle(fontWeight: FontWeight.bold)),
+                          weekdayStyle: TextStyle(
+                            fontFamily: 'Lato',
+                            fontWeight: FontWeight.bold,
+                          ),
+                          weekendStyle: TextStyle(
+                            fontFamily: 'Lato',
+                            fontWeight: FontWeight.bold,
+                          )),
                       availableGestures: AvailableGestures.all,
                       calendarStyle: CalendarStyle(
                         outsideDaysVisible: false,
-                        weekendTextStyle: const TextStyle(color: Colors.black),
+                        weekendTextStyle: TextStyle(
+                          fontFamily: 'Lato',
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
                         todayDecoration: BoxDecoration(
                           color: Colors.deepPurple.shade200,
                           shape: BoxShape.circle,
