@@ -12,7 +12,7 @@ import 'auth/user_preferences.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final app = await MyApp.launch();
+  final myApp = await MyApp.launch();
   runApp(
     MultiProvider(
       providers: [
@@ -21,13 +21,14 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (_) => LocationsProvider()),
         ChangeNotifierProvider(create: (_) => NotificationsProvider()),
       ],
-      child: app,
+      child: myApp,
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key, required this.isLoggedIn});
+
   final bool isLoggedIn;
 
   static Future<MyApp> launch() async {

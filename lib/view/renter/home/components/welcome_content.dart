@@ -65,7 +65,8 @@ class WelcomeContent extends StatelessWidget {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => LocationScreen()));
+                                      builder: (context) =>
+                                          const LocationScreen()));
                             },
                             child: Row(
                               children: [

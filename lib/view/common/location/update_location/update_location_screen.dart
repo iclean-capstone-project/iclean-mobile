@@ -76,13 +76,12 @@ class _UpdateLocationScreenState extends State<UpdateLocationScreen> {
       'description': descriptionController.text,
       'latitude': latitude,
       'longitude': longitude,
-      'isDefault': widget.address.isDefault,
     };
 
     widget.apiLocationRepository
         .updateLocation(widget.address.id!, dataForUpdate)
         .then((_) {
-      Navigator.push(context,
+      Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (context) => const LocationScreen()));
     }).catchError((error) {
       print('Failed to update location: $error');
@@ -98,7 +97,7 @@ class _UpdateLocationScreenState extends State<UpdateLocationScreen> {
           confirm: "Xác nhận",
           onTap: () {
             widget.apiLocationRepository.deleteLocation(location.id!).then((_) {
-              Navigator.push(
+              Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                       builder: (context) => const LocationScreen()));

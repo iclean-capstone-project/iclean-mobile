@@ -17,13 +17,15 @@ class ApiLocationRepository implements LocationRepository {
     const url = urlConstant;
     final uri = Uri.parse(url);
     final accessToken = await UserPreferences.getAccessToken();
-    // Create a headers map with the "Authorization" header
+
     Map<String, String> headers = {
       "Authorization": "Bearer $accessToken",
       "Content-Type": "application/json",
     };
+
     try {
       final response = await http.get(uri, headers: headers);
+
       if (response.statusCode == 200) {
         final jsonMap = json.decode(utf8.decode(response.bodyBytes));
         final data = jsonMap['data'] as List<dynamic>;
@@ -41,6 +43,29 @@ class ApiLocationRepository implements LocationRepository {
       } else {
         return throw Exception(
             'status: ${response.statusCode}, body: ${response.body}');
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  @override
+  Future<void> setDefault(int notiId) async {
+    final url = '$urlConstant/status/$notiId';
+    final uri = Uri.parse(url);
+    final accessToken = await UserPreferences.getAccessToken();
+
+    Map<String, String> headers = {
+      "Authorization": "Bearer $accessToken",
+      "Content-Type": "application/json",
+    };
+    try {
+      final response = await http.put(uri, headers: headers);
+      if (response.statusCode == 200) {
+        print('update succesful');
+      } else {
+        throw Exception(
+            'Failed to set default location. Status: ${response.statusCode}');
       }
     } catch (e) {
       throw Exception(e);

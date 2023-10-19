@@ -3,10 +3,9 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:iclean_mobile_app/models/address.dart';
 import 'package:iclean_mobile_app/services/api_location_repo.dart';
 
-import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
-import 'package:iclean_mobile_app/widgets/my_bottom_app_bar.dart';
 import 'package:iclean_mobile_app/widgets/my_textfield.dart';
+import 'package:iclean_mobile_app/widgets/my_bottom_app_bar.dart';
 
 import '../location_screen.dart';
 
@@ -83,7 +82,7 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
     // Pass newLocation to your addLocation function
     widget.apiLocationRepository.addLocation(newLocation).then((_) {
       // Handle success, for example, by navigating to a new screen
-      Navigator.push(context,
+      Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (context) => const LocationScreen()));
     }).catchError((error) {
       // Handle the error, for example, by displaying an error message

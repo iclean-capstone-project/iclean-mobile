@@ -35,18 +35,9 @@ class LocationScreen extends StatelessWidget {
             title: "Chọn ${location.addressName} làm địa chỉ mặc định",
             confirm: "Xác nhận",
             onTap: () {
-              final Map<String, dynamic> dataForUpdate = {
-                'locationName': location.addressName,
-                'description': location.description,
-                'latitude': location.latitude,
-                'longitude': location.longitude,
-                'isDefault': true,
-              };
-
-              apiLocationRepository
-                  .updateLocation(location.id!, dataForUpdate)
-                  .then((_) {
-                Navigator.push(
+              apiLocationRepository.setDefault(location.id!).then((_) {
+                Navigator.of(context).pop();
+                Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                         builder: (context) => const LocationScreen()));
@@ -58,8 +49,6 @@ class LocationScreen extends StatelessWidget {
         },
       );
     }
-
-    void updateLocation() {}
 
     return Scaffold(
       appBar: const MyAppBar(text: "Vị trí của bạn"),
@@ -129,7 +118,7 @@ class LocationScreen extends StatelessWidget {
                                           ),
                                           GestureDetector(
                                             onTap: () {
-                                              Navigator.push(
+                                              Navigator.pushReplacement(
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
@@ -185,7 +174,7 @@ class LocationScreen extends StatelessWidget {
       bottomNavigationBar: MyBottomAppBar(
         text: "Thêm vị trí mới",
         onTap: () {
-          Navigator.push(
+          Navigator.pushReplacement(
               context,
               MaterialPageRoute(
                   builder: (context) => AddLocationScreen(

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MyAppBar({
-    Key? key,
+    super.key,
     required this.text,
-  }) : super(key: key);
+  });
 
   final String text;
 
@@ -16,7 +16,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       title: Text(
         text,
-        style:  TextStyle(
+        style: TextStyle(
           color: Theme.of(context).colorScheme.secondary,
           fontFamily: 'Lato',
         ),
@@ -27,7 +27,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             Navigator.pop(context);
           },
           child: const Icon(Icons.arrow_back_ios)),
-      iconTheme:  IconThemeData(color: Theme.of(context).colorScheme.secondary),
+      iconTheme: IconThemeData(color: Theme.of(context).colorScheme.secondary),
       backgroundColor: Theme.of(context).colorScheme.background,
     );
   }
