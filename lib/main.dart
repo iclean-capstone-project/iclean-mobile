@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iclean_mobile_app/models/account.dart';
 import 'package:iclean_mobile_app/theme/theme_provider.dart';
 import 'package:iclean_mobile_app/auth/log_in/log_in_screen.dart';
 import 'package:iclean_mobile_app/view/common/location/location_provider.dart';
@@ -27,17 +28,26 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key, required this.isLoggedIn});
+  const MyApp({
+    super.key,
+    required this.isLoggedIn,
+    this.account,
+  });
 
   final bool isLoggedIn;
+  final Account? account;
 
   static Future<MyApp> launch() async {
     await UserPreferences.init();
 
     final isLoggedIn = UserPreferences.isLoggedIn();
-    // final account =
-    //     isLoggedIn ? await UserPreferences.getUserInfomation() : null;
-    return MyApp(isLoggedIn: isLoggedIn);
+
+    final account =
+        isLoggedIn ? await UserPreferences.getAccountInfomation() : null;
+    return MyApp(
+      isLoggedIn: isLoggedIn,
+      account: account,
+    );
   }
 
   @override
@@ -45,7 +55,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: Provider.of<ThemeProvider>(context).themeData,
-      home: isLoggedIn ? const RenterScreens() : LogInScreen(),
+      home: isLoggedIn ? RenterScreens(account: account!) : LogInScreen(),
     );
   }
 }

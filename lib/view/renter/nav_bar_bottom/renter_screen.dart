@@ -9,8 +9,12 @@ import 'package:iclean_mobile_app/view/common/profile/my_profile_screen/profile_
 import '../home/home_screen.dart';
 
 class RenterScreens extends StatefulWidget {
-  //final Account account;
-  const RenterScreens({super.key});
+  const RenterScreens({
+    super.key,
+    required this.account,
+  });
+
+  final Account account;
 
   @override
   State<RenterScreens> createState() => _RenterScreensState();
@@ -34,11 +38,11 @@ class _RenterScreensState extends State<RenterScreens> {
   void initState() {
     super.initState();
     _screenOptions = <Widget>[
-      HomeScreen(userLogin: userLogin),
+      HomeScreen(userLogin: widget.account),
       const MyBookingsScreen(),
       const ScheduleScreen(),
       const NotificationScreen(),
-      ProfileScreen(account: userLogin),
+      ProfileScreen(account: widget.account),
     ];
   }
 
@@ -51,8 +55,8 @@ class _RenterScreensState extends State<RenterScreens> {
           boxShadow: [
             BoxShadow(
               color: Colors.black,
-              blurRadius: 6,
-              offset: Offset(0, 4),
+              blurRadius: 10,
+              offset: Offset(0.5, 3),
             )
           ],
         ),

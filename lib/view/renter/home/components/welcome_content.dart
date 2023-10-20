@@ -36,7 +36,7 @@ class WelcomeContent extends StatelessWidget {
               Row(
                 children: [
                   CircleAvatar(
-                    backgroundImage: AssetImage(userLogin.profilePicture),
+                    backgroundImage: NetworkImage(userLogin.profilePicture),
                     radius: 24,
                   ),
                   Padding(

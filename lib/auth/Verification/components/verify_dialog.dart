@@ -1,29 +1,52 @@
 import 'package:flutter/material.dart';
+import 'package:iclean_mobile_app/models/account.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/view/renter/nav_bar_bottom/renter_screen.dart';
-import 'package:iclean_mobile_app/view/renter/set_up_new_account/update_new_proflie/update_new_profile_screen.dart';
+import 'package:iclean_mobile_app/view/common/set_up_new_account/update_new_proflie/update_new_profile_screen.dart';
 import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
 
 class VerifyDialog extends StatelessWidget {
-  const VerifyDialog({super.key, required this.isNew});
+  const VerifyDialog({
+    super.key,
+    required this.account,
+    required this.isNew,
+  });
+
+  final Account account;
   final bool isNew;
 
   @override
   Widget build(BuildContext context) {
-    void navigateScreen() {
-      Future.delayed(const Duration(seconds: 1), () {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) {
-              return const RenterScreens();
-            },
-          ),
-        );
+    void navigateToRenterScreen() {
+      Future.delayed(const Duration(seconds: 2), () {
+        // Navigator.of(context).pushReplacement(
+        //   MaterialPageRoute(
+        //     builder: (context) {
+        //       return const RenterScreens();
+        //     },
+        //   ),
+        // );
+      });
+    }
+
+    void navigateToEmployeeScreen() {
+      Future.delayed(const Duration(seconds: 2), () {
+        // Navigator.of(context).pushReplacement(
+        //   MaterialPageRoute(
+        //     builder: (context) {
+        //       return const RenterScreens();
+        //     },
+        //   ),
+        // );
       });
     }
 
     if (!isNew) {
-      navigateScreen();
+      navigateToRenterScreen();
+    }
+
+    if (isNew) {
+      navigateToEmployeeScreen();
     }
 
     return Dialog(

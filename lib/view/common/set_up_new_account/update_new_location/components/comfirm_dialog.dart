@@ -9,15 +9,15 @@ class ConfirmDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void navigateScreen() {
-      Future.delayed(const Duration(seconds: 2), () {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) {
-              return const RenterScreens();
-            },
-          ),
-        );
-      });
+      // Future.delayed(const Duration(seconds: 2), () {
+      //   Navigator.of(context).pushReplacement(
+      //     MaterialPageRoute(
+      //       builder: (context) {
+      //         return const RenterScreens();
+      //       },
+      //     ),
+      //   );
+      // });
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {

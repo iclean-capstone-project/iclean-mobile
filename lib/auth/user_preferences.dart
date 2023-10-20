@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:iclean_mobile_app/models/account.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -7,8 +10,7 @@ class UserPreferences {
   static const _accessToken = 'accessToken';
   static const _refreshToken = 'refreshToken';
   static const _keyPhone = 'phone';
-
-  //static const _keyUserInfo = 'infomation';
+  static const _keyAccountInfo = 'infomation';
 
   static Future init() async {
     _preferences = await SharedPreferences.getInstance();
@@ -50,24 +52,25 @@ class UserPreferences {
     return await storage.read(key: _refreshToken);
   }
 
-  // static Future setUserInfomation(Account value) async {
-  //   final jsonMap = value.toJson();
-  //   final jsonString = jsonEncode(jsonMap);
-  //   const storage = FlutterSecureStorage();
-  //   await storage.write(key: _keyUserInfo, value: jsonString);
-  // }
+  static Future setAccountInfomation(Account value) async {
+    final jsonMap = value.toJson();
+    final jsonString = jsonEncode(jsonMap);
+    const storage = FlutterSecureStorage();
+    await storage.write(key: _keyAccountInfo, value: jsonString);
+  }
 
-  // static Future<Account?> getUserInfomation() async {
-  //   const storage = FlutterSecureStorage();
-  //   final jsonString = await storage.read(key: _keyUserInfo);
-  //   if (jsonString != null) {
-  //     final Map<String, dynamic> jsonData = jsonDecode(jsonString);
-  //     final Account account = Account.fromJson(jsonData);
-  //     return account;
-  //   } else {
-  //     return null;
-  //   }
-  // }
+  static Future<Account?> getAccountInfomation() async {
+    const storage = FlutterSecureStorage();
+    final jsonString = await storage.read(key: _keyAccountInfo);
+
+    if (jsonString != null) {
+      final Map<String, dynamic> jsonData = jsonDecode(jsonString);
+      final Account account = Account.fromJson(jsonData);
+      return account;
+    } else {
+      return null;
+    }
+  }
 
   static Future logout() async {
     const storage = FlutterSecureStorage();

@@ -4,7 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:iclean_mobile_app/view/renter/set_up_new_account/update_new_location/update_new_location_screen.dart';
+import 'package:iclean_mobile_app/view/common/set_up_new_account/update_new_location/update_new_location_screen.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';

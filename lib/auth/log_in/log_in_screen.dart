@@ -26,8 +26,6 @@ class LogInScreen extends StatelessWidget {
       body: json.encode({'phoneNumber': phone}),
     );
     if (response.statusCode == 200) {
-      print('Request was successful. Status code: ${response.statusCode}');
-
       // ignore: use_build_context_synchronously
       Navigator.push(
           context,

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/auth/user_preferences.dart';
+import 'package:iclean_mobile_app/models/account.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
@@ -24,6 +25,10 @@ class VerificationScreen extends StatelessWidget {
     await UserPreferences.setRefreshToken(refreshToken);
   }
 
+  setAccount(Account account) async {
+    await UserPreferences.setAccountInfomation(account);
+  }
+
   Future<void> handleLogin(
       String phone, String verifyCode, BuildContext context) async {
     final response = await http.post(
@@ -35,14 +40,21 @@ class VerificationScreen extends StatelessWidget {
     if (response.statusCode == 200) {
       final jsonMap = json.decode(utf8.decode(response.bodyBytes));
       final data = jsonMap['data'];
+
       final accessToken = data['accessToken'];
       final refreshToken = data['refreshToken'];
-
       await setToken(phone, accessToken, refreshToken);
 
+      final dataAccount = data['userInformationDto'];
+      final account = Account.fromJson(dataAccount);
+      await setAccount(account);
+      await UserPreferences.getAccountInfomation();
+
+      final isNewAccount = dataAccount['isNewUser'];
       showDialog(
         context: context,
-        builder: (BuildContext context) => const VerifyDialog(isNew: false),
+        builder: (BuildContext context) =>
+            VerifyDialog(account: account, isNew: isNewAccount),
       );
     } else {
       throw Exception('status: ${response.statusCode}, body: ${response.body}');
