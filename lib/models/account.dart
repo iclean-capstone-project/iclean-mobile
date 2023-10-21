@@ -24,18 +24,18 @@ class Account {
 
     // Parse the date part
     final dateParts = datePart.split('-');
-    final year = int.parse(dateParts[0]);
+    final year = int.parse(dateParts[2]);
     final month = int.parse(dateParts[1]);
-    final day = int.parse(dateParts[2]);
+    final day = int.parse(dateParts[0]);
 
     final id = json['userId'] as int?;
-    final fullName = json['fullName'] as String;
+    final fullName = json['fullName'] as String? ?? "";
     final avatar = json['avatar'] as String? ?? "";
     final dateOfBirth = DateTime(year, month, day);
     final phoneNumber = json['phoneNumber'] as String;
     final email = json['email'] as String? ?? "";
-    final roleName = json['roleName'] as String;
-    final defaultAddress = json['defaultAddress'] as String;
+    final roleName = json['roleName'] as String? ?? "";
+    final defaultAddress = json['defaultAddress'] as String? ?? "";
 
     return Account(
       id: id,

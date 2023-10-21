@@ -17,36 +17,17 @@ class VerifyDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void navigateToRenterScreen() {
+
+    if (!isNew) {
       Future.delayed(const Duration(seconds: 2), () {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (context) {
-              return  RenterScreens(account: account);
+              return RenterScreens(account: account);
             },
           ),
         );
       });
-    }
-
-    void navigateToEmployeeScreen() {
-      Future.delayed(const Duration(seconds: 2), () {
-        // Navigator.of(context).pushReplacement(
-        //   MaterialPageRoute(
-        //     builder: (context) {
-        //       return const RenterScreens();
-        //     },
-        //   ),
-        // );
-      });
-    }
-
-    if (!isNew) {
-      navigateToRenterScreen();
-    }
-
-    if (isNew) {
-      navigateToEmployeeScreen();
     }
 
     return Dialog(

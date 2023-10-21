@@ -175,7 +175,7 @@ class _UpdateNewProfileScreenState extends State<UpdateNewProfileScreen> {
                                 child: _image == null
                                     ? const CircleAvatar(
                                         backgroundImage: AssetImage(
-                                            "assets/images/default_profile.jpg"),
+                                            "assets/images/default_profile.png"),
                                         radius: 72,
                                       )
                                     : CircleAvatar(

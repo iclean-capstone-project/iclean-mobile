@@ -49,8 +49,8 @@ class VerificationScreen extends StatelessWidget {
       final account = Account.fromJson(dataAccount);
       await setAccount(account);
       await UserPreferences.getAccountInfomation();
-
       final isNewAccount = dataAccount['isNewUser'];
+      // ignore: use_build_context_synchronously
       showDialog(
         context: context,
         builder: (BuildContext context) =>
