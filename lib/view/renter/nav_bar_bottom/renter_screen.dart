@@ -23,16 +23,16 @@ class RenterScreens extends StatefulWidget {
 class _RenterScreensState extends State<RenterScreens> {
   int _selectedIndex = 0;
   late List<Widget> _screenOptions;
-  Account userLogin = Account(
-      id: 1,
-      fullname: "Quang Linh",
-      profilePicture: "assets/images/bp.png",
-      dateOfBirth: DateTime.now(),
-      phone: "0123456789",
-      email: "linhlt28@gmail.com",
-      role: "renter",
-      address:
-          "S102 Vinhomes Grand Park, Nguyễn Xiễn, P. Long Thạnh Mỹ, Tp. Thủ Đức");
+  // Account userLogin = Account(
+  //     id: 1,
+  //     fullname: "Quang Linh",
+  //     profilePicture: "assets/images/bp.png",
+  //     dateOfBirth: DateTime.now(),
+  //     phone: "0123456789",
+  //     email: "linhlt28@gmail.com",
+  //     role: "renter",
+  //     address:
+  //         "S102 Vinhomes Grand Park, Nguyễn Xiễn, P. Long Thạnh Mỹ, Tp. Thủ Đức");
 
   @override
   void initState() {

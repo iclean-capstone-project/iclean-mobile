@@ -1,18 +1,18 @@
 class Account {
   int? id;
-  String fullname, profilePicture, phone, address, role;
+  String fullName, avatar, phoneNumber, defaultAddress, roleName;
   String email;
   DateTime dateOfBirth;
 
   Account({
     required this.id,
-    required this.fullname,
-    required this.profilePicture,
+    required this.fullName,
+    required this.avatar,
     required this.dateOfBirth,
-    required this.phone,
+    required this.phoneNumber,
     required this.email,
-    required this.role,
-    required this.address,
+    required this.roleName,
+    required this.defaultAddress,
   });
 
   factory Account.fromJson(Map<String, dynamic> json) {
@@ -29,36 +29,36 @@ class Account {
     final day = int.parse(dateParts[2]);
 
     final id = json['userId'] as int?;
-    final fullname = json['fullname'] as String;
-    final profilePicture = json['profilePicture'] as String? ?? "";
+    final fullName = json['fullName'] as String;
+    final avatar = json['avatar'] as String? ?? "";
     final dateOfBirth = DateTime(year, month, day);
-    final phone = json['phone'] as String;
+    final phoneNumber = json['phoneNumber'] as String;
     final email = json['email'] as String? ?? "";
-    final role = json['role'] as String;
-    final address = json['address'] as String;
+    final roleName = json['roleName'] as String;
+    final defaultAddress = json['defaultAddress'] as String;
 
     return Account(
       id: id,
-      fullname: fullname,
-      profilePicture: profilePicture,
+      fullName: fullName,
+      avatar: avatar,
       dateOfBirth: dateOfBirth,
-      phone: phone,
+      phoneNumber: phoneNumber,
       email: email,
-      role: role,
-      address: address,
+      roleName: roleName,
+      defaultAddress: defaultAddress,
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'fullname': fullname,
-      'profilePicture': profilePicture,
+      'fullName': fullName,
+      'avatar': avatar,
       'dateOfBirth': dateOfBirth.toIso8601String(),
-      'phone': phone,
+      'phoneNumber': phoneNumber,
       'email': email,
-      'role': role,
-      'address': address,
+      'roleName': roleName,
+      'defaultAddress': defaultAddress,
     };
   }
 }

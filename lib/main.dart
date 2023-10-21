@@ -44,6 +44,7 @@ class MyApp extends StatelessWidget {
 
     final account =
         isLoggedIn ? await UserPreferences.getAccountInfomation() : null;
+        print(account);
     return MyApp(
       isLoggedIn: isLoggedIn,
       account: account,

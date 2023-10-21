@@ -19,13 +19,13 @@ class VerifyDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     void navigateToRenterScreen() {
       Future.delayed(const Duration(seconds: 2), () {
-        // Navigator.of(context).pushReplacement(
-        //   MaterialPageRoute(
-        //     builder: (context) {
-        //       return const RenterScreens();
-        //     },
-        //   ),
-        // );
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) {
+              return  RenterScreens(account: account);
+            },
+          ),
+        );
       });
     }
 

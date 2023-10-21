@@ -34,7 +34,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   @override
   void initState() {
     super.initState();
-    nameController = TextEditingController(text: widget.account.fullname);
+    nameController = TextEditingController(text: widget.account.fullName);
     emailController = TextEditingController(text: widget.account.email);
   }
 
@@ -184,8 +184,8 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                             child: Center(
                               child: _image == null
                                   ? CircleAvatar(
-                                      backgroundImage: AssetImage(
-                                          widget.account.profilePicture),
+                                      backgroundImage: NetworkImage(
+                                          widget.account.avatar),
                                       radius: 72,
                                     )
                                   : CircleAvatar(

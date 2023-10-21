@@ -36,7 +36,7 @@ class WelcomeContent extends StatelessWidget {
               Row(
                 children: [
                   CircleAvatar(
-                    backgroundImage: NetworkImage(userLogin.profilePicture),
+                    backgroundImage: NetworkImage(userLogin.avatar),
                     radius: 24,
                   ),
                   Padding(
@@ -49,7 +49,7 @@ class WelcomeContent extends StatelessWidget {
                           Row(
                             children: [
                               Text(
-                                userLogin.fullname,
+                                userLogin.fullName,
                                 style: const TextStyle(
                                   fontSize: 18,
                                   fontFamily: 'Lato',
@@ -78,7 +78,7 @@ class WelcomeContent extends StatelessWidget {
                                 const SizedBox(width: 8),
                                 Expanded(
                                   child: Text(
-                                    userLogin.address,
+                                    userLogin.defaultAddress,
                                     style: const TextStyle(
                                       fontSize: 14,
                                       fontFamily: 'Lato',

@@ -68,12 +68,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Column(
                 children: [
                   CircleAvatar(
-                    backgroundImage: AssetImage(widget.account.profilePicture),
+                    backgroundImage: NetworkImage(widget.account.avatar),
                     radius: 48,
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    widget.account.fullname,
+                    widget.account.fullName,
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,

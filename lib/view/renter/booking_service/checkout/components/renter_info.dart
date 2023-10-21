@@ -27,7 +27,7 @@ class RenterInfo extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    account.fullname,
+                    account.fullName,
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontFamily: 'Lato',
@@ -35,7 +35,7 @@ class RenterInfo extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    "Số điện thoại: ${account.phone}",
+                    "Số điện thoại: ${account.phoneNumber}",
                     style: const TextStyle(
                       fontFamily: 'Lato',
                     ),
@@ -62,7 +62,7 @@ class RenterInfo extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            "Địa chỉ: ${account.address}",
+            "Địa chỉ: ${account.defaultAddress}",
             style: const TextStyle(
               fontFamily: 'Lato',
             ),
