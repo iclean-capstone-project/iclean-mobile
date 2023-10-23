@@ -42,6 +42,7 @@ class LocationScreen extends StatelessWidget {
                     MaterialPageRoute(
                         builder: (context) => const LocationScreen()));
               }).catchError((error) {
+                // ignore: avoid_print
                 print('Failed to update location: $error');
               });
             },

@@ -86,6 +86,7 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
           MaterialPageRoute(builder: (context) => const LocationScreen()));
     }).catchError((error) {
       // Handle the error, for example, by displaying an error message
+      // ignore: avoid_print
       print('Failed to add location: $error');
     });
   }

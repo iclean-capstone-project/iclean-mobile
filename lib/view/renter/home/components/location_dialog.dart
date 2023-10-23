@@ -1,29 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:iclean_mobile_app/view/renter/nav_bar_bottom/renter_screen.dart';
+import 'package:iclean_mobile_app/utils/color_palette.dart';
+import 'package:iclean_mobile_app/view/common/location/location_screen.dart';
+import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
 
-import '../../../../../utils/color_palette.dart';
-
-class ConfirmDialog extends StatelessWidget {
-  const ConfirmDialog({super.key});
+class LocationDialog extends StatelessWidget {
+  const LocationDialog({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    void navigateScreen() {
-      // Future.delayed(const Duration(seconds: 2), () {
-      //   Navigator.of(context).pushReplacement(
-      //     MaterialPageRoute(
-      //       builder: (context) {
-      //         return const RenterScreens();
-      //       },
-      //     ),
-      //   );
-      // });
-    }
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      navigateScreen();
-    });
-
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
@@ -44,7 +30,7 @@ class ConfirmDialog extends StatelessWidget {
             const Padding(
               padding: EdgeInsets.only(top: 16),
               child: Text(
-                "Xác thực thành công",
+                "Vui lòng cập nhật vị trí",
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -56,7 +42,7 @@ class ConfirmDialog extends StatelessWidget {
             const Padding(
               padding: EdgeInsets.only(top: 8),
               child: Text(
-                "Tài khoản của bạn đã sẵn sàng. Bạn sẽ được chuyển đến trang chủ sau một vài giây..",
+                "Có vẻ như bạn vẫn chưa cập nhật vị trí của mình. Hãy cập nhật vị trí để có thể đặt dịch vụ nhé!",
                 style: TextStyle(
                   fontSize: 16,
                   fontFamily: 'Lato',
@@ -64,12 +50,18 @@ class ConfirmDialog extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.only(top: 16.0),
-              child: CircularProgressIndicator(
-                color: ColorPalette.mainColor,
+            Padding(
+              padding: const EdgeInsets.only(top: 16),
+              child: MainColorInkWellFullSize(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LocationScreen()));
+                },
+                text: "Cập nhập vị trí",
               ),
-            ),
+            )
           ],
         ),
       ),

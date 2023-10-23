@@ -7,6 +7,7 @@ import 'package:iclean_mobile_app/models/address.dart';
 import 'package:iclean_mobile_app/repository/location_repo.dart';
 import 'package:iclean_mobile_app/services/constant.dart';
 
+// ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
 
 class ApiLocationRepository implements LocationRepository {

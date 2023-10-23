@@ -9,9 +9,9 @@ import 'components/list_service.dart';
 import 'components/welcome_content.dart';
 
 class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key, required this.userLogin});
+  HomeScreen({super.key, required this.account});
 
-  final Account userLogin;
+  final Account account;
 
   final List<Service> services = [
     Service(
@@ -68,7 +68,7 @@ class HomeScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               //top
-              WelcomeContent(userLogin: userLogin),
+              WelcomeContent(account: account),
 
               const Padding(
                 padding: EdgeInsets.only(top: 16.0, left: 24),
@@ -94,7 +94,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              ListService(services: services, userLogin: userLogin),
+              ListService(services: services, account: account),
             ],
           ),
         ),

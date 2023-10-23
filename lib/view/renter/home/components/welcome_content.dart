@@ -7,10 +7,10 @@ import '../../../common/location/location_screen.dart';
 class WelcomeContent extends StatelessWidget {
   const WelcomeContent({
     super.key,
-    required this.userLogin,
+    required this.account,
   });
 
-  final Account userLogin;
+  final Account account;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class WelcomeContent extends StatelessWidget {
               Row(
                 children: [
                   CircleAvatar(
-                    backgroundImage: NetworkImage(userLogin.avatar),
+                    backgroundImage: NetworkImage(account.avatar),
                     radius: 24,
                   ),
                   Padding(
@@ -49,7 +49,7 @@ class WelcomeContent extends StatelessWidget {
                           Row(
                             children: [
                               Text(
-                                userLogin.fullName,
+                                account.fullName,
                                 style: const TextStyle(
                                   fontSize: 18,
                                   fontFamily: 'Lato',
@@ -78,11 +78,15 @@ class WelcomeContent extends StatelessWidget {
                                 const SizedBox(width: 8),
                                 Expanded(
                                   child: Text(
-                                    userLogin.defaultAddress,
-                                    style: const TextStyle(
+                                    (account.defaultAddress == '')
+                                        ? "Bạn vẫn chưa cập nhật vị trí"
+                                        : account.defaultAddress,
+                                    style: TextStyle(
                                       fontSize: 14,
                                       fontFamily: 'Lato',
-                                      color: Colors.white,
+                                      color: (account.defaultAddress == '')
+                                          ? Colors.red
+                                          : Colors.white,
                                     ),
                                     overflow: TextOverflow.ellipsis,
                                   ),

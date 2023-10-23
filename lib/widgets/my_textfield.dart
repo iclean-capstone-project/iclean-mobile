@@ -5,15 +5,16 @@ class MyTextField extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
   final TextInputType? textType;
+  final Widget? suffixIcon;
   final String? Function(dynamic value)? validator;
 
-  const MyTextField({
-    super.key,
-    required this.controller,
-    required this.hintText,
-    this.textType,
-    this.validator,
-  });
+  const MyTextField(
+      {super.key,
+      required this.controller,
+      required this.hintText,
+      this.textType,
+      this.validator,
+      this.suffixIcon});
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +40,7 @@ class MyTextField extends StatelessWidget {
           ),
         ),
         fillColor: Theme.of(context).colorScheme.primary,
+        suffixIcon: suffixIcon,
         filled: true,
         hintText: hintText,
         hintStyle: const TextStyle(
@@ -46,7 +48,7 @@ class MyTextField extends StatelessWidget {
           fontFamily: 'Lato',
         ),
       ),
-      style:  const TextStyle(
+      style: const TextStyle(
         fontSize: 16,
         fontFamily: 'Lato',
       ),

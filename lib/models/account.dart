@@ -16,7 +16,7 @@ class Account {
   });
 
   factory Account.fromJson(Map<String, dynamic> json) {
-    final dateOfBirthStr = json['dateOfBirth'] as String;
+    final dateOfBirthStr = json['dateOfBirth'] as String? ?? "";
 
     // Split the date and time parts
     final dateAndTimeParts = dateOfBirthStr.split('T');
@@ -47,18 +47,5 @@ class Account {
       roleName: roleName,
       defaultAddress: defaultAddress,
     );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'fullName': fullName,
-      'avatar': avatar,
-      'dateOfBirth': dateOfBirth.toIso8601String(),
-      'phoneNumber': phoneNumber,
-      'email': email,
-      'roleName': roleName,
-      'defaultAddress': defaultAddress,
-    };
   }
 }

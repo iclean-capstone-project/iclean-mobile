@@ -4,15 +4,17 @@ import 'package:iclean_mobile_app/models/services.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/view/renter/booking_service/service_details_screen.dart';
 
+import 'location_dialog.dart';
+
 class ListService extends StatelessWidget {
   const ListService({
     super.key,
     required this.services,
-    required this.userLogin,
+    required this.account,
   });
 
   final List<Service> services;
-  final Account userLogin;
+  final Account account;
 
   @override
   Widget build(BuildContext context) {
@@ -27,15 +29,22 @@ class ListService extends StatelessWidget {
           for (int i = 0; i < services.length; i++)
             InkWell(
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ServiceDetailsScreen(
-                      account: userLogin,
-                      service: services[i],
+                if (account.defaultAddress != '') {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ServiceDetailsScreen(
+                        account: account,
+                        service: services[i],
+                      ),
                     ),
-                  ),
-                );
+                  );
+                } else {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) => const LocationDialog(),
+                  );
+                }
               },
               child: Container(
                 margin: const EdgeInsets.all(16),

@@ -2,9 +2,16 @@
 
 import 'dart:io';
 
+// ignore: depend_on_referenced_packages
+import 'package:http/http.dart' as http;
+
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:iclean_mobile_app/models/account.dart';
+import 'package:iclean_mobile_app/services/api_account_repo.dart';
+import 'package:intl/intl.dart';
+import 'package:flutter/services.dart';
+import 'package:iclean_mobile_app/auth/user_preferences.dart';
+import 'package:iclean_mobile_app/services/constant.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 import 'package:iclean_mobile_app/widgets/my_bottom_app_bar.dart';
 import 'package:image_picker/image_picker.dart';
@@ -13,36 +20,28 @@ import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/widgets/my_textfield.dart';
 import 'package:iclean_mobile_app/widgets/select_photo_options_screen.dart';
 
-import 'package:intl/intl.dart';
+import 'components/comfirm_dialog.dart';
 
-class UpdateProfileScreen extends StatefulWidget {
-  const UpdateProfileScreen({super.key, required this.account});
-  final Account account;
+class SetProfileScreen extends StatefulWidget {
+  const SetProfileScreen({super.key, required this.role});
+
+  final String role;
 
   @override
-  State<UpdateProfileScreen> createState() => _UpdateProfileScreenState();
+  State<SetProfileScreen> createState() => _SetProfileScreenState();
 }
 
-class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
-  dynamic nameController = TextEditingController();
-  dynamic emailController = TextEditingController();
+class _SetProfileScreenState extends State<SetProfileScreen> {
   final _formKey = GlobalKey<FormState>();
   File? _image;
+  final nameController = TextEditingController();
   bool initDateTime = false;
   DateTime? _selectedDate;
+  String imgPath = '';
 
   @override
   void initState() {
-    super.initState();
-    nameController = TextEditingController(text: widget.account.fullName);
-    emailController = TextEditingController(text: widget.account.email);
-  }
-
-  @override
-  void dispose() {
-    nameController.dispose();
-    emailController.dispose();
-    super.dispose();
+    super.initState;
   }
 
   Future _pickImage(ImageSource source) async {
@@ -104,17 +103,6 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     return null;
   }
 
-  // Define validation email function
-  String? validateEmail(String? value) {
-    if (value!.isEmpty) {
-      return 'Please enter email';
-    } else if (!RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
-        .hasMatch(value)) {
-      return 'Email is invalid';
-    }
-    return null;
-  }
-
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -154,13 +142,74 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     }
   }
 
+  Future<Account> fetchAccount() async {
+    final ApiAccountRepository apiAccountRepository = ApiAccountRepository();
+
+    try {
+      final account = await apiAccountRepository.getAccount();
+      return account;
+    } catch (e) {
+      print(e);
+      return Account(
+          id: 1,
+          fullName: "Quang Linh",
+          avatar: "assets/images/bp.png",
+          dateOfBirth: DateTime.now(),
+          phoneNumber: "0123456789",
+          email: "linhlt28@gmail.com",
+          roleName: "renter",
+          defaultAddress:
+              "S102 Vinhomes Grand Park, Nguyễn Xiễn, P. Long Thạnh Mỹ, Tp. Thủ Đức");
+    }
+  }
+
+  Future<void> setNewAccount(String fullName, DateTime dateOfBirth, File image,
+      String role, BuildContext context) async {
+    final uri = Uri.parse('${BaseConstant.baseUrl}/auth/register');
+
+    final accessToken = await UserPreferences.getAccessToken();
+    var request = http.MultipartRequest(
+      'POST',
+      uri,
+    );
+
+    request.headers.addAll({
+      'Authorization': 'Bearer $accessToken',
+    });
+
+    String dob = DateFormat('dd-MM-yyyy').format(_selectedDate!);
+
+    request.fields['fullName'] = fullName;
+    request.fields['dateOfBirth'] = dob;
+    request.files.add(
+      await http.MultipartFile.fromPath('fileImage', image.path),
+    );
+    request.fields['role'] = role;
+    try {
+      var response = await request.send();
+
+      if (response.statusCode == 200) {
+        final account = await fetchAccount();
+        showDialog(
+          context: context,
+          builder: (BuildContext context) => ConfirmDialog(account: account),
+        );
+      } else {
+        throw Exception(
+            'Failed to set profile. Status: ${response.statusCode}');
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const MyAppBar(text: "Cập nhập hồ sơ"),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
           child: Form(
             key: _formKey,
             child: Column(
@@ -183,9 +232,9 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                             ),
                             child: Center(
                               child: _image == null
-                                  ? CircleAvatar(
-                                      backgroundImage:
-                                          NetworkImage(widget.account.avatar),
+                                  ? const CircleAvatar(
+                                      backgroundImage: AssetImage(
+                                          "assets/images/default_profile.png"),
                                       radius: 72,
                                     )
                                   : CircleAvatar(
@@ -237,14 +286,15 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                   ),
                 ),
 
-                //Email TextField
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: MyTextField(
-                      controller: emailController,
-                      hintText: 'Email',
-                      validator: (value) => validateEmail(value)),
-                ),
+                if (_selectedDate == null && initDateTime)
+                  const Text(
+                    'Please select a date',
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontFamily: 'Lato',
+                      fontSize: 12,
+                    ),
+                  ),
               ],
             ),
           ),
@@ -253,12 +303,8 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
       bottomNavigationBar: MyBottomAppBar(
         text: "Tiếp tục",
         onTap: () {
-          // Navigator.pushReplacement(
-          //     context,
-          //     MaterialPageRoute(
-          //         builder: (context) => AddLocationScreen(
-          //               apiLocationRepository: apiLocationRepository,
-          //             )));
+          setNewAccount(nameController.text, _selectedDate!, _image!,
+              widget.role, context);
         },
       ),
     );

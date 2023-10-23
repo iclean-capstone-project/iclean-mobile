@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/auth/user_preferences.dart';
 import 'package:iclean_mobile_app/models/account.dart';
+import 'package:iclean_mobile_app/services/constant.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
@@ -20,19 +21,15 @@ class VerificationScreen extends StatelessWidget {
 
   setToken(String phone, String accessToken, String refreshToken) async {
     await UserPreferences.setLoggedIn(true);
-    await UserPreferences.setPhone(phone);
+
     await UserPreferences.setAccessToken(accessToken);
     await UserPreferences.setRefreshToken(refreshToken);
-  }
-
-  setAccount(Account account) async {
-    await UserPreferences.setAccountInfomation(account);
   }
 
   Future<void> handleLogin(
       String phone, String verifyCode, BuildContext context) async {
     final response = await http.post(
-      Uri.parse("https://iclean.azurewebsites.net/api/v1/auth/otp-number"),
+      Uri.parse("${BaseConstant.baseUrl}/auth/otp-number"),
       headers: {'Content-Type': 'application/json'},
       body: json.encode({'phoneNumber': phone, 'otpToken': verifyCode}),
     );
@@ -47,9 +44,8 @@ class VerificationScreen extends StatelessWidget {
 
       final dataAccount = data['userInformationDto'];
       final account = Account.fromJson(dataAccount);
-      await setAccount(account);
-      await UserPreferences.getAccountInfomation();
       final isNewAccount = dataAccount['isNewUser'];
+
       // ignore: use_build_context_synchronously
       showDialog(
         context: context,
@@ -64,7 +60,7 @@ class VerificationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<TextEditingController> codeControllers = List.generate(
-      6,
+      4,
       (index) => TextEditingController(),
     );
 

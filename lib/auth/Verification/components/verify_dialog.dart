@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/account.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/view/renter/nav_bar_bottom/renter_screen.dart';
-import 'package:iclean_mobile_app/view/common/set_up_new_account/update_new_proflie/update_new_profile_screen.dart';
 import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
+import 'package:iclean_mobile_app/view/common/set_up_new_account/set_role/set_role_screen.dart';
 
 class VerifyDialog extends StatelessWidget {
   const VerifyDialog({
@@ -17,9 +17,8 @@ class VerifyDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     if (!isNew) {
-      Future.delayed(const Duration(seconds: 2), () {
+      Future.delayed(const Duration(seconds: 2), () async {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (context) {
@@ -80,8 +79,7 @@ class VerifyDialog extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    const UpdateNewProfileScreen()));
+                                builder: (context) => const SetRoleScreen()));
                       },
                       text: "Cập nhập hồ sơ",
                     ),
