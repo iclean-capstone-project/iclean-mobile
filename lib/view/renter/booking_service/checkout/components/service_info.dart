@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:iclean_mobile_app/models/services.dart';
 import 'package:iclean_mobile_app/widgets/details_fields.dart';
-import 'package:iclean_mobile_app/view/renter/booking_service/booking_details/booking_details_provider.dart';
+import 'package:iclean_mobile_app/provider/booking_details_provider.dart';
 
 class ServiceInfo extends StatelessWidget {
   const ServiceInfo({

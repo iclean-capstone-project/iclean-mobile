@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-import '../booking_details_provider.dart';
+import '../../../../../provider/booking_details_provider.dart';
 
 class MyCalendar extends StatelessWidget {
   MyCalendar({super.key, required this.bookingDetailsProvider});

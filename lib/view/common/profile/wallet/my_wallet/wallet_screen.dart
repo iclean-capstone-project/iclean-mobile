@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/transaction.dart';
+import 'package:iclean_mobile_app/models/wallet.dart';
+import 'package:iclean_mobile_app/services/api_wallet_repo.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 
 import 'components/account_balance.dart';
@@ -27,6 +29,17 @@ class MyWalletScreen extends StatelessWidget {
         status: 0, //Pending
       ),
     ];
+
+    Future<Wallet> fetchMoney() async {
+      final ApiWalletRepository apiWalletRepository = ApiWalletRepository();
+      try {
+        final money = await apiWalletRepository.getMoney();
+        return money;
+      } catch (e) {
+        throw Exception(e);
+      }
+    }
+
     return Scaffold(
       appBar: const MyAppBar(text: "Ví của tôi"),
       body: SingleChildScrollView(
@@ -35,9 +48,22 @@ class MyWalletScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Padding(
-                padding: EdgeInsets.only(top: 24.0),
-                child: AccountBalance(),
+              FutureBuilder(
+                future: fetchMoney(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else if (snapshot.hasData) {
+                    final money = snapshot.data!;
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 24.0),
+                      child: AccountBalance(money: money),
+                    );
+                  }
+                  return const Divider();
+                },
               ),
               const SizedBox(height: 16),
               const Text(

@@ -13,8 +13,8 @@ class ServiceDetailsScreen extends StatelessWidget {
     required this.account,
   });
 
-  final Account account;
   final Service service;
+  final Account account;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class ServiceDetailsScreen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          const RenterScreens(selectedIndex: 3)));
+                          RenterScreens(account: account, selectedIndex: 3)));
             },
           ),
         ],

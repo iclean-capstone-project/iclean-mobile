@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:iclean_mobile_app/models/account.dart';
-import 'package:iclean_mobile_app/services/api_account_repo.dart';
 import 'package:iclean_mobile_app/view/renter/cart/cart_screen.dart';
+import 'package:iclean_mobile_app/view/renter/home/home_screen.dart';
 import 'package:iclean_mobile_app/view/renter/schedule/schedule_screen.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/view/renter/my_booking/my_booking_screen.dart';
 import 'package:iclean_mobile_app/view/common/profile/my_profile_screen/profile_screen.dart';
-import '../home/home_screen.dart';
 
 class RenterScreens extends StatefulWidget {
   const RenterScreens({
     super.key,
+    required this.account,
     this.selectedIndex,
-    //required this.account,
   });
 
-  //final Account account;
+  final Account account;
   final int? selectedIndex;
 
   @override
@@ -26,40 +25,6 @@ class RenterScreens extends StatefulWidget {
 class _RenterScreensState extends State<RenterScreens> {
   late int _selectedIndex;
   late List<Widget> _screenOptions;
-
-  Account userLogin = Account(
-      id: 1,
-      fullName: "Quang Linh",
-      avatar: "assets/images/bp.png",
-      dateOfBirth: DateTime.now(),
-      phoneNumber: "0123456789",
-      email: "linhlt28@gmail.com",
-      roleName: "renter",
-      defaultAddress:
-          "S102 Vinhomes Grand Park, Nguyễn Xiễn, P. Long Thạnh Mỹ, Tp. Thủ Đức");
-
-  Future<Account> fetchNotifications(ApiAccountRepository repository) async {
-    try {
-      final account = await repository.getAccount();
-      print("account: $account");
-      return account;
-    } catch (e) {
-      // ignore: avoid_print
-      print(e);
-      return Account(
-          id: 1,
-          fullName: "Quang Linh",
-          avatar: "assets/images/bp.png",
-          dateOfBirth: DateTime.now(),
-          phoneNumber: "0123456789",
-          email: "linhlt28@gmail.com",
-          roleName: "renter",
-          defaultAddress:
-              "S102 Vinhomes Grand Park, Nguyễn Xiễn, P. Long Thạnh Mỹ, Tp. Thủ Đức");
-    }
-  }
-
-  final ApiAccountRepository apiAccountRepository = ApiAccountRepository();
 
   @override
   void initState() {
@@ -71,14 +36,12 @@ class _RenterScreensState extends State<RenterScreens> {
       _selectedIndex = 0;
     }
 
-    fetchNotifications(apiAccountRepository);
-
     _screenOptions = <Widget>[
-      HomeScreen(account: userLogin),
+      HomeScreen(account: widget.account),
       const MyBookingsScreen(),
       const ScheduleScreen(),
-      CartScreen(account: userLogin),
-      ProfileScreen(account: userLogin),
+      CartScreen(account: widget.account),
+      ProfileScreen(account: widget.account),
     ];
   }
 

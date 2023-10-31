@@ -7,7 +7,9 @@ import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/account.dart';
+import 'package:iclean_mobile_app/models/wallet.dart';
 import 'package:iclean_mobile_app/services/api_account_repo.dart';
+import 'package:iclean_mobile_app/services/api_wallet_repo.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
 import 'package:iclean_mobile_app/auth/user_preferences.dart';
@@ -149,17 +151,17 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
       final account = await apiAccountRepository.getAccount();
       return account;
     } catch (e) {
-      print(e);
-      return Account(
-          id: 1,
-          fullName: "Quang Linh",
-          avatar: "assets/images/bp.png",
-          dateOfBirth: DateTime.now(),
-          phoneNumber: "0123456789",
-          email: "linhlt28@gmail.com",
-          roleName: "renter",
-          defaultAddress:
-              "S102 Vinhomes Grand Park, Nguyễn Xiễn, P. Long Thạnh Mỹ, Tp. Thủ Đức");
+      throw Exception(e);
+    }
+  }
+
+  Future<Wallet> fetchMoney() async {
+    final ApiWalletRepository apiWalletRepository = ApiWalletRepository();
+    try {
+      final money = await apiWalletRepository.getMoney();
+      return money;
+    } catch (e) {
+      throw Exception(e);
     }
   }
 
@@ -190,6 +192,7 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
 
       if (response.statusCode == 200) {
         final account = await fetchAccount();
+        final money = await fetchMoney();
         showDialog(
           context: context,
           builder: (BuildContext context) => ConfirmDialog(account: account),

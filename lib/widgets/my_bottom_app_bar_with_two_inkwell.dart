@@ -38,7 +38,7 @@ class MyBottomAppBarTwoInkWell extends StatelessWidget {
               Container(
                 color: Theme.of(context).colorScheme.background,
                 child: MainColorInkWellFullSize(
-                  backgroundColor: Colors.white,
+                  backgroundColor: Theme.of(context).colorScheme.background,
                   textColor: ColorPalette.mainColor,
                   width: MediaQuery.of(context).size.width * 0.44,
                   onTap: onTap1,

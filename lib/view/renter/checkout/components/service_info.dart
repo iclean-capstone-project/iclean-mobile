@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:iclean_mobile_app/view/renter/cart/components/cart_item.dart';
+import 'package:iclean_mobile_app/view/renter/cart/components/cart_item_content.dart';
 import 'package:intl/intl.dart';
 import 'package:iclean_mobile_app/models/cart.dart';
 import 'package:iclean_mobile_app/widgets/details_fields.dart';

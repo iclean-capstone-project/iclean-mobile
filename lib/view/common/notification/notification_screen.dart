@@ -4,7 +4,7 @@ import 'package:iclean_mobile_app/widgets/title_content.dart';
 import 'package:provider/provider.dart';
 import 'package:iclean_mobile_app/models/noti.dart';
 import 'package:iclean_mobile_app/services/api_noti_repo.dart';
-import 'package:iclean_mobile_app/view/common/notification/notification_provider.dart';
+import 'package:iclean_mobile_app/provider/notification_provider.dart';
 
 import 'components/noti_content.dart';
 
@@ -17,7 +17,6 @@ class NotificationScreen extends StatelessWidget {
         ApiNotiRepository repository, int page) async {
       try {
         final newNotifications = await repository.getNoti(page);
-        //print("Notifications: $newNotifications");
         return newNotifications;
       } catch (e) {
         // ignore: avoid_print
@@ -43,7 +42,6 @@ class NotificationScreen extends StatelessWidget {
                     text2: "Đọc hết",
                     onTap: () async {
                       await notificationsProvider.readAll();
-                      //After marking notifications as read, fetch notifications again
                       await notificationsProvider.fetchNotifications(
                           apiNotiRepository, 1);
                     },
@@ -52,8 +50,6 @@ class NotificationScreen extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               FutureBuilder<List<Noti>>(
-                // future: notificationsProvider.fetchNotifications(
-                //     apiNotiRepository, 1),
                 future: fetchNotifications(apiNotiRepository, 1),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:iclean_mobile_app/theme/theme_provider.dart';
+import 'package:iclean_mobile_app/provider/theme_provider.dart';
 import 'package:provider/provider.dart';
 
 class DarkModeButton extends StatefulWidget {

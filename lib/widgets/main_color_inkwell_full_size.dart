@@ -32,7 +32,7 @@ class MainColorInkWellFullSize extends StatelessWidget {
             BoxShadow(
               color: ColorPalette.mainColor,
               offset: Offset(0, 2),
-              blurRadius: 3.0,
+              blurRadius: 6.0,
               spreadRadius: 0.0,
             ),
           ],

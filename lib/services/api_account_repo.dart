@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:iclean_mobile_app/auth/user_preferences.dart';
 import 'package:iclean_mobile_app/models/account.dart';
 import 'package:iclean_mobile_app/repository/account_repo.dart';
-import 'package:iclean_mobile_app/services/constant.dart';
+import 'constant.dart';
 // ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
 
@@ -28,7 +28,6 @@ class ApiAccountRepository implements AccountRepository {
         final jsonMap = json.decode(utf8.decode(response.bodyBytes));
         final data = jsonMap['data'];
         final account = Account.fromJson(data);
-        print(account);
         return account;
       } else {
         return throw Exception(

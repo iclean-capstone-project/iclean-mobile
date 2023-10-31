@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/account.dart';
+
 import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/view/renter/nav_bar_bottom/renter_screen.dart';
 
 class ConfirmDialog extends StatelessWidget {
-  const ConfirmDialog({super.key, required this.account});
+  const ConfirmDialog({
+    super.key,
+    required this.account,
+  });
 
   final Account account;
 
@@ -15,8 +19,7 @@ class ConfirmDialog extends StatelessWidget {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (context) {
-              //return RenterScreens(account: account);
-              return const RenterScreens();
+              return RenterScreens(account: account);
             },
           ),
         );

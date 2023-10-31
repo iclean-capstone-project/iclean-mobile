@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
 
-import '../booking_details_provider.dart';
+import '../../../../../provider/booking_details_provider.dart';
 import 'option_content.dart';
 
 class TimeWorkingOption extends StatefulWidget {

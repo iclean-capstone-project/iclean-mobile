@@ -5,7 +5,7 @@ import 'package:iclean_mobile_app/models/account.dart';
 
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 import 'package:iclean_mobile_app/widgets/my_bottom_app_bar.dart';
-import 'package:iclean_mobile_app/view/renter/booking_service/booking_details/booking_details_provider.dart';
+import 'package:iclean_mobile_app/provider/booking_details_provider.dart';
 
 import 'components/point_button.dart';
 import 'components/renter_info.dart';

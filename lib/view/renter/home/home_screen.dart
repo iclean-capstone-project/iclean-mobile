@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/account.dart';
-
+import 'package:iclean_mobile_app/models/services.dart';
 import 'package:iclean_mobile_app/view/renter/home/components/banner_slider.dart';
 
-import '../../../models/services.dart';
 import 'components/list_service.dart';
-
 import 'components/welcome_content.dart';
 
 class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key, required this.account});
+  HomeScreen({
+    super.key,
+    required this.account,
+    //required this.money,
+  });
 
   final Account account;
+  //final Wallet money;
 
   final List<Service> services = [
     Service(

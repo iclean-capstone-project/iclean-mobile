@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/account.dart';
-import 'package:iclean_mobile_app/models/cart.dart';
+
+import 'package:iclean_mobile_app/provider/cart_provider.dart';
 import 'package:iclean_mobile_app/view/renter/cart/components/cart_item_content.dart';
 import 'package:iclean_mobile_app/view/renter/checkout/checkout_screen.dart';
 import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';

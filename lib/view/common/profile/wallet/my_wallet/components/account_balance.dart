@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:iclean_mobile_app/models/wallet.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
 
 class AccountBalance extends StatelessWidget {
   const AccountBalance({
     super.key,
+    required this.money,
   });
+
+  final Wallet money;
 
   @override
   Widget build(BuildContext context) {
@@ -24,16 +28,16 @@ class AccountBalance extends StatelessWidget {
       ),
       child: Center(
         child: Column(
-          children: const [
-            Icon(
-              Icons.wallet,
+          children: [
+            const Icon(
+              Icons.account_balance_wallet_rounded,
               color: Colors.white,
               size: 32,
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
-              "5000000 VNĐ",
-              style: TextStyle(
+              money.formatBalanceInVND(),
+              style: const TextStyle(
                 color: Colors.white,
                 fontFamily: 'Lato',
                 fontSize: 24,
@@ -41,8 +45,8 @@ class AccountBalance extends StatelessWidget {
                 letterSpacing: 1,
               ),
             ),
-            SizedBox(height: 8),
-            Text(
+            const SizedBox(height: 8),
+            const Text(
               "Số dư tài khoản",
               style: TextStyle(
                 color: Colors.white,

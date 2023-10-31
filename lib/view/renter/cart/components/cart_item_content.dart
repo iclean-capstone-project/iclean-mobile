@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:iclean_mobile_app/models/cart.dart';
+import 'package:iclean_mobile_app/provider/cart_provider.dart';
 
 import 'package:intl/intl.dart';
 
