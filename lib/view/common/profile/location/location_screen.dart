@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/address.dart';
 import 'package:iclean_mobile_app/services/api_location_repo.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
-import 'package:iclean_mobile_app/view/common/location/add_location/add_location_screen.dart';
-import 'package:iclean_mobile_app/view/common/location/update_location/update_location_screen.dart';
+import 'package:iclean_mobile_app/view/common/profile/location/add_location/add_location_screen.dart';
+import 'package:iclean_mobile_app/view/common/profile/location/update_location/update_location_screen.dart';
 import 'package:iclean_mobile_app/widgets/my_bottom_app_bar.dart';
 
-import '../../../widgets/confirm_dialog.dart';
+import '../../../../widgets/confirm_dialog.dart';
 
 class LocationScreen extends StatelessWidget {
   const LocationScreen({super.key});
@@ -52,7 +52,7 @@ class LocationScreen extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: const MyAppBar(text: "Vị trí của bạn"),
+      appBar: const MyAppBar(text: "Vị trí của tôi"),
       body: FutureBuilder<List<Address>>(
         future: fetchNotifications(apiLocationRepository),
         builder: (context, snapshot) {

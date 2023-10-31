@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:iclean_mobile_app/models/account.dart';
+import 'package:iclean_mobile_app/models/cart.dart';
 import 'package:iclean_mobile_app/models/services.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
-import 'package:iclean_mobile_app/widgets/my_bottom_app_bar.dart';
-import 'package:provider/provider.dart';
+import 'package:iclean_mobile_app/widgets/my_bottom_app_bar_with_two_inkwell.dart';
+import 'package:iclean_mobile_app/view/renter/nav_bar_bottom/renter_screen.dart';
+import 'package:iclean_mobile_app/view/renter/booking_service/checkout/checkout_screen.dart';
 
-import '../checkout/checkout_screen.dart';
 import 'booking_details_provider.dart';
 import 'components/my_calendar.dart';
 import 'components/start_time_option.dart';
@@ -30,8 +32,23 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
   Widget build(BuildContext context) {
     BookingDetailsProvider bookingDetailsProvider =
         Provider.of<BookingDetailsProvider>(context);
+    final cartProvider = Provider.of<CartProvider>(context);
     return Scaffold(
-      appBar: MyAppBar(text: widget.service.name),
+      appBar: MyAppBar(
+        text: widget.service.name,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.shopping_cart_outlined),
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          const RenterScreens(selectedIndex: 3)));
+            },
+          ),
+        ],
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -114,13 +131,30 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: MyBottomAppBar(
-        text: "Đặt dịch vụ",
-        onTap: () {
+      bottomNavigationBar: MyBottomAppBarTwoInkWell(
+        text1: "Thêm vào giỏ",
+        onTap1: () {
+          cartProvider.addToCart(
+            CartItem(
+              service: widget.service,
+              day: bookingDetailsProvider.selectedDay,
+              time: bookingDetailsProvider.selectedOption,
+              timeStart: bookingDetailsProvider.selectedTime,
+            ),
+          );
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('${widget.service.name} đã được thêm vào giỏ hàng'),
+              duration: const Duration(seconds: 1),
+            ),
+          );
+        },
+        text2: "Đặt dịch vụ",
+        onTap2: () {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => CheckoutScreen(
+                  builder: (context) => CheckoutScreen1(
                         account: widget.account,
                         service: widget.service,
                       )));

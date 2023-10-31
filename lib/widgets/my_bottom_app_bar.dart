@@ -7,8 +7,12 @@ class MyBottomAppBar extends StatelessWidget {
     super.key,
     required this.text,
     required this.onTap,
+    this.widget1,
+    this.widget2,
   });
 
+  final Widget? widget1;
+  final Widget? widget2;
   final String text;
   final void Function() onTap;
 

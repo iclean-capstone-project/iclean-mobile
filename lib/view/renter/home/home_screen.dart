@@ -83,6 +83,7 @@ class HomeScreen extends StatelessWidget {
               ),
               //slider
               const Center(child: BannerSlider()),
+
               const Padding(
                 padding: EdgeInsets.only(top: 16.0, left: 24),
                 child: Text(

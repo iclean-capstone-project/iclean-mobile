@@ -4,9 +4,11 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MyAppBar({
     super.key,
     required this.text,
+    this.actions,
   });
 
   final String text;
+  final List<Widget>? actions;
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -27,6 +29,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             Navigator.pop(context);
           },
           child: const Icon(Icons.arrow_back_ios)),
+      actions: actions,
       iconTheme: IconThemeData(color: Theme.of(context).colorScheme.secondary),
       backgroundColor: Theme.of(context).colorScheme.background,
     );

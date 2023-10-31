@@ -2,28 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:iclean_mobile_app/models/account.dart';
 import 'package:iclean_mobile_app/services/api_account_repo.dart';
+import 'package:iclean_mobile_app/view/renter/cart/cart_screen.dart';
 import 'package:iclean_mobile_app/view/renter/schedule/schedule_screen.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/view/renter/my_booking/my_booking_screen.dart';
-import 'package:iclean_mobile_app/view/common/notification/notification_screen.dart';
 import 'package:iclean_mobile_app/view/common/profile/my_profile_screen/profile_screen.dart';
 import '../home/home_screen.dart';
 
 class RenterScreens extends StatefulWidget {
   const RenterScreens({
     super.key,
-    required this.account,
+    this.selectedIndex,
+    //required this.account,
   });
 
-  final Account account;
+  //final Account account;
+  final int? selectedIndex;
 
   @override
   State<RenterScreens> createState() => _RenterScreensState();
 }
 
 class _RenterScreensState extends State<RenterScreens> {
-  int _selectedIndex = 0;
+  late int _selectedIndex;
   late List<Widget> _screenOptions;
+
   Account userLogin = Account(
       id: 1,
       fullName: "Quang Linh",
@@ -61,13 +64,21 @@ class _RenterScreensState extends State<RenterScreens> {
   @override
   void initState() {
     super.initState();
+
+    if (widget.selectedIndex != null) {
+      _selectedIndex = widget.selectedIndex!;
+    } else {
+      _selectedIndex = 0;
+    }
+
     fetchNotifications(apiAccountRepository);
+
     _screenOptions = <Widget>[
-      HomeScreen(account: widget.account),
+      HomeScreen(account: userLogin),
       const MyBookingsScreen(),
       const ScheduleScreen(),
-      const NotificationScreen(),
-      ProfileScreen(account: widget.account),
+      CartScreen(account: userLogin),
+      ProfileScreen(account: userLogin),
     ];
   }
 
@@ -129,8 +140,8 @@ class _RenterScreensState extends State<RenterScreens> {
             ),
             GButton(
               icon: _selectedIndex == 3
-                  ? Icons.notifications_sharp
-                  : Icons.notifications_outlined,
+                  ? Icons.shopping_cart
+                  : Icons.shopping_cart_outlined,
               textStyle: const TextStyle(
                 fontFamily: 'Lato',
                 color: Colors.white,

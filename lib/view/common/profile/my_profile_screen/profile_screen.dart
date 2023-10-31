@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/auth/log_in/log_in_screen.dart';
 import 'package:iclean_mobile_app/auth/user_preferences.dart';
 import 'package:iclean_mobile_app/models/account.dart';
-import 'package:iclean_mobile_app/view/common/location/location_screen.dart';
+import 'package:iclean_mobile_app/view/common/profile/location/location_screen.dart';
 import 'package:iclean_mobile_app/view/common/profile/my_profile_screen/components/dark_mode.dart';
 import 'package:iclean_mobile_app/view/common/profile/my_profile_screen/components/profile_inkwell.dart';
 import 'package:iclean_mobile_app/view/common/profile/update_profile_screen/update_profile_screen.dart';
-
-import '../../../../widgets/confirm_dialog.dart';
+import 'package:iclean_mobile_app/view/common/profile/wallet/my_wallet/wallet_screen.dart';
+import 'package:iclean_mobile_app/widgets/confirm_dialog.dart';
 
 class ProfileScreen extends StatefulWidget {
   final Account account;
@@ -104,6 +104,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           builder: (context) => const LocationScreen()));
                 },
               ),
+              ProfileInkWell(
+                icon: const Icon(Icons.wallet),
+                text: "Ví IcleanPay",
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const MyWalletScreen()));
+                },
+              ),
+
               ProfileInkWell(
                 icon: const Icon(Icons.notifications_outlined),
                 text: "Thông báo",

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
+import 'package:iclean_mobile_app/widgets/title_content.dart';
 import 'package:provider/provider.dart';
 import 'package:iclean_mobile_app/models/noti.dart';
 import 'package:iclean_mobile_app/services/api_noti_repo.dart';
@@ -27,6 +29,7 @@ class NotificationScreen extends StatelessWidget {
     final ApiNotiRepository apiNotiRepository = ApiNotiRepository();
     final notificationsProvider = Provider.of<NotificationsProvider>(context);
     return Scaffold(
+      appBar: const MyAppBar(text: 'Thông báo'),
       body: SingleChildScrollView(
         child: SafeArea(
           child: Column(
@@ -35,35 +38,15 @@ class NotificationScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Padding(
                   padding: const EdgeInsets.only(top: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        "Thông báo",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Lato',
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () async {
-                          await notificationsProvider.readAll();
-                          //After marking notifications as read, fetch notifications again
-                          await notificationsProvider.fetchNotifications(
-                              apiNotiRepository, 1);
-                        },
-                        child: const Text(
-                          "Đọc hết",
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Lato',
-                            color: Colors.blue,
-                          ),
-                        ),
-                      ),
-                    ],
+                  child: TitleContent(
+                    text1: "Thông báo",
+                    text2: "Đọc hết",
+                    onTap: () async {
+                      await notificationsProvider.readAll();
+                      //After marking notifications as read, fetch notifications again
+                      await notificationsProvider.fetchNotifications(
+                          apiNotiRepository, 1);
+                    },
                   ),
                 ),
               ),

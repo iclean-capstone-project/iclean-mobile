@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:iclean_mobile_app/models/account.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
-
-import '../../../../models/account.dart';
-import '../../../common/location/location_screen.dart';
+import 'package:iclean_mobile_app/view/common/profile/location/location_screen.dart';
+import 'package:iclean_mobile_app/view/common/notification/notification_screen.dart';
+import 'package:iclean_mobile_app/view/common/profile/wallet/my_wallet/wallet_screen.dart';
 
 class WelcomeContent extends StatelessWidget {
   const WelcomeContent({
@@ -40,9 +41,9 @@ class WelcomeContent extends StatelessWidget {
                     radius: 24,
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 8),
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: SizedBox(
-                      width: 320,
+                      width: 288,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -98,12 +99,26 @@ class WelcomeContent extends StatelessWidget {
                       ),
                     ),
                   ),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const NotificationScreen()));
+                    },
+                    child: const Icon(
+                      Icons.notifications_sharp,
+                      color: Colors.white,
+                    ),
+                  )
                 ],
               ),
             ],
           ),
           Container(
             margin: const EdgeInsets.only(top: 24),
+            padding: const EdgeInsets.symmetric(vertical: 8),
             width: double.infinity,
             decoration: BoxDecoration(
                 borderRadius: const BorderRadius.all(
@@ -116,7 +131,6 @@ class WelcomeContent extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const SizedBox(height: 8),
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16),
                   child: Text(
@@ -131,55 +145,85 @@ class WelcomeContent extends StatelessWidget {
                   ),
                 ),
                 const Divider(color: ColorPalette.greyColor),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Row(
-                      children: const [
-                        Icon(
-                          IconData(
-                            0xe0b2,
-                            fontFamily: 'MaterialIcons',
-                          ),
-                          size: 24,
-                          color: Colors.black,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Icon(
+                              IconData(
+                                0xe0b2,
+                                fontFamily: 'MaterialIcons',
+                              ),
+                              size: 24,
+                              color: Colors.black,
+                            ),
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const MyWalletScreen()));
+                              },
+                              child: const Text(
+                                "120 000 VND",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontFamily: 'Lato',
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                            const Icon(
+                              Icons.remove_red_eye_rounded,
+                              size: 24,
+                              color: Colors.black,
+                            ),
+                          ],
                         ),
-                        SizedBox(width: 8),
-                        Text(
-                          "120 000 VND",
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontFamily: 'Lato',
-                            color: Colors.black,
-                          ),
+                      ),
+                      const SizedBox(
+                        height: 24,
+                        child: VerticalDivider(
+                          color: ColorPalette.greyColor,
                         ),
-                      ],
-                    ),
-                    //Divider(),
-                    Row(
-                      children: const [
-                        Icon(
-                          IconData(
-                            0xe0b2,
-                            fontFamily: 'MaterialIcons',
-                          ),
-                          size: 24,
-                          color: Colors.black,
+                      ),
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: const [
+                            Icon(
+                              IconData(
+                                0xe0b2,
+                                fontFamily: 'MaterialIcons',
+                              ),
+                              size: 24,
+                              color: Colors.black,
+                            ),
+                            Text(
+                              "120 000 VND",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontFamily: 'Lato',
+                                color: Colors.black,
+                              ),
+                            ),
+                            Icon(
+                              Icons.remove_red_eye_rounded,
+                              size: 24,
+                              color: Colors.black,
+                            ),
+                          ],
                         ),
-                        SizedBox(width: 8),
-                        Text(
-                          "120 000 VND",
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontFamily: 'Lato',
-                            color: Colors.black,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                      ),
+                    ],
+                  ),
                 ),
-                const SizedBox(height: 8),
               ],
             ),
           ),

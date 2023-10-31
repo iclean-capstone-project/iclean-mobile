@@ -22,7 +22,8 @@ class VerifyDialog extends StatelessWidget {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (context) {
-              return RenterScreens(account: account);
+              //return RenterScreens(account: account);
+              return const RenterScreens();
             },
           ),
         );

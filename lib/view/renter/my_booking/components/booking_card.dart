@@ -11,9 +11,9 @@ class BookingCard extends StatefulWidget {
   final List<Booking> listBookings;
 
   const BookingCard({
-    Key? key,
+    super.key,
     required this.listBookings,
-  }) : super(key: key);
+  });
 
   @override
   State<BookingCard> createState() => _BookingCardCardState();
@@ -69,41 +69,76 @@ class _BookingCardCardState extends State<BookingCard>
       shrinkWrap: true,
       children: [
         for (int i = 0; i < widget.listBookings.length; i++)
-          Container(
-            margin: const EdgeInsets.symmetric(vertical: 8),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              color: Theme.of(context).colorScheme.background,
-            ),
-            child: Column(
-              children: [
-                InkWell(
-                  onTap: () {
-                    navigateToScreenBasedOnStatus(widget.listBookings[i]);
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(16),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        //avatar
-                        const AvatarWidget(
-                            imagePath: "widget.listBookings[i].jobImage"),
-                        const SizedBox(width: 16),
-                        //Info
-                        InfoBooking(
-                          empName: "widget.listBookings[i].empName",
-                          jobName: "widget.listBookings[i].jobName",
-                          status: "widget.listBookings[i].status",
-                          colorStatus: getColorForStatus(
-                              widget.listBookings[i].statusId),
-                        ),
-                      ],
-                    ),
-                  ),
+          Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 8),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  color: Theme.of(context).colorScheme.primary,
                 ),
-              ],
-            ),
+                child: Column(
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        navigateToScreenBasedOnStatus(widget.listBookings[i]);
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(16),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            //avatar
+                            const AvatarWidget(
+                                imagePath: "widget.listBookings[i].jobImage"),
+                            const SizedBox(width: 16),
+                            //Info
+                            InfoBooking(
+                              // empName: "widget.listBookings[i].empName",
+                              // jobName: "widget.listBookings[i].jobName",
+                              // status: "widget.listBookings[i].status",
+                              empName: "Thanh Tỷ",
+                              jobName: "Vệ sinh kính",
+                              status: "Đang đợi duyệt đơn",
+                              colorStatus: getColorForStatus(
+                                  widget.listBookings[i].statusId),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.all(16),
+                margin: const EdgeInsets.symmetric(vertical: 8),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    //avatar
+                    const AvatarWidget(
+                        imagePath: "widget.listBookings[i].jobImage"),
+                    const SizedBox(width: 16),
+                    //Info
+                    InfoBooking(
+                      // empName: "widget.listBookings[i].empName",
+                      // jobName: "widget.listBookings[i].jobName",
+                      // status: "widget.listBookings[i].status",
+                      empName: "Nhật Linh",
+                      jobName: "Vệ sinh Sofa - Rèm - Đệm - Thảm",
+                      status: "Đang đợi duyệt đơn",
+                      colorStatus:
+                          getColorForStatus(widget.listBookings[i].statusId),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
       ],
     );

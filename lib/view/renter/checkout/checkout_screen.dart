@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:iclean_mobile_app/models/cart.dart';
 import 'package:provider/provider.dart';
 import 'package:iclean_mobile_app/models/account.dart';
-import 'package:iclean_mobile_app/models/services.dart';
+
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 import 'package:iclean_mobile_app/widgets/my_bottom_app_bar.dart';
 import 'package:iclean_mobile_app/view/renter/booking_service/booking_details/booking_details_provider.dart';
@@ -10,15 +11,15 @@ import 'components/point_button.dart';
 import 'components/renter_info.dart';
 import 'components/service_info.dart';
 
-class CheckoutScreen1 extends StatelessWidget {
-  const CheckoutScreen1({
+class CheckoutScreen2 extends StatelessWidget {
+  const CheckoutScreen2({
     super.key,
     required this.account,
-    required this.service,
+    required this.cartItems,
   });
 
   final Account account;
-  final Service service;
+  final List<CartItem> cartItems;
 
   @override
   Widget build(BuildContext context) {
@@ -57,24 +58,57 @@ class CheckoutScreen1 extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 8),
-                ServiceInfo(service: service),
-                const SizedBox(height: 16),
-                const PointButton(),
-                const SizedBox(height: 16),
-                Row(
-                  children: const [
-                    Icon(Icons.list_alt_outlined),
-                    SizedBox(width: 16),
-                    Expanded(
-                      child: Text(
-                        "Bằng việc nhấn \"Đăng tin\", bạn đồng ý tuân theo Điều khoản dịch vụ và Quy chế của iClean.",
+                for (int i = 0; i < cartItems.length; i++)
+                  Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        child: ServiceInfo(cartItem: cartItems[i]),
+                      ),
+                    ],
+                  ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: const [
+                      Text(
+                        "Total",
                         style: TextStyle(
                           fontSize: 16,
-                          fontFamily: 'Lato',
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
                         ),
                       ),
-                    ),
-                  ],
+                      Text(
+                        "ASĐSADSA",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.red,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const PointButton(),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Row(
+                    children: const [
+                      Icon(Icons.list_alt_outlined),
+                      SizedBox(width: 16),
+                      Expanded(
+                        child: Text(
+                          "Bằng việc nhấn \"Đăng tin\", bạn đồng ý tuân theo Điều khoản dịch vụ và Quy chế của iClean.",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontFamily: 'Lato',
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
