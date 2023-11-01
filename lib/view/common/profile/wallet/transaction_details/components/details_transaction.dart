@@ -13,7 +13,7 @@ class DetailsTransaction extends StatelessWidget {
 
   String _getStatusString(TransactionStatus status) {
     switch (status) {
-      case TransactionStatus.completed:
+      case TransactionStatus.success:
         return "Hoàn Thành";
       case TransactionStatus.failed:
         return "Thất bại";
@@ -22,7 +22,7 @@ class DetailsTransaction extends StatelessWidget {
 
   Color _getStatusColor(TransactionStatus status) {
     switch (status) {
-      case TransactionStatus.completed:
+      case TransactionStatus.success:
         return Colors.green;
       case TransactionStatus.failed:
         return Colors.red;
@@ -49,7 +49,7 @@ class DetailsTransaction extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              transaction.type == TransactionType.addition
+              transaction.type == TransactionType.deposit
                   ? '+ ${transaction.amount.toStringAsFixed(0)}đ'
                   : '- ${transaction.amount.toStringAsFixed(0)}đ',
               style: const TextStyle(
@@ -64,7 +64,7 @@ class DetailsTransaction extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  transaction.status == TransactionStatus.completed
+                  transaction.status == TransactionStatus.success
                       ? Icons.check_circle
                       : Icons.cancel_rounded,
                   color: _getStatusColor(transaction.status),

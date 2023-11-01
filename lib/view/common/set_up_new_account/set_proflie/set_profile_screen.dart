@@ -191,12 +191,10 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
       var response = await request.send();
 
       if (response.statusCode == 200) {
-        final account = await fetchAccount();
-
         // ignore: use_build_context_synchronously
         showDialog(
           context: context,
-          builder: (BuildContext context) => ConfirmDialog(account: account),
+          builder: (BuildContext context) => const ConfirmDialog(),
         );
       } else {
         throw Exception(

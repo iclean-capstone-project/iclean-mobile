@@ -47,11 +47,11 @@ class InformationTransaction extends StatelessWidget {
               ),
             ),
           ),
-          if (transaction.type == TransactionType.subtraction)
+          if (transaction.type == TransactionType.withdraw)
             const Divider(
               color: ColorPalette.greyColor,
             ),
-          if (transaction.type == TransactionType.subtraction)
+          if (transaction.type == TransactionType.withdraw)
             ListTile(
               title: const Text(
                 "Phương thức thanh toán",

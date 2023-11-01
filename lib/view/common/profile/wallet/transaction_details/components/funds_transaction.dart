@@ -22,7 +22,7 @@ class FundsTransaction extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            transaction.type == TransactionType.addition
+            transaction.type == TransactionType.deposit
                 ? "Nhận tiền từ"
                 : "Thanh toán cho",
             style: const TextStyle(

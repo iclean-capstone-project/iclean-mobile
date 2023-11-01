@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:iclean_mobile_app/models/account.dart';
-
 import 'package:iclean_mobile_app/provider/cart_provider.dart';
 import 'package:iclean_mobile_app/view/renter/cart/components/cart_item_content.dart';
 import 'package:iclean_mobile_app/view/renter/checkout/checkout_screen.dart';
@@ -12,9 +10,9 @@ import 'package:provider/provider.dart';
 import 'components/empty_cart_content.dart';
 
 class CartScreen extends StatelessWidget {
-  const CartScreen({super.key, required this.account});
+  const CartScreen({super.key});
 
-  final Account account;
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +78,6 @@ class CartScreen extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => CheckoutScreen2(
-                                      account: account,
                                       cartItems: cartProvider.items,
                                     )));
                       },

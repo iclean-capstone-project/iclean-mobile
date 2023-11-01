@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:iclean_mobile_app/models/account.dart';
 import 'package:iclean_mobile_app/models/services.dart';
 import 'package:iclean_mobile_app/view/renter/home/components/banner_slider.dart';
 
@@ -7,14 +6,7 @@ import 'components/list_service.dart';
 import 'components/welcome_content.dart';
 
 class HomeScreen extends StatelessWidget {
-  HomeScreen({
-    super.key,
-    required this.account,
-    //required this.money,
-  });
-
-  final Account account;
-  //final Wallet money;
+  HomeScreen({super.key});
 
   final List<Service> services = [
     Service(
@@ -71,7 +63,7 @@ class HomeScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               //top
-              WelcomeContent(account: account),
+              const WelcomeContent(),
 
               const Padding(
                 padding: EdgeInsets.only(top: 16.0, left: 24),
@@ -98,7 +90,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              ListService(services: services, account: account),
+              ListService(services: services),
             ],
           ),
         ),

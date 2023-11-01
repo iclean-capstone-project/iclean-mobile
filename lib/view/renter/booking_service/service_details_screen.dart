@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:iclean_mobile_app/models/account.dart';
 import 'package:iclean_mobile_app/models/services.dart';
 import 'package:iclean_mobile_app/view/renter/nav_bar_bottom/renter_screen.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
@@ -10,11 +9,9 @@ class ServiceDetailsScreen extends StatelessWidget {
   const ServiceDetailsScreen({
     super.key,
     required this.service,
-    required this.account,
   });
 
   final Service service;
-  final Account account;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +26,7 @@ class ServiceDetailsScreen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          RenterScreens(account: account, selectedIndex: 3)));
+                          const RenterScreens(selectedIndex: 3)));
             },
           ),
         ],
@@ -61,8 +58,8 @@ class ServiceDetailsScreen extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => BookingDetailsScreen(
-                              service: service, account: account)));
+                          builder: (context) =>
+                              BookingDetailsScreen(service: service)));
                 },
                 text: "Đặt dịch vụ",
               ),

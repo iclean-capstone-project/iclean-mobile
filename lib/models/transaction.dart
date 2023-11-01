@@ -1,14 +1,15 @@
 enum TransactionStatus {
-  completed,
+  success,
   failed,
 }
 
 enum TransactionType {
-  addition,
-  subtraction,
+  deposit,
+  withdraw,
 }
 
 class Transaction {
+  final int id;
   final DateTime date;
   final String code;
   final TransactionType type;
@@ -17,6 +18,7 @@ class Transaction {
   final String? content;
 
   Transaction({
+    required this.id,
     required this.date,
     required this.code,
     required this.type,
@@ -25,18 +27,20 @@ class Transaction {
     this.content,
   });
 
-  factory Transaction.fromInt({
+  factory Transaction.fromStr({
+    required int id,
     required DateTime date,
     required String code,
-    required int type,
+    required String type,
     required double amount,
-    required int status,
+    required String status,
     String? content,
   }) {
-    TransactionType mappedType = _mapIntToTransactionType(type);
-    TransactionStatus mappedStatus = _mapIntToTransactionStatus(status);
+    TransactionType mappedType = _mapStrToTransactionType(type);
+    TransactionStatus mappedStatus = _mapStrToTransactionStatus(status);
 
     return Transaction(
+      id: id,
       date: date,
       code: code,
       type: mappedType,
@@ -46,22 +50,22 @@ class Transaction {
     );
   }
 
-  static TransactionType _mapIntToTransactionType(int value) {
+  static TransactionType _mapStrToTransactionType(String value) {
     switch (value) {
-      case 0:
-        return TransactionType.addition;
-      case 1:
-        return TransactionType.subtraction;
+      case "DEPOSIT":
+        return TransactionType.deposit;
+      case "WITHDRAW":
+        return TransactionType.withdraw;
       default:
         throw Exception('Invalid transaction type value');
     }
   }
 
-  static TransactionStatus _mapIntToTransactionStatus(int value) {
+  static TransactionStatus _mapStrToTransactionStatus(String value) {
     switch (value) {
-      case 0:
-        return TransactionStatus.completed;
-      case 1:
+      case "SUCCESS":
+        return TransactionStatus.success;
+      case "FAIL":
         return TransactionStatus.failed;
       default:
         throw Exception('Invalid transaction status value');

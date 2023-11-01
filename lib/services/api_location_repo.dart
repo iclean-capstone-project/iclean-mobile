@@ -63,7 +63,6 @@ class ApiLocationRepository implements LocationRepository {
     try {
       final response = await http.put(uri, headers: headers);
       if (response.statusCode == 200) {
-        print('update succesful');
       } else {
         throw Exception(
             'Failed to set default location. Status: ${response.statusCode}');

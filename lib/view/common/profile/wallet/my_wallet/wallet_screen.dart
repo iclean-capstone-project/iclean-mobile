@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/transaction.dart';
 import 'package:iclean_mobile_app/models/wallet.dart';
+import 'package:iclean_mobile_app/services/api_transaction_repo.dart';
 import 'package:iclean_mobile_app/services/api_wallet_repo.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 
@@ -10,26 +11,10 @@ import 'components/transaction_content.dart';
 class MyWalletScreen extends StatelessWidget {
   const MyWalletScreen({super.key});
 
+  
+
   @override
   Widget build(BuildContext context) {
-    List<Transaction> transactions = [
-      Transaction.fromInt(
-        date: DateTime.now(),
-        code: "1234567890",
-        type: 1, //Subtraction
-        amount: 100.0,
-        status: 1, //Completed
-        content: "em dep qua",
-      ),
-      Transaction.fromInt(
-        date: DateTime.now(),
-        code: "0987654321",
-        type: 0, //Addition
-        amount: 200.0,
-        status: 0, //Pending
-      ),
-    ];
-
     Future<Wallet> fetchMoney() async {
       final ApiWalletRepository apiWalletRepository = ApiWalletRepository();
       try {
@@ -37,6 +22,18 @@ class MyWalletScreen extends StatelessWidget {
         return money;
       } catch (e) {
         throw Exception(e);
+      }
+    }
+
+    Future<List<Transaction>> fetchTransactionMoney(int page) async {
+      final ApiTransactionRepository apiTransactionRepository = ApiTransactionRepository();
+      try {
+        final newNotifications = await apiTransactionRepository.getTransactionMoney(page);
+        return newNotifications;
+      } catch (e) {
+        // ignore: avoid_print
+        print(e);
+        return <Transaction>[];
       }
     }
 
@@ -74,12 +71,20 @@ class MyWalletScreen extends StatelessWidget {
                   fontFamily: 'Lato',
                 ),
               ),
-              for (int i = 0; i < transactions.length; i++)
-                Column(
-                  children: [
-                    TransactionContent(transactions: transactions, i: i)
-                  ],
-                )
+                FutureBuilder(
+                  future: fetchTransactionMoney(1),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const CircularProgressIndicator();
+                    } else if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    } else if (snapshot.hasData) {
+                      final transactions = snapshot.data!;
+                      return TransactionContent(transactions: transactions);
+                    }
+                    return const Divider();
+                  },
+                ),
             ],
           ),
         ),

@@ -1,19 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:iclean_mobile_app/models/account.dart';
+
 import 'package:iclean_mobile_app/utils/color_palette.dart';
 
 import 'info_account_content.dart';
 import 'wallet_content.dart';
 
 class WelcomeContent extends StatelessWidget {
-  const WelcomeContent({
-    super.key,
-    required this.account,
-    //required this.money,
-  });
-
-  final Account account;
-  //final Wallet money;
+  const WelcomeContent({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,12 +26,7 @@ class WelcomeContent extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              InfoAccountContent(account: account),
-            ],
-          ),
+          const InfoAccountContent(),
           const SizedBox(height: 24),
           Container(
             padding: const EdgeInsets.symmetric(vertical: 8),

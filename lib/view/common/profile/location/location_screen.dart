@@ -81,15 +81,12 @@ class LocationScreen extends StatelessWidget {
                             child: Row(
                               children: [
                                 InkWell(
-                                  // onTap: () => showConfirmationDialog(
-                                  //     context, locations[i]),
                                   onTap: () {
                                     if (locations[i].isDefault == false) {
                                       showConfirmationDialog(
                                           context, locations[i]);
                                     }
                                   },
-
                                   child: Icon(
                                     locations[i].isDefault
                                         ? Icons.circle_rounded

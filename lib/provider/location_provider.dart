@@ -5,7 +5,7 @@ import 'package:iclean_mobile_app/services/api_location_repo.dart';
 class LocationsProvider extends ChangeNotifier {
   List<Address> locations = [];
 
-  Future<List<Address>> fetchNotifications(
+  Future<List<Address>> fetchLocation(
       ApiLocationRepository repository) async {
     try {
       final newLocations = await repository.getLocation();

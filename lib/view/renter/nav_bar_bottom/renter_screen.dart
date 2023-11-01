@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:iclean_mobile_app/models/account.dart';
 import 'package:iclean_mobile_app/view/renter/cart/cart_screen.dart';
 import 'package:iclean_mobile_app/view/renter/home/home_screen.dart';
 import 'package:iclean_mobile_app/view/renter/schedule/schedule_screen.dart';
@@ -11,11 +10,9 @@ import 'package:iclean_mobile_app/view/common/profile/my_profile_screen/profile_
 class RenterScreens extends StatefulWidget {
   const RenterScreens({
     super.key,
-    required this.account,
     this.selectedIndex,
   });
 
-  final Account account;
   final int? selectedIndex;
 
   @override
@@ -37,11 +34,11 @@ class _RenterScreensState extends State<RenterScreens> {
     }
 
     _screenOptions = <Widget>[
-      HomeScreen(account: widget.account),
+      HomeScreen(),
       const MyBookingsScreen(),
       const ScheduleScreen(),
-      CartScreen(account: widget.account),
-      ProfileScreen(account: widget.account),
+      const CartScreen(),
+      const ProfileScreen(),
     ];
   }
 

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:iclean_mobile_app/models/account.dart';
 import 'package:iclean_mobile_app/models/services.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 import 'package:iclean_mobile_app/widgets/my_bottom_app_bar.dart';
@@ -13,11 +12,9 @@ import 'components/service_info.dart';
 class CheckoutScreen1 extends StatelessWidget {
   const CheckoutScreen1({
     super.key,
-    required this.account,
     required this.service,
   });
 
-  final Account account;
   final Service service;
 
   @override
@@ -44,7 +41,7 @@ class CheckoutScreen1 extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 8),
-                RenterInfo(account: account),
+                const RenterInfo(),
                 const Padding(
                   padding: EdgeInsets.only(top: 16.0),
                   child: Text(

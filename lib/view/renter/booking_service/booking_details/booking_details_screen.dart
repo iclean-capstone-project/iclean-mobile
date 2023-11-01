@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/provider/cart_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:iclean_mobile_app/models/account.dart';
 import 'package:iclean_mobile_app/models/cart.dart';
 import 'package:iclean_mobile_app/models/services.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
@@ -18,10 +17,7 @@ class BookingDetailsScreen extends StatefulWidget {
   const BookingDetailsScreen({
     super.key,
     required this.service,
-    required this.account,
   });
-
-  final Account account;
 
   final Service service;
 
@@ -45,8 +41,8 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => RenterScreens(
-                          account: widget.account, selectedIndex: 3)));
+                      builder: (context) =>
+                          const RenterScreens(selectedIndex: 3)));
             },
           ),
         ],
@@ -157,7 +153,6 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
               context,
               MaterialPageRoute(
                   builder: (context) => CheckoutScreen1(
-                        account: widget.account,
                         service: widget.service,
                       )));
         },
