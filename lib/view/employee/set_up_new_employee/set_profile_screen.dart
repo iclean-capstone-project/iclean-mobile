@@ -2,8 +2,7 @@
 
 import 'dart:io';
 
-// ignore: depend_on_referenced_packages
-import 'package:http/http.dart' as http;
+
 
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/account.dart';
@@ -115,11 +114,11 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
               onSurface: Colors.black,
             ),
             textTheme: const TextTheme(
-              bodyText1: TextStyle(
+              bodyLarge: TextStyle(
                 color: Colors.black,
                 fontSize: 20,
               ),
-              button: TextStyle(
+              labelLarge: TextStyle(
                 color: Colors.black,
                 fontSize: 16,
                 fontWeight: FontWeight.bold,

@@ -119,11 +119,11 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
               onSurface: Colors.black,
             ),
             textTheme: const TextTheme(
-              bodyText1: TextStyle(
+              bodyLarge: TextStyle(
                 color: Colors.black,
                 fontSize: 20,
               ),
-              button: TextStyle(
+              labelLarge: TextStyle(
                 color: Colors.black,
                 fontSize: 16,
                 fontWeight: FontWeight.bold,

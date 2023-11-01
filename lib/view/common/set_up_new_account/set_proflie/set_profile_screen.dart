@@ -121,11 +121,11 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
               onSurface: Colors.black,
             ),
             textTheme: const TextTheme(
-              bodyText1: TextStyle(
+              bodyLarge: TextStyle(
                 color: Colors.black,
                 fontSize: 20,
               ),
-              button: TextStyle(
+              labelLarge: TextStyle(
                 color: Colors.black,
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
@@ -192,7 +192,8 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
 
       if (response.statusCode == 200) {
         final account = await fetchAccount();
-        final money = await fetchMoney();
+
+        // ignore: use_build_context_synchronously
         showDialog(
           context: context,
           builder: (BuildContext context) => ConfirmDialog(account: account),

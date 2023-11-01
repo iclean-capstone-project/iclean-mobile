@@ -55,7 +55,7 @@ class WelcomeContent extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Text(
                     "Khám phá và trải nghiệm các dịch vụ gia đình ngay hôm nay.",
                     style: TextStyle(
@@ -67,8 +67,8 @@ class WelcomeContent extends StatelessWidget {
                     textAlign: TextAlign.justify,
                   ),
                 ),
-                Divider(color: ColorPalette.greyColor),
-                WalletContent(),
+                const Divider(color: ColorPalette.greyColor),
+                const WalletContent(),
               ],
             ),
           ),

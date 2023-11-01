@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.iclean_mobile_app">
    <application
-        android:label="iclean_mobile_app"
+        android:label="iClean"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

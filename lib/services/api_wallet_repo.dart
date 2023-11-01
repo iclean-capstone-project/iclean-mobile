@@ -6,6 +6,7 @@ import 'package:iclean_mobile_app/repository/wallet_repo.dart';
 
 import 'constant.dart';
 
+// ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
 
 class ApiWalletRepository implements WalletRepository {
