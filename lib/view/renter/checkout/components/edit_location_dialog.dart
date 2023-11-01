@@ -13,9 +13,6 @@ class EditLocationDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
-
-    
     // if (!isNew) {
     //   Future.delayed(const Duration(seconds: 2), () async {
     //     Navigator.of(context).pushReplacement(
@@ -31,7 +28,7 @@ class EditLocationDialog extends StatelessWidget {
     return Column(
       children: [
         Text("asd"),
-Text("asd"),
+        Text("asd"),
       ],
     );
   }
@@ -56,6 +53,7 @@ class ListLocationContent extends StatelessWidget {
         return <Address>[];
       }
     }
+
     return FutureBuilder<List<Address>>(
       future: fetchLocations(),
       builder: (context, snapshot) {
@@ -86,8 +84,7 @@ class ListLocationContent extends StatelessWidget {
                               Flexible(
                                 fit: FlexFit.loose,
                                 child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Row(
                                       mainAxisAlignment:
