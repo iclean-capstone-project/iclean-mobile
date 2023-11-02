@@ -1,28 +1,25 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: depend_on_referenced_packages, avoid_print
 
 import 'dart:io';
-
-// ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
-
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:iclean_mobile_app/models/account.dart';
 import 'package:iclean_mobile_app/models/wallet.dart';
 import 'package:iclean_mobile_app/services/api_account_repo.dart';
 import 'package:iclean_mobile_app/services/api_wallet_repo.dart';
-import 'package:intl/intl.dart';
-import 'package:flutter/services.dart';
 import 'package:iclean_mobile_app/auth/user_preferences.dart';
-import 'package:iclean_mobile_app/services/constant.dart';
+import 'package:iclean_mobile_app/services/components/constant.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 import 'package:iclean_mobile_app/widgets/my_bottom_app_bar.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:image_cropper/image_cropper.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/widgets/my_textfield.dart';
 import 'package:iclean_mobile_app/widgets/select_photo_options_screen.dart';
 
-import 'components/comfirm_dialog.dart';
+import 'components/success_dialog.dart';
 
 class SetProfileScreen extends StatefulWidget {
   const SetProfileScreen({super.key, required this.role});
@@ -194,7 +191,7 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
         // ignore: use_build_context_synchronously
         showDialog(
           context: context,
-          builder: (BuildContext context) => const ConfirmDialog(),
+          builder: (BuildContext context) => const SuccessDialog(),
         );
       } else {
         throw Exception(

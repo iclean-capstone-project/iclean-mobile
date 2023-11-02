@@ -1,10 +1,11 @@
 class Service {
-  String name, icon, imagePath;
+  String name, description, icon, imagePath;
   int id;
 
   Service({
     required this.id,
     required this.name,
+    required this.description,
     required this.icon,
     required this.imagePath,
   });

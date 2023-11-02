@@ -1,17 +1,16 @@
+import 'dart:async';
 import 'dart:convert';
-
-import 'package:flutter/material.dart';
-import 'package:iclean_mobile_app/auth/user_preferences.dart';
-import 'package:iclean_mobile_app/models/account.dart';
-import 'package:iclean_mobile_app/services/constant.dart';
-import 'package:iclean_mobile_app/utils/color_palette.dart';
-import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
-import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
-
 // ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
+import 'package:flutter/material.dart';
+import 'package:iclean_mobile_app/models/account.dart';
+import 'package:iclean_mobile_app/services/components/constant.dart';
+import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
+import 'package:iclean_mobile_app/auth/user_preferences.dart';
+import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
 
 import 'components/digit_textfield.dart';
+import 'components/resend_code_content.dart';
 import 'components/verify_dialog.dart';
 
 class VerificationScreen extends StatelessWidget {
@@ -21,7 +20,6 @@ class VerificationScreen extends StatelessWidget {
 
   setToken(String phone, String accessToken, String refreshToken) async {
     await UserPreferences.setLoggedIn(true);
-
     await UserPreferences.setAccessToken(accessToken);
     await UserPreferences.setRefreshToken(refreshToken);
   }
@@ -94,11 +92,11 @@ class VerificationScreen extends StatelessWidget {
               ),
 
               //Description
-              const Padding(
-                padding: EdgeInsets.only(top: 8),
+              Padding(
+                padding: const EdgeInsets.only(top: 8),
                 child: Text(
-                  "Nhập 4 chữ số mà chúng tôi đã gửi qua số điện thoại +84 987654321",
-                  style: TextStyle(
+                  "Nhập 4 chữ số mà chúng tôi đã gửi qua số điện thoại $phoneNumber",
+                  style: const TextStyle(
                     fontSize: 16,
                     fontFamily: 'Lato',
                   ),
@@ -131,18 +129,9 @@ class VerificationScreen extends StatelessWidget {
                 ),
               ),
 
-              //Resend code
-              const Padding(
-                padding: EdgeInsets.only(top: 24),
-                child: Text(
-                  "Gửi lại mã",
-                  style: TextStyle(
-                    color: ColorPalette.mainColor,
-                    fontSize: 16,
-                    fontFamily: 'Lato',
-                  ),
-                  textAlign: TextAlign.center,
-                ),
+              Padding(
+                padding: const EdgeInsets.only(top: 16.0),
+                child: ResendCodeContent(phone: phoneNumber),
               ),
             ],
           ),

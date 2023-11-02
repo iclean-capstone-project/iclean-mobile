@@ -31,59 +31,61 @@ class CartItemContent extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
-            children: [
-              Container(
-                height: 104,
-                width: 104,
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: Row(
+              children: [
+                Container(
+                  height: 104,
+                  width: 104,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    image: DecorationImage(
+                      image: NetworkImage(cartProvider.items[i].service.icon),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
-                child: Image.asset(
-                  cartProvider.items[i].service.icon,
-                  fit: BoxFit.contain,
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        cartProvider.items[i].service.name,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontFamily: 'Lato',
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        "Ngày làm: ${DateFormat('d/MM/yyyy').format(cartProvider.items[i].day)}",
+                        style: const TextStyle(
+                          fontFamily: 'Lato',
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        "Giờ làm: ${cartProvider.items[i].timeStart.to24hours()} - ${cartProvider.items[i].timeStart.addHour(cartProvider.items[i].time).to24hours()}",
+                        style: const TextStyle(
+                          fontFamily: 'Lato',
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const Text(
+                        "Giá: áđsadsa",
+                        style: TextStyle(
+                          fontFamily: 'Lato',
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      cartProvider.items[i].service.name,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontFamily: 'Lato',
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      "Ngày làm: ${DateFormat('d/MM/yyyy').format(cartProvider.items[i].day)}",
-                      style: const TextStyle(
-                        fontFamily: 'Lato',
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      "Giờ làm: ${cartProvider.items[i].timeStart.to24hours()} - ${cartProvider.items[i].timeStart.addHour(cartProvider.items[i].time).to24hours()}",
-                      style: const TextStyle(
-                        fontFamily: 'Lato',
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const Text(
-                      "Giá: áđsadsa",
-                      style: TextStyle(
-                        fontFamily: 'Lato',
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
           IconButton(
             onPressed: () {

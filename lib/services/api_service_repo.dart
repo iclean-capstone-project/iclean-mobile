@@ -3,18 +3,17 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:iclean_mobile_app/auth/user_preferences.dart';
-import 'package:iclean_mobile_app/models/account.dart';
-import 'package:iclean_mobile_app/repository/account_repo.dart';
+import 'package:iclean_mobile_app/models/services.dart';
+import 'package:iclean_mobile_app/repository/service_repo.dart';
 
 import 'components/constant.dart';
 
-class ApiAccountRepository implements AccountRepository {
-  static const String urlConstant = "${BaseConstant.baseUrl}/profile";
+class ApiServiceRepository implements ServiceRepository {
+  static const String urlConstant = "${BaseConstant.baseUrl}/service";
 
   @override
-  Future<Account> getAccount() async {
-    const url = urlConstant;
-    final uri = Uri.parse(url);
+  Future<List<Service>> getService() async {
+    final uri = Uri.parse(urlConstant);
     final accessToken = await UserPreferences.getAccessToken();
 
     Map<String, String> headers = {
@@ -27,9 +26,17 @@ class ApiAccountRepository implements AccountRepository {
 
       if (response.statusCode == 200) {
         final jsonMap = json.decode(utf8.decode(response.bodyBytes));
-        final data = jsonMap['data'];
-        final account = Account.fromJson(data);
-        return account;
+        final data = jsonMap['data'] as List<dynamic>;
+        final services = data.map((e) {
+          return Service(
+            id: e['serviceId'],
+            name: e['serviceName'],
+            icon: e['serviceIcon'],
+            description: e['dsaaaa'] ?? "",
+            imagePath: e['dsaaaa'] ?? "",
+          );
+        }).toList();
+        return services;
       } else {
         return throw Exception(
             'status: ${response.statusCode}, body: ${response.body}');

@@ -1,13 +1,12 @@
-import 'dart:convert';
+// ignore_for_file: depend_on_referenced_packages
 
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:iclean_mobile_app/auth/user_preferences.dart';
 import 'package:iclean_mobile_app/models/wallet.dart';
 import 'package:iclean_mobile_app/repository/wallet_repo.dart';
 
-import 'constant.dart';
-
-// ignore: depend_on_referenced_packages
-import 'package:http/http.dart' as http;
+import 'components/constant.dart';
 
 class ApiWalletRepository implements WalletRepository {
   static const String urlConstant = "${BaseConstant.baseUrl}/wallet";

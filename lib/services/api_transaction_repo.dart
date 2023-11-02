@@ -1,12 +1,12 @@
-import 'dart:convert';
+// ignore_for_file: depend_on_referenced_packages
 
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:iclean_mobile_app/auth/user_preferences.dart';
 import 'package:iclean_mobile_app/models/transaction.dart';
 import 'package:iclean_mobile_app/repository/transaction_repo.dart';
-// ignore: depend_on_referenced_packages
-import 'package:http/http.dart' as http;
 
-import 'constant.dart';
+import 'components/constant.dart';
 
 class ApiTransactionRepository implements TransactionRepository {
   static const String urlConstant = "${BaseConstant.baseUrl}/transaction";
@@ -28,13 +28,13 @@ class ApiTransactionRepository implements TransactionRepository {
       if (response.statusCode == 200) {
         final jsonMap = json.decode(utf8.decode(response.bodyBytes));
         final data = jsonMap['data'];
-        
+
         final content = data['content'] as List<dynamic>;
         final transactions = content.map((e) {
           return Transaction.fromStr(
             id: e['transactionId'],
             date: DateTime.parse(e['createAt']),
-            code: e['content']?? "",
+            code: e['content'] ?? "",
             type: e['transactionType'],
             amount: e['balance'],
             status: e['transactionStatus'],

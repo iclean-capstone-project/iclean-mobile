@@ -1,13 +1,12 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, depend_on_referenced_packages
 
 import 'dart:convert';
-
-import 'package:iclean_mobile_app/auth/user_preferences.dart';
-import 'package:iclean_mobile_app/models/noti.dart';
-import 'package:iclean_mobile_app/repository/noti_repo.dart';
-// ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
-import 'package:iclean_mobile_app/services/constant.dart';
+import 'package:iclean_mobile_app/models/noti.dart';
+import 'package:iclean_mobile_app/auth/user_preferences.dart';
+import 'package:iclean_mobile_app/repository/noti_repo.dart';
+
+import 'components/constant.dart';
 
 class ApiNotiRepository implements NotiRepository {
   static const String urlConstant = "${BaseConstant.baseUrl}/notification";
@@ -18,7 +17,6 @@ class ApiNotiRepository implements NotiRepository {
     final uri = Uri.parse(url);
     final accessToken = await UserPreferences.getAccessToken();
 
-    // Create a headers map with the "Authorization" header
     Map<String, String> headers = {
       "Authorization": "Bearer $accessToken",
       "Content-Type": "application/json",
@@ -46,7 +44,8 @@ class ApiNotiRepository implements NotiRepository {
             'status: ${response.statusCode}, body: ${response.body}');
       }
     } catch (e) {
-      throw Exception(e);
+      print(e);
+      return <Noti>[];
     }
   }
 
@@ -61,15 +60,9 @@ class ApiNotiRepository implements NotiRepository {
       "Content-Type": "application/json",
     };
     try {
-      final response = await http.put(uri, headers: headers);
-      if (response.statusCode == 200) {
-        print('update succesful');
-      } else {
-        throw Exception(
-            'Failed to update notifications. Status: ${response.statusCode}');
-      }
+      await http.put(uri, headers: headers);
     } catch (e) {
-      throw Exception(e);
+      print(e);
     }
   }
 
@@ -84,15 +77,9 @@ class ApiNotiRepository implements NotiRepository {
       "Content-Type": "application/json",
     };
     try {
-      final response = await http.put(uri, headers: headers);
-      if (response.statusCode == 200) {
-        print('update succesful');
-      } else {
-        throw Exception(
-            'Failed to update notifications. Status: ${response.statusCode}');
-      }
+      await http.put(uri, headers: headers);
     } catch (e) {
-      throw Exception(e);
+      print(e);
     }
   }
 
@@ -107,15 +94,9 @@ class ApiNotiRepository implements NotiRepository {
       "Content-Type": "application/json",
     };
     try {
-      final response = await http.delete(uri, headers: headers);
-      if (response.statusCode == 200) {
-        print('deleted succesful');
-      } else {
-        throw Exception(
-            'Failed to update notifications. Status: ${response.statusCode}');
-      }
+      await http.delete(uri, headers: headers);
     } catch (e) {
-      throw Exception(e);
+      print(e);
     }
   }
 }

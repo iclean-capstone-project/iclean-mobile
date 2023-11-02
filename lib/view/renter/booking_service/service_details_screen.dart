@@ -35,22 +35,41 @@ class ServiceDetailsScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              width: double.infinity,
-              child: Image.network(service.imagePath),
-            ),
-            const SizedBox(height: 8),
-            const Padding(
-              padding: EdgeInsets.only(left: 16),
-              child: Text(
-                "Thông tin",
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Lato',
+            Center(
+              child: SizedBox(
+                height: 240,
+                width: double.infinity,
+                child: Image.network(
+                  service.icon,
+                  fit: BoxFit.contain,
                 ),
               ),
             ),
+            const SizedBox(height: 16),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                children: [
+                  const Text(
+                    "Thông tin",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Lato',
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    service.description,
+                    style: const TextStyle(
+                      fontFamily: 'Lato',
+                    ),
+                    textAlign: TextAlign.justify,
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 16),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: MainColorInkWellFullSize(

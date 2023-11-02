@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/address.dart';
 import 'package:iclean_mobile_app/services/api_location_repo.dart';
+import 'package:iclean_mobile_app/widgets/confirm_dialog.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 import 'package:iclean_mobile_app/view/common/profile/location/add_location/add_location_screen.dart';
 import 'package:iclean_mobile_app/view/common/profile/location/update_location/update_location_screen.dart';
 import 'package:iclean_mobile_app/widgets/my_bottom_app_bar.dart';
-
-import '../../../../widgets/confirm_dialog.dart';
 
 class LocationScreen extends StatelessWidget {
   const LocationScreen({super.key});
@@ -15,10 +14,9 @@ class LocationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final ApiLocationRepository apiLocationRepository = ApiLocationRepository();
 
-    Future<List<Address>> fetchNotifications(
-        ApiLocationRepository repository) async {
+    Future<List<Address>> fetchNotifications() async {
       try {
-        final locations = await repository.getLocation();
+        final locations = await apiLocationRepository.getLocation();
         return locations;
       } catch (e) {
         // ignore: avoid_print
@@ -53,22 +51,22 @@ class LocationScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: const MyAppBar(text: "Vị trí của tôi"),
-      body: FutureBuilder<List<Address>>(
-        future: fetchNotifications(apiLocationRepository),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else if (snapshot.hasError) {
-            return Center(
-              child: Text('Error: ${snapshot.error}'),
-            );
-          } else {
-            List<Address> locations = snapshot.data ?? [];
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: ListView(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: FutureBuilder<List<Address>>(
+          future: fetchNotifications(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (snapshot.hasError) {
+              return Center(
+                child: Text('Error: ${snapshot.error}'),
+              );
+            } else {
+              List<Address> locations = snapshot.data ?? [];
+              return Column(
                 children: [
                   const SizedBox(height: 16),
                   for (int i = 0; i < locations.length; i++)
@@ -164,10 +162,10 @@ class LocationScreen extends StatelessWidget {
                       ),
                     ),
                 ],
-              ),
-            );
-          }
-        },
+              );
+            }
+          },
+        ),
       ),
       bottomNavigationBar: MyBottomAppBar(
         text: "Thêm vị trí mới",

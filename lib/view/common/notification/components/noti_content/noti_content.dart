@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/noti.dart';
-import 'package:iclean_mobile_app/services/api_noti_repo.dart';
 import 'package:iclean_mobile_app/provider/notification_provider.dart';
 
 import 'components/mess_noti.dart';
@@ -11,12 +10,10 @@ class NotiContent extends StatelessWidget {
   const NotiContent({
     super.key,
     required this.notis,
-    required this.apiNotiRepository,
     required this.notificationsProvider,
   });
 
   final List<Noti> notis;
-  final ApiNotiRepository apiNotiRepository;
   final NotificationsProvider notificationsProvider;
 
   void showNotiOptions(BuildContext context, Noti noti) {
@@ -41,16 +38,14 @@ class NotiContent extends StatelessWidget {
                   maskAsRead: () async {
                     if (noti.isRead == false) {
                       await notificationsProvider.maskAsRead(noti.id);
-                      await notificationsProvider.fetchNotifications(
-                          apiNotiRepository, 1);
+                      await notificationsProvider.fetchNotifications(1);
                       // ignore: use_build_context_synchronously
                       Navigator.pop(context);
                     }
                   },
                   delete: () async {
                     await notificationsProvider.deleteNoti(noti.id);
-                    await notificationsProvider.fetchNotifications(
-                        apiNotiRepository, 1);
+                    await notificationsProvider.fetchNotifications(1);
                     // ignore: use_build_context_synchronously
                     Navigator.pop(context);
                   },
@@ -68,8 +63,7 @@ class NotiContent extends StatelessWidget {
             onTap: () async {
               if (notis[i].isRead == false) {
                 await notificationsProvider.maskAsRead(notis[i].id);
-                await notificationsProvider.fetchNotifications(
-                    apiNotiRepository, 1);
+                await notificationsProvider.fetchNotifications(1);
               }
             },
             child: Container(

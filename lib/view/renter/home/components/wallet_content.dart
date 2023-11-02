@@ -5,10 +5,18 @@ import 'package:iclean_mobile_app/services/api_wallet_repo.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/view/common/profile/wallet/my_wallet/wallet_screen.dart';
 
-class WalletContent extends StatelessWidget {
+class WalletContent extends StatefulWidget {
   const WalletContent({
     super.key,
   });
+
+  @override
+  State<WalletContent> createState() => _WalletContentState();
+}
+
+class _WalletContentState extends State<WalletContent> {
+  bool isMoneyHidden = true;
+  bool isPointHidden = true;
 
   @override
   Widget build(BuildContext context) {
@@ -45,40 +53,56 @@ class WalletContent extends StatelessWidget {
                   size: 24,
                   color: ColorPalette.mainColor,
                 ),
-                FutureBuilder(
-                  future: fetchMoney(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const CircularProgressIndicator();
-                    } else if (snapshot.hasError) {
-                      return Text('Error: ${snapshot.error}');
-                    } else if (snapshot.hasData) {
-                      final money = snapshot.data!;
-                      return InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const MyWalletScreen()));
-                        },
-                        child: Text(
-                          money.formatBalanceInVND(),
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontFamily: 'Lato',
-                            color: Theme.of(context).colorScheme.secondary,
+                if (isMoneyHidden)
+                  FutureBuilder(
+                    future: fetchMoney(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const CircularProgressIndicator();
+                      } else if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      } else if (snapshot.hasData) {
+                        final money = snapshot.data!;
+                        return InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const MyWalletScreen()));
+                          },
+                          child: Text(
+                            money.formatBalanceInVND(),
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontFamily: 'Lato',
+                              color: Theme.of(context).colorScheme.secondary,
+                            ),
                           ),
-                        ),
-                      );
-                    }
-                    return const Divider();
+                        );
+                      }
+                      return const Divider();
+                    },
+                  ),
+                if (!isMoneyHidden)
+                  const Text(
+                    "******",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontFamily: 'Lato',
+                    ),
+                  ),
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      isMoneyHidden = !isMoneyHidden;
+                    });
                   },
-                ),
-                const Icon(
-                  Icons.remove_red_eye_rounded,
-                  size: 24,
-                  color: ColorPalette.mainColor,
+                  child: const Icon(
+                    Icons.remove_red_eye_rounded,
+                    size: 24,
+                    color: ColorPalette.mainColor,
+                  ),
                 ),
               ],
             ),
@@ -98,40 +122,56 @@ class WalletContent extends StatelessWidget {
                   size: 24,
                   color: ColorPalette.mainColor,
                 ),
-                FutureBuilder(
-                  future: fetchPoint(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const CircularProgressIndicator();
-                    } else if (snapshot.hasError) {
-                      return Text('Error: ${snapshot.error}');
-                    } else if (snapshot.hasData) {
-                      final point = snapshot.data!;
-                      return InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const MyWalletScreen()));
-                        },
-                        child: Text(
-                          point.formatBalanceInVND(),
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontFamily: 'Lato',
-                            color: Theme.of(context).colorScheme.secondary,
+                if (isPointHidden)
+                  FutureBuilder(
+                    future: fetchPoint(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const CircularProgressIndicator();
+                      } else if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      } else if (snapshot.hasData) {
+                        final point = snapshot.data!;
+                        return InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const MyWalletScreen()));
+                          },
+                          child: Text(
+                            point.formatBalanceInVND(),
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontFamily: 'Lato',
+                              color: Theme.of(context).colorScheme.secondary,
+                            ),
                           ),
-                        ),
-                      );
-                    }
-                    return const Divider();
+                        );
+                      }
+                      return const Divider();
+                    },
+                  ),
+                if (!isPointHidden)
+                  const Text(
+                    "******",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontFamily: 'Lato',
+                    ),
+                  ),
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      isPointHidden = !isPointHidden;
+                    });
                   },
-                ),
-                const Icon(
-                  Icons.remove_red_eye_rounded,
-                  size: 24,
-                  color: ColorPalette.mainColor,
+                  child: const Icon(
+                    Icons.remove_red_eye_rounded,
+                    size: 24,
+                    color: ColorPalette.mainColor,
+                  ),
                 ),
               ],
             ),

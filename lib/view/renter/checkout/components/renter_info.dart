@@ -21,43 +21,35 @@ class RenterInfo extends StatelessWidget {
     }
 
     void showEditLocation(BuildContext context, Account account) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(25.0),
+      showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(25.0),
+          ),
         ),
-      ),
-      builder: (context) => DraggableScrollableSheet(
-          initialChildSize: 0.36,
-          maxChildSize: 0.36,
-          minChildSize: 0.36,
-          expand: true,
-          builder: (context, scrollController) {
-            return SingleChildScrollView(
-                controller: scrollController,
-                child: EditLocationDialog(account: account));
-          }),
-    );
-  }
+        builder: (context) => EditLocationDialog(account: account),
+      );
+    }
 
-    return FutureBuilder(
-      future: fetchAccount(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
-        } else if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
-        } else if (snapshot.hasData) {
-          final account = snapshot.data!;
-          return Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.primary,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Column(
+    return Container(
+      padding: const EdgeInsets.all(16),
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.primary,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: FutureBuilder(
+        future: fetchAccount(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const CircularProgressIndicator();
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else if (snapshot.hasData) {
+            final account = snapshot.data!;
+            return Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -112,11 +104,11 @@ class RenterInfo extends StatelessWidget {
                   ),
                 ),
               ],
-            ),
-          );
-        }
-        return const Divider();
-      },
+            );
+          }
+          return const Divider();
+        },
+      ),
     );
   }
 }

@@ -6,17 +6,18 @@ import 'package:iclean_mobile_app/models/noti.dart';
 import 'package:iclean_mobile_app/services/api_noti_repo.dart';
 import 'package:iclean_mobile_app/provider/notification_provider.dart';
 
-import 'components/noti_content.dart';
+import 'components/noti_content_loading.dart';
+import 'components/noti_content/noti_content.dart';
 
 class NotificationScreen extends StatelessWidget {
   const NotificationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    Future<List<Noti>> fetchNotifications(
-        ApiNotiRepository repository, int page) async {
+    Future<List<Noti>> fetchNotifications(int page) async {
+      final ApiNotiRepository apiNotiRepository = ApiNotiRepository();
       try {
-        final newNotifications = await repository.getNoti(page);
+        final newNotifications = await apiNotiRepository.getNoti(page);
         return newNotifications;
       } catch (e) {
         // ignore: avoid_print
@@ -25,7 +26,6 @@ class NotificationScreen extends StatelessWidget {
       }
     }
 
-    final ApiNotiRepository apiNotiRepository = ApiNotiRepository();
     final notificationsProvider = Provider.of<NotificationsProvider>(context);
     return Scaffold(
       appBar: const MyAppBar(text: 'Thông báo'),
@@ -42,25 +42,37 @@ class NotificationScreen extends StatelessWidget {
                     text2: "Đọc hết",
                     onTap: () async {
                       await notificationsProvider.readAll();
-                      await notificationsProvider.fetchNotifications(
-                          apiNotiRepository, 1);
+                      await notificationsProvider.fetchNotifications(1);
                     },
                   ),
                 ),
               ),
               const SizedBox(height: 8),
               FutureBuilder<List<Noti>>(
-                future: fetchNotifications(apiNotiRepository, 1),
+                future: fetchNotifications(1),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator();
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: Column(
+                        children: List.generate(5, (index) {
+                          return const ListTile(
+                            leading: NotiContentLoadingWidget.circular(
+                                height: 40, width: 40),
+                            title: NotiContentLoadingWidget.rectangular(
+                                height: 18),
+                            subtitle: NotiContentLoadingWidget.rectangular(
+                                height: 10),
+                          );
+                        }),
+                      ),
+                    );
                   } else if (snapshot.hasError) {
                     return Text('Error: ${snapshot.error}');
                   } else if (snapshot.hasData) {
                     final notis = snapshot.data!;
                     return NotiContent(
                       notis: notis,
-                      apiNotiRepository: apiNotiRepository,
                       notificationsProvider: notificationsProvider,
                     );
                   } else {

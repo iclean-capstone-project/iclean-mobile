@@ -34,7 +34,7 @@ class _RenterScreensState extends State<RenterScreens> {
     }
 
     _screenOptions = <Widget>[
-      HomeScreen(),
+      const HomeScreen(),
       const MyBookingsScreen(),
       const ScheduleScreen(),
       const CartScreen(),

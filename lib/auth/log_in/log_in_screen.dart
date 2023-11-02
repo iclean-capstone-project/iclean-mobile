@@ -1,42 +1,12 @@
-// ignore_for_file: avoid_print
-
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:iclean_mobile_app/utils/color_palette.dart';
-import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
-import 'package:iclean_mobile_app/widgets/my_textfield.dart';
-// ignore: depend_on_referenced_packages
-import 'package:http/http.dart' as http;
 
-import '../verification/verification_screen.dart';
+import 'components/login_content.dart';
 import 'components/logo_inkwell.dart';
 import 'components/or_divider.dart';
 
 class LogInScreen extends StatelessWidget {
-  LogInScreen({super.key});
-
-  final phoneController = TextEditingController();
-
-  Future<void> handleLogin(String phone, BuildContext context) async {
-    final response = await http.post(
-      Uri.parse("https://iclean.azurewebsites.net/api/v1/auth/phone-number"),
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode({'phoneNumber': phone}),
-    );
-    if (response.statusCode == 200) {
-      // ignore: use_build_context_synchronously
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => VerificationScreen(phoneNumber: phone)));
-    } else {
-      print('Request failed with status code: ${response.statusCode}');
-      print('Response body: ${response.body}');
-      // Handle the error as needed
-    }
-  }
+  const LogInScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -61,42 +31,7 @@ class LogInScreen extends StatelessWidget {
                 ),
               ),
 
-              //Phone TextField
-              Padding(
-                padding: const EdgeInsets.only(top: 24),
-                child: SizedBox(
-                  height: 48,
-                  child: MyTextField(
-                    textType: TextInputType.number,
-                    controller: phoneController,
-                    hintText: 'Số điện thoại',
-                  ),
-                ),
-              ),
-
-              //Note
-              const Padding(
-                padding: EdgeInsets.only(top: 8),
-                child: Text(
-                  "Bạn sẽ nhận được xác minh qua SMS có thể áp dụng phí tin nhắn và dữ liệu.",
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: ColorPalette.greyColor,
-                    fontFamily: 'Lato',
-                  ),
-                ),
-              ),
-
-              //InkWell Login
-              Padding(
-                padding: const EdgeInsets.only(top: 16),
-                child: MainColorInkWellFullSize(
-                  onTap: () {
-                    handleLogin(phoneController.text.toString(), context);
-                  },
-                  text: "Đăng nhập với số điện thoại",
-                ),
-              ),
+              const LoginContent(),
 
               //Or Divider
               const Padding(

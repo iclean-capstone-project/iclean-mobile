@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/view/renter/nav_bar_bottom/renter_screen.dart';
 
-class ConfirmDialog extends StatelessWidget {
-  const ConfirmDialog({super.key});
+class SuccessDialog extends StatelessWidget {
+  const SuccessDialog({super.key});
 
   @override
   Widget build(BuildContext context) {

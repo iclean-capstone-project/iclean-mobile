@@ -12,8 +12,6 @@ import 'components/empty_cart_content.dart';
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
 
- 
-
   @override
   Widget build(BuildContext context) {
     final cartProvider = Provider.of<CartProvider>(context);
@@ -58,7 +56,6 @@ class CartScreen extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
-                              color: Colors.black,
                             ),
                           ),
                           Text(

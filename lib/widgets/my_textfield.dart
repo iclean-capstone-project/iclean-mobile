@@ -6,20 +6,22 @@ class MyTextField extends StatelessWidget {
   final String hintText;
   final TextInputType? textType;
   final Widget? suffixIcon;
-  final String? Function(dynamic value)? validator;
+  final String? Function(String?)? validator;
 
-  const MyTextField(
-      {super.key,
-      required this.controller,
-      required this.hintText,
-      this.textType,
-      this.validator,
-      this.suffixIcon});
+  const MyTextField({
+    super.key,
+    required this.controller,
+    required this.hintText,
+    this.textType,
+    this.validator,
+    this.suffixIcon,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       controller: controller,
+      validator: validator,
       keyboardType: textType,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.symmetric(horizontal: 16),

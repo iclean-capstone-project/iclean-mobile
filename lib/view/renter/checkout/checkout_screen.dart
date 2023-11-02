@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/cart.dart';
 import 'package:provider/provider.dart';
 
-
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 import 'package:iclean_mobile_app/widgets/my_bottom_app_bar.dart';
 import 'package:iclean_mobile_app/provider/booking_details_provider.dart';
@@ -75,7 +74,6 @@ class CheckoutScreen2 extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black,
                         ),
                       ),
                       Text(

@@ -29,7 +29,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(
-                    builder: (BuildContext context) => LogInScreen()),
+                    builder: (BuildContext context) => const LogInScreen()),
                 (Route<dynamic> route) => false,
               );
               await UserPreferences.logout();
