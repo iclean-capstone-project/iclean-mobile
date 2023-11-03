@@ -3,12 +3,14 @@ import 'package:iclean_mobile_app/auth/log_in/log_in_screen.dart';
 import 'package:iclean_mobile_app/auth/user_preferences.dart';
 import 'package:iclean_mobile_app/models/account.dart';
 import 'package:iclean_mobile_app/services/api_account_repo.dart';
+
 import 'package:iclean_mobile_app/view/common/profile/location/location_screen.dart';
 import 'package:iclean_mobile_app/view/common/profile/my_profile_screen/components/dark_mode.dart';
 import 'package:iclean_mobile_app/view/common/profile/my_profile_screen/components/profile_inkwell.dart';
 import 'package:iclean_mobile_app/view/common/profile/update_profile_screen/update_profile_screen.dart';
 import 'package:iclean_mobile_app/view/common/profile/wallet/my_wallet/wallet_screen.dart';
 import 'package:iclean_mobile_app/widgets/confirm_dialog.dart';
+import 'package:iclean_mobile_app/widgets/shimmer_loading.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -18,6 +20,16 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  Future<Account> fetchAccount() async {
+    final ApiAccountRepository apiAccountRepository = ApiAccountRepository();
+    try {
+      final account = await apiAccountRepository.getAccount();
+      return account;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
   void showLogoutConfirmationDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -38,16 +50,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Future<Account> fetchAccount() async {
-    final ApiAccountRepository apiAccountRepository = ApiAccountRepository();
-    try {
-      final account = await apiAccountRepository.getAccount();
-      return account;
-    } catch (e) {
-      throw Exception(e);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,42 +57,65 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: FutureBuilder(
-              future: fetchAccount(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const CircularProgressIndicator();
-                } else if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                } else if (snapshot.hasData) {
-                  final account = snapshot.data!;
-                  return Column(
-                    children: [
-                      //Tittle
-                      Padding(
-                        padding: const EdgeInsets.only(top: 16),
-                        child: Row(
-                          children: const [
-                            Text(
-                              "Profile",
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Lato',
-                              ),
-                            ),
-                          ],
+            child: Column(
+              children: [
+                //Tittle
+                Padding(
+                  padding: const EdgeInsets.only(top: 16),
+                  child: Row(
+                    children: const [
+                      Text(
+                        "Profile",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Lato',
                         ),
                       ),
-                      const SizedBox(height: 8),
-                      //Avatar
-                      Column(
+                    ],
+                  ),
+                ),
+                FutureBuilder(
+                  future: fetchAccount(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Column(
                         children: [
-                          CircleAvatar(
-                            backgroundImage: NetworkImage(account.avatar),
-                            radius: 48,
+                          const ShimmerLoadingWidget.circular(
+                              height: 96, width: 96),
+                          const SizedBox(height: 16),
+                          ShimmerLoadingWidget.rectangular(
+                              width: MediaQuery.of(context).size.width * 0.2,
+                              height: 18),
+                          const SizedBox(height: 24),
+                          Column(
+                            children: List.generate(10, (index) {
+                              return Column(
+                                children: const [
+                                  ShimmerLoadingWidget.rectangular(height: 16),
+                                  SizedBox(height: 24),
+                                ],
+                              );
+                            }),
+                          ),
+                        ],
+                      );
+                    } else if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    } else if (snapshot.hasData) {
+                      final account = snapshot.data!;
+                      return Column(
+                        children: [
+                          //Avatar
+                          Padding(
+                            padding: const EdgeInsets.only(top: 8.0),
+                            child: CircleAvatar(
+                              backgroundImage: NetworkImage(account.avatar),
+                              radius: 48,
+                            ),
                           ),
                           const SizedBox(height: 16),
+                          //name
                           Text(
                             account.fullName,
                             style: const TextStyle(
@@ -99,114 +124,116 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               fontFamily: 'Lato',
                             ),
                           ),
-                        ],
-                      ),
-                      const SizedBox(height: 8),
-                      ProfileInkWell(
-                        icon: const Icon(Icons.person_outline),
-                        text: "Cập nhật hồ sơ",
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      UpdateProfileScreen(account: account)));
-                        },
-                      ),
-                      ProfileInkWell(
-                        icon: const Icon(Icons.location_on_outlined),
-                        text: "Vị trí",
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const LocationScreen()));
-                        },
-                      ),
-                      ProfileInkWell(
-                        icon: const Icon(Icons.wallet),
-                        text: "Ví IcleanPay",
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const MyWalletScreen()));
-                        },
-                      ),
-
-                      ProfileInkWell(
-                        icon: const Icon(Icons.notifications_outlined),
-                        text: "Thông báo",
-                        onTap: () {},
-                      ),
-                      ProfileInkWell(
-                        icon: const Icon(Icons.payment_outlined),
-                        text: "Thanh toán",
-                        onTap: () {},
-                      ),
-                      ProfileInkWell(
-                        icon: const Icon(Icons.language_outlined),
-                        text: "Ngôn ngữ",
-                        onTap: () {},
-                      ),
-
-                      const DarkModeButton(),
-                      ProfileInkWell(
-                        icon: const Icon(Icons.policy_outlined),
-                        text: "Privacy Policy",
-                        onTap: () {},
-                      ),
-                      ProfileInkWell(
-                        icon: const Icon(Icons.list_alt_outlined),
-                        text: "Điều khoản sử dụng",
-                        onTap: () {},
-                      ),
-                      TextButton(
-                        style: ButtonStyle(
-                          overlayColor:
-                              MaterialStateProperty.resolveWith<Color>(
-                            (Set<MaterialState> states) {
-                              if (states.contains(MaterialState.hovered)) {
-                                return Colors.red.withOpacity(0.2);
-                              } else {
-                                return Colors.transparent;
-                              }
+                          const SizedBox(height: 8),
+                          ProfileInkWell(
+                            icon: const Icon(Icons.person_outline),
+                            text: "Cập nhật hồ sơ",
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => UpdateProfileScreen(
+                                          account: account)));
                             },
                           ),
-                          mouseCursor: MaterialStateProperty.all<MouseCursor>(
-                              SystemMouseCursors.click),
-                        ),
-                        onPressed: () => showLogoutConfirmationDialog(context),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: const [
-                                Icon(
-                                  Icons.logout,
-                                  color: Colors.red,
-                                ),
-                                SizedBox(width: 8),
-                                Text(
-                                  "Đăng xuất",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontFamily: 'Lato',
-                                    color: Colors.red,
-                                  ),
+                          ProfileInkWell(
+                            icon: const Icon(Icons.location_on_outlined),
+                            text: "Vị trí",
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const LocationScreen()));
+                            },
+                          ),
+                          ProfileInkWell(
+                            icon: const Icon(Icons.wallet),
+                            text: "Ví IcleanPay",
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const MyWalletScreen()));
+                            },
+                          ),
+
+                          ProfileInkWell(
+                            icon: const Icon(Icons.notifications_outlined),
+                            text: "Thông báo",
+                            onTap: () {},
+                          ),
+                          ProfileInkWell(
+                            icon: const Icon(Icons.payment_outlined),
+                            text: "Thanh toán",
+                            onTap: () {},
+                          ),
+                          ProfileInkWell(
+                            icon: const Icon(Icons.language_outlined),
+                            text: "Ngôn ngữ",
+                            onTap: () {},
+                          ),
+
+                          const DarkModeButton(),
+                          ProfileInkWell(
+                            icon: const Icon(Icons.policy_outlined),
+                            text: "Privacy Policy",
+                            onTap: () {},
+                          ),
+                          ProfileInkWell(
+                            icon: const Icon(Icons.list_alt_outlined),
+                            text: "Điều khoản sử dụng",
+                            onTap: () {},
+                          ),
+                          TextButton(
+                            style: ButtonStyle(
+                              overlayColor:
+                                  MaterialStateProperty.resolveWith<Color>(
+                                (Set<MaterialState> states) {
+                                  if (states.contains(MaterialState.hovered)) {
+                                    return Colors.red.withOpacity(0.2);
+                                  } else {
+                                    return Colors.transparent;
+                                  }
+                                },
+                              ),
+                              mouseCursor:
+                                  MaterialStateProperty.all<MouseCursor>(
+                                      SystemMouseCursors.click),
+                            ),
+                            onPressed: () =>
+                                showLogoutConfirmationDialog(context),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: const [
+                                    Icon(
+                                      Icons.logout,
+                                      color: Colors.red,
+                                    ),
+                                    SizedBox(width: 8),
+                                    Text(
+                                      "Đăng xuất",
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontFamily: 'Lato',
+                                        color: Colors.red,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
-                          ],
-                        ),
-                      )
-                    ],
-                  );
-                }
-                return const Divider();
-              },
+                          )
+                        ],
+                      );
+                    }
+                    return const Divider();
+                  },
+                ),
+              ],
             ),
           ),
         ),

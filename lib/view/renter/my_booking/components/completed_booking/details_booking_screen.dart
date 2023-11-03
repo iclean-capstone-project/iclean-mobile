@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/bookings.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
+import 'package:iclean_mobile_app/view/renter/my_booking/components/completed_booking/components/timeline_details/timeline_details.dart';
 import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
 
 import 'components/address_content.dart';
@@ -42,15 +43,21 @@ class DetailsBookingScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TimelineContent(booking: booking),
+                Center(
+                  child: TimelineContent(booking: booking),
+                ),
+                const SizedBox(height: 16),
+                TimelineDetails(booking: booking),
+                const SizedBox(height: 16),
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16.0),
                   child: DetailsContentField(
                       text: "Mã đặt dịch vụ", text2: "ádsadsadsadsadsa"),
                 ),
-                EmployeeContent(booking: booking),
                 const SizedBox(height: 16),
                 AddressContent(booking: booking),
+                const SizedBox(height: 16),
+                EmployeeContent(booking: booking),
                 const SizedBox(height: 24),
                 DetailContent(booking: booking),
                 const SizedBox(height: 24),

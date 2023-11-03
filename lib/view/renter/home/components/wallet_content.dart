@@ -4,6 +4,7 @@ import 'package:iclean_mobile_app/services/api_wallet_repo.dart';
 
 import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/view/common/profile/wallet/my_wallet/wallet_screen.dart';
+import 'package:iclean_mobile_app/widgets/shimmer_loading.dart';
 
 class WalletContent extends StatefulWidget {
   const WalletContent({
@@ -53,12 +54,15 @@ class _WalletContentState extends State<WalletContent> {
                   size: 24,
                   color: ColorPalette.mainColor,
                 ),
-                if (isMoneyHidden)
+                if (!isMoneyHidden)
                   FutureBuilder(
                     future: fetchMoney(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const CircularProgressIndicator();
+                        return ShimmerLoadingWidget.rectangular(
+                          width: MediaQuery.of(context).size.width * 0.2,
+                          height: 16,
+                        );
                       } else if (snapshot.hasError) {
                         return Text('Error: ${snapshot.error}');
                       } else if (snapshot.hasData) {
@@ -84,7 +88,7 @@ class _WalletContentState extends State<WalletContent> {
                       return const Divider();
                     },
                   ),
-                if (!isMoneyHidden)
+                if (isMoneyHidden)
                   const Text(
                     "******",
                     style: TextStyle(
@@ -122,12 +126,15 @@ class _WalletContentState extends State<WalletContent> {
                   size: 24,
                   color: ColorPalette.mainColor,
                 ),
-                if (isPointHidden)
+                if (!isPointHidden)
                   FutureBuilder(
                     future: fetchPoint(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const CircularProgressIndicator();
+                        return ShimmerLoadingWidget.rectangular(
+                          width: MediaQuery.of(context).size.width * 0.2,
+                          height: 16,
+                        );
                       } else if (snapshot.hasError) {
                         return Text('Error: ${snapshot.error}');
                       } else if (snapshot.hasData) {
@@ -153,7 +160,7 @@ class _WalletContentState extends State<WalletContent> {
                       return const Divider();
                     },
                   ),
-                if (!isPointHidden)
+                if (isPointHidden)
                   const Text(
                     "******",
                     style: TextStyle(

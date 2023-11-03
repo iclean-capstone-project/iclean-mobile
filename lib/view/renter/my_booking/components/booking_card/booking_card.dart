@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/bookings.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
-
-import 'completed_booking/details_booking_screen.dart';
-import 'components/avatar_widget.dart';
-
-import 'components/info_booking.dart';
+import 'package:iclean_mobile_app/view/renter/my_booking/components/completed_booking/details_booking_screen.dart';
+import 'package:iclean_mobile_app/view/renter/my_booking/components/components/avatar_widget.dart';
+import 'package:iclean_mobile_app/view/renter/my_booking/components/components/info_booking.dart';
 
 class BookingCard extends StatefulWidget {
   final List<Booking> listBookings;
@@ -143,35 +141,4 @@ class _BookingCardCardState extends State<BookingCard>
       ],
     );
   }
-
-  // Future<void> _updateBookingOrder(int id, String status) async {
-  //   int responseStatus = await BookingApi.changeStatusBooking(id, status);
-  //   String alert = "Cancel";
-  //   if (status != 'cancel') {
-  //     alert = 'Accept';
-  //   }
-  //   if (responseStatus == 202) {
-  //     // Booking order was created successfully, show a success message to the user
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       SnackBar(content: Text('${alert} Booking Successfully!')),
-  //     );
-  //   } else if (responseStatus == 409) {
-  //     // Booking order creation failed, show an error message to the user
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       SnackBar(content: Text('The booking is conflict with another')),
-  //     );
-  //   } else {
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       SnackBar(content: Text('Failed to cancel booking')),
-  //     );
-  //   }
-  //   _reloadPage;
-  // }
-
-  // void fetchBooking(int userId, String status) async {
-  //   final listBookings = await BookingApi.fetchBooking(userId, status);
-  //   setState(() {
-  //     bookings = listBookings;
-  //   });
-  // }
 }

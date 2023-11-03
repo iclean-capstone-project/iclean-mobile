@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-class NotiContentLoadingWidget extends StatelessWidget {
+class ShimmerLoadingWidget extends StatelessWidget {
   final double height;
   final double width;
   final ShapeBorder shapeBorder;
 
-  const NotiContentLoadingWidget.rectangular({
+  const ShimmerLoadingWidget.rectangular({
     super.key,
     required this.height,
     this.width = double.infinity,
     this.shapeBorder = const RoundedRectangleBorder(),
   });
 
-  const NotiContentLoadingWidget.circular({
+  const ShimmerLoadingWidget.circular({
     super.key,
     required this.height,
     required this.width,

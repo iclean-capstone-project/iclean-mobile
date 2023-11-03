@@ -36,7 +36,7 @@ class ApiTransactionRepository implements TransactionRepository {
             date: DateTime.parse(e['createAt']),
             code: e['content'] ?? "",
             type: e['transactionType'],
-            amount: e['balance'],
+            amount: e['amount'],
             status: e['transactionStatus'],
             content: e['note'],
           );

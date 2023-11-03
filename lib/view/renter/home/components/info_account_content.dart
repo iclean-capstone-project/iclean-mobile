@@ -3,6 +3,7 @@ import 'package:iclean_mobile_app/models/account.dart';
 import 'package:iclean_mobile_app/services/api_account_repo.dart';
 import 'package:iclean_mobile_app/view/common/notification/notification_screen.dart';
 import 'package:iclean_mobile_app/view/common/profile/location/location_screen.dart';
+import 'package:iclean_mobile_app/widgets/shimmer_loading.dart';
 
 class InfoAccountContent extends StatelessWidget {
   const InfoAccountContent({super.key});
@@ -23,7 +24,49 @@ class InfoAccountContent extends StatelessWidget {
       future: fetchAccount(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
+          return Row(
+            children: [
+              const ShimmerLoadingWidget.circular(height: 48, width: 48),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: SizedBox(
+                  width: 288,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          ShimmerLoadingWidget.rectangular(
+                            width: MediaQuery.of(context).size.width * 0.3,
+                            height: 16,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.location_on,
+                            size: 16,
+                            color: Colors.white,
+                          ),
+                          const SizedBox(width: 8),
+                          ShimmerLoadingWidget.rectangular(
+                            width: MediaQuery.of(context).size.width * 0.6,
+                            height: 16,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const Icon(
+                Icons.notifications_sharp,
+                color: Colors.white,
+              )
+            ],
+          );
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else if (snapshot.hasData) {

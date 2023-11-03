@@ -6,6 +6,7 @@ import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 import 'package:iclean_mobile_app/view/common/profile/location/add_location/add_location_screen.dart';
 import 'package:iclean_mobile_app/view/common/profile/location/update_location/update_location_screen.dart';
 import 'package:iclean_mobile_app/widgets/my_bottom_app_bar.dart';
+import 'package:iclean_mobile_app/widgets/shimmer_loading.dart';
 
 class LocationScreen extends StatelessWidget {
   const LocationScreen({super.key});
@@ -57,8 +58,57 @@ class LocationScreen extends StatelessWidget {
           future: fetchNotifications(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: CircularProgressIndicator(),
+              return Padding(
+                padding: const EdgeInsets.only(top: 16.0),
+                child: Column(
+                    children: List.generate(5, (index) {
+                  return Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: Row(
+                            children: [
+                              const ShimmerLoadingWidget.circular(
+                                  height: 16, width: 16),
+                              const SizedBox(width: 16),
+                              Flexible(
+                                fit: FlexFit.loose,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    ShimmerLoadingWidget.rectangular(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.3,
+                                      height: 16,
+                                    ),
+                                    const SizedBox(height: 8),
+                                    const ShimmerLoadingWidget.rectangular(
+                                      height: 12,
+                                    ),
+                                    const SizedBox(height: 4),
+                                    ShimmerLoadingWidget.rectangular(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.6,
+                                      height: 12,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        if (index != 4)
+                          Divider(
+                            thickness: 0.5,
+                            color: Colors.grey[400],
+                          ),
+                      ],
+                    ),
+                  );
+                })),
               );
             } else if (snapshot.hasError) {
               return Center(

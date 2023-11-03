@@ -21,9 +21,8 @@ class MyTimeline extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 80,
+      height: 64,
       child: TimelineTile(
-          axis: TimelineAxis.horizontal,
           isFirst: isFirst,
           isLast: isLast,
           beforeLineStyle: const LineStyle(
@@ -37,29 +36,27 @@ class MyTimeline extends StatelessWidget {
               color: Colors.white,
             ),
           ),
-          endChild: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                statusTitle,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontFamily: 'Lato',
+          endChild: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  statusTitle,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontFamily: 'Lato',
+                  ),
                 ),
-              ),
-              Text(
-                DateFormat('hh:mm aaa').format(date!),
-                style: const TextStyle(
-                  fontFamily: 'Lato',
+                Text(
+                  DateFormat('d/MM/yyyy | hh:mm aaa').format(date!),
+                  style: const TextStyle(
+                    fontFamily: 'Lato',
+                  ),
                 ),
-              ),
-              Text(
-                DateFormat('d/MM/yyyy').format(date!),
-                style: const TextStyle(
-                  fontFamily: 'Lato',
-                ),
-              ),
-            ],
+              ],
+            ),
           )),
     );
   }

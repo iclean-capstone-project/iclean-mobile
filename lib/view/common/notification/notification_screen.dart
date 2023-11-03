@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
+import 'package:iclean_mobile_app/widgets/shimmer_loading.dart';
 import 'package:iclean_mobile_app/widgets/title_content.dart';
 import 'package:provider/provider.dart';
 import 'package:iclean_mobile_app/models/noti.dart';
 import 'package:iclean_mobile_app/services/api_noti_repo.dart';
 import 'package:iclean_mobile_app/provider/notification_provider.dart';
 
-import 'components/noti_content_loading.dart';
-import 'components/noti_content/noti_content.dart';
+import 'components/noti_content.dart/noti_content.dart';
 
 class NotificationScreen extends StatelessWidget {
   const NotificationScreen({super.key});
@@ -57,12 +57,11 @@ class NotificationScreen extends StatelessWidget {
                       child: Column(
                         children: List.generate(5, (index) {
                           return const ListTile(
-                            leading: NotiContentLoadingWidget.circular(
+                            leading: ShimmerLoadingWidget.circular(
                                 height: 40, width: 40),
-                            title: NotiContentLoadingWidget.rectangular(
-                                height: 18),
-                            subtitle: NotiContentLoadingWidget.rectangular(
-                                height: 10),
+                            title: ShimmerLoadingWidget.rectangular(height: 18),
+                            subtitle:
+                                ShimmerLoadingWidget.rectangular(height: 10),
                           );
                         }),
                       ),

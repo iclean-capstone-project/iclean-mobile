@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/transaction.dart';
-import 'package:iclean_mobile_app/models/wallet.dart';
 import 'package:iclean_mobile_app/services/api_transaction_repo.dart';
-import 'package:iclean_mobile_app/services/api_wallet_repo.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
+import 'package:iclean_mobile_app/widgets/shimmer_loading.dart';
 
 import 'components/account_balance.dart';
 import 'components/transaction_content.dart';
@@ -11,24 +10,14 @@ import 'components/transaction_content.dart';
 class MyWalletScreen extends StatelessWidget {
   const MyWalletScreen({super.key});
 
-  
-
   @override
   Widget build(BuildContext context) {
-    Future<Wallet> fetchMoney() async {
-      final ApiWalletRepository apiWalletRepository = ApiWalletRepository();
-      try {
-        final money = await apiWalletRepository.getMoney();
-        return money;
-      } catch (e) {
-        throw Exception(e);
-      }
-    }
-
     Future<List<Transaction>> fetchTransactionMoney(int page) async {
-      final ApiTransactionRepository apiTransactionRepository = ApiTransactionRepository();
+      final ApiTransactionRepository apiTransactionRepository =
+          ApiTransactionRepository();
       try {
-        final newNotifications = await apiTransactionRepository.getTransactionMoney(page);
+        final newNotifications =
+            await apiTransactionRepository.getTransactionMoney(page);
         return newNotifications;
       } catch (e) {
         // ignore: avoid_print
@@ -45,22 +34,9 @@ class MyWalletScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              FutureBuilder(
-                future: fetchMoney(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator();
-                  } else if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
-                  } else if (snapshot.hasData) {
-                    final money = snapshot.data!;
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 24.0),
-                      child: AccountBalance(money: money),
-                    );
-                  }
-                  return const Divider();
-                },
+              const Padding(
+                padding: EdgeInsets.only(top: 24.0),
+                child: AccountBalance(),
               ),
               const SizedBox(height: 16),
               const Text(
@@ -71,20 +47,42 @@ class MyWalletScreen extends StatelessWidget {
                   fontFamily: 'Lato',
                 ),
               ),
-                FutureBuilder(
-                  future: fetchTransactionMoney(1),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const CircularProgressIndicator();
-                    } else if (snapshot.hasError) {
-                      return Text('Error: ${snapshot.error}');
-                    } else if (snapshot.hasData) {
-                      final transactions = snapshot.data!;
-                      return TransactionContent(transactions: transactions);
-                    }
-                    return const Divider();
-                  },
-                ),
+              FutureBuilder(
+                future: fetchTransactionMoney(1),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Column(
+                      children: List.generate(5, (index) {
+                        return ListTile(
+                          leading: const ShimmerLoadingWidget.circular(
+                              height: 24, width: 24),
+                          title: Align(
+                            alignment: Alignment.centerLeft,
+                            child: ShimmerLoadingWidget.rectangular(
+                                width: MediaQuery.of(context).size.width * 0.4,
+                                height: 18),
+                          ),
+                          subtitle: Align(
+                            alignment: Alignment.centerLeft,
+                            child: ShimmerLoadingWidget.rectangular(
+                                width: MediaQuery.of(context).size.width * 0.3,
+                                height: 16),
+                          ),
+                          trailing: ShimmerLoadingWidget.rectangular(
+                              width: MediaQuery.of(context).size.width * 0.15,
+                              height: 16),
+                        );
+                      }),
+                    );
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else if (snapshot.hasData) {
+                    final transactions = snapshot.data!;
+                    return TransactionContent(transactions: transactions);
+                  }
+                  return const Divider();
+                },
+              ),
             ],
           ),
         ),
