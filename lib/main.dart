@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iclean_mobile_app/view/common/welcome/splash/splash_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:iclean_mobile_app/auth/log_in/log_in_screen.dart';
 import 'package:iclean_mobile_app/view/renter/nav_bar_bottom/renter_screen.dart';
@@ -52,7 +53,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: Provider.of<ThemeProvider>(context).themeData,
-      home: isLoggedIn ? const RenterScreens() : const LogInScreen(),
+      //home: isLoggedIn ? const RenterScreens() : const LogInScreen(),
+      home: SplashScreen(),
     );
   }
 }

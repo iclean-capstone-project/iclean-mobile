@@ -19,14 +19,14 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   final List<OnBoard> onboardData = [
     OnBoard(
         image: "assets/images/illustration_1.png",
-        description: "We provide professional service at a friendly price"),
+        description: "Chúng tôi cung cấp dịch vụ chuyên nghiệp với mức giá thân thiện"),
     OnBoard(
         image: "assets/images/illustration_2.png",
         description:
-            "The best result and your satisfaction is our top priority"),
+            "Kết quả tốt nhất và sự hài lòng của bạn là mục tiêu hàng đầu của chúng tôi"),
     OnBoard(
         image: "assets/images/illustration_3.png",
-        description: "Let's make awesome changes to your home"),
+        description: "Hãy tạo ra những thay đổi tuyệt vời cho ngôi nhà của bạn"),
   ];
 
   @override
