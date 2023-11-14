@@ -6,10 +6,10 @@ import 'package:iclean_mobile_app/view/renter/nav_bar_bottom/renter_screen.dart'
 
 import 'auth/user_preferences.dart';
 import 'provider/booking_details_provider.dart';
+import 'provider/cart_provider.dart';
 import 'provider/theme_provider.dart';
 import 'provider/location_provider.dart';
 import 'provider/notification_provider.dart';
-import 'provider/cart_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -53,8 +53,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: Provider.of<ThemeProvider>(context).themeData,
-      //home: isLoggedIn ? const RenterScreens() : const LogInScreen(),
-      home: SplashScreen(),
+      home: isLoggedIn ? const RenterScreens() : const LogInScreen(),
+      //home: SplashScreen(),
     );
   }
 }

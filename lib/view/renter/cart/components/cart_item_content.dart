@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:iclean_mobile_app/models/cart_item.dart';
 import 'package:iclean_mobile_app/provider/cart_provider.dart';
+import 'package:iclean_mobile_app/services/api_cart_repo.dart';
+import 'package:iclean_mobile_app/widgets/confirm_dialog.dart';
 
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 extension TimeOfDayExtension on TimeOfDay {
   TimeOfDay addHour(int hour) {
@@ -12,15 +16,41 @@ extension TimeOfDayExtension on TimeOfDay {
 class CartItemContent extends StatelessWidget {
   const CartItemContent({
     super.key,
-    required this.cartProvider,
-    required this.i,
+    required this.cartItem,
   });
 
-  final CartProvider cartProvider;
-  final int i;
+  final CartItem cartItem;
 
   @override
   Widget build(BuildContext context) {
+    void showConfirmationDialog(BuildContext context, int id) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return ConfirmDialog(
+            title: "Bạn có chắc chắn muốn xóa dịch vụ này khỏi giỏ hàng?",
+            confirm: "Xác nhận",
+            onTap: () async {
+              // final ApiCartRepository repository = ApiCartRepository();
+              // repository.deleteCartItem(id).then((_) {
+              //   Navigator.pop(context);
+              // }).catchError((error) {
+              //   // ignore: avoid_print
+              //   print('Failed to delete service: $error');
+              // });
+              final cartProvider =
+                  Provider.of<CartProvider>(context, listen: false);
+              await cartProvider.deleteCartItem(id);
+
+              await cartProvider.fetchCart();
+
+              Navigator.pop(context);
+            },
+          );
+        },
+      );
+    }
+
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8),
       height: 120,
@@ -41,7 +71,7 @@ class CartItemContent extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
                     image: DecorationImage(
-                      image: NetworkImage(cartProvider.items[i].service.icon),
+                      image: NetworkImage(cartItem.serviceIcon),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -53,7 +83,7 @@ class CartItemContent extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        cartProvider.items[i].service.name,
+                        cartItem.serviceName,
                         style: const TextStyle(
                           fontSize: 16,
                           fontFamily: 'Lato',
@@ -61,22 +91,22 @@ class CartItemContent extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "Ngày làm: ${DateFormat('d/MM/yyyy').format(cartProvider.items[i].day)}",
+                        "Ngày làm: ${DateFormat('d/MM/yyyy').format(cartItem.workDate)}",
                         style: const TextStyle(
                           fontFamily: 'Lato',
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       Text(
-                        "Giờ làm: ${cartProvider.items[i].timeStart.to24hours()} - ${cartProvider.items[i].timeStart.addHour(cartProvider.items[i].time).to24hours()}",
+                        "Giờ làm: ${cartItem.workTime.to24hours()} - ${cartItem.workTime.addHour(cartItem.serviceUnit.equivalent.toInt()).to24hours()}",
                         style: const TextStyle(
                           fontFamily: 'Lato',
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const Text(
-                        "Giá: áđsadsa",
-                        style: TextStyle(
+                      Text(
+                        "Giá: ${cartItem.formatPriceInVND()}",
+                        style: const TextStyle(
                           fontFamily: 'Lato',
                           fontWeight: FontWeight.bold,
                         ),
@@ -89,7 +119,7 @@ class CartItemContent extends StatelessWidget {
           ),
           IconButton(
             onPressed: () {
-              cartProvider.removeFromCart(cartProvider.items[i]);
+              showConfirmationDialog(context, cartItem.cartItemId);
             },
             icon: const Icon(Icons.remove_shopping_cart),
           ),

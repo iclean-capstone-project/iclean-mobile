@@ -60,7 +60,8 @@ class ServiceInfo extends StatelessWidget {
               text: "Khối lượng công việc",
               text2: context
                   .watch<BookingDetailsProvider>()
-                  .selectedOption
+                  .selectedServiceUnit
+                  .equivalent
                   .toString()),
           const SizedBox(height: 4),
           const DetailsContentField(text: "Tổng cộng", text2: "abc"),

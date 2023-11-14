@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/cart.dart';
+import 'package:iclean_mobile_app/models/cart_item.dart';
 import 'package:provider/provider.dart';
 
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
@@ -13,10 +14,10 @@ import 'components/service_info.dart';
 class CheckoutScreen2 extends StatelessWidget {
   const CheckoutScreen2({
     super.key,
-    required this.cartItems,
+    required this.cart,
   });
 
-  final List<CartItem> cartItems;
+  final Cart cart;
 
   @override
   Widget build(BuildContext context) {
@@ -55,12 +56,12 @@ class CheckoutScreen2 extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 8),
-                for (int i = 0; i < cartItems.length; i++)
+                for (int i = 0; i < cart.cartItem.length; i++)
                   Column(
                     children: [
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8),
-                        child: ServiceInfo(cartItem: cartItems[i]),
+                        child: ServiceInfo(cartItem: cart.cartItem[i]),
                       ),
                     ],
                   ),
@@ -68,8 +69,8 @@ class CheckoutScreen2 extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      Text(
+                    children: [
+                      const Text(
                         "Total",
                         style: TextStyle(
                           fontSize: 16,
@@ -77,8 +78,8 @@ class CheckoutScreen2 extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "ASĐSADSA",
-                        style: TextStyle(
+                        cart.formatTotalPriceInVND(),
+                        style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: Colors.red,

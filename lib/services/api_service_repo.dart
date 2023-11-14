@@ -28,13 +28,7 @@ class ApiServiceRepository implements ServiceRepository {
         final jsonMap = json.decode(utf8.decode(response.bodyBytes));
         final data = jsonMap['data'] as List<dynamic>;
         final services = data.map((e) {
-          return Service(
-            id: e['serviceId'],
-            name: e['serviceName'],
-            icon: e['serviceIcon'],
-            description: e['dsaaaa'] ?? "",
-            imagePath: e['dsaaaa'] ?? "",
-          );
+          return Service.fromJson(e as Map<String, dynamic>);
         }).toList();
         return services;
       } else {
@@ -43,6 +37,38 @@ class ApiServiceRepository implements ServiceRepository {
       }
     } catch (e) {
       throw Exception(e);
+    }
+  }
+
+  @override
+  Future<Service> getServiceDetails(int id) async {
+    final url = '$urlConstant/$id';
+    final uri = Uri.parse(url);
+    final accessToken = await UserPreferences.getAccessToken();
+
+    Map<String, String> headers = {
+      "Authorization": "Bearer $accessToken",
+      "Content-Type": "application/json",
+    };
+
+    try {
+      final response = await http.get(uri, headers: headers);
+
+      if (response.statusCode == 200) {
+        final jsonMap = json.decode(utf8.decode(response.bodyBytes));
+        final serviceData = jsonMap['data'];
+
+        if (serviceData != null) {
+          return Service.fromJson(serviceData);
+        } else {
+          throw Exception("Service data not found for ID: $id");
+        }
+      } else {
+        throw Exception(
+            'Status: ${response.statusCode}, Body: ${response.body}');
+      }
+    } catch (e) {
+      throw Exception(e.toString());
     }
   }
 }

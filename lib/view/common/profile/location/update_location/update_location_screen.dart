@@ -15,11 +15,9 @@ class UpdateLocationScreen extends StatefulWidget {
   const UpdateLocationScreen({
     super.key,
     required this.address,
-    required this.apiLocationRepository,
   });
 
   final Address address;
-  final ApiLocationRepository apiLocationRepository;
 
   @override
   State<UpdateLocationScreen> createState() => _UpdateLocationScreenState();
@@ -79,10 +77,8 @@ class _UpdateLocationScreenState extends State<UpdateLocationScreen> {
       'latitude': latitude,
       'longitude': longitude,
     };
-
-    widget.apiLocationRepository
-        .updateLocation(widget.address.id!, dataForUpdate)
-        .then((_) {
+    final ApiLocationRepository repository = ApiLocationRepository();
+    repository.updateLocation(widget.address.id!, dataForUpdate).then((_) {
       Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (context) => const LocationScreen()));
     }).catchError((error) {
@@ -98,7 +94,8 @@ class _UpdateLocationScreenState extends State<UpdateLocationScreen> {
           title: "Bạn có chắc chắn muốn xóa địa chỉ này?",
           confirm: "Xác nhận",
           onTap: () {
-            widget.apiLocationRepository.deleteLocation(location.id!).then((_) {
+            final ApiLocationRepository repository = ApiLocationRepository();
+            repository.deleteLocation(location.id!).then((_) {
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(

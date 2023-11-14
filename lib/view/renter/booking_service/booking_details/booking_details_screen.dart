@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:iclean_mobile_app/provider/cart_provider.dart';
+import 'package:iclean_mobile_app/services/api_cart_repo.dart';
+import 'package:iclean_mobile_app/widgets/my_textfield.dart';
 import 'package:provider/provider.dart';
-import 'package:iclean_mobile_app/models/cart.dart';
 import 'package:iclean_mobile_app/models/services.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 import 'package:iclean_mobile_app/widgets/my_bottom_app_bar_with_two_inkwell.dart';
@@ -26,11 +26,28 @@ class BookingDetailsScreen extends StatefulWidget {
 }
 
 class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
+  final noteController = TextEditingController();
+
+  void addToCart(bookingDetailsProvider) {
+    final selectedDate = bookingDetailsProvider.selectedDay;
+    final selectedTime = bookingDetailsProvider.selectedTime;
+    final startTime = DateTime(
+      selectedDate.year,
+      selectedDate.month,
+      selectedDate.day,
+      selectedTime.hour,
+      0,
+    );
+    final serviceUnitId = bookingDetailsProvider.selectedServiceUnit.id;
+    final note = noteController.text;
+    final ApiCartRepository repository = ApiCartRepository();
+    repository.addToCart(startTime, serviceUnitId, note);
+  }
+
   @override
   Widget build(BuildContext context) {
     BookingDetailsProvider bookingDetailsProvider =
         Provider.of<BookingDetailsProvider>(context);
-    final cartProvider = Provider.of<CartProvider>(context);
     return Scaffold(
       appBar: MyAppBar(
         text: widget.service.name,
@@ -79,7 +96,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
                 ),
               ),
               const SizedBox(height: 8),
-              TimeWorkingOption(bookingDetailsProvider: bookingDetailsProvider),
+              TimeWorkingOption(service: widget.service),
               const SizedBox(height: 16),
               const Text(
                 "Chọn giờ làm",
@@ -101,14 +118,9 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
                 ),
               ),
               const SizedBox(height: 8),
-              TextFormField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  hintText: "Thêm ghi chú",
-                  contentPadding: const EdgeInsets.all(16),
-                ),
+              MyTextField(
+                controller: noteController,
+                hintText: 'Thêm ghi chú',
               ),
               const SizedBox(height: 16),
               Row(
@@ -132,14 +144,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
       bottomNavigationBar: MyBottomAppBarTwoInkWell(
         text1: "Thêm vào giỏ",
         onTap1: () {
-          cartProvider.addToCart(
-            CartItem(
-              service: widget.service,
-              day: bookingDetailsProvider.selectedDay,
-              time: bookingDetailsProvider.selectedOption,
-              timeStart: bookingDetailsProvider.selectedTime,
-            ),
-          );
+          addToCart(bookingDetailsProvider);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text('${widget.service.name} đã được thêm vào giỏ hàng'),

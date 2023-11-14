@@ -50,6 +50,7 @@ dependencies:
   flutter_secure_storage: ^8.0.0
   shared_preferences: ^2.2.0
   shimmer: ^3.0.0
+  another_carousel_pro: ^1.0.0
 
 dev_dependencies:
   flutter_test:

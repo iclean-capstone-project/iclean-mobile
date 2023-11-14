@@ -10,9 +10,7 @@ import 'package:iclean_mobile_app/widgets/my_bottom_app_bar.dart';
 import '../location_screen.dart';
 
 class AddLocationScreen extends StatefulWidget {
-  const AddLocationScreen({super.key, required this.apiLocationRepository});
-
-  final ApiLocationRepository apiLocationRepository;
+  const AddLocationScreen({super.key});
 
   @override
   State<AddLocationScreen> createState() => _AddLocationScreenState();
@@ -80,7 +78,8 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
       isDefault: false,
     );
     // Pass newLocation to your addLocation function
-    widget.apiLocationRepository.addLocation(newLocation).then((_) {
+    final ApiLocationRepository repository = ApiLocationRepository();
+    repository.addLocation(newLocation).then((_) {
       // Handle success, for example, by navigating to a new screen
       Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (context) => const LocationScreen()));

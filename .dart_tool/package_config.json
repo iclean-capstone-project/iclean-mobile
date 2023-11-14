@@ -2,6 +2,12 @@
   "configVersion": 2,
   "packages": [
     {
+      "name": "another_carousel_pro",
+      "rootUri": "file:///D:/Tools/Android/flutter/.pub-cache/hosted/pub.dartlang.org/another_carousel_pro-1.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "async",
       "rootUri": "file:///D:/Tools/Android/flutter/.pub-cache/hosted/pub.dartlang.org/async-2.9.0",
       "packageUri": "lib/",
@@ -560,7 +566,7 @@
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2023-11-06T09:57:12.085317Z",
+  "generated": "2023-11-14T08:49:41.948809Z",
   "generator": "pub",
   "generatorVersion": "2.18.6"
 }

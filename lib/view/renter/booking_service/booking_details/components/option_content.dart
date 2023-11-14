@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
 class OptionContent extends StatelessWidget {
-  final String time, square;
   const OptionContent({
-    Key? key,
-    required this.time,
-    required this.square,
-  }) : super(key: key);
+    super.key,
+    required this.value,
+    required this.equivalent,
+  });
+
+  final String value, equivalent;
 
   @override
   Widget build(BuildContext context) {
@@ -15,14 +16,14 @@ class OptionContent extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            time,
+            value,
             style: const TextStyle(
               fontFamily: 'Lato',
             ),
           ),
           const SizedBox(height: 4),
           Text(
-            square,
+            equivalent,
             style: const TextStyle(
               fontFamily: 'Lato',
             ),

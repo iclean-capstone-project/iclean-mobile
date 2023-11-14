@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:iclean_mobile_app/models/cart.dart';
+import 'package:iclean_mobile_app/models/cart_item.dart';
 import 'package:iclean_mobile_app/provider/cart_provider.dart';
-import 'package:iclean_mobile_app/view/renter/cart/components/cart_item_content.dart';
+import 'package:iclean_mobile_app/services/api_cart_repo.dart';
 import 'package:iclean_mobile_app/view/renter/checkout/checkout_screen.dart';
 import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
 import 'package:iclean_mobile_app/widgets/title_content.dart';
-
 import 'package:provider/provider.dart';
 
+import 'components/cart_item_content.dart';
 import 'components/empty_cart_content.dart';
 
 class CartScreen extends StatelessWidget {
@@ -14,7 +16,22 @@ class CartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cartProvider = Provider.of<CartProvider>(context);
+    Future<Cart> fetchCart() async {
+      final ApiCartRepository repository = ApiCartRepository();
+      try {
+        final cart = await repository.getCart();
+        return cart;
+      } catch (e) {
+        return Cart(
+          cartId: null,
+          totalPrice: 0,
+          totalPriceActual: 0,
+          cartItem: <CartItem>[],
+        );
+      }
+    }
+
+    final cartProvider = Provider.of<CartProvider>(context, listen: false);
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -26,65 +43,118 @@ class CartScreen extends StatelessWidget {
                 child: TitleContent(
                   text1: "Giỏ hàng",
                   text2: "Xóa hết",
-                  onTap: () {
-                    cartProvider.clearCart();
+                  onTap: () async {
+                    await cartProvider.deleteAllCart();
+                    await cartProvider.fetchCart();
                   },
                 ),
               ),
-              if (cartProvider.itemCount == 0)
-                const EmptyCartContent()
-              else
-                Column(
-                  children: [
-                    for (int i = 0; i < cartProvider.itemCount; i++)
-                      Column(
-                        children: [
-                          CartItemContent(cartProvider: cartProvider, i: i),
-                        ],
-                      ),
-                    Divider(
-                      thickness: 0.5,
-                      color: Colors.grey[400],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: Row(
+              Column(
+                children: [
+                  FutureBuilder<Cart>(
+                    future: fetchCart(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else if (snapshot.hasError) {
+                        return Center(
+                          child: Text('Error: ${snapshot.error}'),
+                        );
+                      } else {
+                        final cart = snapshot.data!;
+                        if (cart.cartItem.isEmpty) {
+                          return const EmptyCartContent();
+                        } else {
+                          return Column(
+                            children: [
+                              for (int i = 0; i < cart.cartItem.length; i++)
+                                CartItemContent(cartItem: cart.cartItem[i]),
+                            ],
+                          );
+                        }
+                      }
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: FutureBuilder<Cart>(
+        future: fetchCart(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (snapshot.hasError) {
+            return Center(
+              child: Text('Error: ${snapshot.error}'),
+            );
+          } else {
+            final cart = snapshot.data!;
+            return Container(
+              decoration: const BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black,
+                    blurRadius: 10,
+                    offset: Offset(0.5, 3),
+                  )
+                ],
+              ),
+              child: BottomAppBar(
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                  color: Theme.of(context).colorScheme.background,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          Text(
+                        children: [
+                          const Text(
                             "Total",
                             style: TextStyle(
                               fontSize: 16,
+                              fontFamily: 'Lato',
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           Text(
-                            "ASĐSADSA",
-                            style: TextStyle(
+                            cart.formatTotalPriceInVND(),
+                            style: const TextStyle(
                               fontSize: 18,
+                              fontFamily: 'Lato',
                               fontWeight: FontWeight.bold,
                               color: Colors.red,
                             ),
                           ),
                         ],
                       ),
-                    ),
-                    MainColorInkWellFullSize(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => CheckoutScreen2(
-                                      cartItems: cartProvider.items,
-                                    )));
-                      },
-                      text: "Đặt dịch vụ",
-                    )
-                  ],
+                      const SizedBox(height: 8),
+                      MainColorInkWellFullSize(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      CheckoutScreen2(cart: cart)));
+                        },
+                        text: "Đặt địch vụ",
+                      ),
+                      const SizedBox(height: 8),
+                    ],
+                  ),
                 ),
-            ],
-          ),
-        ),
+              ),
+            );
+          }
+        },
       ),
     );
   }

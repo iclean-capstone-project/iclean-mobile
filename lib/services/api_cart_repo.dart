@@ -2,19 +2,18 @@
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:iclean_mobile_app/models/noti.dart';
 import 'package:iclean_mobile_app/auth/user_preferences.dart';
-import 'package:iclean_mobile_app/repository/noti_repo.dart';
+import 'package:iclean_mobile_app/models/cart.dart';
+import 'package:iclean_mobile_app/repository/cart_repo.dart';
 
 import 'components/constant.dart';
 
-class ApiNotiRepository implements NotiRepository {
-  static const String urlConstant = "${BaseConstant.baseUrl}/notification";
+class ApiCartRepository implements CartRepository {
+  static const String urlConstant = "${BaseConstant.baseUrl}/booking/cart";
 
   @override
-  Future<List<Noti>> getNoti(int page) async {
-    final url = '$urlConstant?page=$page';
-    final uri = Uri.parse(url);
+  Future<Cart> getCart() async {
+    final uri = Uri.parse(urlConstant);
     final accessToken = await UserPreferences.getAccessToken();
 
     Map<String, String> headers = {
@@ -28,71 +27,71 @@ class ApiNotiRepository implements NotiRepository {
       if (response.statusCode == 200) {
         final jsonMap = json.decode(utf8.decode(response.bodyBytes));
         final data = jsonMap['data'];
-        final content = data['content'] as List<dynamic>;
-        final notifications = content.map((e) {
-          return Noti(
-            id: e['notificationId'],
-            details: e['detail'] ?? "",
-            imgLink: e['notificationImgLink'],
-            timestamp: DateTime.parse(e['createAt']),
-            isRead: e['isRead'],
-          );
-        }).toList();
-        return notifications;
+        final cart = Cart.fromJson(data);
+        return cart;
       } else {
         return throw Exception(
             'status: ${response.statusCode}, body: ${response.body}');
       }
     } catch (e) {
-      print(e);
-      return <Noti>[];
+      throw Exception(e);
     }
   }
 
   @override
-  Future<void> readAll() async {
-    const url = urlConstant;
-    final uri = Uri.parse(url);
+  Future<void> addToCart(
+      DateTime startTime, int serviceUnitId, String note) async {
+    final uri = Uri.parse(urlConstant);
     final accessToken = await UserPreferences.getAccessToken();
 
     Map<String, String> headers = {
       "Authorization": "Bearer $accessToken",
       "Content-Type": "application/json",
     };
+
+    final Map<String, dynamic> data = {
+      "startTime": startTime.toIso8601String(),
+      "serviceUnitId": serviceUnitId,
+      "note": note,
+    };
+
     try {
-      await http.put(uri, headers: headers);
+      await http.post(uri, headers: headers, body: jsonEncode(data));
     } catch (e) {
       print(e);
     }
   }
 
   @override
-  Future<void> maskAsRead(int notiId) async {
-    final url = '$urlConstant/$notiId';
+  Future<void> deleteCartItem(int id) async {
+    final url = '$urlConstant/$id';
     final uri = Uri.parse(url);
+
     final accessToken = await UserPreferences.getAccessToken();
 
     Map<String, String> headers = {
       "Authorization": "Bearer $accessToken",
       "Content-Type": "application/json",
     };
+
     try {
-      await http.put(uri, headers: headers);
+      await http.delete(uri, headers: headers);
     } catch (e) {
       print(e);
     }
   }
 
   @override
-  Future<void> deleteNoti(int notiId) async {
-    final url = '$urlConstant/$notiId';
-    final uri = Uri.parse(url);
+  Future<void> deleteAllCart() async {
+    final uri = Uri.parse(urlConstant);
+
     final accessToken = await UserPreferences.getAccessToken();
 
     Map<String, String> headers = {
       "Authorization": "Bearer $accessToken",
       "Content-Type": "application/json",
     };
+
     try {
       await http.delete(uri, headers: headers);
     } catch (e) {

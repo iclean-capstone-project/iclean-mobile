@@ -13,11 +13,10 @@ class LocationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ApiLocationRepository apiLocationRepository = ApiLocationRepository();
-
     Future<List<Address>> fetchNotifications() async {
+      final ApiLocationRepository repository = ApiLocationRepository();
       try {
-        final locations = await apiLocationRepository.getLocation();
+        final locations = await repository.getLocation();
         return locations;
       } catch (e) {
         // ignore: avoid_print
@@ -34,7 +33,8 @@ class LocationScreen extends StatelessWidget {
             title: "Chọn ${location.addressName} làm địa chỉ mặc định",
             confirm: "Xác nhận",
             onTap: () {
-              apiLocationRepository.setDefault(location.id!).then((_) {
+              final ApiLocationRepository repository = ApiLocationRepository();
+              repository.setDefault(location.id!).then((_) {
                 Navigator.of(context).pop();
                 Navigator.pushReplacement(
                     context,
@@ -169,11 +169,9 @@ class LocationScreen extends StatelessWidget {
                                                   MaterialPageRoute(
                                                       builder: (context) =>
                                                           UpdateLocationScreen(
-                                                            address:
-                                                                locations[i],
-                                                            apiLocationRepository:
-                                                                apiLocationRepository,
-                                                          )));
+                                                              address:
+                                                                  locations[
+                                                                      i])));
                                             },
                                             child: const Text(
                                               "Sửa",
@@ -223,9 +221,7 @@ class LocationScreen extends StatelessWidget {
           Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                  builder: (context) => AddLocationScreen(
-                        apiLocationRepository: apiLocationRepository,
-                      )));
+                  builder: (context) => const AddLocationScreen()));
         },
       ),
     );

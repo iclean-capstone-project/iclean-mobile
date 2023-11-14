@@ -1,33 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/cart.dart';
+import 'package:iclean_mobile_app/models/cart_item.dart';
+import 'package:iclean_mobile_app/services/api_cart_repo.dart';
 
 class CartProvider extends ChangeNotifier {
-  final List<CartItem> _items = [];
+  Cart cart = Cart(
+    cartId: null,
+    totalPrice: 0,
+    totalPriceActual: 0,
+    cartItem: <CartItem>[],
+  );
 
-  List<CartItem> get items => _items;
+  final ApiCartRepository repository = ApiCartRepository();
 
-  int get itemCount => _items.length;
-
-  // double get totalPrice {
-  //   double sum = 0.0;
-  //   for (var item in _items) {
-  //     sum += item.service.price ;
-  //   }
-  //   return sum;
-  // }
-
-  void addToCart(CartItem item) {
-    _items.add(item);
-    notifyListeners();
+  Future<Cart> fetchCart() async {
+    try {
+      final newCart = await repository.getCart();
+      cart = newCart;
+      notifyListeners();
+      return cart;
+    } catch (e) {
+      return cart;
+    }
   }
 
-  void removeFromCart(CartItem item) {
-    _items.remove(item);
-    notifyListeners();
+  Future<void> deleteCartItem(int notiId) async {
+    try {
+      await repository.deleteCartItem(notiId);
+    } catch (e) {
+      print(e);
+    }
   }
 
-  void clearCart() {
-    _items.clear();
-    notifyListeners();
+  Future<void> deleteAllCart() async {
+    try {
+      await repository.deleteAllCart();
+      notifyListeners();
+    } catch (e) {
+      print(e);
+    }
   }
 }

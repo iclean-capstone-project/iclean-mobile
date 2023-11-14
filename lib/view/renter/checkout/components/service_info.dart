@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/view/renter/cart/components/cart_item_content.dart';
 import 'package:intl/intl.dart';
-import 'package:iclean_mobile_app/models/cart.dart';
+import 'package:iclean_mobile_app/models/cart_item.dart';
 import 'package:iclean_mobile_app/widgets/details_fields.dart';
 
 class ServiceInfo extends StatelessWidget {
@@ -34,12 +34,12 @@ class ServiceInfo extends StatelessWidget {
           const SizedBox(height: 8),
           DetailsContentField(
               text: "Ngày làm việc",
-              text2: DateFormat('d/MM/yyyy').format(cartItem.day)),
+              text2: DateFormat('d/MM/yyyy').format(cartItem.workDate)),
           const SizedBox(height: 4),
           DetailsContentField(
               text: "Thời gian việc",
               text2:
-                  "${cartItem.timeStart.to24hours()}-${cartItem.timeStart.addHour(cartItem.time).to24hours()}"),
+                  "${cartItem.workTime.to24hours()}-${cartItem.workTime.addHour(cartItem.serviceUnit.equivalent.toInt()).to24hours()}"),
           const SizedBox(height: 8),
           const Text(
             "Chi tiết công việc",
@@ -51,14 +51,14 @@ class ServiceInfo extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           DetailsContentField(
-              text: "Tên công việc", text2: cartItem.service.name),
+              text: "Tên công việc", text2: cartItem.serviceName),
           const SizedBox(height: 4),
           DetailsContentField(
             text: "Khối lượng công việc",
-            text2: cartItem.time.toString(),
+            text2: cartItem.serviceUnit.equivalent.toString(),
           ),
           const SizedBox(height: 4),
-          const DetailsContentField(text: "Giá", text2: "abc"),
+          DetailsContentField(text: "Giá", text2: cartItem.formatPriceInVND()),
         ],
       ),
     );
