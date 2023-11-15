@@ -14,18 +14,6 @@ class Wallet {
     required this.type,
   });
 
-  factory Wallet.fromStr({
-    required double balance,
-    required String type,
-  }) {
-    WalletType mappedType = _mapStrToWalletType(type);
-
-    return Wallet(
-      balance: balance,
-      type: mappedType,
-    );
-  }
-
   static WalletType _mapStrToWalletType(String value) {
     switch (value) {
       case "MONEY":

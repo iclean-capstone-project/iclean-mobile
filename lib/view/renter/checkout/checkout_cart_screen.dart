@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/cart.dart';
 import 'package:iclean_mobile_app/models/cart_item.dart';
+import 'package:iclean_mobile_app/view/renter/checkout/components/auto_assign_button.dart';
 import 'package:provider/provider.dart';
 
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
@@ -11,8 +12,8 @@ import 'components/point_button.dart';
 import 'components/renter_info.dart';
 import 'components/service_info.dart';
 
-class CheckoutScreen2 extends StatelessWidget {
-  const CheckoutScreen2({
+class CheckoutCartScreen extends StatelessWidget {
+  const CheckoutCartScreen({
     super.key,
     required this.cart,
   });
@@ -65,13 +66,15 @@ class CheckoutScreen2 extends StatelessWidget {
                       ),
                     ],
                   ),
+                const AutoAssignButton(),
+                const PointButton(),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text(
-                        "Total",
+                        "Tổng cộng",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -88,7 +91,6 @@ class CheckoutScreen2 extends StatelessWidget {
                     ],
                   ),
                 ),
-                const PointButton(),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: Row(

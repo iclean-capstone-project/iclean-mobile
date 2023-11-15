@@ -37,7 +37,7 @@ class ServiceInfo extends StatelessWidget {
               text2: DateFormat('d/MM/yyyy').format(cartItem.workDate)),
           const SizedBox(height: 4),
           DetailsContentField(
-              text: "Thời gian việc",
+              text: "Thời gian làm việc",
               text2:
                   "${cartItem.workTime.to24hours()}-${cartItem.workTime.addHour(cartItem.serviceUnit.equivalent.toInt()).to24hours()}"),
           const SizedBox(height: 8),
@@ -52,11 +52,6 @@ class ServiceInfo extends StatelessWidget {
           const SizedBox(height: 8),
           DetailsContentField(
               text: "Tên công việc", text2: cartItem.serviceName),
-          const SizedBox(height: 4),
-          DetailsContentField(
-            text: "Khối lượng công việc",
-            text2: cartItem.serviceUnit.equivalent.toString(),
-          ),
           const SizedBox(height: 4),
           DetailsContentField(text: "Giá", text2: cartItem.formatPriceInVND()),
         ],

@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 
 class InfoBooking extends StatelessWidget {
-  final String empName, jobName, status;
-  final Color colorStatus;
+  final String text, jobName, price;
+
   const InfoBooking({
     super.key,
-    required this.empName,
+    required this.text,
     required this.jobName,
-    required this.status,
-    required this.colorStatus,
+    required this.price,
   });
 
   @override
@@ -18,37 +17,32 @@ class InfoBooking extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            empName,
+            jobName,
             style: const TextStyle(
               fontSize: 18,
               fontFamily: 'Lato',
               fontWeight: FontWeight.bold,
             ),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
           ),
           const SizedBox(height: 8),
           Text(
-            jobName,
+            text,
             style: const TextStyle(
               fontSize: 16,
               fontFamily: 'Lato',
             ),
           ),
           const SizedBox(height: 8),
-          Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: colorStatus,
-              borderRadius: BorderRadius.circular(8),
+          Text(
+            price,
+            style: const TextStyle(
+              fontSize: 16,
+              fontFamily: 'Lato',
             ),
-            child: Text(
-              status,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 14,
-                fontFamily: 'Lato',
-              ),
-            ),
-          )
+          ),
+          const SizedBox(height: 8),
         ],
       ),
     );

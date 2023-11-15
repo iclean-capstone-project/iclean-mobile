@@ -4,8 +4,8 @@ import 'package:iclean_mobile_app/view/renter/home/components/banner_slider.dart
 import 'components/list_service.dart';
 import 'components/welcome_content.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class EmployeeHomeScreen extends StatelessWidget {
+  const EmployeeHomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class HomeScreen extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(top: 16.0, left: 24),
                 child: Text(
-                  "Có gì mới?",
+                  "Những đơn bạn có thể nhận",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Lato',
@@ -36,7 +36,7 @@ class HomeScreen extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(top: 16.0, left: 24),
                 child: Text(
-                  "Dịch vụ",
+                  "áđsad",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Lato',
@@ -44,7 +44,6 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              ListService(),
             ],
           ),
         ),

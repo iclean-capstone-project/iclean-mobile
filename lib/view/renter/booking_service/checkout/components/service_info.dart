@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:iclean_mobile_app/models/services.dart';
+import 'package:iclean_mobile_app/models/service.dart';
 import 'package:iclean_mobile_app/widgets/details_fields.dart';
 import 'package:iclean_mobile_app/provider/booking_details_provider.dart';
 

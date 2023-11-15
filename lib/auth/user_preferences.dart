@@ -4,6 +4,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 class UserPreferences {
   static SharedPreferences? _preferences;
   static const _keyLoggedIn = 'loggedIn';
+  static const _role = 'role';
   static const _accessToken = 'accessToken';
   static const _refreshToken = 'refreshToken';
 
@@ -16,6 +17,16 @@ class UserPreferences {
   }
 
   static bool isLoggedIn() => _preferences?.getBool(_keyLoggedIn) ?? false;
+
+  static Future setRole(String value) async {
+    const storage = FlutterSecureStorage();
+    await storage.write(key: _role, value: value);
+  }
+
+  static Future<String?> getRole() async {
+    const storage = FlutterSecureStorage();
+    return await storage.read(key: _role);
+  }
 
   static Future setAccessToken(String value) async {
     const storage = FlutterSecureStorage();

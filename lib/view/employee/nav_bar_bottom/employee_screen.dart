@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:iclean_mobile_app/view/renter/cart/cart_screen.dart';
-import 'package:iclean_mobile_app/view/renter/home/renter_home_screen.dart';
+import 'package:iclean_mobile_app/view/employee/home/employee_home_screen.dart';
 import 'package:iclean_mobile_app/view/renter/schedule/schedule_screen.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/view/renter/my_booking/my_booking_screen.dart';
 import 'package:iclean_mobile_app/view/common/profile/my_profile_screen/profile_screen.dart';
 
-class RenterScreens extends StatefulWidget {
-  const RenterScreens({
+class EmployeeScreens extends StatefulWidget {
+  const EmployeeScreens({
     super.key,
     this.selectedIndex,
   });
@@ -16,10 +15,10 @@ class RenterScreens extends StatefulWidget {
   final int? selectedIndex;
 
   @override
-  State<RenterScreens> createState() => _RenterScreensState();
+  State<EmployeeScreens> createState() => _EmployeeScreensState();
 }
 
-class _RenterScreensState extends State<RenterScreens> {
+class _EmployeeScreensState extends State<EmployeeScreens> {
   late int _selectedIndex;
   late List<Widget> _screenOptions;
 
@@ -34,10 +33,9 @@ class _RenterScreensState extends State<RenterScreens> {
     }
 
     _screenOptions = <Widget>[
-      const RenterHomeScreen(),
+      const EmployeeHomeScreen(),
       const MyBookingsScreen(),
       const ScheduleScreen(),
-      const CartScreen(),
       const ProfileScreen(),
     ];
   }
@@ -61,7 +59,7 @@ class _RenterScreensState extends State<RenterScreens> {
           backgroundColor: ColorPalette.mainColor,
           color: Colors.white,
           activeColor: Colors.white,
-          gap: 8,
+          gap: 10,
           padding: const EdgeInsets.all(8),
           tabMargin: const EdgeInsetsDirectional.all(8),
           onTabChange: (index) {
@@ -100,16 +98,6 @@ class _RenterScreensState extends State<RenterScreens> {
             ),
             GButton(
               icon: _selectedIndex == 3
-                  ? Icons.shopping_cart
-                  : Icons.shopping_cart_outlined,
-              textStyle: const TextStyle(
-                fontFamily: 'Lato',
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            GButton(
-              icon: _selectedIndex == 4
                   ? Icons.person_sharp
                   : Icons.person_outline,
               textStyle: const TextStyle(

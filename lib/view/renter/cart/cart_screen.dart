@@ -3,7 +3,7 @@ import 'package:iclean_mobile_app/models/cart.dart';
 import 'package:iclean_mobile_app/models/cart_item.dart';
 import 'package:iclean_mobile_app/provider/cart_provider.dart';
 import 'package:iclean_mobile_app/services/api_cart_repo.dart';
-import 'package:iclean_mobile_app/view/renter/checkout/checkout_screen.dart';
+import 'package:iclean_mobile_app/view/renter/checkout/checkout_cart_screen.dart';
 import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
 import 'package:iclean_mobile_app/widgets/title_content.dart';
 import 'package:provider/provider.dart';
@@ -143,7 +143,7 @@ class CartScreen extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      CheckoutScreen2(cart: cart)));
+                                      CheckoutCartScreen(cart: cart)));
                         },
                         text: "Đặt địch vụ",
                       ),

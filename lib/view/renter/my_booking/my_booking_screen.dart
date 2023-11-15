@@ -21,154 +21,75 @@ class _MyBookingsScreenState extends State<MyBookingsScreen>
     super.initState();
   }
 
-//   Future<int> _getUserId() async {
-//     final storage = FlutterSecureStorage();
-//     final jsonString = await storage.read(key: 'account');
-
-// // Convert JSON string to object
-//     final accountJson = jsonDecode(jsonString!);
-//     final account = Account.fromJson(accountJson);
-//     return account.id;
-//   }
-
   List<Booking> requests = [
-    Booking(
-        id: 1,
-        renterId: 1,
-        empId: 1,
-        jobId: 1,
-        location: "Thủ Đức, Thành phố Hồ Chí Minh",
-        workTime: 2,
-        description: "Thủ Đức, Thành phố Hồ Chí Minh",
-        timeWork: DateTime(2023, 10, 10, 9, 0),
-        totalPrice: 200,
-        timeCreated: DateTime(2023, 10, 7, 9, 0),
-        timeStart: null,
-        timeEnd: null,
-        timeCancel: null,
-        discount: null,
-        statusId: 1),
-    // Booking(
-    //     id: 2,
-    //     renterId: 1,
-    //     empId: 1,
-    //     jobId: 2,
-    //     location: "Thủ Đức, Thành phố Hồ Chí Minh",
-    //     workTime: 2,
-    //     description: "Thủ Đức, Thành phố Hồ Chí Minh",
-    //     timeWork: DateTime(2023, 10, 11, 9, 0),
-    //     totalPrice: 200,
-    //     timeCreated: DateTime(2023, 10, 7, 9, 0),
-    //     timeStart: null,
-    //     timeEnd: null,
-    //     timeCancel: null,
-    //     discount: null,
-    //     statusId: 1),
+    Booking.fromStr(
+      id: 31,
+      bookingCode: "11141555259327",
+      renterName: "quanglinh",
+      renterAvatar:
+          "https://i.pinimg.com/736x/72/8d/b5/728db51a8610a5c1f0e37e655340c565.jpg",
+      renterPhoneNumber: "0123123123",
+      serviceName: "Dọn nhà vệ sinh, Lau nhà",
+      serviceAvatar:
+          "https://firebasestorage.googleapis.com/v0/b/iclean-59a5b.appspot.com/o/istockphoto-1136414971-1024x1024.jpg?alt=media",
+      orderDate: DateTime.parse("2023-11-13T21:30:27.278984"),
+      totalPrice: 350000,
+      totalPriceActual: 200,
+      bookingStatus: "NOT_YET",
+    ),
+    Booking.fromStr(
+      id: 32,
+      bookingCode: "11141555259328",
+      renterName: "quanglinh",
+      renterAvatar:
+          "https://i.pinimg.com/736x/72/8d/b5/728db51a8610a5c1f0e37e655340c565.jpg",
+      renterPhoneNumber: "0123123123",
+      serviceName: "Dọn nhà vệ sinh, Lau nhà",
+      serviceAvatar:
+          "https://firebasestorage.googleapis.com/v0/b/iclean-59a5b.appspot.com/o/istockphoto-1136414971-1024x1024.jpg?alt=media",
+      orderDate: DateTime.parse("2023-11-13T21:30:27.278984"),
+      totalPrice: 350000,
+      totalPriceActual: 200,
+      bookingStatus: "REJECTED",
+    ),
   ];
 
-  List<Booking> rejectedBookings = [
-    Booking(
-        id: 1,
-        renterId: 1,
-        empId: 1,
-        jobId: 1,
-        location: "Thủ Đức, Thành phố Hồ Chí Minh",
-        workTime: 2,
-        description: "Thủ Đức, Thành phố Hồ Chí Minh",
-        timeWork: DateTime(2023, 10, 10, 9, 0),
-        totalPrice: 200,
-        timeCreated: DateTime(2023, 10, 7, 9, 0),
-        timeStart: null,
-        timeEnd: null,
-        timeCancel: null,
-        discount: null,
-        statusId: 0),
-    // Booking(
-    //     id: 2,
-    //     renterId: 1,
-    //     empId: 1,
-    //     jobId: 2,
-    //     location: "Thủ Đức, Thành phố Hồ Chí Minh",
-    //     workTime: 2,
-    //     description: "Thủ Đức, Thành phố Hồ Chí Minh",
-    //     timeWork: DateTime(2023, 10, 11, 9, 0),
-    //     totalPrice: 200,
-    //     timeCreated: DateTime(2023, 10, 7, 9, 0),
-    //     timeStart: null,
-    //     timeEnd: null,
-    //     timeCancel: null,
-    //     discount: null,
-    //     statusId: 0),
-  ];
+  List<Booking> rejectedBookings = [];
 
   List<Booking> upcomingBookings = [
-    Booking(
-        id: 1,
-        renterId: 1,
-        empId: 1,
-        jobId: 1,
-        location: "Thủ Đức, Thành phố Hồ Chí Minh",
-        workTime: 2,
-        description: "Thủ Đức, Thành phố Hồ Chí Minh",
-        timeWork: DateTime(2023, 10, 10, 9, 0),
-        totalPrice: 200,
-        timeCreated: DateTime(2023, 10, 7, 9, 0),
-        timeStart: null,
-        timeEnd: null,
-        timeCancel: null,
-        discount: null,
-        statusId: 4),
-    // Booking(
-    //     id: 2,
-    //     renterId: 1,
-    //     empId: 1,
-    //     jobId: 2,
-    //     location: "Thủ Đức, Thành phố Hồ Chí Minh",
-    //     workTime: 2,
-    //     description: "Thủ Đức, Thành phố Hồ Chí Minh",
-    //     timeWork: DateTime(2023, 10, 11, 9, 0),
-    //     totalPrice: 200,
-    //     timeCreated: DateTime(2023, 10, 7, 9, 0),
-    //     timeStart: null,
-    //     timeEnd: null,
-    //     timeCancel: null,
-    //     discount: null,
-    //     statusId: 4),
+    Booking.fromStr(
+      id: 33,
+      bookingCode: "11141555259329",
+      renterName: "quanglinh",
+      renterAvatar:
+          "https://i.pinimg.com/736x/72/8d/b5/728db51a8610a5c1f0e37e655340c565.jpg",
+      renterPhoneNumber: "0123123123",
+      serviceName: "Dọn nhà vệ sinh, Lau nhà",
+      serviceAvatar:
+          "https://firebasestorage.googleapis.com/v0/b/iclean-59a5b.appspot.com/o/istockphoto-1136414971-1024x1024.jpg?alt=media",
+      orderDate: DateTime.parse("2023-11-13T21:30:27.278984"),
+      totalPrice: 350000,
+      totalPriceActual: 200,
+      bookingStatus: "WAITING",
+    ),
   ];
 
   List<Booking> finishedBookings = [
-    Booking(
-        id: 1,
-        renterId: 1,
-        empId: 1,
-        jobId: 1,
-        location: "Thủ Đức, Thành phố Hồ Chí Minh",
-        workTime: 2,
-        description: "Thủ Đức, Thành phố Hồ Chí Minh",
-        timeWork: DateTime(2023, 9, 30, 9, 0),
-        totalPrice: 200,
-        timeCreated: DateTime(2023, 9, 29, 9, 0),
-        timeStart: DateTime(2023, 9, 30, 9, 0),
-        timeEnd: DateTime(2023, 9, 30, 11, 0),
-        timeCancel: null,
-        discount: null,
-        statusId: 6),
-    // Booking(
-    //     id: 2,
-    //     renterId: 1,
-    //     empId: 1,
-    //     jobId: 2,
-    //     location: "Thủ Đức, Thành phố Hồ Chí Minh",
-    //     workTime: 2,
-    //     description: "Thủ Đức, Thành phố Hồ Chí Minh",
-    //     timeWork: DateTime(2023, 9, 30, 9, 0),
-    //     totalPrice: 200,
-    //     timeCreated: DateTime(2023, 9, 28, 9, 0),
-    //     timeStart: null,
-    //     timeEnd: null,
-    //     timeCancel: DateTime(2023, 9, 29, 9, 0),
-    //     discount: null,
-    //     statusId: 8),
+    Booking.fromStr(
+      id: 31,
+      bookingCode: "11141555259330",
+      renterName: "quanglinh",
+      renterAvatar:
+          "https://i.pinimg.com/736x/72/8d/b5/728db51a8610a5c1f0e37e655340c565.jpg",
+      renterPhoneNumber: "0123123123",
+      serviceName: "Dọn nhà vệ sinh, Lau nhà",
+      serviceAvatar:
+          "https://firebasestorage.googleapis.com/v0/b/iclean-59a5b.appspot.com/o/istockphoto-1136414971-1024x1024.jpg?alt=media",
+      orderDate: DateTime.parse("2023-11-13T21:30:27.278984"),
+      totalPrice: 350000,
+      totalPriceActual: 200,
+      bookingStatus: "FINISHED",
+    ),
   ];
 
   _handleTabSelection() {
@@ -218,7 +139,7 @@ class _MyBookingsScreenState extends State<MyBookingsScreen>
                   ),
                   tabs: const [
                     Tab(text: 'Yêu cầu'),
-                    Tab(text: 'Bị từ chối'),
+                    Tab(text: 'Chọn người làm'),
                     Tab(text: 'Đang đến'),
                     Tab(text: 'Lịch sử'),
                   ],

@@ -18,10 +18,12 @@ class VerificationScreen extends StatelessWidget {
 
   final String phoneNumber;
 
-  setToken(String phone, String accessToken, String refreshToken) async {
+  setToken(String phone, String accessToken, String refreshToken,
+      String role) async {
     await UserPreferences.setLoggedIn(true);
     await UserPreferences.setAccessToken(accessToken);
     await UserPreferences.setRefreshToken(refreshToken);
+    await UserPreferences.setRole(role);
   }
 
   Future<void> handleLogin(
@@ -35,13 +37,12 @@ class VerificationScreen extends StatelessWidget {
     if (response.statusCode == 200) {
       final jsonMap = json.decode(utf8.decode(response.bodyBytes));
       final data = jsonMap['data'];
-
       final accessToken = data['accessToken'];
       final refreshToken = data['refreshToken'];
-      await setToken(phone, accessToken, refreshToken);
-
       final dataAccount = data['userInformationDto'];
       final account = Account.fromJson(dataAccount);
+      final role = account.roleName;
+      await setToken(phone, accessToken, refreshToken, role);
       final isNewAccount = dataAccount['isNewUser'];
 
       // ignore: use_build_context_synchronously

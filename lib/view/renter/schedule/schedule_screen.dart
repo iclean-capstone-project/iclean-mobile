@@ -25,7 +25,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   void initState() {
     super.initState();
     _selectedDay = _today;
-    events = _getEventsFromBookings(myBookings);
+    //events = _getEventsFromBookings(myBookings);
     _selectedEvents = _getEventsForDay(_selectedDay!);
   }
 
@@ -44,23 +44,23 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
     }
   }
 
-  Map<DateTime, List<Booking>> _getEventsFromBookings(List<Booking> bookings) {
-    for (final booking in bookings) {
-      final bookingDate = DateTime(
-        booking.timeWork.year,
-        booking.timeWork.month,
-        booking.timeWork.day,
-      );
+  // Map<DateTime, List<Booking>> _getEventsFromBookings(List<Booking> bookings) {
+  //   for (final booking in bookings) {
+  //     final bookingDate = DateTime(
+  //       booking.timeWork.year,
+  //       booking.timeWork.month,
+  //       booking.timeWork.day,
+  //     );
 
-      if (events.containsKey(bookingDate)) {
-        events[bookingDate]!.add(booking);
-      } else {
-        events[bookingDate] = [booking];
-      }
-    }
+  //     if (events.containsKey(bookingDate)) {
+  //       events[bookingDate]!.add(booking);
+  //     } else {
+  //       events[bookingDate] = [booking];
+  //     }
+  //   }
 
-    return events;
-  }
+  //   return events;
+  // }
 
   List<Booking> _getEventsForDay(DateTime day) {
     final dayWithoutTime = DateTime(day.year, day.month, day.day);
@@ -238,10 +238,10 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                                     SizedBox(width: 16),
                                     //Info
                                     InfoBooking(
-                                      empName: "event.empName",
+                                      text: "event.empName",
                                       jobName: "event.jobName",
-                                      status: "event.status",
-                                      colorStatus: Colors.lightBlueAccent,
+                                      price: "event.status",
+                                      //colorStatus: Colors.lightBlueAccent,
                                     ),
                                   ],
                                 ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/service_unit.dart';
-import 'package:iclean_mobile_app/models/services.dart';
+import 'package:iclean_mobile_app/models/service.dart';
 import 'package:iclean_mobile_app/provider/booking_details_provider.dart';
 import 'package:iclean_mobile_app/services/api_service_unit_repo.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';

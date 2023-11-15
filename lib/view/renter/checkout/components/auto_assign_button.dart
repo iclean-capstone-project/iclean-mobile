@@ -3,14 +3,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:iclean_mobile_app/provider/checkout_provider.dart';
 import 'package:provider/provider.dart';
 
-class PointButton extends StatefulWidget {
-  const PointButton({super.key});
+class AutoAssignButton extends StatefulWidget {
+  const AutoAssignButton({super.key});
 
   @override
-  State<PointButton> createState() => _PointButtonState();
+  State<AutoAssignButton> createState() => _AutoAssignButtonState();
 }
 
-class _PointButtonState extends State<PointButton> {
+class _AutoAssignButtonState extends State<AutoAssignButton> {
   @override
   Widget build(BuildContext context) {
     CheckoutProvider checkoutProvider = Provider.of<CheckoutProvider>(context);
@@ -19,10 +19,10 @@ class _PointButtonState extends State<PointButton> {
       children: [
         Row(
           children: const [
-            Icon(Icons.abc),
+            Icon(Icons.assignment_ind_rounded),
             SizedBox(width: 16),
             Text(
-              "Dùng Point",
+              "Chọn người làm",
               style: TextStyle(
                 fontSize: 16,
                 fontFamily: 'Lato',
@@ -31,11 +31,11 @@ class _PointButtonState extends State<PointButton> {
           ],
         ),
         CupertinoSwitch(
-          value: checkoutProvider.usePoint,
+          value: checkoutProvider.autoAssign,
           onChanged: (value) {
             setState(() {
-              checkoutProvider.usePoint = value;
-              checkoutProvider.toggleUsePoint();
+              checkoutProvider.autoAssign = value;
+              checkoutProvider.toggleAutoAssign();
             });
           },
         ),

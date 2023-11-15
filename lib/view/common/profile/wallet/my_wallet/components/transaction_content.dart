@@ -49,8 +49,8 @@ class TransactionContent extends StatelessWidget {
               ),
               trailing: Text(
                 transactions[i].type == TransactionType.withdraw
-                    ? '+ ${transactions[i].amount.toStringAsFixed(0)}đ'
-                    : '- ${transactions[i].amount.toStringAsFixed(0)}đ',
+                    ? '+ ${transactions[i].formatAmountInVND()}'
+                    : '- ${transactions[i].formatAmountInVND()}',
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontFamily: 'Lato',

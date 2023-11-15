@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:iclean_mobile_app/models/services.dart';
+import 'package:iclean_mobile_app/models/service.dart';
 import 'package:iclean_mobile_app/services/api_service_repo.dart';
 import 'package:iclean_mobile_app/view/renter/nav_bar_bottom/renter_screen.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';

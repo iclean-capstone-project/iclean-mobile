@@ -9,6 +9,7 @@ import 'package:iclean_mobile_app/view/common/profile/my_profile_screen/componen
 import 'package:iclean_mobile_app/view/common/profile/my_profile_screen/components/profile_inkwell.dart';
 import 'package:iclean_mobile_app/view/common/profile/update_profile_screen/update_profile_screen.dart';
 import 'package:iclean_mobile_app/view/common/profile/wallet/my_wallet/wallet_screen.dart';
+import 'package:iclean_mobile_app/view/employee/set_time_working_screen.dart';
 import 'package:iclean_mobile_app/widgets/confirm_dialog.dart';
 import 'package:iclean_mobile_app/widgets/shimmer_loading.dart';
 
@@ -24,10 +25,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final ApiAccountRepository apiAccountRepository = ApiAccountRepository();
     try {
       final account = await apiAccountRepository.getAccount();
+
       return account;
     } catch (e) {
       throw Exception(e);
     }
+  }
+
+  Future<String> getRole() async {
+    final role = await UserPreferences.getRole();
+    return role!;
   }
 
   void showLogoutConfirmationDialog(BuildContext context) {
@@ -136,6 +143,38 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           account: account)));
                             },
                           ),
+                          FutureBuilder<String>(
+                            future: getRole(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const ShimmerLoadingWidget.rectangular(
+                                    height: 16);
+                              } else if (snapshot.hasError) {
+                                return Text('Error: ${snapshot.error}');
+                              } else if (snapshot.hasData) {
+                                final role = snapshot.data!;
+                                if (role == "employee") {
+                                  return ProfileInkWell(
+                                    icon: const Icon(Icons.person_outline),
+                                    text: "Chọn giờ làm việc",
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const SetTimeWorkingScreen()));
+                                    },
+                                  );
+                                } else {
+                                  return const Text('ads');
+                                }
+                              } else {
+                                return const Text('ads');
+                              }
+                            },
+                          ),
+
                           ProfileInkWell(
                             icon: const Icon(Icons.location_on_outlined),
                             text: "Vị trí",

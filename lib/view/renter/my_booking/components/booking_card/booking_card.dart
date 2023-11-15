@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/bookings.dart';
+import 'package:iclean_mobile_app/models/booking_status.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
-import 'package:iclean_mobile_app/view/renter/my_booking/components/completed_booking/details_booking_screen.dart';
 import 'package:iclean_mobile_app/view/renter/my_booking/components/components/avatar_widget.dart';
 import 'package:iclean_mobile_app/view/renter/my_booking/components/components/info_booking.dart';
+import 'package:iclean_mobile_app/view/renter/my_booking/components/completed_booking/details_booking_screen.dart';
+
+import 'package:intl/intl.dart';
 
 class BookingCard extends StatefulWidget {
   final List<Booking> listBookings;
@@ -19,43 +22,45 @@ class BookingCard extends StatefulWidget {
 
 class _BookingCardCardState extends State<BookingCard>
     with TickerProviderStateMixin {
-  Color getColorForStatus(int statusId) {
-    switch (statusId) {
-      case 4:
-        return Colors.lightBlue;
-      case 6:
-        return Colors.green;
-      case 0:
-      case 8:
-      case 9:
-      case 10:
-      case 11:
+  Color getColorForStatus(BookingStatus status) {
+    switch (status) {
+      case BookingStatus.notYet:
+        return ColorPalette.mainColor;
+      case BookingStatus.rejected:
         return Colors.red;
+      case BookingStatus.upcoming:
+        return Colors.lightBlue;
+      case BookingStatus.finished:
+        return Colors.green;
       default:
         return ColorPalette.mainColor;
     }
   }
 
-  void navigateToScreenBasedOnStatus(Booking booking) {
-    int status = booking.statusId;
+  String getStringForStatus(BookingStatus status) {
     switch (status) {
-      case 0: //admin reject request
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-          return DetailsBookingScreen(booking: booking);
-        }));
-        break;
-      case 6:
-      case 7:
-      case 8:
-      case 9:
-      case 10:
-      case 11:
+      case BookingStatus.notYet:
+        return "Đang đợi duyệt đơn";
+      case BookingStatus.rejected:
+        return "Bị từ chối";
+      case BookingStatus.upcoming:
+        return "Sắp đến";
+      case BookingStatus.finished:
+        return "Hoàn thành";
+      default:
+        return "Trạng thái đơn hàng";
+    }
+  }
+
+  void navigateToScreenBasedOnStatus(Booking booking) {
+    BookingStatus status = booking.bookingStatus;
+    switch (status) {
+      case BookingStatus.finished:
         Navigator.of(context).push(MaterialPageRoute(builder: (context) {
           return DetailsBookingScreen(booking: booking);
         }));
         break;
       default:
-        // Handle the default case if needed
         break;
     }
   }
@@ -83,55 +88,72 @@ class _BookingCardCardState extends State<BookingCard>
                       },
                       child: Container(
                         padding: const EdgeInsets.all(16),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        child: Column(
                           children: [
-                            //avatar
-                            const AvatarWidget(
-                                imagePath: "widget.listBookings[i].jobImage"),
-                            const SizedBox(width: 16),
-                            //Info
-                            InfoBooking(
-                              // empName: "widget.listBookings[i].empName",
-                              // jobName: "widget.listBookings[i].jobName",
-                              // status: "widget.listBookings[i].status",
-                              empName: "Thanh Tỷ",
-                              jobName: "Vệ sinh kính",
-                              status: "Đang đợi duyệt đơn",
-                              colorStatus: getColorForStatus(
-                                  widget.listBookings[i].statusId),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                //avatar
+                                AvatarWidget(
+                                    imagePath:
+                                        widget.listBookings[i].serviceAvatar),
+                                const SizedBox(width: 16),
+                                //Info
+                                InfoBooking(
+                                  jobName: widget.listBookings[i].serviceName,
+                                  text: DateFormat('d/MM/yyyy | HH:mm')
+                                      .format(widget.listBookings[i].orderDate),
+                                  price: widget.listBookings[i]
+                                      .formatTotalPriceActualInVND(),
+                                ),
+                              ],
                             ),
+                            const Divider(
+                              color: ColorPalette.greyColor,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                    color: getColorForStatus(
+                                        widget.listBookings[i].bookingStatus),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Text(
+                                    getStringForStatus(
+                                        widget.listBookings[i].bookingStatus),
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                      fontFamily: 'Lato',
+                                    ),
+                                  ),
+                                ),
+                                if (widget.listBookings[i].bookingStatus ==
+                                    BookingStatus.finished)
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 8, horizontal: 16),
+                                    decoration: BoxDecoration(
+                                      color: ColorPalette.mainColor,
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: const Text(
+                                      "Đặt lại",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                        fontFamily: 'Lato',
+                                      ),
+                                    ),
+                                  ),
+                              ],
+                            )
                           ],
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.all(16),
-                margin: const EdgeInsets.symmetric(vertical: 8),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16),
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    //avatar
-                    const AvatarWidget(
-                        imagePath: "widget.listBookings[i].jobImage"),
-                    const SizedBox(width: 16),
-                    //Info
-                    InfoBooking(
-                      // empName: "widget.listBookings[i].empName",
-                      // jobName: "widget.listBookings[i].jobName",
-                      // status: "widget.listBookings[i].status",
-                      empName: "Nhật Linh",
-                      jobName: "Vệ sinh Sofa - Rèm - Đệm - Thảm",
-                      status: "Đang đợi duyệt đơn",
-                      colorStatus:
-                          getColorForStatus(widget.listBookings[i].statusId),
                     ),
                   ],
                 ),

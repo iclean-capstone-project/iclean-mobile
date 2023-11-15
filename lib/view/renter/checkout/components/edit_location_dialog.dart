@@ -27,7 +27,7 @@ class EditLocationDialog extends StatelessWidget {
               children: [
                 const SizedBox(height: 24),
                 const Text(
-                  "Địa chỉ của bạn",
+                  "Chọn vị trí làm việc",
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,

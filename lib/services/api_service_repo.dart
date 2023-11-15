@@ -3,7 +3,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:iclean_mobile_app/auth/user_preferences.dart';
-import 'package:iclean_mobile_app/models/services.dart';
+import 'package:iclean_mobile_app/models/service.dart';
 import 'package:iclean_mobile_app/repository/service_repo.dart';
 
 import 'components/constant.dart';

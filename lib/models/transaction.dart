@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 enum TransactionStatus {
   success,
   failed,
@@ -70,5 +72,10 @@ class Transaction {
       default:
         throw Exception('Invalid transaction status value');
     }
+  }
+
+  String formatAmountInVND() {
+    final vndFormat = NumberFormat.currency(locale: 'vi_VN', symbol: 'đ');
+    return vndFormat.format(amount);
   }
 }

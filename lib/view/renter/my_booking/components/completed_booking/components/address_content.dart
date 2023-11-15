@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iclean_mobile_app/models/booking_detail.dart';
 import 'package:iclean_mobile_app/models/bookings.dart';
 
 class AddressContent extends StatelessWidget {
@@ -7,34 +8,52 @@ class AddressContent extends StatelessWidget {
     required this.booking,
   });
 
-  final Booking booking;
+  final BookingDetail booking;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            "Địa chỉ",
-            style: TextStyle(
-              fontSize: 16,
-              fontFamily: 'Lato',
-              fontWeight: FontWeight.bold,
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          "Vị trí làm việc",
+          style: TextStyle(
+            fontSize: 16,
+            fontFamily: 'Lato',
+            fontWeight: FontWeight.bold,
           ),
-          const SizedBox(height: 8),
-          Text(
-            booking.location,
-            style: const TextStyle(
-              fontSize: 14,
-              fontFamily: 'Lato',
-            ),
-            textAlign: TextAlign.justify,
+        ),
+        const SizedBox(height: 4),
+        Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Colors.grey.shade200,
+            borderRadius: BorderRadius.circular(10),
           ),
-        ],
-      ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                booking.renterName,
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontFamily: 'Lato',
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                booking.locationDescription,
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontFamily: 'Lato',
+                ),
+                textAlign: TextAlign.justify,
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

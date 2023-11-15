@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:iclean_mobile_app/models/booking_detail.dart';
 import 'package:iclean_mobile_app/models/bookings.dart';
+import 'package:iclean_mobile_app/view/renter/cart/components/cart_item_content.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../../../widgets/details_fields.dart';
@@ -10,29 +12,48 @@ class DetailContent extends StatelessWidget {
     required this.booking,
   });
 
-  final Booking booking;
+  final BookingDetail booking;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.grey.shade200,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Column(
-        children: [
-          const DetailsContentField(text: "Dịch vụ", text2: "booking.jobName"),
-          const SizedBox(height: 8),
-          DetailsContentField(
-            text: "Ngày làm",
-            text2: DateFormat('d/MM/yyyy').format(booking.timeWork),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          "Chi tiết dịch vụ",
+          style: TextStyle(
+            fontSize: 16,
+            fontFamily: 'Lato',
+            fontWeight: FontWeight.bold,
           ),
-          const SizedBox(height: 8),
-          DetailsContentField(
-              text: "Số giờ làm", text2: booking.workTime.toString()),
-        ],
-      ),
+        ),
+        const SizedBox(height: 4),
+        Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Colors.grey.shade200,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Column(
+            children: [
+              // DetailsContentField(
+              //     text: "Dịch vụ", text2: booking.serviceName),
+              // const SizedBox(height: 8),
+              // DetailsContentField(
+              //   text: "Ngày làm",
+              //   text2: DateFormat('d/MM/yyyy')
+              //       .format(booking.cartItem[i].workDate),
+              // ),
+              // const SizedBox(height: 8),
+              // DetailsContentField(
+              //   text: "Thời gian làm việc",
+              //   text2:
+              //       "${booking.workTime.to24hours()} - ${booking.workTime.addHour(booking.serviceUnit.equivalent.toInt()).to24hours()}",
+              // ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
