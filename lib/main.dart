@@ -12,6 +12,7 @@ import 'provider/checkout_provider.dart';
 import 'provider/theme_provider.dart';
 import 'provider/location_provider.dart';
 import 'provider/notification_provider.dart';
+import 'provider/work_schedule_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,6 +28,7 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (_) => CartProvider()),
         ChangeNotifierProvider(create: (_) => BookingDetailsProvider()),
         ChangeNotifierProvider(create: (_) => CheckoutProvider()),
+        ChangeNotifierProvider(create: (_) => WorkScheduleProvider()),
       ],
       child: myApp,
     ),

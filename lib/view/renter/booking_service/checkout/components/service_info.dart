@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import 'package:iclean_mobile_app/services/api_price_repo.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:iclean_mobile_app/models/service.dart';
@@ -15,6 +17,19 @@ class ServiceInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future<double> fetchPrice(int id, TimeOfDay time) async {
+      final ApiPriceRepository apiServiceRepository = ApiPriceRepository();
+
+      try {
+        final price = await apiServiceRepository.getPrice(id, time);
+        return price;
+      } catch (e) {
+        // ignore: avoid_print
+        print("e");
+        throw Exception("Failed to fetch price");
+      }
+    }
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -61,10 +76,32 @@ class ServiceInfo extends StatelessWidget {
               text2: context
                   .watch<BookingDetailsProvider>()
                   .selectedServiceUnit
-                  .equivalent
+                  .value
                   .toString()),
           const SizedBox(height: 4),
-          const DetailsContentField(text: "Tổng cộng", text2: "abc"),
+          FutureBuilder<double>(
+            future: fetchPrice(
+              context.watch<BookingDetailsProvider>().selectedServiceUnit.id,
+              context.watch<BookingDetailsProvider>().selectedTime,
+            ),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (snapshot.hasError) {
+                return Center(
+                  child: Text('Error: ${snapshot.error}'),
+                );
+              } else {
+                final price = snapshot.data!;
+                return DetailsContentField(
+                    text: "Tổng cộng",
+                    text2: NumberFormat.currency(locale: 'vi_VN', symbol: 'đ')
+                        .format(price));
+              }
+            },
+          ),
         ],
       ),
     );

@@ -9,7 +9,7 @@ import 'package:iclean_mobile_app/view/common/profile/my_profile_screen/componen
 import 'package:iclean_mobile_app/view/common/profile/my_profile_screen/components/profile_inkwell.dart';
 import 'package:iclean_mobile_app/view/common/profile/update_profile_screen/update_profile_screen.dart';
 import 'package:iclean_mobile_app/view/common/profile/wallet/my_wallet/wallet_screen.dart';
-import 'package:iclean_mobile_app/view/employee/set_time_working_screen.dart';
+import 'package:iclean_mobile_app/view/employee/set_time_working_screen/set_time_working_screen.dart';
 import 'package:iclean_mobile_app/widgets/confirm_dialog.dart';
 import 'package:iclean_mobile_app/widgets/shimmer_loading.dart';
 

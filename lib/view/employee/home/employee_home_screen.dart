@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/view/renter/home/components/banner_slider.dart';
 
-import 'components/list_service.dart';
 import 'components/welcome_content.dart';
 
 class EmployeeHomeScreen extends StatelessWidget {
