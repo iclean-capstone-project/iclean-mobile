@@ -17,7 +17,7 @@ class MyWalletScreen extends StatelessWidget {
           ApiTransactionRepository();
       try {
         final newNotifications =
-            await apiTransactionRepository.getTransactionMoney(page);
+            await apiTransactionRepository.getTransactionMoney(context, page);
         return newNotifications;
       } catch (e) {
         // ignore: avoid_print

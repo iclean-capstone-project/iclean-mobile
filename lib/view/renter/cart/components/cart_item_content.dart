@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/cart_item.dart';
 import 'package:iclean_mobile_app/provider/cart_provider.dart';
@@ -39,9 +41,9 @@ class CartItemContent extends StatelessWidget {
               // });
               final cartProvider =
                   Provider.of<CartProvider>(context, listen: false);
-              await cartProvider.deleteCartItem(id);
+              await cartProvider.deleteCartItem(context, id);
 
-              await cartProvider.fetchCart();
+              await cartProvider.fetchCart(context);
 
               Navigator.pop(context);
             },
@@ -97,7 +99,7 @@ class CartItemContent extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "Giờ làm: ${cartItem.workTime.to24hours()} - ${cartItem.workTime.addHour(cartItem.serviceUnit.equivalent.toInt()).to24hours()}",
+                        "Giờ làm: ${cartItem.workTime.toString()} - ${cartItem.workTime.addHour(cartItem.serviceUnit.equivalent.toInt()).toString()}",
                         style: const TextStyle(
                           fontFamily: 'Lato',
                           fontWeight: FontWeight.bold,

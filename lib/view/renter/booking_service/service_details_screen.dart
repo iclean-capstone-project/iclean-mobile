@@ -20,7 +20,8 @@ class ServiceDetailsScreen extends StatelessWidget {
     Future<Service> fetchServiceDetails(int id) async {
       final ApiServiceRepository apiServiceRepository = ApiServiceRepository();
       try {
-        final services = await apiServiceRepository.getServiceDetails(id);
+        final services =
+            await apiServiceRepository.getServiceDetails(context, id);
         return services;
       } catch (e) {
         // ignore: avoid_print

@@ -5,10 +5,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     super.key,
     required this.text,
     this.actions,
-    this.pop = true,
   });
 
-  final bool pop;
   final String text;
   final List<Widget>? actions;
 
@@ -17,15 +15,6 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget? leadingWidget;
-    if (pop) {
-      leadingWidget = GestureDetector(
-        onTap: () {
-          Navigator.pop(context);
-        },
-        child: const Icon(Icons.arrow_back_ios),
-      );
-    }
     return AppBar(
       title: Text(
         text,
@@ -35,7 +24,6 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
       centerTitle: true,
-      leading: leadingWidget,
       actions: actions,
       iconTheme: IconThemeData(color: Theme.of(context).colorScheme.secondary),
       backgroundColor: Theme.of(context).colorScheme.background,

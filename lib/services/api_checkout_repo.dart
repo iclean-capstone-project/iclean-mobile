@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print, depend_on_referenced_packages
 
 import 'dart:convert';
+import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:iclean_mobile_app/auth/user_preferences.dart';
 import 'package:iclean_mobile_app/repository/checkout_repo.dart';
@@ -11,7 +12,7 @@ class ApiCheckoutRepository implements CheckoutRepository {
   static const String urlConstant = "${BaseConstant.baseUrl}/booking/checkout";
 
   @override
-  Future<void> checkout(int id) async {
+  Future<void> checkout(BuildContext context, int id) async {
     final uri = Uri.parse(urlConstant);
     final accessToken = await UserPreferences.getAccessToken();
 

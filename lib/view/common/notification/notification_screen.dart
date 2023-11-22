@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 import 'package:iclean_mobile_app/widgets/shimmer_loading.dart';
@@ -7,7 +9,7 @@ import 'package:iclean_mobile_app/models/noti.dart';
 import 'package:iclean_mobile_app/services/api_noti_repo.dart';
 import 'package:iclean_mobile_app/provider/notification_provider.dart';
 
-import 'components/noti_content.dart/noti_content.dart';
+import 'components/noti_content/noti_content.dart';
 
 class NotificationScreen extends StatelessWidget {
   const NotificationScreen({super.key});
@@ -17,7 +19,7 @@ class NotificationScreen extends StatelessWidget {
     Future<List<Noti>> fetchNotifications(int page) async {
       final ApiNotiRepository apiNotiRepository = ApiNotiRepository();
       try {
-        final newNotifications = await apiNotiRepository.getNoti(page);
+        final newNotifications = await apiNotiRepository.getNoti(context, page);
         return newNotifications;
       } catch (e) {
         // ignore: avoid_print
@@ -41,8 +43,9 @@ class NotificationScreen extends StatelessWidget {
                     text1: "Thông báo",
                     text2: "Đọc hết",
                     onTap: () async {
-                      await notificationsProvider.readAll();
-                      await notificationsProvider.fetchNotifications(1);
+                      await notificationsProvider.readAll(context);
+                      await notificationsProvider.fetchNotifications(
+                          context, 1);
                     },
                   ),
                 ),

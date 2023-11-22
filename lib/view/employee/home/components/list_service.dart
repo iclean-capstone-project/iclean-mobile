@@ -12,7 +12,7 @@ class ListService extends StatelessWidget {
     Future<List<Service>> fetchServices() async {
       final ApiServiceRepository apiServiceRepository = ApiServiceRepository();
       try {
-        final services = await apiServiceRepository.getService();
+        final services = await apiServiceRepository.getService(context);
         return services;
       } catch (e) {
         // ignore: avoid_print

@@ -14,7 +14,7 @@ class AccountBalance extends StatelessWidget {
     Future<Wallet> fetchMoney() async {
       final ApiWalletRepository apiWalletRepository = ApiWalletRepository();
       try {
-        final money = await apiWalletRepository.getMoney();
+        final money = await apiWalletRepository.getMoney(context);
         return money;
       } catch (e) {
         throw Exception(e);

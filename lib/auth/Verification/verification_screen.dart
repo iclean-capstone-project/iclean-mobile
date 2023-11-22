@@ -1,14 +1,18 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:async';
 import 'dart:convert';
 // ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/account.dart';
+import 'package:iclean_mobile_app/models/common_response.dart';
 import 'package:iclean_mobile_app/services/components/constant.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 import 'package:iclean_mobile_app/auth/user_preferences.dart';
 import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
 
+import '../../widgets/error_dialog.dart';
 import 'components/digit_textfield.dart';
 import 'components/resend_code_content.dart';
 import 'components/verify_dialog.dart';
@@ -45,14 +49,19 @@ class VerificationScreen extends StatelessWidget {
       await setToken(phone, accessToken, refreshToken, role);
       final isNewAccount = dataAccount['isNewUser'];
 
-      // ignore: use_build_context_synchronously
       showDialog(
         context: context,
         builder: (BuildContext context) =>
             VerifyDialog(account: account, isNew: isNewAccount),
       );
     } else {
-      throw Exception('status: ${response.statusCode}, body: ${response.body}');
+      final jsonMap = json.decode(utf8.decode(response.bodyBytes));
+      final responseObject = ResponseObject.fromJson(jsonMap);
+      showDialog(
+        context: context,
+        builder: (BuildContext context) =>
+            ErrorDialog(responseObject: responseObject),
+      );
     }
   }
 

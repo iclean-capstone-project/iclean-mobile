@@ -2,8 +2,6 @@
 
 import 'dart:io';
 
-
-
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/account.dart';
 import 'package:iclean_mobile_app/services/api_account_repo.dart';
@@ -141,7 +139,7 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
     final ApiAccountRepository apiAccountRepository = ApiAccountRepository();
 
     try {
-      final account = await apiAccountRepository.getAccount();
+      final account = await apiAccountRepository.getAccount(context);
       return account;
     } catch (e) {
       print(e);

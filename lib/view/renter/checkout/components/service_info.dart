@@ -39,7 +39,7 @@ class ServiceInfo extends StatelessWidget {
           DetailsContentField(
               text: "Thời gian làm việc",
               text2:
-                  "${cartItem.workTime.to24hours()}-${cartItem.workTime.addHour(cartItem.serviceUnit.equivalent.toInt()).to24hours()}"),
+                  "${cartItem.workTime.toString()}-${cartItem.workTime.addHour(cartItem.serviceUnit.equivalent.toInt()).toString()}"),
           const SizedBox(height: 8),
           const Text(
             "Chi tiết công việc",

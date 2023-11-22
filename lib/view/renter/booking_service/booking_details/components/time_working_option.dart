@@ -21,7 +21,7 @@ class _TimeWorkingOptionState extends State<TimeWorkingOption> {
   Future<List<ServiceUnit>> fetchServiceUnit(int id) async {
     final ApiServiceUnitRepository repository = ApiServiceUnitRepository();
     try {
-      final serviceUnits = await repository.getServiceUnit(id);
+      final serviceUnits = await repository.getServiceUnit(context, id);
       return serviceUnits;
     } catch (e) {
       // ignore: avoid_print

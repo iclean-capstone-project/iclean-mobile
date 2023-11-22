@@ -1,18 +1,22 @@
-// ignore_for_file: avoid_print, depend_on_referenced_packages
+// ignore_for_file: avoid_print, depend_on_referenced_packages, use_build_context_synchronously
 
 import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:iclean_mobile_app/models/noti.dart';
 import 'package:iclean_mobile_app/auth/user_preferences.dart';
 import 'package:iclean_mobile_app/repository/noti_repo.dart';
 
+import '../models/common_response.dart';
+import '../widgets/error_dialog.dart';
 import 'components/constant.dart';
 
 class ApiNotiRepository implements NotiRepository {
   static const String urlConstant = "${BaseConstant.baseUrl}/notification";
 
   @override
-  Future<List<Noti>> getNoti(int page) async {
+  Future<List<Noti>> getNoti(BuildContext context, int page) async {
     final url = '$urlConstant?page=$page';
     final uri = Uri.parse(url);
     final accessToken = await UserPreferences.getAccessToken();
@@ -40,8 +44,14 @@ class ApiNotiRepository implements NotiRepository {
         }).toList();
         return notifications;
       } else {
-        return throw Exception(
-            'status: ${response.statusCode}, body: ${response.body}');
+        final jsonMap = json.decode(utf8.decode(response.bodyBytes));
+        final responseObject = ResponseObject.fromJson(jsonMap);
+        showDialog(
+          context: context,
+          builder: (BuildContext context) =>
+              ErrorDialog(responseObject: responseObject),
+        );
+        throw Exception('Failed to get account: ${response.statusCode}');
       }
     } catch (e) {
       print(e);
@@ -50,7 +60,7 @@ class ApiNotiRepository implements NotiRepository {
   }
 
   @override
-  Future<void> readAll() async {
+  Future<void> readAll(BuildContext context) async {
     const url = urlConstant;
     final uri = Uri.parse(url);
     final accessToken = await UserPreferences.getAccessToken();
@@ -67,7 +77,7 @@ class ApiNotiRepository implements NotiRepository {
   }
 
   @override
-  Future<void> maskAsRead(int notiId) async {
+  Future<void> maskAsRead(BuildContext context, int notiId) async {
     final url = '$urlConstant/$notiId';
     final uri = Uri.parse(url);
     final accessToken = await UserPreferences.getAccessToken();
@@ -84,7 +94,7 @@ class ApiNotiRepository implements NotiRepository {
   }
 
   @override
-  Future<void> deleteNoti(int notiId) async {
+  Future<void> deleteNoti(BuildContext context, int notiId) async {
     final url = '$urlConstant/$notiId';
     final uri = Uri.parse(url);
     final accessToken = await UserPreferences.getAccessToken();

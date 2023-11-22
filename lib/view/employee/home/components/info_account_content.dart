@@ -13,7 +13,7 @@ class InfoAccountContent extends StatelessWidget {
     Future<Account> fetchAccount() async {
       final ApiAccountRepository apiAccountRepository = ApiAccountRepository();
       try {
-        final account = await apiAccountRepository.getAccount();
+        final account = await apiAccountRepository.getAccount(context);
         return account;
       } catch (e) {
         throw Exception(e);

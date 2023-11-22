@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/booking_detail.dart';
-import 'package:iclean_mobile_app/models/booking_status.dart';
 import 'package:iclean_mobile_app/models/bookings.dart';
 import 'package:iclean_mobile_app/services/api_booking_repo.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
@@ -21,10 +20,12 @@ class DetailsBookingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future<BookingDetail> fetchBookingDetail(int id) async {
+    Future<BookingDetail> fetchBookingDetail(
+        BuildContext context, int id) async {
       final ApiBookingRepository repository = ApiBookingRepository();
       try {
-        final bookingDetail = await repository.getBookingDetailsById(id);
+        final bookingDetail =
+            await repository.getBookingDetailsById(context, id);
         return bookingDetail;
       } catch (e) {
         // ignore: avoid_print
@@ -99,7 +100,7 @@ class DetailsBookingScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
               child: FutureBuilder<BookingDetail>(
-                future: fetchBookingDetail(booking.id),
+                future: fetchBookingDetail(context, booking.id),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(

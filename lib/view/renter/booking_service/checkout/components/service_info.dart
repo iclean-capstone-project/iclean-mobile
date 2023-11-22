@@ -58,7 +58,7 @@ class ServiceInfo extends StatelessWidget {
               text2: context
                   .watch<BookingDetailsProvider>()
                   .selectedTime
-                  .to24hours()),
+                  .toString()),
           const SizedBox(height: 8),
           const Text(
             "Chi tiết công việc",

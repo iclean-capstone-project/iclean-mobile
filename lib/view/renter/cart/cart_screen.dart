@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/cart.dart';
 import 'package:iclean_mobile_app/models/cart_item.dart';
@@ -19,7 +21,7 @@ class CartScreen extends StatelessWidget {
     Future<Cart> fetchCart() async {
       final ApiCartRepository repository = ApiCartRepository();
       try {
-        final cart = await repository.getCart();
+        final cart = await repository.getCart(context);
         return cart;
       } catch (e) {
         return Cart(
@@ -44,8 +46,8 @@ class CartScreen extends StatelessWidget {
                   text1: "Giỏ hàng",
                   text2: "Xóa hết",
                   onTap: () async {
-                    await cartProvider.deleteAllCart();
-                    await cartProvider.fetchCart();
+                    await cartProvider.deleteAllCart(context);
+                    await cartProvider.fetchCart(context);
                   },
                 ),
               ),

@@ -1,11 +1,13 @@
+import 'package:flutter/widgets.dart';
 import 'package:iclean_mobile_app/models/cart.dart';
 
 abstract class CartRepository {
-  Future<Cart> getCart();
+  Future<Cart> getCart(BuildContext context);
 
-  Future<void> addToCart(DateTime startTime, int serviceUnitId, String note);
+  Future<void> addToCart(
+      BuildContext context, DateTime startTime, int serviceUnitId, String note);
 
-  Future<void> deleteCartItem(int id);
+  Future<void> deleteCartItem(BuildContext context, int id);
 
-  Future<void> deleteAllCart();
+  Future<void> deleteAllCart(BuildContext context);
 }

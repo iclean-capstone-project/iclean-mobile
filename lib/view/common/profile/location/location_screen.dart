@@ -16,7 +16,7 @@ class LocationScreen extends StatelessWidget {
     Future<List<Address>> fetchNotifications() async {
       final ApiLocationRepository repository = ApiLocationRepository();
       try {
-        final locations = await repository.getLocation();
+        final locations = await repository.getLocation(context);
         return locations;
       } catch (e) {
         // ignore: avoid_print
@@ -34,7 +34,7 @@ class LocationScreen extends StatelessWidget {
             confirm: "Xác nhận",
             onTap: () {
               final ApiLocationRepository repository = ApiLocationRepository();
-              repository.setDefault(location.id!).then((_) {
+              repository.setDefault(context, location.id!).then((_) {
                 Navigator.of(context).pop();
                 Navigator.pushReplacement(
                     context,

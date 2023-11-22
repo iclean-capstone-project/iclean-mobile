@@ -11,7 +11,7 @@ class LogInScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MyAppBar(text: "Đăng nhập"),
+      appBar: const MyAppBar(text: "Đăng nhập", pop: false),
       body: SingleChildScrollView(
         reverse: true,
         child: Padding(

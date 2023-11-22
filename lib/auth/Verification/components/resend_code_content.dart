@@ -66,7 +66,7 @@ class _ResendCodeContentState extends State<ResendCodeContent> {
 
   Future<void> fetchPhoneNumber(String phone) async {
     final ApiLoginRepository apiLoginRepository = ApiLoginRepository();
-    await apiLoginRepository.checkPhoneNumber(phone);
+    await apiLoginRepository.checkPhoneNumber(context, phone);
   }
 
   @override

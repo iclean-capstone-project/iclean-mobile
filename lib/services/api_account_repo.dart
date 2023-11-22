@@ -1,18 +1,21 @@
-// ignore_for_file: depend_on_referenced_packages
+// ignore_for_file: depend_on_referenced_packages, use_build_context_synchronously
 
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:iclean_mobile_app/auth/user_preferences.dart';
 import 'package:iclean_mobile_app/models/account.dart';
 import 'package:iclean_mobile_app/repository/account_repo.dart';
 
+import '../models/common_response.dart';
+import '../widgets/error_dialog.dart';
 import 'components/constant.dart';
 
 class ApiAccountRepository implements AccountRepository {
   static const String urlConstant = "${BaseConstant.baseUrl}/profile";
 
   @override
-  Future<Account> getAccount() async {
+  Future<Account> getAccount(BuildContext context) async {
     const url = urlConstant;
     final uri = Uri.parse(url);
     final accessToken = await UserPreferences.getAccessToken();
@@ -31,8 +34,14 @@ class ApiAccountRepository implements AccountRepository {
         final account = Account.fromJson(data);
         return account;
       } else {
-        return throw Exception(
-            'status: ${response.statusCode}, body: ${response.body}');
+        final jsonMap = json.decode(utf8.decode(response.bodyBytes));
+        final responseObject = ResponseObject.fromJson(jsonMap);
+        showDialog(
+          context: context,
+          builder: (BuildContext context) =>
+              ErrorDialog(responseObject: responseObject),
+        );
+        throw Exception('Failed to get account: ${response.statusCode}');
       }
     } catch (e) {
       throw Exception(e);

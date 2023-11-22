@@ -79,7 +79,7 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
     );
     // Pass newLocation to your addLocation function
     final ApiLocationRepository repository = ApiLocationRepository();
-    repository.addLocation(newLocation).then((_) {
+    repository.addLocation(context, newLocation).then((_) {
       // Handle success, for example, by navigating to a new screen
       Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (context) => const LocationScreen()));

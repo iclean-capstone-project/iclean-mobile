@@ -145,7 +145,7 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
     final ApiAccountRepository apiAccountRepository = ApiAccountRepository();
 
     try {
-      final account = await apiAccountRepository.getAccount();
+      final account = await apiAccountRepository.getAccount(context);
       return account;
     } catch (e) {
       throw Exception(e);
@@ -155,7 +155,7 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
   Future<Wallet> fetchMoney() async {
     final ApiWalletRepository apiWalletRepository = ApiWalletRepository();
     try {
-      final money = await apiWalletRepository.getMoney();
+      final money = await apiWalletRepository.getMoney(context);
       return money;
     } catch (e) {
       throw Exception(e);

@@ -8,9 +8,10 @@ class NotificationsProvider extends ChangeNotifier {
   List<Noti> notifications = [];
   final ApiNotiRepository apiLocationRepository = ApiNotiRepository();
 
-  Future<List<Noti>> fetchNotifications(int page) async {
+  Future<List<Noti>> fetchNotifications(BuildContext context, int page) async {
     try {
-      final newNotifications = await apiLocationRepository.getNoti(page);
+      final newNotifications =
+          await apiLocationRepository.getNoti(context, page);
       notifications = newNotifications;
       notifyListeners();
       return notifications;
@@ -19,25 +20,25 @@ class NotificationsProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> readAll() async {
+  Future<void> readAll(BuildContext context) async {
     try {
-      await apiLocationRepository.readAll();
+      await apiLocationRepository.readAll(context);
     } catch (e) {
       print(e);
     }
   }
 
-  Future<void> maskAsRead(int notiId) async {
+  Future<void> maskAsRead(BuildContext context, int notiId) async {
     try {
-      await apiLocationRepository.maskAsRead(notiId);
+      await apiLocationRepository.maskAsRead(context, notiId);
     } catch (e) {
       print(e);
     }
   }
 
-  Future<void> deleteNoti(int notiId) async {
+  Future<void> deleteNoti(BuildContext context, int notiId) async {
     try {
-      await apiLocationRepository.deleteNoti(notiId);
+      await apiLocationRepository.deleteNoti(context, notiId);
     } catch (e) {
       print(e);
     }

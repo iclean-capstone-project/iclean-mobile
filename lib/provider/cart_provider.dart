@@ -13,9 +13,9 @@ class CartProvider extends ChangeNotifier {
 
   final ApiCartRepository repository = ApiCartRepository();
 
-  Future<Cart> fetchCart() async {
+  Future<Cart> fetchCart(BuildContext context) async {
     try {
-      final newCart = await repository.getCart();
+      final newCart = await repository.getCart(context);
       cart = newCart;
       notifyListeners();
       return cart;
@@ -24,17 +24,17 @@ class CartProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> deleteCartItem(int notiId) async {
+  Future<void> deleteCartItem(BuildContext context, int notiId) async {
     try {
-      await repository.deleteCartItem(notiId);
+      await repository.deleteCartItem(context, notiId);
     } catch (e) {
       print(e);
     }
   }
 
-  Future<void> deleteAllCart() async {
+  Future<void> deleteAllCart(BuildContext context) async {
     try {
-      await repository.deleteAllCart();
+      await repository.deleteAllCart(context);
       notifyListeners();
     } catch (e) {
       print(e);

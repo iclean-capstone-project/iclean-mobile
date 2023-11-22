@@ -15,7 +15,7 @@ class RenterInfo extends StatelessWidget {
     Future<Account> fetchAccount() async {
       final ApiAccountRepository apiAccountRepository = ApiAccountRepository();
       try {
-        final account = await apiAccountRepository.getAccount();
+        final account = await apiAccountRepository.getAccount(context);
         return account;
       } catch (e) {
         throw Exception(e);
@@ -26,7 +26,7 @@ class RenterInfo extends StatelessWidget {
       final ApiLocationRepository apiLocationRepository =
           ApiLocationRepository();
       try {
-        final locations = await apiLocationRepository.getLocation();
+        final locations = await apiLocationRepository.getLocation(context);
         return locations;
       } catch (e) {
         return <Address>[];

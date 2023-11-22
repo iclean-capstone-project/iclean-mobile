@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/noti.dart';
 import 'package:iclean_mobile_app/provider/notification_provider.dart';
@@ -37,16 +39,15 @@ class NotiContent extends StatelessWidget {
                   noti: noti,
                   maskAsRead: () async {
                     if (noti.isRead == false) {
-                      await notificationsProvider.maskAsRead(noti.id);
-                      await notificationsProvider.fetchNotifications(1);
-                      // ignore: use_build_context_synchronously
+                      await notificationsProvider.maskAsRead(context, noti.id);
+                      await notificationsProvider.fetchNotifications(
+                          context, 1);
                       Navigator.pop(context);
                     }
                   },
                   delete: () async {
-                    await notificationsProvider.deleteNoti(noti.id);
-                    await notificationsProvider.fetchNotifications(1);
-                    // ignore: use_build_context_synchronously
+                    await notificationsProvider.deleteNoti(context, noti.id);
+                    await notificationsProvider.fetchNotifications(context, 1);
                     Navigator.pop(context);
                   },
                 ));
@@ -62,8 +63,8 @@ class NotiContent extends StatelessWidget {
           InkWell(
             onTap: () async {
               if (notis[i].isRead == false) {
-                await notificationsProvider.maskAsRead(notis[i].id);
-                await notificationsProvider.fetchNotifications(1);
+                await notificationsProvider.maskAsRead(context, notis[i].id);
+                await notificationsProvider.fetchNotifications(context, 1);
               }
             },
             child: Container(

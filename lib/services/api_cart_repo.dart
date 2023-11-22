@@ -1,18 +1,21 @@
-// ignore_for_file: avoid_print, depend_on_referenced_packages
+// ignore_for_file: avoid_print, depend_on_referenced_packages, use_build_context_synchronously
 
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:iclean_mobile_app/auth/user_preferences.dart';
 import 'package:iclean_mobile_app/models/cart.dart';
 import 'package:iclean_mobile_app/repository/cart_repo.dart';
 
+import '../models/common_response.dart';
+import '../widgets/error_dialog.dart';
 import 'components/constant.dart';
 
 class ApiCartRepository implements CartRepository {
   static const String urlConstant = "${BaseConstant.baseUrl}/booking/cart";
 
   @override
-  Future<Cart> getCart() async {
+  Future<Cart> getCart(BuildContext context) async {
     final uri = Uri.parse(urlConstant);
     final accessToken = await UserPreferences.getAccessToken();
 
@@ -30,8 +33,14 @@ class ApiCartRepository implements CartRepository {
         final cart = Cart.fromJson(data);
         return cart;
       } else {
-        return throw Exception(
-            'status: ${response.statusCode}, body: ${response.body}');
+        final jsonMap = json.decode(utf8.decode(response.bodyBytes));
+        final responseObject = ResponseObject.fromJson(jsonMap);
+        showDialog(
+          context: context,
+          builder: (BuildContext context) =>
+              ErrorDialog(responseObject: responseObject),
+        );
+        throw Exception('Failed to get account: ${response.statusCode}');
       }
     } catch (e) {
       throw Exception(e);
@@ -39,8 +48,8 @@ class ApiCartRepository implements CartRepository {
   }
 
   @override
-  Future<void> addToCart(
-      DateTime startTime, int serviceUnitId, String note) async {
+  Future<void> addToCart(BuildContext context, DateTime startTime,
+      int serviceUnitId, String note) async {
     final uri = Uri.parse(urlConstant);
     final accessToken = await UserPreferences.getAccessToken();
 
@@ -63,7 +72,7 @@ class ApiCartRepository implements CartRepository {
   }
 
   @override
-  Future<void> deleteCartItem(int id) async {
+  Future<void> deleteCartItem(BuildContext context, int id) async {
     final url = '$urlConstant/$id';
     final uri = Uri.parse(url);
 
@@ -82,7 +91,7 @@ class ApiCartRepository implements CartRepository {
   }
 
   @override
-  Future<void> deleteAllCart() async {
+  Future<void> deleteAllCart(BuildContext context) async {
     final uri = Uri.parse(urlConstant);
 
     final accessToken = await UserPreferences.getAccessToken();

@@ -15,7 +15,7 @@ class ListLocationContent extends StatelessWidget {
       final ApiLocationRepository apiLocationRepository =
           ApiLocationRepository();
       try {
-        final locations = await apiLocationRepository.getLocation();
+        final locations = await apiLocationRepository.getLocation(context);
         return locations;
       } catch (e) {
         return <Address>[];

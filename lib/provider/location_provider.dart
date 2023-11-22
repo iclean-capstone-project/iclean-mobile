@@ -6,9 +6,9 @@ class LocationsProvider extends ChangeNotifier {
   List<Address> locations = [];
 
   Future<List<Address>> fetchLocation(
-      ApiLocationRepository repository) async {
+      BuildContext context, ApiLocationRepository repository) async {
     try {
-      final newLocations = await repository.getLocation();
+      final newLocations = await repository.getLocation(context);
       locations = newLocations;
       notifyListeners();
       return locations;

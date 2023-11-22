@@ -1,5 +1,6 @@
+import 'package:flutter/widgets.dart';
 import 'package:iclean_mobile_app/models/transaction.dart';
 
 abstract class TransactionRepository {
-  Future<List<Transaction>> getTransactionMoney(int page);
+  Future<List<Transaction>> getTransactionMoney(BuildContext context, int page);
 }

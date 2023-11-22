@@ -9,13 +9,13 @@ class LoginContent extends StatelessWidget {
   const LoginContent({super.key});
 
   bool isValidPhoneNumber(String value) {
-    final phoneNumberRegExp = RegExp(r'^\d{10}$');
+    final phoneNumberRegExp = RegExp(r'^0\d{9}$');
     return phoneNumberRegExp.hasMatch(value);
   }
 
   Future<void> fectchPhoneNumber(String phone, BuildContext context) async {
     final ApiLoginRepository apiLoginRepository = ApiLoginRepository();
-    await apiLoginRepository.checkPhoneNumber(phone);
+    await apiLoginRepository.checkPhoneNumber(context, phone);
 
     // ignore: use_build_context_synchronously
     Navigator.push(
@@ -36,7 +36,7 @@ class LoginContent extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 24),
             child: SizedBox(
-              height: 48,
+              height: 78,
               child: MyTextField(
                 textType: TextInputType.number,
                 controller: phoneNumberController,

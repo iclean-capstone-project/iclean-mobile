@@ -24,7 +24,7 @@ class _WalletContentState extends State<WalletContent> {
     final ApiWalletRepository apiWalletRepository = ApiWalletRepository();
     Future<Wallet> fetchMoney() async {
       try {
-        final money = await apiWalletRepository.getMoney();
+        final money = await apiWalletRepository.getMoney(context);
         return money;
       } catch (e) {
         throw Exception(e);
@@ -33,7 +33,7 @@ class _WalletContentState extends State<WalletContent> {
 
     Future<Wallet> fetchPoint() async {
       try {
-        final point = await apiWalletRepository.getPoint();
+        final point = await apiWalletRepository.getPoint(context);
         return point;
       } catch (e) {
         throw Exception(e);

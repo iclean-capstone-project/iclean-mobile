@@ -78,7 +78,9 @@ class _UpdateLocationScreenState extends State<UpdateLocationScreen> {
       'longitude': longitude,
     };
     final ApiLocationRepository repository = ApiLocationRepository();
-    repository.updateLocation(widget.address.id!, dataForUpdate).then((_) {
+    repository
+        .updateLocation(context, widget.address.id!, dataForUpdate)
+        .then((_) {
       Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (context) => const LocationScreen()));
     }).catchError((error) {
@@ -95,7 +97,7 @@ class _UpdateLocationScreenState extends State<UpdateLocationScreen> {
           confirm: "Xác nhận",
           onTap: () {
             final ApiLocationRepository repository = ApiLocationRepository();
-            repository.deleteLocation(location.id!).then((_) {
+            repository.deleteLocation(context, location.id!).then((_) {
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(

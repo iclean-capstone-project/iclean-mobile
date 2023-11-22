@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:iclean_mobile_app/view/common/welcome/splash/splash_screen.dart';
 import 'package:iclean_mobile_app/view/employee/nav_bar_bottom/employee_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:iclean_mobile_app/auth/log_in/log_in_screen.dart';
