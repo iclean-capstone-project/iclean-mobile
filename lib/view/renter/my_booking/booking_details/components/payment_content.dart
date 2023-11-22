@@ -34,21 +34,21 @@ class PaymentContent extends StatelessWidget {
           ),
           child: Column(
             children: [
-              for (int i = 0; i < booking.cartItem.length; i++)
+              for (int i = 0; i < booking.transaction.service.length; i++)
                 Column(
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          booking.cartItem[i].serviceName,
+                          booking.transaction.service[i].serviceName,
                           style: const TextStyle(
                             fontSize: 14,
                             fontFamily: 'Lato',
                           ),
                         ),
                         Text(
-                          booking.cartItem[i].formatPriceInVND(),
+                          booking.transaction.service[i].formatPriceInVND(),
                           style: const TextStyle(
                             fontSize: 16,
                             fontFamily: 'Lato',
@@ -56,22 +56,26 @@ class PaymentContent extends StatelessWidget {
                         ),
                       ],
                     ),
-                    if (i < booking.cartItem.length - 1)
+                    if (i < booking.transaction.service.length - 1)
                       const SizedBox(height: 8),
                   ],
                 ),
               const SizedBox(height: 4),
+              DetailsContentField(
+                  text: "Tổng cộng", text2: booking.formatTotalPriceInVND()),
+              const SizedBox(height: 4),
+              DetailsContentField(
+                  text:
+                      "Sử dụng ${booking.transaction.discount?.toStringAsFixed(0)} iClean Point",
+                  text2: '- ${booking.transaction.formatDiscountInVND()}'),
               Divider(
                 thickness: 0.5,
                 color: Colors.grey[400],
               ),
               const SizedBox(height: 4),
               DetailsContentField(
-                  text: "Tổng tiền", text2: booking.formatTotalPriceInVND()),
-              const SizedBox(height: 8),
-              DetailsContentField(
-                  text: "Tổng cộng",
-                  text2: booking.formatTotalPriceActualInVND()),
+                  text: "Thành tiền",
+                  text2: booking.transaction.formatAmountInVND()),
               const SizedBox(height: 8),
               DetailsContentField(
                 text: "Thời gian",
@@ -96,7 +100,7 @@ class PaymentContent extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
-                      "Đã thanh toán",
+                      booking.transaction.status.name,
                       style: TextStyle(
                         color: Colors.deepPurple.shade400,
                         fontSize: 15,

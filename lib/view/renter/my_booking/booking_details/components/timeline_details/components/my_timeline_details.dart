@@ -1,22 +1,20 @@
-import 'package:flutter/material.dart';
-import 'package:iclean_mobile_app/models/bookings.dart';
-import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter/material.dart';
+import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 
 class MyTimeline extends StatelessWidget {
-  final Booking booking;
-  final bool isFirst, isLast;
-  final String statusTitle;
-  final DateTime? date;
   const MyTimeline({
     super.key,
-    required this.booking,
     required this.isFirst,
     required this.isLast,
     required this.statusTitle,
     this.date,
   });
+
+  final bool isFirst, isLast;
+  final String statusTitle;
+  final DateTime? date;
 
   @override
   Widget build(BuildContext context) {

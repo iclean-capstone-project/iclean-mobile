@@ -82,7 +82,7 @@ class DetailsTransaction extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              "Thời gian: ${DateFormat('hh:mm - d/MM/yyyy').format(transaction.date)}",
+              "Thời gian: ${DateFormat('hh:mm - d/MM/yyyy').format(transaction.date!)}",
               style: const TextStyle(
                 color: Colors.white,
                 fontFamily: 'Lato',

@@ -5,11 +5,11 @@ import 'package:iclean_mobile_app/models/bookings.dart';
 import 'package:iclean_mobile_app/services/api_booking_repo.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/view/renter/booking_service/booking_details/booking_details_screen.dart';
-import 'package:iclean_mobile_app/view/renter/my_booking/components/completed_booking/components/timeline_details/timeline_details.dart';
+import 'package:iclean_mobile_app/view/renter/my_booking/booking_details/components/timeline_details/timeline_details.dart';
 import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
 
 import 'components/address_content.dart';
-import '../../../../../widgets/details_fields.dart';
+import '../../../../widgets/details_fields.dart';
 import 'components/detail_content.dart';
 import 'components/employee_content.dart';
 import 'components/payment_content.dart';
@@ -55,46 +55,47 @@ class DetailsBookingScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              color: ColorPalette.mainColor,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(24),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        Text(
-                          "Dịch vụ đã hoàn thành",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'Lato',
-                            fontWeight: FontWeight.bold,
+            if (booking.status == BookingStatus.finished)
+              Container(
+                color: ColorPalette.mainColor,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(24),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: const [
+                          Text(
+                            "Dịch vụ đã hoàn thành",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'Lato',
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                        SizedBox(height: 8),
-                        Text(
-                          "Cám ơn bạn đã đặt dịch vụ ở iClean!",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'Lato',
+                          SizedBox(height: 8),
+                          Text(
+                            "Cám ơn bạn đã đặt dịch vụ ở iClean!",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'Lato',
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(24),
-                    child: Icon(
-                      Icons.domain_verification_rounded,
-                      size: 40,
-                      color: Colors.white,
-                    ),
-                  )
-                ],
+                    const Padding(
+                      padding: EdgeInsets.all(24),
+                      child: Icon(
+                        Icons.domain_verification_rounded,
+                        size: 40,
+                        color: Colors.white,
+                      ),
+                    )
+                  ],
+                ),
               ),
-            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
               child: FutureBuilder<BookingDetail>(
@@ -118,7 +119,7 @@ class DetailsBookingScreen extends StatelessWidget {
                           child: TimelineContent(booking: booking),
                         ),
                         const SizedBox(height: 16),
-                        TimelineDetails(booking: booking),
+                        TimelineDetails(listStatus: bookingDetail.listStatus),
                         const SizedBox(height: 16),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -129,7 +130,7 @@ class DetailsBookingScreen extends StatelessWidget {
                         const SizedBox(height: 16),
                         AddressContent(booking: bookingDetail),
                         const SizedBox(height: 16),
-                        EmployeeContent(booking: booking),
+                        EmployeeContent(booking: bookingDetail),
                         const SizedBox(height: 24),
                         DetailContent(booking: bookingDetail),
                         const SizedBox(height: 24),

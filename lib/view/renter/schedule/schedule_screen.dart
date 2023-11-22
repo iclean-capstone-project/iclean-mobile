@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/bookings.dart';
-import 'package:iclean_mobile_app/view/renter/my_booking/components/components/avatar_widget.dart';
-import 'package:iclean_mobile_app/view/renter/my_booking/components/components/info_booking.dart';
-
+import 'package:iclean_mobile_app/view/renter/my_booking/my_booking_screen/components/components/avatar_widget.dart';
+import 'package:iclean_mobile_app/view/renter/my_booking/my_booking_screen/components/components/info_booking.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class ScheduleScreen extends StatefulWidget {
@@ -237,12 +236,12 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                                     AvatarWidget(imagePath: "event.jobImage"),
                                     SizedBox(width: 16),
                                     //Info
-                                    InfoBooking(
-                                      text: "event.empName",
-                                      jobName: "event.jobName",
-                                      price: "event.status",
-                                      //colorStatus: Colors.lightBlueAccent,
-                                    ),
+                                    // InfoBooking(
+                                    //   text: "event.empName",
+                                    //   jobName: "event.jobName",
+                                    //   price: "event.status",
+                                    //   //colorStatus: Colors.lightBlueAccent,
+                                    // ),
                                   ],
                                 ),
                               ),

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/bookings.dart';
+import 'package:iclean_mobile_app/services/api_booking_repo.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
-import 'package:iclean_mobile_app/view/renter/my_booking/components/booking_card/booking_card.dart';
+import 'package:iclean_mobile_app/view/renter/my_booking/my_booking_screen/components/booking_card/booking_card.dart';
 
 class MyBookingsScreen extends StatefulWidget {
   const MyBookingsScreen({Key? key}) : super(key: key);
@@ -13,84 +14,71 @@ class MyBookingsScreen extends StatefulWidget {
 class _MyBookingsScreenState extends State<MyBookingsScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  List<Booking> requests = [];
+
+  List<Booking> rejectedBookings = [];
+
+  List<Booking> upcomingBookings = [];
+
+  List<Booking> finishedBookings = [];
 
   @override
   void initState() {
     _tabController = TabController(length: 4, vsync: this, initialIndex: 0);
     _tabController.addListener((_handleTabSelection));
     super.initState();
+    fetchBookingNotYet().then((bookings) {
+      setState(() {
+        requests = bookings;
+      });
+    });
+    fetchBookingUpcoming().then((bookings) {
+      setState(() {
+        upcomingBookings = bookings;
+      });
+    });
+    fetchBookingFinished().then((bookings) {
+      setState(() {
+        finishedBookings = bookings;
+      });
+    });
   }
 
-  List<Booking> requests = [
-    Booking.fromStr(
-      id: 31,
-      bookingCode: "11141555259327",
-      renterName: "quanglinh",
-      renterAvatar:
-          "https://i.pinimg.com/736x/72/8d/b5/728db51a8610a5c1f0e37e655340c565.jpg",
-      renterPhoneNumber: "0123123123",
-      serviceName: "Dọn nhà vệ sinh, Lau nhà",
-      serviceAvatar:
-          "https://firebasestorage.googleapis.com/v0/b/iclean-59a5b.appspot.com/o/istockphoto-1136414971-1024x1024.jpg?alt=media",
-      orderDate: DateTime.parse("2023-11-13T21:30:27.278984"),
-      totalPrice: 350000,
-      totalPriceActual: 200,
-      bookingStatus: "NOT_YET",
-    ),
-    Booking.fromStr(
-      id: 32,
-      bookingCode: "11141555259328",
-      renterName: "quanglinh",
-      renterAvatar:
-          "https://i.pinimg.com/736x/72/8d/b5/728db51a8610a5c1f0e37e655340c565.jpg",
-      renterPhoneNumber: "0123123123",
-      serviceName: "Dọn nhà vệ sinh, Lau nhà",
-      serviceAvatar:
-          "https://firebasestorage.googleapis.com/v0/b/iclean-59a5b.appspot.com/o/istockphoto-1136414971-1024x1024.jpg?alt=media",
-      orderDate: DateTime.parse("2023-11-13T21:30:27.278984"),
-      totalPrice: 350000,
-      totalPriceActual: 200,
-      bookingStatus: "REJECTED",
-    ),
-  ];
+  Future<List<Booking>> fetchBookingNotYet() async {
+    final ApiBookingRepository repository = ApiBookingRepository();
+    try {
+      final bookings = await repository.getBooking(1, "NOT_YET", false);
+      return bookings;
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+      return <Booking>[];
+    }
+  }
 
-  List<Booking> rejectedBookings = [];
+  Future<List<Booking>> fetchBookingUpcoming() async {
+    final ApiBookingRepository repository = ApiBookingRepository();
+    try {
+      final bookings = await repository.getBooking(1, "WAITING", false);
+      return bookings;
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+      return <Booking>[];
+    }
+  }
 
-  List<Booking> upcomingBookings = [
-    Booking.fromStr(
-      id: 33,
-      bookingCode: "11141555259329",
-      renterName: "quanglinh",
-      renterAvatar:
-          "https://i.pinimg.com/736x/72/8d/b5/728db51a8610a5c1f0e37e655340c565.jpg",
-      renterPhoneNumber: "0123123123",
-      serviceName: "Dọn nhà vệ sinh, Lau nhà",
-      serviceAvatar:
-          "https://firebasestorage.googleapis.com/v0/b/iclean-59a5b.appspot.com/o/istockphoto-1136414971-1024x1024.jpg?alt=media",
-      orderDate: DateTime.parse("2023-11-13T21:30:27.278984"),
-      totalPrice: 350000,
-      totalPriceActual: 200,
-      bookingStatus: "WAITING",
-    ),
-  ];
-
-  List<Booking> finishedBookings = [
-    Booking.fromStr(
-      id: 31,
-      bookingCode: "11141555259330",
-      renterName: "quanglinh",
-      renterAvatar:
-          "https://i.pinimg.com/736x/72/8d/b5/728db51a8610a5c1f0e37e655340c565.jpg",
-      renterPhoneNumber: "0123123123",
-      serviceName: "Dọn nhà vệ sinh, Lau nhà",
-      serviceAvatar:
-          "https://firebasestorage.googleapis.com/v0/b/iclean-59a5b.appspot.com/o/istockphoto-1136414971-1024x1024.jpg?alt=media",
-      orderDate: DateTime.parse("2023-11-13T21:30:27.278984"),
-      totalPrice: 350000,
-      totalPriceActual: 200,
-      bookingStatus: "FINISHED",
-    ),
-  ];
+  Future<List<Booking>> fetchBookingFinished() async {
+    final ApiBookingRepository repository = ApiBookingRepository();
+    try {
+      final bookings = await repository.getBooking(1, "FINISHED", false);
+      return bookings;
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+      return <Booking>[];
+    }
+  }
 
   _handleTabSelection() {
     if (_tabController.indexIsChanging) {

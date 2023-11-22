@@ -72,7 +72,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Row(
                     children: const [
                       Text(
-                        "Profile",
+                        "Hồ sơ",
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -167,10 +167,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     },
                                   );
                                 } else {
-                                  return const Text('ads');
+                                  return const SizedBox();
                                 }
                               } else {
-                                return const Text('ads');
+                                return const SizedBox();
                               }
                             },
                           ),

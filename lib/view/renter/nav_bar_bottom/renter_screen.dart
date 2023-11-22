@@ -4,7 +4,7 @@ import 'package:iclean_mobile_app/view/renter/cart/cart_screen.dart';
 import 'package:iclean_mobile_app/view/renter/home/renter_home_screen.dart';
 import 'package:iclean_mobile_app/view/renter/schedule/schedule_screen.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
-import 'package:iclean_mobile_app/view/renter/my_booking/my_booking_screen.dart';
+import 'package:iclean_mobile_app/view/renter/my_booking/my_booking_screen/my_booking_screen.dart';
 import 'package:iclean_mobile_app/view/common/profile/my_profile_screen/profile_screen.dart';
 
 class RenterScreens extends StatefulWidget {

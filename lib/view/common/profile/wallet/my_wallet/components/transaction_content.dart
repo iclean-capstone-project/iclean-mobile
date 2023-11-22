@@ -41,12 +41,12 @@ class TransactionContent extends StatelessWidget {
                   fontFamily: 'Lato',
                 ),
               ),
-              subtitle: Text(
-                DateFormat('hh:mm - d/MM/yyyy').format(transactions[i].date),
-                style: const TextStyle(
-                  fontFamily: 'Lato',
-                ),
-              ),
+              // subtitle: Text(
+              //   DateFormat('hh:mm - d/MM/yyyy').format(transactions[i].date!),
+              //   style: const TextStyle(
+              //     fontFamily: 'Lato',
+              //   ),
+              // ),
               trailing: Text(
                 transactions[i].type == TransactionType.withdraw
                     ? '+ ${transactions[i].formatAmountInVND()}'

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/cart.dart';
-import 'package:iclean_mobile_app/models/cart_item.dart';
 import 'package:iclean_mobile_app/view/renter/checkout/components/auto_assign_button.dart';
 import 'package:provider/provider.dart';
 

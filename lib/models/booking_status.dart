@@ -29,7 +29,7 @@ BookingStatus mapStrBookingStatus(String value) {
       return BookingStatus.employeeCanceled;
     case "WAITING":
       return BookingStatus.upcoming;
-    case "IN_PROCESSING":
+    case "IN_PROCESS":
       return BookingStatus.inProcessing;
     case "FINISHED":
       return BookingStatus.finished;
@@ -60,9 +60,8 @@ class StatusHistory {
   }
 
   factory StatusHistory.fromJson(Map<String, dynamic> json) {
-    final status = json['bookingStatus'] as String;
+    final status = json['bookingDetailStatus'] as String;
     BookingStatus mappedStatus = _mapStrBookingStatus(status);
-
     return StatusHistory(
       id: json['statusHistoryId'],
       createAt: DateTime.parse(json['createAt']),

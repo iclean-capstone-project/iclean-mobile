@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:iclean_mobile_app/models/bookings.dart';
+import 'package:iclean_mobile_app/models/booking_status.dart';
 
 import 'components/my_timeline_details.dart';
 
 class TimelineDetails extends StatefulWidget {
-  final Booking booking;
-  const TimelineDetails({super.key, required this.booking});
+  const TimelineDetails({super.key, required this.listStatus});
+  final List<StatusHistory> listStatus;
 
   @override
   State<TimelineDetails> createState() => _TimelineDetailsState();
@@ -13,6 +13,32 @@ class TimelineDetails extends StatefulWidget {
 
 class _TimelineDetailsState extends State<TimelineDetails> {
   bool isVisible = false;
+
+  String getStringForStatus(BookingStatus status) {
+    switch (status) {
+      case BookingStatus.notYet:
+        return "Đặt đơn";
+      case BookingStatus.rejected:
+        return "Đơn bị từ chối";
+      case BookingStatus.approved:
+        return "Đơn đã được duyệt";
+      case BookingStatus.upcoming:
+        return "Đơn sắp đến";
+      case BookingStatus.inProcessing:
+        return "Đang làm việc";
+      case BookingStatus.finished:
+        return "Đã hoàn thành";
+      case BookingStatus.employeeAccepted:
+        return "Đơn bị hủy từ phía người làm";
+      case BookingStatus.employeeCanceled:
+        return "Đơn bị hủy từ phía người làm";
+      case BookingStatus.renterCanceled:
+        return "Bạn đã hủy đơn hàng";
+      default:
+        return "Trạng thái đơn hàng";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -46,34 +72,13 @@ class _TimelineDetailsState extends State<TimelineDetails> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                MyTimeline(
-                    isFirst: true,
-                    isLast: false,
-                    statusTitle: "Đã đặt",
-                    //date: widget.booking.timeCreated,
-                    date: DateTime.now(),
-                    booking: widget.booking),
-                MyTimeline(
-                    isFirst: false,
-                    isLast: false,
-                    statusTitle: "Được duyệt",
-                    //date: widget.booking.timeWork,
-                    date: DateTime.now(),
-                    booking: widget.booking),
-                MyTimeline(
-                    isFirst: false,
-                    isLast: false,
-                    statusTitle: "Làm việc",
-                    //date: widget.booking.timeStart,
-                    date: DateTime.now(),
-                    booking: widget.booking),
-                MyTimeline(
-                    isFirst: false,
-                    isLast: true,
-                    statusTitle: "hoàn thành",
-                    //date: widget.booking.timeEnd,
-                    date: DateTime.now(),
-                    booking: widget.booking),
+                for (int i = 0; i < widget.listStatus.length; i++)
+                  MyTimeline(
+                    isFirst: i == 0,
+                    isLast: i == widget.listStatus.length - 1,
+                    statusTitle: widget.listStatus[i].bookingStatus.name,
+                    date: widget.listStatus[i].createAt,
+                  ),
               ],
             ),
           ),

@@ -29,17 +29,10 @@ class ApiTransactionRepository implements TransactionRepository {
         final jsonMap = json.decode(utf8.decode(response.bodyBytes));
         final data = jsonMap['data'];
 
-        final content = data['content'] as List<dynamic>;
+        final content = data['content'] as List;
+
         final transactions = content.map((e) {
-          return Transaction.fromStr(
-            id: e['transactionId'],
-            date: DateTime.parse(e['createAt']),
-            code: e['content'] ?? "",
-            type: e['transactionType'],
-            amount: e['amount'],
-            status: e['transactionStatus'],
-            content: e['note'],
-          );
+          return Transaction.fromJsonForBookingDetails(e);
         }).toList();
         return transactions;
       } else {

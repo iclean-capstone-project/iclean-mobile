@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/booking_detail.dart';
-import 'package:iclean_mobile_app/models/bookings.dart';
+import 'package:iclean_mobile_app/view/renter/cart/components/cart_item_content.dart';
+import 'package:iclean_mobile_app/widgets/details_fields.dart';
+import 'package:intl/intl.dart';
 
-class AddressContent extends StatelessWidget {
-  const AddressContent({
+class DetailContent extends StatelessWidget {
+  const DetailContent({
     super.key,
     required this.booking,
   });
@@ -16,7 +18,7 @@ class AddressContent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          "Vị trí làm việc",
+          "Chi tiết dịch vụ",
           style: TextStyle(
             fontSize: 16,
             fontFamily: 'Lato',
@@ -31,24 +33,18 @@ class AddressContent extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
           ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                booking.renterName,
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontFamily: 'Lato',
-                  fontWeight: FontWeight.bold,
-                ),
+              DetailsContentField(text: "Dịch vụ", text2: booking.serviceName),
+              const SizedBox(height: 8),
+              DetailsContentField(
+                text: "Ngày làm",
+                text2: DateFormat('d/MM/yyyy').format(booking.workDate),
               ),
               const SizedBox(height: 8),
-              Text(
-                booking.locationDescription,
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontFamily: 'Lato',
-                ),
-                textAlign: TextAlign.justify,
+              DetailsContentField(
+                text: "Thời gian làm việc",
+                text2:
+                    "${booking.workTime.to24hours()} - ${booking.workTime.addHour(booking.serviceUnit.equivalent.toInt()).to24hours()}",
               ),
             ],
           ),

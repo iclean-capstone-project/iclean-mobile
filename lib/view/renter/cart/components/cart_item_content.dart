@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/cart_item.dart';
 import 'package:iclean_mobile_app/provider/cart_provider.dart';
-import 'package:iclean_mobile_app/services/api_cart_repo.dart';
 import 'package:iclean_mobile_app/widgets/confirm_dialog.dart';
 
 import 'package:intl/intl.dart';

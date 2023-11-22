@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class InfoBooking extends StatelessWidget {
-  final String text, jobName, price;
-
   const InfoBooking({
     super.key,
-    required this.text,
     required this.jobName,
+    required this.date,
+    required this.time,
     required this.price,
   });
+  final String jobName, date, time, price;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,15 @@ class InfoBooking extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            text,
+            "Ngày làm việc: $date",
+            style: const TextStyle(
+              fontSize: 16,
+              fontFamily: 'Lato',
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            "Thời gian bắt đầu: $time",
             style: const TextStyle(
               fontSize: 16,
               fontFamily: 'Lato',
@@ -40,6 +48,7 @@ class InfoBooking extends StatelessWidget {
             style: const TextStyle(
               fontSize: 16,
               fontFamily: 'Lato',
+              fontWeight: FontWeight.bold,
             ),
           ),
           const SizedBox(height: 8),

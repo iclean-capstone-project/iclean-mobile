@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/bookings.dart';
 import 'package:iclean_mobile_app/models/booking_status.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
-import 'package:iclean_mobile_app/view/renter/my_booking/components/components/avatar_widget.dart';
-import 'package:iclean_mobile_app/view/renter/my_booking/components/components/info_booking.dart';
-import 'package:iclean_mobile_app/view/renter/my_booking/components/completed_booking/details_booking_screen.dart';
+import 'package:iclean_mobile_app/view/renter/my_booking/my_booking_screen/components/components/avatar_widget.dart';
+import 'package:iclean_mobile_app/view/renter/my_booking/my_booking_screen/components/components/info_booking.dart';
+import 'package:iclean_mobile_app/view/renter/my_booking/booking_details/details_booking_screen.dart';
 
 import 'package:intl/intl.dart';
 
@@ -53,9 +53,14 @@ class _BookingCardCardState extends State<BookingCard>
   }
 
   void navigateToScreenBasedOnStatus(Booking booking) {
-    BookingStatus status = booking.bookingStatus;
+    BookingStatus status = booking.status;
     switch (status) {
       case BookingStatus.finished:
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+          return DetailsBookingScreen(booking: booking);
+        }));
+        break;
+      case BookingStatus.upcoming:
         Navigator.of(context).push(MaterialPageRoute(builder: (context) {
           return DetailsBookingScreen(booking: booking);
         }));
@@ -96,15 +101,17 @@ class _BookingCardCardState extends State<BookingCard>
                                 //avatar
                                 AvatarWidget(
                                     imagePath:
-                                        widget.listBookings[i].serviceAvatar),
+                                        widget.listBookings[i].serviceIcon),
                                 const SizedBox(width: 16),
                                 //Info
                                 InfoBooking(
                                   jobName: widget.listBookings[i].serviceName,
-                                  text: DateFormat('d/MM/yyyy | HH:mm')
-                                      .format(widget.listBookings[i].orderDate),
-                                  price: widget.listBookings[i]
-                                      .formatTotalPriceActualInVND(),
+                                  date: DateFormat('d/MM/yyyy')
+                                      .format(widget.listBookings[i].workDate),
+                                  time: widget.listBookings[i].workTime
+                                      .to24hours(),
+                                  price:
+                                      widget.listBookings[i].formatPriceInVND(),
                                 ),
                               ],
                             ),
@@ -118,12 +125,12 @@ class _BookingCardCardState extends State<BookingCard>
                                   padding: const EdgeInsets.all(8),
                                   decoration: BoxDecoration(
                                     color: getColorForStatus(
-                                        widget.listBookings[i].bookingStatus),
+                                        widget.listBookings[i].status),
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                   child: Text(
                                     getStringForStatus(
-                                        widget.listBookings[i].bookingStatus),
+                                        widget.listBookings[i].status),
                                     style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 14,
@@ -131,7 +138,7 @@ class _BookingCardCardState extends State<BookingCard>
                                     ),
                                   ),
                                 ),
-                                if (widget.listBookings[i].bookingStatus ==
+                                if (widget.listBookings[i].status ==
                                     BookingStatus.finished)
                                   Container(
                                     padding: const EdgeInsets.symmetric(
