@@ -160,7 +160,8 @@ class BookingDetailsScreen extends StatelessWidget {
                                     //             const UpdateNewLocationScreen()));
                                   },
                                   text: "Đánh giá",
-                                  backgroundColor: Colors.white,
+                                  backgroundColor:
+                                      Theme.of(context).colorScheme.background,
                                   textColor: ColorPalette.mainColor,
                                   width:
                                       MediaQuery.of(context).size.width * 0.43,

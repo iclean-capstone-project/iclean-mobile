@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/cart_item.dart';
 import 'package:iclean_mobile_app/provider/cart_provider.dart';
+import 'package:iclean_mobile_app/utils/time.dart';
 import 'package:iclean_mobile_app/widgets/confirm_dialog.dart';
 
 import 'package:intl/intl.dart';
@@ -99,7 +100,7 @@ class CartItemContent extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "Giờ làm: ${cartItem.workTime.toString()} - ${cartItem.workTime.addHour(cartItem.serviceUnit.equivalent.toInt()).toString()}",
+                        "Giờ làm: ${cartItem.workTime.to24hours()} - ${cartItem.workTime.addHour(cartItem.serviceUnit.equivalent.toInt()).to24hours()}",
                         style: const TextStyle(
                           fontFamily: 'Lato',
                           fontWeight: FontWeight.bold,

@@ -8,14 +8,13 @@ class MainColorInkWellFullSize extends StatelessWidget {
     required this.onTap,
     required this.text,
     this.backgroundColor,
-    this.borderColor,
     this.textColor,
     this.width,
   });
 
   final void Function() onTap;
   final String text;
-  final Color? backgroundColor, borderColor, textColor;
+  final Color? backgroundColor, textColor;
   final double? width;
 
   @override
@@ -28,6 +27,9 @@ class MainColorInkWellFullSize extends StatelessWidget {
         decoration: BoxDecoration(
           color: backgroundColor ?? ColorPalette.mainColor,
           borderRadius: BorderRadius.circular(8),
+          border: Border.all(
+            color: ColorPalette.mainColor,
+          ),
           boxShadow: const [
             BoxShadow(
               color: ColorPalette.mainColor,

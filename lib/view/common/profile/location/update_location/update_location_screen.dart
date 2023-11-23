@@ -168,7 +168,6 @@ class _UpdateLocationScreenState extends State<UpdateLocationScreen> {
                 text: "Xóa vị trí này",
                 backgroundColor: Colors.white,
                 textColor: Colors.red,
-                borderColor: Colors.red,
               ),
             ],
           ),
