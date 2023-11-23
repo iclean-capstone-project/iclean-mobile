@@ -4,10 +4,10 @@ import 'package:iclean_mobile_app/models/booking_status.dart';
 import 'package:iclean_mobile_app/models/bookings.dart';
 import 'package:iclean_mobile_app/services/api_booking_repo.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
-import 'package:iclean_mobile_app/view/renter/booking_service/booking_details/booking_details_screen.dart';
 import 'package:iclean_mobile_app/view/renter/my_booking/booking_details/components/timeline_details/timeline_details.dart';
 import 'package:iclean_mobile_app/widgets/details_fields.dart';
 import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
+import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 
 import 'components/address_content.dart';
 import 'components/detail_content.dart';
@@ -41,18 +41,7 @@ class BookingDetailsScreen extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Chi tiết đơn",
-          style: TextStyle(
-            color: Colors.black,
-            fontFamily: 'Lato',
-          ),
-        ),
-        centerTitle: true,
-        iconTheme: const IconThemeData(color: Colors.black),
-        backgroundColor: Colors.white,
-      ),
+      appBar: const MyAppBar(text: 'Chi tiết đơn'),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -132,52 +121,64 @@ class BookingDetailsScreen extends StatelessWidget {
                         AddressContent(booking: bookingDetail),
                         const SizedBox(height: 16),
                         EmployeeContent(booking: bookingDetail),
-                        const SizedBox(height: 24),
+                        const SizedBox(height: 16),
                         DetailContent(booking: bookingDetail),
-                        const SizedBox(height: 24),
+                        const SizedBox(height: 16),
                         PaymentContent(booking: bookingDetail),
-                        const SizedBox(height: 24),
-                        // if (daysBetween(booking.timeEnd!, DateTime.now()) > 7)
-                        //   MainColorInkWellFullSize(
-                        //     onTap: () {
-                        //       // Navigator.push(
-                        //       //     context,
-                        //       //     MaterialPageRoute(
-                        //       //         builder: (context) =>
-                        //       //             const UpdateNewLocationScreen()));
-                        //     },
-                        //     text: "Đặt lại",
-                        //   ),
-                        // if (daysBetween(booking.timeEnd!, DateTime.now()) < 7)
-                        //   Row(
-                        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //     children: [
-                        //       MainColorInkWellFullSize(
-                        //         onTap: () {
-                        //           // Navigator.push(
-                        //           //     context,
-                        //           //     MaterialPageRoute(
-                        //           //         builder: (context) =>
-                        //           //             const UpdateNewLocationScreen()));
-                        //         },
-                        //         text: "Đánh giá",
-                        //         backgroundColor: Colors.white,
-                        //         textColor: ColorPalette.mainColor,
-                        //         width: MediaQuery.of(context).size.width * 0.43,
-                        //       ),
-                        //       MainColorInkWellFullSize(
-                        //         onTap: () {
-                        //           // Navigator.push(
-                        //           //     context,
-                        //           //     MaterialPageRoute(
-                        //           //         builder: (context) =>
-                        //           //             const UpdateNewLocationScreen()));
-                        //         },
-                        //         text: "Đặt lại",
-                        //         width: MediaQuery.of(context).size.width * 0.43,
-                        //       ),
-                        //     ],
-                        //   ),
+                        const SizedBox(height: 16),
+                        for (int i = 0;
+                            i < bookingDetail.listStatus.length;
+                            i++)
+                          if (bookingDetail.listStatus[i].bookingStatus.name ==
+                                  "finished" &&
+                              daysBetween(bookingDetail.listStatus[i].createAt,
+                                      DateTime.now()) >
+                                  3)
+                            MainColorInkWellFullSize(
+                              onTap: () {
+                                // Your onTap logic here
+                              },
+                              text: "Đặt lại",
+                            ),
+                        for (int i = 0;
+                            i < bookingDetail.listStatus.length;
+                            i++)
+                          if (bookingDetail.listStatus[i].bookingStatus.name ==
+                                  "finished" &&
+                              daysBetween(bookingDetail.listStatus[i].createAt,
+                                      DateTime.now()) <
+                                  3)
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                MainColorInkWellFullSize(
+                                  onTap: () {
+                                    // Navigator.push(
+                                    //     context,
+                                    //     MaterialPageRoute(
+                                    //         builder: (context) =>
+                                    //             const UpdateNewLocationScreen()));
+                                  },
+                                  text: "Đánh giá",
+                                  backgroundColor: Colors.white,
+                                  textColor: ColorPalette.mainColor,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.43,
+                                ),
+                                MainColorInkWellFullSize(
+                                  onTap: () {
+                                    // Navigator.push(
+                                    //     context,
+                                    //     MaterialPageRoute(
+                                    //         builder: (context) =>
+                                    //             const UpdateNewLocationScreen()));
+                                  },
+                                  text: "Đặt lại",
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.43,
+                                ),
+                              ],
+                            ),
                       ],
                     );
                   }

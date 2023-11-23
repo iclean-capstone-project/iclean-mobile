@@ -7,16 +7,16 @@ import 'package:provider/provider.dart';
 class SelectTime extends StatefulWidget {
   const SelectTime({
     super.key,
-    required this.icon,
-    required this.iconColor,
-    required this.onTap,
+    this.icon,
+    this.iconColor,
+    this.onTap,
     required this.startTime,
     required this.endTime,
     required this.index,
   });
-  final IconData icon;
-  final Color iconColor;
-  final void Function() onTap;
+  final IconData? icon;
+  final Color? iconColor;
+  final void Function()? onTap;
   final TimeOfDay startTime, endTime;
   final int index;
 

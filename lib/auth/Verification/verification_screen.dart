@@ -8,11 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/account.dart';
 import 'package:iclean_mobile_app/models/common_response.dart';
 import 'package:iclean_mobile_app/services/components/constant.dart';
+import 'package:iclean_mobile_app/widgets/error_dialog.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 import 'package:iclean_mobile_app/auth/user_preferences.dart';
 import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
 
-import '../../widgets/error_dialog.dart';
 import 'components/digit_textfield.dart';
 import 'components/resend_code_content.dart';
 import 'components/verify_dialog.dart';

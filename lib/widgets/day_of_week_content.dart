@@ -4,17 +4,18 @@ import 'package:iclean_mobile_app/models/work_schedule.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/utils/time.dart';
 
-import 'components/select_time.dart';
+import 'select_time.dart';
 
 class DayOfWeekContent extends StatefulWidget {
   const DayOfWeekContent({
     super.key,
+    required this.isEditable,
     required this.isEnable,
     required this.day,
     required this.dayData,
   });
 
-  final bool isEnable;
+  final bool isEditable, isEnable;
   final DayOfWeek day;
   final WorkSchedule dayData;
 
@@ -24,6 +25,13 @@ class DayOfWeekContent extends StatefulWidget {
 
 class _DayOfWeekContentState extends State<DayOfWeekContent> {
   bool isVisible = false;
+  late bool isEnableDay;
+
+  @override
+  void initState() {
+    super.initState();
+    isEnableDay = widget.isEnable;
+  }
 
   String getDayOfWeekString(String day) {
     switch (day) {
@@ -63,8 +71,24 @@ class _DayOfWeekContentState extends State<DayOfWeekContent> {
                 children: [
                   CupertinoSwitch(
                     activeColor: ColorPalette.mainColor,
-                    value: widget.isEnable,
-                    onChanged: (value) {},
+                    value: isEnableDay,
+                    onChanged: (value) {
+                      if (widget.isEditable) {
+                        setState(() {
+                          isEnableDay = value;
+                          isVisible = true;
+                        });
+                        if (widget.dayData.workSchedule.isEmpty) {
+                          widget.dayData.workSchedule.add(
+                            TimeWorking(
+                              workScheduleId: 3,
+                              startTime: const TimeOfDay(hour: 9, minute: 0),
+                              endTime: const TimeOfDay(hour: 10, minute: 0),
+                            ),
+                          );
+                        }
+                      }
+                    },
                   ),
                   const SizedBox(width: 16),
                   Text(
@@ -76,7 +100,7 @@ class _DayOfWeekContentState extends State<DayOfWeekContent> {
                   ),
                 ],
               ),
-              if (widget.isEnable)
+              if (isEnableDay)
                 InkWell(
                   onTap: () => setState(() => isVisible = !isVisible),
                   child: isVisible
@@ -85,7 +109,7 @@ class _DayOfWeekContentState extends State<DayOfWeekContent> {
                 ),
             ],
           ),
-          if (widget.isEnable)
+          if (isEnableDay)
             Visibility(
               visible: isVisible,
               child: Column(
@@ -98,46 +122,58 @@ class _DayOfWeekContentState extends State<DayOfWeekContent> {
                       final isAddButton = index == 0;
                       final timeWorking = widget.dayData.workSchedule[index];
 
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 4),
-                        child: SelectTime(
-                          index: index,
-                          startTime: timeWorking.startTime,
-                          endTime: timeWorking.endTime,
-                          icon: isAddButton
-                              ? Icons.add_circle_outline
-                              : Icons.highlight_remove_rounded,
-                          iconColor: isAddButton ? Colors.black : Colors.red,
-                          onTap: () {
-                            setState(
-                              () {
-                                if (isAddButton) {
-                                  widget.dayData.workSchedule.add(
-                                    TimeWorking(
-                                      workScheduleId: 3,
-                                      startTime:
-                                          const TimeOfDay(hour: 9, minute: 0),
-                                      endTime:
-                                          const TimeOfDay(hour: 10, minute: 0),
-                                    ),
-                                  );
-                                } else {
-                                  if (index <
-                                      widget.dayData.workSchedule.length) {
-                                    widget.dayData.workSchedule.removeAt(index);
+                      if (widget.isEditable) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 4),
+                          child: SelectTime(
+                            index: index,
+                            startTime: timeWorking.startTime,
+                            endTime: timeWorking.endTime,
+                            icon: isAddButton
+                                ? Icons.add_circle_outline
+                                : Icons.highlight_remove_rounded,
+                            iconColor: isAddButton ? Colors.black : Colors.red,
+                            onTap: () {
+                              setState(
+                                () {
+                                  if (isAddButton) {
+                                    widget.dayData.workSchedule.add(
+                                      TimeWorking(
+                                        workScheduleId: 3,
+                                        startTime:
+                                            const TimeOfDay(hour: 9, minute: 0),
+                                        endTime: const TimeOfDay(
+                                            hour: 10, minute: 0),
+                                      ),
+                                    );
+                                  } else {
+                                    if (index <
+                                        widget.dayData.workSchedule.length) {
+                                      widget.dayData.workSchedule
+                                          .removeAt(index);
+                                    }
                                   }
-                                }
-                              },
-                            );
-                          },
-                        ),
-                      );
+                                },
+                              );
+                            },
+                          ),
+                        );
+                      } else {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 4),
+                          child: SelectTime(
+                            index: index,
+                            startTime: timeWorking.startTime,
+                            endTime: timeWorking.endTime,
+                          ),
+                        );
+                      }
                     },
                   ),
                 ],
               ),
             ),
-          if (widget.isEnable)
+          if (isEnableDay)
             Row(
               children: [
                 for (int i = 0;

@@ -26,7 +26,7 @@ class EmployeeContent extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: Colors.grey.shade200,
+            color: Theme.of(context).colorScheme.primary,
             borderRadius: BorderRadius.circular(10),
           ),
           child: Row(

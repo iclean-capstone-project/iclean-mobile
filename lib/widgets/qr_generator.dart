@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class QrGenerator extends StatelessWidget {
@@ -7,17 +8,13 @@ class QrGenerator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String qrData = "Hello, world!"; // Dữ liệu bạn muốn chứa trong mã QR
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('QR Flutter'),
-        ),
-        body: Center(
-          child: QrImage(
-            data: qrData,
-            version: QrVersions.auto,
-            size: 200.0,
-          ),
+    return Scaffold(
+      appBar: const MyAppBar(text: 'QR Flutter'),
+      body: Center(
+        child: QrImage(
+          data: qrData,
+          version: QrVersions.auto,
+          size: 200.0,
         ),
       ),
     );

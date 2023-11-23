@@ -1,47 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/work_schedule.dart';
-import 'package:iclean_mobile_app/view/employee/set_time_working_screen/components/day_of_week/day_of_week_content.dart';
+import 'package:iclean_mobile_app/widgets/day_of_week_content.dart';
 
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 
+import 'package:iclean_mobile_app/widgets/my_bottom_app_bar_with_two_inkwell.dart';
+
 class SetTimeWorkingScreen extends StatelessWidget {
-  const SetTimeWorkingScreen({super.key});
+  const SetTimeWorkingScreen({super.key, required this.workSchedules});
+
+  final List<WorkSchedule> workSchedules;
 
   @override
   Widget build(BuildContext context) {
-    List<WorkSchedule> workSchedules = [
-      WorkSchedule.fromStr(
-        dayOfWeekStr: "MONDAY",
-        workSchedule: [
-          TimeWorking(
-            workScheduleId: 1,
-            startTime: const TimeOfDay(hour: 9, minute: 0),
-            endTime: const TimeOfDay(hour: 10, minute: 0),
-          ),
-          TimeWorking(
-            workScheduleId: 4,
-            startTime: const TimeOfDay(hour: 12, minute: 0),
-            endTime: const TimeOfDay(hour: 13, minute: 0),
-          ),
-        ],
-      ),
-      WorkSchedule.fromStr(
-        dayOfWeekStr: "TUESDAY",
-        workSchedule: [
-          TimeWorking(
-            workScheduleId: 2,
-            startTime: const TimeOfDay(hour: 10, minute: 0),
-            endTime: const TimeOfDay(hour: 12, minute: 0),
-          ),
-          TimeWorking(
-            workScheduleId: 3,
-            startTime: const TimeOfDay(hour: 14, minute: 0),
-            endTime: const TimeOfDay(hour: 17, minute: 0),
-          ),
-        ],
-      ),
-    ];
-
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: const MyAppBar(text: "Thời gian làm việc"),
@@ -62,10 +33,19 @@ class SetTimeWorkingScreen extends StatelessWidget {
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
               child: DayOfWeekContent(
-                  isEnable: isEnable, day: day, dayData: dayData),
+                  isEditable: true,
+                  isEnable: isEnable,
+                  day: day,
+                  dayData: dayData),
             );
           },
         ),
+      ),
+      bottomNavigationBar: MyBottomAppBarTwoInkWell(
+        text1: "Hủy",
+        onTap1: () {},
+        text2: "Xác nhận",
+        onTap2: () {},
       ),
     );
   }

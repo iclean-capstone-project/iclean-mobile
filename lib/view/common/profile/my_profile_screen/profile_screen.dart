@@ -9,7 +9,7 @@ import 'package:iclean_mobile_app/view/common/profile/my_profile_screen/componen
 import 'package:iclean_mobile_app/view/common/profile/my_profile_screen/components/profile_inkwell.dart';
 import 'package:iclean_mobile_app/view/common/profile/update_profile_screen/update_profile_screen.dart';
 import 'package:iclean_mobile_app/view/common/profile/wallet/my_wallet/wallet_screen.dart';
-import 'package:iclean_mobile_app/view/employee/set_time_working_screen/set_time_working_screen.dart';
+import 'package:iclean_mobile_app/view/employee/time_working/time_working_screen.dart';
 import 'package:iclean_mobile_app/widgets/confirm_dialog.dart';
 import 'package:iclean_mobile_app/widgets/qr_generator.dart';
 import 'package:iclean_mobile_app/widgets/qr_scan_screen.dart';
@@ -159,13 +159,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 if (role == "employee") {
                                   return ProfileInkWell(
                                     icon: const Icon(Icons.person_outline),
-                                    text: "Chọn giờ làm việc",
+                                    text: "Lịch làm việc",
                                     onTap: () {
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  const SetTimeWorkingScreen()));
+                                                  const TimeWorkingScreen()));
                                     },
                                   );
                                 } else {

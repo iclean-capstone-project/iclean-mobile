@@ -9,41 +9,38 @@ class TimelineContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          MyTimeline(
-              isFirst: true,
-              isLast: false,
-              statusTitle: "Đã đặt",
-              date: DateTime.now(),
-              //date: booking.timeCreated,
-              booking: booking),
-          MyTimeline(
-              isFirst: false,
-              isLast: false,
-              statusTitle: "Được duyệt",
-              date: DateTime.now(),
-              //date: booking.timeWork,
-              booking: booking),
-          MyTimeline(
-              isFirst: false,
-              isLast: false,
-              statusTitle: "Làm việc",
-              date: DateTime.now(),
-              //date: booking.timeStart,
-              booking: booking),
-          MyTimeline(
-              isFirst: false,
-              isLast: true,
-              statusTitle: "hoàn thành",
-              date: DateTime.now(),
-              //date: booking.timeEnd,
-              booking: booking),
-        ],
-      ),
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        MyTimeline(
+            isFirst: true,
+            isLast: false,
+            statusTitle: "Đã đặt",
+            date: DateTime.now(),
+            //date: booking.timeCreated,
+            booking: booking),
+        MyTimeline(
+            isFirst: false,
+            isLast: false,
+            statusTitle: "Được duyệt",
+            date: DateTime.now(),
+            //date: booking.timeWork,
+            booking: booking),
+        MyTimeline(
+            isFirst: false,
+            isLast: false,
+            statusTitle: "Làm việc",
+            date: DateTime.now(),
+            //date: booking.timeStart,
+            booking: booking),
+        MyTimeline(
+            isFirst: false,
+            isLast: true,
+            statusTitle: "hoàn thành",
+            date: DateTime.now(),
+            //date: booking.timeEnd,
+            booking: booking),
+      ],
     );
   }
 }
