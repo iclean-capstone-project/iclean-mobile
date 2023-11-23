@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/bookings.dart';
 import 'package:iclean_mobile_app/models/booking_status.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
+import 'package:iclean_mobile_app/utils/time.dart';
 import 'package:iclean_mobile_app/view/renter/my_booking/my_booking_screen/components/components/avatar_widget.dart';
 import 'package:iclean_mobile_app/view/renter/my_booking/my_booking_screen/components/components/info_booking.dart';
-import 'package:iclean_mobile_app/view/renter/my_booking/booking_details/details_booking_screen.dart';
+import 'package:iclean_mobile_app/view/renter/my_booking/booking_details/booking_details_screen.dart';
 
 import 'package:intl/intl.dart';
 
@@ -57,12 +58,12 @@ class _BookingCardCardState extends State<BookingCard>
     switch (status) {
       case BookingStatus.finished:
         Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-          return DetailsBookingScreen(booking: booking);
+          return BookingDetailsScreen(booking: booking);
         }));
         break;
       case BookingStatus.upcoming:
         Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-          return DetailsBookingScreen(booking: booking);
+          return BookingDetailsScreen(booking: booking);
         }));
         break;
       default:

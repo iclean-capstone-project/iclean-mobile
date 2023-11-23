@@ -69,10 +69,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: Column(
               children: [
                 //Tittle
-                const Padding(
-                  padding: EdgeInsets.only(top: 16),
+                Padding(
+                  padding: const EdgeInsets.only(top: 16),
                   child: Row(
-                    children: [
+                    children: const [
                       Text(
                         "Hồ sơ",
                         style: TextStyle(
@@ -99,8 +99,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           const SizedBox(height: 24),
                           Column(
                             children: List.generate(10, (index) {
-                              return const Column(
-                                children: [
+                              return Column(
+                                children: const [
                                   ShimmerLoadingWidget.rectangular(height: 16),
                                   SizedBox(height: 24),
                                 ],
@@ -267,11 +267,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             onPressed: () =>
                                 showLogoutConfirmationDialog(context),
-                            child: const Row(
+                            child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Row(
-                                  children: [
+                                  children: const [
                                     Icon(
                                       Icons.logout,
                                       color: Colors.red,

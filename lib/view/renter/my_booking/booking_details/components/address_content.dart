@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/booking_detail.dart';
-import 'package:iclean_mobile_app/models/bookings.dart';
 
 class AddressContent extends StatelessWidget {
   const AddressContent({

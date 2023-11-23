@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/booking_detail.dart';
+import 'package:iclean_mobile_app/models/booking_status.dart';
 import 'package:iclean_mobile_app/models/bookings.dart';
 import 'package:iclean_mobile_app/services/api_booking_repo.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/view/renter/booking_service/booking_details/booking_details_screen.dart';
 import 'package:iclean_mobile_app/view/renter/my_booking/booking_details/components/timeline_details/timeline_details.dart';
+import 'package:iclean_mobile_app/widgets/details_fields.dart';
 import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
 
 import 'components/address_content.dart';
-import '../../../../widgets/details_fields.dart';
 import 'components/detail_content.dart';
 import 'components/employee_content.dart';
 import 'components/payment_content.dart';
 import 'components/timeline_content/timeline_content.dart';
 
-class DetailsBookingScreen extends StatelessWidget {
-  const DetailsBookingScreen({super.key, required this.booking});
+class BookingDetailsScreen extends StatelessWidget {
+  const BookingDetailsScreen({super.key, required this.booking});
   final Booking booking;
 
   @override
   Widget build(BuildContext context) {
-    Future<BookingDetail> fetchBookingDetail(
-        BuildContext context, int id) async {
+    Future<BookingDetail> fetchBookingDetail(int id) async {
       final ApiBookingRepository repository = ApiBookingRepository();
       try {
         final bookingDetail =
@@ -100,7 +100,7 @@ class DetailsBookingScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
               child: FutureBuilder<BookingDetail>(
-                future: fetchBookingDetail(context, booking.id),
+                future: fetchBookingDetail(booking.id),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(

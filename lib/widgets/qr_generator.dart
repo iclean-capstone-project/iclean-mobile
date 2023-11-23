@@ -13,7 +13,7 @@ class QrGenerator extends StatelessWidget {
           title: const Text('QR Flutter'),
         ),
         body: Center(
-          child: QrImageView(
+          child: QrImage(
             data: qrData,
             version: QrVersions.auto,
             size: 200.0,

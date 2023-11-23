@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/booking_detail.dart';
+import 'package:iclean_mobile_app/utils/time.dart';
 import 'package:iclean_mobile_app/view/renter/cart/components/cart_item_content.dart';
 import 'package:iclean_mobile_app/widgets/details_fields.dart';
 import 'package:intl/intl.dart';
