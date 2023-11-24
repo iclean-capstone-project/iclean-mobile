@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:iclean_mobile_app/view/renter/home/components/banner_slider.dart';
+import 'package:iclean_mobile_app/widgets/welcome_content.dart';
 
+import 'components/banner_slider.dart';
 import 'components/list_service.dart';
-import 'components/welcome_content.dart';
 
 class RenterHomeScreen extends StatelessWidget {
   const RenterHomeScreen({super.key});
@@ -30,8 +30,11 @@ class RenterHomeScreen extends StatelessWidget {
                   ),
                 ),
               ),
+
               //slider
-              Center(child: BannerSlider()),
+              Center(
+                child: BannerSlider(),
+              ),
 
               Padding(
                 padding: EdgeInsets.only(top: 16.0, left: 24),

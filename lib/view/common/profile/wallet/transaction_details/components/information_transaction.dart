@@ -39,7 +39,7 @@ class InformationTransaction extends StatelessWidget {
               ),
             ),
             subtitle: Text(
-              transaction.code,
+              'transaction.code!',
               style: TextStyle(
                 fontSize: 16,
                 fontFamily: 'Lato',

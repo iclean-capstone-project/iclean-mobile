@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:iclean_mobile_app/view/renter/home/components/banner_slider.dart';
+import 'package:iclean_mobile_app/widgets/welcome_content.dart';
 
-import 'components/welcome_content.dart';
+import 'booking_for_helper_screen.dart';
+import 'components/booking_slider.dart';
 
 class EmployeeHomeScreen extends StatelessWidget {
   const EmployeeHomeScreen({super.key});
@@ -14,25 +15,53 @@ class EmployeeHomeScreen extends StatelessWidget {
         child: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
+            children: [
               //top
-              WelcomeContent(),
+              const WelcomeContent(),
+
+              const SizedBox(height: 16),
 
               Padding(
-                padding: EdgeInsets.only(top: 16.0, left: 24),
-                child: Text(
-                  "Những đơn bạn có thể nhận",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Lato',
-                    fontSize: 18,
-                  ),
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "Những đơn bạn có thể nhận",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Lato',
+                        fontSize: 18,
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const BookingForHelperScreen()));
+                      },
+                      child: const Text(
+                        "Tất cả",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Lato',
+                          fontSize: 18,
+                          color: Colors.blue,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              //slider
-              Center(child: BannerSlider()),
 
-              Padding(
+              //slider
+              const Center(
+                child: BookingSlider(),
+              ),
+
+              const Padding(
                 padding: EdgeInsets.only(top: 16.0, left: 24),
                 child: Text(
                   "áđsad",

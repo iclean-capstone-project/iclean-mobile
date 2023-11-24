@@ -33,76 +33,60 @@ class ServicePrice {
 class Transaction {
   final int? id;
   final DateTime? date;
-  final String code;
+  final String? code;
   final TransactionType type;
   final double amount;
   final double? totalPrice, discount;
   final TransactionStatus status;
-  final List<ServicePrice> service;
+  final List<ServicePrice>? service;
 
   Transaction({
     this.id,
     this.date,
-    required this.code,
+    this.code,
     required this.type,
     required this.amount,
     this.totalPrice,
     this.discount,
     required this.status,
-    required this.service,
+    this.service,
   });
 
   factory Transaction.fromJsonForBookingDetails(Map<String, dynamic> json) {
+    const typeStr = 'DEPOSIT';
+    TransactionType mappedType = _mapStrToTransactionType(typeStr);
+
+    //status: json['status'],
+    const status = 'SUCCESS';
+    TransactionStatus mappedStatus = _mapStrToTransactionStatus(status);
+
     List<dynamic> details = json['servicePrice'] as List;
     List<ServicePrice> service =
         details.map((detail) => ServicePrice.fromJson(detail)).toList();
-    return Transaction.fromStr(
+    return Transaction(
       code: json['transactionCode'],
-      type: 'DEPOSIT',
+      type: mappedType,
       amount: json['totalPriceActual'],
       totalPrice: json['totalPrice'],
       discount: json['discount'],
-      //status: json['status'],
-      status: 'SUCCESS',
+      status: mappedStatus,
       service: service,
     );
   }
 
-  // factory Transaction.fromJsonForHistory(Map<String, dynamic> json) {
-  //   return Transaction.fromStr(
-  //     id: json['transactionId'],
-  //     //date: DateTime.parse(json['createAt']),
-  //     code: json['transactionCode'],
-  //     type: json['transactionType'],
-  //     amount: json['amount'],
-  //     status: json['transactionStatus'],
-  //   );
-  // }
+  factory Transaction.fromJsonForHistory(Map<String, dynamic> json) {
+    final typeStr = json['transactionType'];
+    TransactionType mappedType = _mapStrToTransactionType(typeStr);
 
-  factory Transaction.fromStr({
-    //required int id,
-    //required DateTime date,
-    required String code,
-    required String type,
-    required double amount,
-    required String status,
-    double? totalPrice,
-    discount,
-    required List<ServicePrice> service,
-  }) {
-    TransactionType mappedType = _mapStrToTransactionType(type);
+    final status = json['transactionStatus'];
     TransactionStatus mappedStatus = _mapStrToTransactionStatus(status);
 
     return Transaction(
-      //id: id,
-      //date: date,
-      code: code,
+      id: json['transactionId'],
+      amount: json['amount'],
+      date: DateTime.parse(json['createAt']),
       type: mappedType,
-      amount: amount,
-      totalPrice: totalPrice,
-      discount: discount,
       status: mappedStatus,
-      service: service,
     );
   }
 

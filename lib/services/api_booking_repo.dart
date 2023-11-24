@@ -6,10 +6,10 @@ import 'package:http/http.dart' as http;
 import 'package:iclean_mobile_app/auth/user_preferences.dart';
 import 'package:iclean_mobile_app/models/booking_detail.dart';
 import 'package:iclean_mobile_app/models/bookings.dart';
+import 'package:iclean_mobile_app/models/common_response.dart';
 import 'package:iclean_mobile_app/repository/booking_repo.dart';
+import 'package:iclean_mobile_app/widgets/error_dialog.dart';
 
-import '../models/common_response.dart';
-import '../widgets/error_dialog.dart';
 import 'components/constant.dart';
 
 class ApiBookingRepository implements BookingRepository {
@@ -79,6 +79,36 @@ class ApiBookingRepository implements BookingRepository {
               ErrorDialog(responseObject: responseObject),
         );
         throw Exception('Failed to get account: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
+  Future<List<Booking>> getBookingForHelper() async {
+    const url = '$urlConstant/helper';
+    final uri = Uri.parse(url);
+    final accessToken = await UserPreferences.getAccessToken();
+
+    Map<String, String> headers = {
+      "Authorization": "Bearer $accessToken",
+      "Content-Type": "application/json",
+    };
+
+    try {
+      final response = await http.get(uri, headers: headers);
+
+      if (response.statusCode == 200) {
+        final jsonMap = json.decode(utf8.decode(response.bodyBytes));
+        final data = jsonMap['data'] as List;
+        final bookings = data.map((e) {
+          return Booking.fromJsonForHelper(e);
+        }).toList();
+        return bookings;
+      } else {
+        throw Exception(
+            'Status: ${response.statusCode}, Body: ${response.body}');
       }
     } catch (e) {
       throw Exception(e.toString());

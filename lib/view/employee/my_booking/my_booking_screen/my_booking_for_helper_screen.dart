@@ -4,19 +4,17 @@ import 'package:iclean_mobile_app/services/api_booking_repo.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/view/renter/my_booking/my_booking_screen/components/booking_card.dart';
 
-class MyBookingsScreen extends StatefulWidget {
-  const MyBookingsScreen({super.key});
+class MyBookingsForHelperScreen extends StatefulWidget {
+  const MyBookingsForHelperScreen({super.key});
 
   @override
-  State<MyBookingsScreen> createState() => _MyBookingsScreenState();
+  State<MyBookingsForHelperScreen> createState() =>
+      _MyBookingsForHelperScreenState();
 }
 
-class _MyBookingsScreenState extends State<MyBookingsScreen>
+class _MyBookingsForHelperScreenState extends State<MyBookingsForHelperScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  List<Booking> requests = [];
-
-  List<Booking> rejectedBookings = [];
 
   List<Booking> upcomingBookings = [];
 
@@ -24,14 +22,9 @@ class _MyBookingsScreenState extends State<MyBookingsScreen>
 
   @override
   void initState() {
-    _tabController = TabController(length: 4, vsync: this, initialIndex: 0);
+    _tabController = TabController(length: 2, vsync: this, initialIndex: 0);
     _tabController.addListener((_handleTabSelection));
     super.initState();
-    fetchBookingNotYet().then((bookings) {
-      setState(() {
-        requests = bookings;
-      });
-    });
     fetchBookingUpcoming().then((bookings) {
       setState(() {
         upcomingBookings = bookings;
@@ -42,18 +35,6 @@ class _MyBookingsScreenState extends State<MyBookingsScreen>
         finishedBookings = bookings;
       });
     });
-  }
-
-  Future<List<Booking>> fetchBookingNotYet() async {
-    final ApiBookingRepository repository = ApiBookingRepository();
-    try {
-      final bookings = await repository.getBooking(1, "NOT_YET", false);
-      return bookings;
-    } catch (e) {
-      // ignore: avoid_print
-      print(e);
-      return <Booking>[];
-    }
   }
 
   Future<List<Booking>> fetchBookingUpcoming() async {
@@ -90,7 +71,7 @@ class _MyBookingsScreenState extends State<MyBookingsScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       body: DefaultTabController(
-        length: 4,
+        length: 2,
         child: SingleChildScrollView(
           child: SafeArea(
             child: Column(
@@ -126,8 +107,6 @@ class _MyBookingsScreenState extends State<MyBookingsScreen>
                     ),
                   ),
                   tabs: const [
-                    Tab(text: 'Yêu cầu'),
-                    Tab(text: 'Chọn người làm'),
                     Tab(text: 'Sắp tới'),
                     Tab(text: 'Lịch sử'),
                   ],
@@ -139,8 +118,6 @@ class _MyBookingsScreenState extends State<MyBookingsScreen>
                     height: MediaQuery.of(context).size.height - 200,
                     child: TabBarView(
                       children: [
-                        BookingCard(listBookings: requests),
-                        BookingCard(listBookings: rejectedBookings),
                         BookingCard(listBookings: upcomingBookings),
                         BookingCard(listBookings: finishedBookings),
                       ],
