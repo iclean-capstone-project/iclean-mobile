@@ -32,7 +32,7 @@ class EmployeeContent extends StatelessWidget {
           child: Row(
             children: [
               CircleAvatar(
-                backgroundImage: NetworkImage(booking.helperAvatar!),
+                backgroundImage: NetworkImage(booking.customerAvatar!),
                 radius: 36,
               ),
               const SizedBox(width: 16),
@@ -40,7 +40,7 @@ class EmployeeContent extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    booking.helperName!,
+                    booking.customerName!,
                     style: const TextStyle(
                       fontSize: 18,
                       fontFamily: 'Lato',

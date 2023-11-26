@@ -49,9 +49,9 @@ class DetailsTransaction extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              transaction.type == TransactionType.deposit
-                  ? '+ ${transaction.amount.toStringAsFixed(0)}đ'
-                  : '- ${transaction.amount.toStringAsFixed(0)}đ',
+              transaction.type == TransactionType.withdraw
+                  ? '+ ${transaction.formatAmountInVND()}'
+                  : '- ${transaction.formatAmountInVND()}',
               style: const TextStyle(
                 fontSize: 24,
                 color: Colors.white,

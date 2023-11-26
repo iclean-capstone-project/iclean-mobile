@@ -11,4 +11,14 @@ class Noti {
     required this.timestamp,
     required this.isRead,
   });
+
+  factory Noti.fromJson(Map<String, dynamic> json) {
+    return Noti(
+      id: json['notificationId'],
+      details: json['detail'] ?? "",
+      imgLink: json['notificationImgLink'] ?? "",
+      timestamp: DateTime.parse(json['createAt']),
+      isRead: json['isRead'],
+    );
+  }
 }

@@ -33,13 +33,7 @@ class ApiNotiRepository implements NotiRepository {
         final data = jsonMap['data'];
         final content = data['content'] as List<dynamic>;
         final notifications = content.map((e) {
-          return Noti(
-            id: e['notificationId'],
-            details: e['detail'] ?? "",
-            imgLink: e['notificationImgLink'],
-            timestamp: DateTime.parse(e['createAt']),
-            isRead: e['isRead'],
-          );
+          return Noti.fromJson(e);
         }).toList();
         return notifications;
       } else {
@@ -50,7 +44,7 @@ class ApiNotiRepository implements NotiRepository {
           builder: (BuildContext context) =>
               ErrorDialog(responseObject: responseObject),
         );
-        throw Exception('Failed to get account: ${response.statusCode}');
+        throw Exception('Failed to get noti: ${response.statusCode}');
       }
     } catch (e) {
       print(e);

@@ -78,7 +78,7 @@ class ApiBookingRepository implements BookingRepository {
           builder: (BuildContext context) =>
               ErrorDialog(responseObject: responseObject),
         );
-        throw Exception('Failed to get account: ${response.statusCode}');
+        throw Exception('Failed to get bookingdetail: ${response.statusCode}');
       }
     } catch (e) {
       throw Exception(e.toString());
@@ -109,6 +109,43 @@ class ApiBookingRepository implements BookingRepository {
       } else {
         throw Exception(
             'Status: ${response.statusCode}, Body: ${response.body}');
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
+  Future<BookingDetail> getBookingDetailsByIdForHelper(
+      BuildContext context, int bookingId) async {
+    final url = '$urlConstant/helper/$bookingId';
+    final uri = Uri.parse(url);
+    final accessToken = await UserPreferences.getAccessToken();
+
+    Map<String, String> headers = {
+      "Authorization": "Bearer $accessToken",
+      "Content-Type": "application/json",
+    };
+
+    try {
+      final response = await http.get(uri, headers: headers);
+
+      if (response.statusCode == 200) {
+        final jsonMap = json.decode(utf8.decode(response.bodyBytes));
+        final data = jsonMap['data'];
+
+        final bookingDetail = BookingDetail.fromJsonForHelper(data);
+
+        return bookingDetail;
+      } else {
+        final jsonMap = json.decode(utf8.decode(response.bodyBytes));
+        final responseObject = ResponseObject.fromJson(jsonMap);
+        showDialog(
+          context: context,
+          builder: (BuildContext context) =>
+              ErrorDialog(responseObject: responseObject),
+        );
+        throw Exception('Failed to get bookingdetail: ${response.statusCode}');
       }
     } catch (e) {
       throw Exception(e.toString());

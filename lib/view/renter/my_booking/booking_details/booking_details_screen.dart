@@ -8,12 +8,13 @@ import 'package:iclean_mobile_app/view/renter/my_booking/booking_details/compone
 import 'package:iclean_mobile_app/widgets/details_fields.dart';
 import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
+import 'package:iclean_mobile_app/widgets/note_content.dart';
+import 'package:iclean_mobile_app/widgets/timeline_content.dart';
 
 import 'components/address_content.dart';
 import 'components/detail_content.dart';
 import 'components/employee_content.dart';
 import 'components/payment_content.dart';
-import 'components/timeline_content/timeline_content.dart';
 
 class BookingDetailsScreen extends StatelessWidget {
   const BookingDetailsScreen({super.key, required this.booking});
@@ -123,6 +124,8 @@ class BookingDetailsScreen extends StatelessWidget {
                         EmployeeContent(booking: bookingDetail),
                         const SizedBox(height: 16),
                         DetailContent(booking: bookingDetail),
+                        const SizedBox(height: 16),
+                        NoteContent(booking: bookingDetail),
                         const SizedBox(height: 16),
                         PaymentContent(booking: bookingDetail),
                         const SizedBox(height: 16),

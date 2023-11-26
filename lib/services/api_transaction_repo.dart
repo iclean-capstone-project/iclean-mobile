@@ -53,4 +53,39 @@ class ApiTransactionRepository implements TransactionRepository {
       throw Exception(e);
     }
   }
+
+  @override
+  Future<Transaction> getTransactionById(BuildContext context, int id) async {
+    final url = '$urlConstant/$id';
+    final uri = Uri.parse(url);
+    final accessToken = await UserPreferences.getAccessToken();
+
+    Map<String, String> headers = {
+      "Authorization": "Bearer $accessToken",
+      "Content-Type": "application/json",
+    };
+
+    try {
+      final response = await http.get(uri, headers: headers);
+
+      if (response.statusCode == 200) {
+        final jsonMap = json.decode(utf8.decode(response.bodyBytes));
+        final data = jsonMap['data'];
+        final transaction = Transaction.fromJsonForDetail(data);
+
+        return transaction;
+      } else {
+        final jsonMap = json.decode(utf8.decode(response.bodyBytes));
+        final responseObject = ResponseObject.fromJson(jsonMap);
+        showDialog(
+          context: context,
+          builder: (BuildContext context) =>
+              ErrorDialog(responseObject: responseObject),
+        );
+        throw Exception('Failed to get account: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 }

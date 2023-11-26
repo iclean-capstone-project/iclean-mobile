@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/transaction.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
+import 'package:iclean_mobile_app/widgets/details_fields.dart';
 
 class InformationTransaction extends StatelessWidget {
   const InformationTransaction({
@@ -30,45 +31,36 @@ class InformationTransaction extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          ListTile(
-            title: const Text(
-              "Mã giao dịch",
-              style: TextStyle(
-                fontSize: 14,
-                fontFamily: 'Lato',
-              ),
-            ),
-            subtitle: Text(
-              'transaction.code!',
-              style: TextStyle(
-                fontSize: 16,
-                fontFamily: 'Lato',
-                color: Theme.of(context).colorScheme.secondary,
-              ),
-            ),
+          const SizedBox(height: 4),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: DetailsContentField(
+                text: 'Mã giao dịch', text2: transaction.code!),
           ),
-          if (transaction.type == TransactionType.withdraw)
-            const Divider(
-              color: ColorPalette.greyColor,
+          const Divider(
+            color: ColorPalette.greyColor,
+          ),
+          for (int i = 0; i < transaction.service!.length; i++)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Column(
+                children: [
+                  DetailsContentField(
+                    text: 'Dịch vụ',
+                    text2: transaction.service![i].serviceName,
+                  ),
+                  const SizedBox(height: 4),
+                  DetailsContentField(
+                    text: 'Giá',
+                    text2: transaction.service![i].formatPriceInVND(),
+                    color: ColorPalette.mainColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  if (i != transaction.service!.length - 1)
+                    const SizedBox(height: 8),
+                ],
+              ),
             ),
-          if (transaction.type == TransactionType.withdraw)
-            ListTile(
-              title: const Text(
-                "Phương thức thanh toán",
-                style: TextStyle(
-                  fontSize: 14,
-                  fontFamily: 'Lato',
-                ),
-              ),
-              subtitle: Text(
-                "iCleanPay",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontFamily: 'Lato',
-                  color: Theme.of(context).colorScheme.secondary,
-                ),
-              ),
-            )
         ],
       ),
     );

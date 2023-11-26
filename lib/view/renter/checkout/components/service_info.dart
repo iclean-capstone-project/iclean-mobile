@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:iclean_mobile_app/view/renter/cart/components/cart_item_content.dart';
+import 'package:iclean_mobile_app/utils/time.dart';
 import 'package:intl/intl.dart';
 import 'package:iclean_mobile_app/models/cart_item.dart';
 import 'package:iclean_mobile_app/widgets/details_fields.dart';
@@ -39,7 +39,7 @@ class ServiceInfo extends StatelessWidget {
           DetailsContentField(
               text: "Thời gian làm việc",
               text2:
-                  "${cartItem.workTime.toString()}-${cartItem.workTime.addHour(cartItem.serviceUnit.equivalent.toInt()).toString()}"),
+                  "${cartItem.workTime.to24hours()}-${cartItem.workTime.addHour(cartItem.serviceUnit.equivalent.toInt()).to24hours()}"),
           const SizedBox(height: 8),
           const Text(
             "Chi tiết công việc",

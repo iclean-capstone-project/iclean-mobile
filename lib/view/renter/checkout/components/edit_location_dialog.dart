@@ -9,9 +9,11 @@ class EditLocationDialog extends StatelessWidget {
   const EditLocationDialog({
     super.key,
     required this.account,
+    required this.text,
   });
 
   final Account account;
+  final String text;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +40,7 @@ class EditLocationDialog extends StatelessWidget {
                   thickness: 0.5,
                   color: ColorPalette.greyColor,
                 ),
-                const ListLocationContent(),
+                ListLocationContent(text: text),
                 const Divider(
                   thickness: 0.5,
                   color: ColorPalette.greyColor,

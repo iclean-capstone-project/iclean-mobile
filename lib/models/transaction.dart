@@ -33,7 +33,7 @@ class ServicePrice {
 class Transaction {
   final int? id;
   final DateTime? date;
-  final String? code;
+  final String? code, note;
   final TransactionType type;
   final double amount;
   final double? totalPrice, discount;
@@ -44,6 +44,7 @@ class Transaction {
     this.id,
     this.date,
     this.code,
+    this.note,
     required this.type,
     required this.amount,
     this.totalPrice,
@@ -83,10 +84,34 @@ class Transaction {
 
     return Transaction(
       id: json['transactionId'],
+      note: json['note'],
       amount: json['amount'],
       date: DateTime.parse(json['createAt']),
       type: mappedType,
       status: mappedStatus,
+    );
+  }
+
+  factory Transaction.fromJsonForDetail(Map<String, dynamic> json) {
+    final typeStr = json['transactionType'];
+    TransactionType mappedType = _mapStrToTransactionType(typeStr);
+
+    final status = json['transactionStatus'];
+    TransactionStatus mappedStatus = _mapStrToTransactionStatus(status);
+
+    List<dynamic> details = json['priceServices'] as List;
+    List<ServicePrice> service =
+        details.map((detail) => ServicePrice.fromJson(detail)).toList();
+
+    return Transaction(
+      id: json['transactionId'],
+      code: json['transactionCode'] ?? "",
+      note: json['note'] ?? "",
+      amount: json['amount'],
+      date: DateTime.parse(json['createAt']),
+      type: mappedType,
+      status: mappedStatus,
+      service: service,
     );
   }
 

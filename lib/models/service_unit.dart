@@ -13,7 +13,7 @@ class ServiceUnit {
   factory ServiceUnit.fromJson(Map<String, dynamic> json) {
     return ServiceUnit(
       id: json['serviceUnitId'],
-      value: json['value'],
+      value: json['value'] ?? "",
       equivalent: json['equivalent'].toDouble() ?? 0,
       serviceUnitImage: json['serviceUnitImage'] ?? "",
     );

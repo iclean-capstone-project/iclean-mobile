@@ -5,9 +5,13 @@ class DetailsContentField extends StatelessWidget {
     super.key,
     required this.text,
     required this.text2,
+    this.color,
+    this.fontWeight,
   });
 
   final String text, text2;
+  final Color? color;
+  final FontWeight? fontWeight;
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +27,11 @@ class DetailsContentField extends StatelessWidget {
         ),
         Text(
           text2,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 16,
             fontFamily: 'Lato',
+            color: color,
+            fontWeight: fontWeight,
           ),
         ),
       ],

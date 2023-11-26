@@ -16,17 +16,17 @@ class BookingDetail {
   String? note,
       rejectionReasonContent,
       rejectionReasonDescription,
-      helperName,
-      helperAvatar,
+      customerName,
+      customerAvatar,
       phoneNumber,
       feedback;
-  Transaction transaction;
+  Transaction? transaction;
   ServiceUnit serviceUnit;
   double price, latitude, longitude;
   BookingStatus status;
   List<StatusHistory> listStatus;
   double? rate;
-  int? helperId, numberOfFeedback;
+  int? customerId, numberOfFeedback;
 
   BookingDetail({
     required this.id,
@@ -47,13 +47,13 @@ class BookingDetail {
     required this.latitude,
     this.rejectionReasonContent,
     this.rejectionReasonDescription,
-    this.helperId,
-    this.helperName,
-    this.helperAvatar,
+    this.customerId,
+    this.customerName,
+    this.customerAvatar,
     this.rate,
     this.phoneNumber,
     this.numberOfFeedback,
-    required this.transaction,
+    this.transaction,
     this.feedback,
     required this.listStatus,
   });
@@ -63,8 +63,8 @@ class BookingDetail {
   }
 
   factory BookingDetail.fromJson(Map<String, dynamic> json) {
-    final workDateStr = json['workDate'];
-    final workTimeStr = json['workStart'];
+    final workDateStr = json['workDate'] ?? "";
+    final workTimeStr = json['workStart'] ?? "";
 
     // Parse the date part
     final dateParts = workDateStr.split('-');
@@ -90,31 +90,84 @@ class BookingDetail {
 
     return BookingDetail(
       id: json['bookingDetailId'],
-      bookingCode: json['bookingCode'],
-      orderDate: DateTime.parse(json['orderDate']),
+      bookingCode: json['bookingCode'] ?? "",
+      orderDate: DateTime.parse(json['orderDate'] ?? ""),
       serviceId: json['serviceId'],
-      serviceName: json['serviceName'],
-      serviceIcon: json['serviceIcon'],
+      serviceName: json['serviceName'] ?? "",
+      serviceIcon: json['serviceIcon'] ?? "",
       workDate: DateTime(year, month, day),
       workTime: TimeOfDay(hour: hour, minute: minute),
-      note: json['note'],
+      note: json['note'] ?? "",
       serviceUnit: ServiceUnit.fromJson(json),
       price: json['price'],
       status: mappedStatus,
       latitude: address['latitude'],
       longitude: address['longitude'],
-      locationDescription: address['locationDescription'],
-      locationName: address['locationName'],
-      rejectionReasonContent: json['rejectionReasonContent'],
-      rejectionReasonDescription: json['rejectionReasonDescription'],
-      helperId: helper?['helperId'],
-      helperName: helper?['helperName'],
-      helperAvatar: helper?['helperAvatar'],
-      phoneNumber: helper?['phoneNumber'],
+      locationDescription: address['locationDescription'] ?? "",
+      locationName: address['locationName'] ?? "",
+      rejectionReasonContent: json['rejectionReasonContent'] ?? "",
+      rejectionReasonDescription: json['rejectionReasonDescription'] ?? "",
+      customerId: helper?['helperId'],
+      customerName: helper?['helperName'] ?? "",
+      customerAvatar: helper?['helperAvatar'] ?? "",
+      phoneNumber: helper?['phoneNumber'] ?? "",
       rate: helper?['rate'],
       numberOfFeedback: helper?['numberOfFeedback'],
       transaction: Transaction.fromJsonForBookingDetails(transaction),
-      feedback: json['feedback'],
+      feedback: json['feedback'] ?? "",
+      listStatus: statusHistory,
+    );
+  }
+
+  factory BookingDetail.fromJsonForHelper(Map<String, dynamic> json) {
+    final workDateStr = json['workDate'] ?? "";
+    final workTimeStr = json['workStart'] ?? "";
+
+    // Parse the date part
+    final dateParts = workDateStr.split('-');
+    final year = int.parse(dateParts[2]);
+    final month = int.parse(dateParts[1]);
+    final day = int.parse(dateParts[0]);
+
+    // Parse the time of date
+    final timeParts = workTimeStr.split(':');
+    final hour = int.parse(timeParts[0]);
+    final minute = int.parse(timeParts[1]);
+
+    final status = json['currentStatus'] as String;
+    BookingStatus mappedStatus = _mapStrBookingStatus(status);
+
+    final address = json['address'];
+    final renter = json['renter'] as Map<String, dynamic>?;
+
+    List<dynamic> statuses = json['statuses'];
+    List<StatusHistory> statusHistory =
+        statuses.map((statuses) => StatusHistory.fromJson(statuses)).toList();
+
+    return BookingDetail(
+      id: json['bookingDetailId'],
+      bookingCode: json['bookingCode'] ?? "",
+      orderDate: DateTime.parse(json['orderDate'] ?? ""),
+      serviceId: json['serviceId'],
+      serviceName: json['serviceName'] ?? "",
+      serviceIcon: json['serviceIcon'] ?? "",
+      workDate: DateTime(year, month, day),
+      workTime: TimeOfDay(hour: hour, minute: minute),
+      note: json['note'] ?? "",
+      serviceUnit: ServiceUnit.fromJson(json),
+      price: json['price'],
+      status: mappedStatus,
+      latitude: address['latitude'],
+      longitude: address['longitude'],
+      locationDescription: address['locationDescription'] ?? "",
+      locationName: address['locationName'] ?? "",
+      rejectionReasonContent: json['rejectionReasonContent'] ?? "",
+      rejectionReasonDescription: json['rejectionReasonDescription'] ?? "",
+      customerId: renter?['renterId'],
+      customerName: renter?['renterName'] ?? "",
+      customerAvatar: renter?['renterAvatar'] ?? "",
+      phoneNumber: renter?['phoneNumber'] ?? "",
+      feedback: json['feedback'] ?? "",
       listStatus: statusHistory,
     );
   }

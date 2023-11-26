@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:iclean_mobile_app/models/transaction.dart';
 import 'package:iclean_mobile_app/view/common/profile/wallet/transaction_details/transaction_details_screen.dart';
+import 'package:intl/intl.dart';
 
 class TransactionContent extends StatelessWidget {
   const TransactionContent({
@@ -34,19 +34,18 @@ class TransactionContent extends StatelessWidget {
                     : Colors.red,
               ),
               title: Text(
-                transactions[i].type == TransactionType.withdraw
-                    ? "Nhận tiền từ hoàn thành dịch vụ"
-                    : "Thanh toán dịch vụ",
+                transactions[i].note!,
+                style: const TextStyle(
+                  fontFamily: 'Lato',
+                ),
+                textAlign: TextAlign.justify,
+              ),
+              subtitle: Text(
+                DateFormat('hh:mm - d/MM/yyyy').format(transactions[i].date!),
                 style: const TextStyle(
                   fontFamily: 'Lato',
                 ),
               ),
-              // subtitle: Text(
-              //   DateFormat('hh:mm - d/MM/yyyy').format(transactions[i].date!),
-              //   style: const TextStyle(
-              //     fontFamily: 'Lato',
-              //   ),
-              // ),
               trailing: Text(
                 transactions[i].type == TransactionType.withdraw
                     ? '+ ${transactions[i].formatAmountInVND()}'

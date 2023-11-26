@@ -7,3 +7,9 @@ extension TimeOfDayConverter on TimeOfDay {
     return "$hour:$min";
   }
 }
+
+extension TimeOfDayExtension on TimeOfDay {
+  TimeOfDay addHour(int hour) {
+    return replacing(hour: this.hour + hour, minute: minute);
+  }
+}

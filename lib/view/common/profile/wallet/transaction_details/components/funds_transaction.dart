@@ -21,17 +21,6 @@ class FundsTransaction extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            transaction.type == TransactionType.deposit
-                ? "Nhận tiền từ"
-                : "Thanh toán cho",
-            style: const TextStyle(
-              fontSize: 16,
-              fontFamily: 'Lato',
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 16),
           Row(
             children: [
               SizedBox(
@@ -41,10 +30,14 @@ class FundsTransaction extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
               ),
-              const Text(
-                "iClean",
-                style: TextStyle(
-                  fontFamily: 'Lato',
+              const SizedBox(width: 16),
+              Flexible(
+                child: Text(
+                  transaction.note!,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontFamily: 'Lato',
+                  ),
                 ),
               ),
             ],

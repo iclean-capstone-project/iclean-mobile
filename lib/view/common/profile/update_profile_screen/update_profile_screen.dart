@@ -5,6 +5,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iclean_mobile_app/models/account.dart';
+import 'package:iclean_mobile_app/services/api_account_repo.dart';
+import 'package:iclean_mobile_app/view/renter/nav_bar_bottom/renter_screen.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 import 'package:iclean_mobile_app/widgets/my_bottom_app_bar.dart';
 import 'package:image_picker/image_picker.dart';
@@ -25,6 +27,7 @@ class UpdateProfileScreen extends StatefulWidget {
 
 class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   dynamic nameController = TextEditingController();
+  dynamic dobController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
   File? _image;
@@ -35,13 +38,40 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   void initState() {
     super.initState();
     nameController = TextEditingController(text: widget.account.fullName);
+    dobController = TextEditingController(
+        text: DateFormat('dd/MM/yyyy').format(widget.account.dateOfBirth));
   }
 
   @override
   void dispose() {
     nameController.dispose();
-
+    dobController.dispose();
     super.dispose();
+  }
+
+  Future<void> updateAccount(
+    String fullName,
+    TextEditingController dobController,
+    File? image,
+    BuildContext context,
+  ) async {
+    String dob = DateFormat('dd-MM-yyyy').format(
+      DateFormat('dd/MM/yyyy').parse(dobController.text),
+    );
+
+    File? selectedImage = image;
+
+    final ApiAccountRepository repository = ApiAccountRepository();
+
+    repository.updateAccount(fullName, dob, selectedImage, context).then((_) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (context) => const RenterScreens(selectedIndex: 4)),
+      );
+    }).catchError((error) {
+      print('Failed to update location: $error');
+    });
   }
 
   Future _pickImage(ImageSource source) async {
@@ -106,7 +136,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
+      initialDate: _selectedDate ?? widget.account.dateOfBirth,
       firstDate: DateTime(1900),
       lastDate: DateTime.now(),
       builder: (BuildContext context, Widget? child) {
@@ -138,6 +168,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     if (picked != null && picked != _selectedDate) {
       setState(() {
         _selectedDate = picked;
+        dobController.text = DateFormat('dd/MM/yyyy').format(picked);
       });
     }
   }
@@ -217,10 +248,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                         ),
                       ),
                     ),
-                    controller: TextEditingController(
-                        text: _selectedDate == null
-                            ? ''
-                            : DateFormat('dd/MM/yyyy').format(_selectedDate!)),
+                    controller: dobController,
                     hintText: 'Ngày sinh',
                   ),
                 ),
@@ -232,12 +260,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
       bottomNavigationBar: MyBottomAppBar(
         text: "Tiếp tục",
         onTap: () {
-          // Navigator.pushReplacement(
-          //     context,
-          //     MaterialPageRoute(
-          //         builder: (context) => AddLocationScreen(
-          //               apiLocationRepository: apiLocationRepository,
-          //             )));
+          updateAccount(nameController.text, dobController, _image, context);
         },
       ),
     );

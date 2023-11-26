@@ -1,6 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages, use_build_context_synchronously
 
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:iclean_mobile_app/auth/user_preferences.dart';
@@ -16,8 +17,7 @@ class ApiAccountRepository implements AccountRepository {
 
   @override
   Future<Account> getAccount(BuildContext context) async {
-    const url = urlConstant;
-    final uri = Uri.parse(url);
+    final uri = Uri.parse(urlConstant);
     final accessToken = await UserPreferences.getAccessToken();
 
     Map<String, String> headers = {
@@ -45,6 +45,47 @@ class ApiAccountRepository implements AccountRepository {
       }
     } catch (e) {
       throw Exception(e);
+    }
+  }
+
+  @override
+  Future<void> updateAccount(String fullName, String dateOfBirth, File? image,
+      BuildContext context) async {
+    final uri = Uri.parse(urlConstant);
+
+    final accessToken = await UserPreferences.getAccessToken();
+    var request = http.MultipartRequest(
+      'PUT',
+      uri,
+    );
+
+    request.headers.addAll({
+      'Authorization': 'Bearer $accessToken',
+    });
+
+    request.fields['fullName'] = fullName;
+    request.fields['dateOfBirth'] = dateOfBirth;
+
+    if (image != null) {
+      request.files.add(
+        await http.MultipartFile.fromPath('fileImage', image.path),
+      );
+    } else {
+      // Add a placeholder for null or empty image
+      request.fields['fileImage'] = '';
+    }
+
+    try {
+      var response = await request.send();
+
+      if (response.statusCode == 200) {
+      } else {
+        throw Exception(
+            'Failed to update profile. Status: ${response.statusCode}');
+      }
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
     }
   }
 }

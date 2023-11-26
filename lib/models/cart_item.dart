@@ -25,8 +25,8 @@ class CartItem {
   });
 
   factory CartItem.fromJson(Map<String, dynamic> json) {
-    final workDateStr = json['workDate'];
-    final workTimeStr = json['workTime'];
+    final workDateStr = json['workDate'] ?? "";
+    final workTimeStr = json['workTime'] ?? "";
 
     // Split the date and time parts
     final dateAndTimePartsOfWorkDate = workDateStr.split('T');
@@ -46,11 +46,11 @@ class CartItem {
     return CartItem(
       cartItemId: json['cartItemId'],
       serviceId: json['serviceId'],
-      serviceUnitId: json['serviceUnitId'],
-      serviceName: json['serviceName'],
-      serviceIcon: json['serviceIcon'],
+      serviceUnitId: json['serviceUnitId'] ?? "",
+      serviceName: json['serviceName'] ?? "",
+      serviceIcon: json['serviceIcon'] ?? "",
       workDate: DateTime(year, month, day),
-      workTime: TimeOfDay.fromDateTime(DateTime(0, 0, 0, hour, minute)),
+      workTime: TimeOfDay(hour: hour, minute: minute),
       serviceUnit: ServiceUnit.fromJson(json),
       note: json['note'] ?? '',
       price: json['price'],

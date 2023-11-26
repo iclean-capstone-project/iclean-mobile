@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/booking_detail.dart';
+import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/widgets/details_fields.dart';
 
 import 'package:intl/intl.dart';
@@ -34,21 +35,21 @@ class PaymentContent extends StatelessWidget {
           ),
           child: Column(
             children: [
-              for (int i = 0; i < booking.transaction.service!.length; i++)
+              for (int i = 0; i < booking.transaction!.service!.length; i++)
                 Column(
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          booking.transaction.service![i].serviceName,
+                          booking.transaction!.service![i].serviceName,
                           style: const TextStyle(
                             fontSize: 14,
                             fontFamily: 'Lato',
                           ),
                         ),
                         Text(
-                          booking.transaction.service![i].formatPriceInVND(),
+                          booking.transaction!.service![i].formatPriceInVND(),
                           style: const TextStyle(
                             fontSize: 16,
                             fontFamily: 'Lato',
@@ -56,31 +57,35 @@ class PaymentContent extends StatelessWidget {
                         ),
                       ],
                     ),
-                    if (i < booking.transaction.service!.length - 1)
-                      const SizedBox(height: 8),
+                    if (i < booking.transaction!.service!.length - 1)
+                      const SizedBox(height: 4),
                   ],
                 ),
-              const SizedBox(height: 4),
+              const SizedBox(height: 8),
               DetailsContentField(
-                  text: "Tổng cộng", text2: booking.formatTotalPriceInVND()),
-              const SizedBox(height: 4),
+                  text: "Tổng cộng",
+                  text2: booking.transaction!.formatTotalPriceInVND()),
+              const SizedBox(height: 8),
               DetailsContentField(
                   text:
-                      "Sử dụng ${booking.transaction.discount?.toStringAsFixed(0)} iClean Point",
-                  text2: '- ${booking.transaction.formatDiscountInVND()}'),
+                      "Sử dụng ${booking.transaction!.discount?.toStringAsFixed(0)} iClean Point",
+                  text2: '- ${booking.transaction!.formatDiscountInVND()}'),
               Divider(
                 thickness: 0.5,
                 color: Colors.grey[400],
               ),
               const SizedBox(height: 4),
               DetailsContentField(
-                  text: "Thành tiền",
-                  text2: booking.transaction.formatAmountInVND()),
+                text: "Thành tiền",
+                text2: booking.transaction!.formatAmountInVND(),
+                color: ColorPalette.mainColor,
+                fontWeight: FontWeight.bold,
+              ),
               const SizedBox(height: 8),
               DetailsContentField(
                 text: "Thời gian",
-                text2: DateFormat('d/MM/yyyy | hh:mm aaa')
-                    .format(booking.orderDate),
+                text2:
+                    DateFormat('d/MM/yyyy | HH:mm ').format(booking.orderDate),
               ),
               const SizedBox(height: 4),
               Row(
@@ -100,7 +105,7 @@ class PaymentContent extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
-                      booking.transaction.status.name,
+                      booking.transaction!.status.name,
                       style: TextStyle(
                         color: Colors.deepPurple.shade400,
                         fontSize: 15,

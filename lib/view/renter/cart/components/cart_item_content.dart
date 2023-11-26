@@ -4,16 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/cart_item.dart';
 import 'package:iclean_mobile_app/provider/cart_provider.dart';
 import 'package:iclean_mobile_app/utils/time.dart';
+import 'package:iclean_mobile_app/view/renter/nav_bar_bottom/renter_screen.dart';
 import 'package:iclean_mobile_app/widgets/confirm_dialog.dart';
 
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-
-extension TimeOfDayExtension on TimeOfDay {
-  TimeOfDay addHour(int hour) {
-    return replacing(hour: this.hour + hour, minute: minute);
-  }
-}
 
 class CartItemContent extends StatelessWidget {
   const CartItemContent({
@@ -33,13 +28,6 @@ class CartItemContent extends StatelessWidget {
             title: "Bạn có chắc chắn muốn xóa dịch vụ này khỏi giỏ hàng?",
             confirm: "Xác nhận",
             onTap: () async {
-              // final ApiCartRepository repository = ApiCartRepository();
-              // repository.deleteCartItem(id).then((_) {
-              //   Navigator.pop(context);
-              // }).catchError((error) {
-              //   // ignore: avoid_print
-              //   print('Failed to delete service: $error');
-              // });
               final cartProvider =
                   Provider.of<CartProvider>(context, listen: false);
               await cartProvider.deleteCartItem(context, id);
@@ -47,6 +35,11 @@ class CartItemContent extends StatelessWidget {
               await cartProvider.fetchCart(context);
 
               Navigator.pop(context);
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                    builder: (context) =>
+                        const RenterScreens(selectedIndex: 3)),
+              );
             },
           );
         },

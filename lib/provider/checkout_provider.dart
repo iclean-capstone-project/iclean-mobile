@@ -18,18 +18,12 @@ class CheckoutProvider extends ChangeNotifier {
   }
 
   void toggleUsePoint() {
-    if (usePoint == true) {
-      usePoint = false;
-    } else {
-      usePoint = true;
-    }
+    _usePoint = !_usePoint;
+    notifyListeners();
   }
 
   void toggleAutoAssign() {
-    if (autoAssign == true) {
-      autoAssign = false;
-    } else {
-      autoAssign = true;
-    }
+    _autoAssign = !_autoAssign;
+    notifyListeners();
   }
 }

@@ -40,8 +40,8 @@ class Booking {
   }
 
   factory Booking.fromJson(Map<String, dynamic> json) {
-    final workDateStr = json['workDate'];
-    final workTimeStr = json['workTime'];
+    final workDateStr = json['workDate'] ?? "";
+    final workTimeStr = json['workTime'] ?? "";
 
     // Split the date and time parts
     final dateAndTimePartsOfWorkDate = workDateStr.split('T');
@@ -63,14 +63,14 @@ class Booking {
 
     return Booking(
       id: json['bookingDetailId'],
-      bookingCode: json['bookingCode'],
-      orderDate: DateTime.parse(json['orderDate']),
+      bookingCode: json['bookingCode'] ?? "",
+      orderDate: DateTime.parse(json['orderDate'] ?? ""),
       serviceId: json['serviceId'],
-      serviceName: json['serviceName'],
-      serviceIcon: json['serviceIcon'],
+      serviceName: json['serviceName'] ?? "",
+      serviceIcon: json['serviceIcon'] ?? "",
       workDate: DateTime(year, month, day),
       workTime: TimeOfDay(hour: hour, minute: minute),
-      note: json['note'],
+      note: json['note'] ?? "",
       serviceUnit: ServiceUnit.fromJson(json),
       price: json['price'],
       status: mappedStatus,
@@ -78,8 +78,8 @@ class Booking {
   }
 
   factory Booking.fromJsonForHelper(Map<String, dynamic> json) {
-    final workDateStr = json['workDate'];
-    final workTimeStr = json['workStart'];
+    final workDateStr = json['workDate'] ?? "";
+    final workTimeStr = json['workStart'] ?? "";
 
     // Split the date and time parts
     final dateAndTimePartsOfWorkDate = workDateStr.split('T');
@@ -98,17 +98,17 @@ class Booking {
 
     return Booking(
       id: json['bookingDetailId'],
-      renterName: json['renterName'],
-      serviceName: json['serviceName'],
-      serviceIcon: json['serviceImages'],
+      renterName: json['renterName'] ?? "",
+      serviceName: json['serviceName'] ?? "",
+      serviceIcon: json['serviceImages'] ?? "",
       workDate: DateTime(year, month, day),
       workTime: TimeOfDay(hour: hour, minute: minute),
-      location: json['locationDescription'],
+      location: json['locationDescription'] ?? "",
       longitude: json['longitude'],
       latitude: json['latitude'],
       serviceUnit: ServiceUnit.fromJson(json),
       price: json['amount'],
-      note: json['noteMessage'],
+      note: json['noteMessage'] ?? "",
     );
   }
 

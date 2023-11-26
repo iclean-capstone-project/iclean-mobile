@@ -64,7 +64,7 @@ class StatusHistory {
     BookingStatus mappedStatus = _mapStrBookingStatus(status);
     return StatusHistory(
       id: json['statusHistoryId'],
-      createAt: DateTime.parse(json['createAt']),
+      createAt: DateTime.parse(json['createAt'] ?? ""),
       bookingStatus: mappedStatus,
     );
   }

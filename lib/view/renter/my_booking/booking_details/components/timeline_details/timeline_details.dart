@@ -76,7 +76,7 @@ class _TimelineDetailsState extends State<TimelineDetails> {
                   MyTimeline(
                     isFirst: i == 0,
                     isLast: i == widget.listStatus.length - 1,
-                    statusTitle: widget.listStatus[i].bookingStatus.name,
+                    status: widget.listStatus[i].bookingStatus,
                     date: widget.listStatus[i].createAt,
                   ),
               ],

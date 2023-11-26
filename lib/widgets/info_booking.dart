@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iclean_mobile_app/utils/color_palette.dart';
 
 class InfoBooking extends StatelessWidget {
   const InfoBooking({
@@ -26,32 +27,50 @@ class InfoBooking extends StatelessWidget {
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
-          const SizedBox(height: 8),
-          Text(
-            "Ngày làm việc: $date",
-            style: const TextStyle(
-              fontSize: 16,
-              fontFamily: 'Lato',
-            ),
+          const SizedBox(height: 4),
+          Row(
+            children: [
+              const Icon(Icons.date_range_rounded),
+              const SizedBox(width: 4),
+              Text(
+                date,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontFamily: 'Lato',
+                ),
+              ),
+            ],
           ),
-          const SizedBox(height: 8),
-          Text(
-            "Thời gian bắt đầu: $time",
-            style: const TextStyle(
-              fontSize: 16,
-              fontFamily: 'Lato',
-            ),
+          const SizedBox(height: 4),
+          Row(
+            children: [
+              const Icon(Icons.timer_sharp),
+              const SizedBox(width: 4),
+              Text(
+                time,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontFamily: 'Lato',
+                ),
+              ),
+            ],
           ),
-          const SizedBox(height: 8),
-          Text(
-            price,
-            style: const TextStyle(
-              fontSize: 16,
-              fontFamily: 'Lato',
-              fontWeight: FontWeight.bold,
-            ),
+          const SizedBox(height: 4),
+          Row(
+            children: [
+              const Icon(Icons.tag),
+              const SizedBox(width: 4),
+              Text(
+                price,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontFamily: 'Lato',
+                  fontWeight: FontWeight.bold,
+                  color: ColorPalette.mainColor,
+                ),
+              ),
+            ],
           ),
-          const SizedBox(height: 8),
         ],
       ),
     );

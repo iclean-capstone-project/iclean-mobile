@@ -32,9 +32,9 @@ class Service {
 
     return Service(
       id: json['serviceId'],
-      name: json['serviceName'],
+      name: json['serviceName'] ?? "",
       description: json['description'] ?? "",
-      icon: json['serviceIcon'],
+      icon: json['serviceIcon'] ?? "",
       images: serviceImages,
     );
   }

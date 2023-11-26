@@ -9,4 +9,7 @@ abstract class BookingRepository {
       BuildContext context, int bookingId);
 
   Future<List<Booking>> getBookingForHelper();
+
+  Future<BookingDetail> getBookingDetailsByIdForHelper(
+      BuildContext context, int bookingId);
 }

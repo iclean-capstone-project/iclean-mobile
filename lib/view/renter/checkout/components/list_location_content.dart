@@ -1,27 +1,46 @@
 import 'package:flutter/material.dart';
 
 import 'package:iclean_mobile_app/models/address.dart';
+import 'package:iclean_mobile_app/provider/checkout_provider.dart';
+import 'package:iclean_mobile_app/services/api_checkout_repo.dart';
 import 'package:iclean_mobile_app/services/api_location_repo.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
+import 'package:iclean_mobile_app/view/renter/checkout/checkout_cart_screen.dart';
+import 'package:provider/provider.dart';
 
 class ListLocationContent extends StatelessWidget {
   const ListLocationContent({
     super.key,
+    required this.text,
   });
+
+  final String text;
 
   @override
   Widget build(BuildContext context) {
     Future<List<Address>> fetchLocations() async {
-      final ApiLocationRepository apiLocationRepository =
-          ApiLocationRepository();
+      final ApiLocationRepository repository = ApiLocationRepository();
       try {
-        final locations = await apiLocationRepository.getLocation(context);
+        final locations = await repository.getLocation(context);
         return locations;
       } catch (e) {
         return <Address>[];
       }
     }
 
+    void updateCart(int id, bool isUsePoint, bool isAutoAssign) {
+      final ApiCheckoutRepository repository = ApiCheckoutRepository();
+      repository.updateCart(id, isUsePoint, isAutoAssign, context).then((_) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const CheckoutCartScreen()),
+        );
+      }).catchError((error) {
+        print('Failed to choose location: $error');
+      });
+    }
+
+    var checkoutProvider =
+        Provider.of<CheckoutProvider>(context, listen: false);
     return FutureBuilder<List<Address>>(
       future: fetchLocations(),
       builder: (context, snapshot) {
@@ -44,56 +63,58 @@ class ListLocationContent extends StatelessWidget {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
-                        child: Row(
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                // if (locations[i].isDefault == false) {
-                                //   showConfirmationDialog(
-                                //       context, locations[i]);
-                                // }
-                              },
-                              child: Icon(
-                                locations[i].isDefault
+                        child: InkWell(
+                          onTap: () {
+                            updateCart(
+                              locations[i].id!,
+                              checkoutProvider.usePoint,
+                              checkoutProvider.autoAssign,
+                            );
+                          },
+                          child: Row(
+                            children: [
+                              Icon(
+                                (locations[i].description == text)
                                     ? Icons.circle_rounded
                                     : Icons.circle_outlined,
                                 color: Colors.deepPurple.shade300,
                                 size: 16,
                               ),
-                            ),
-                            const SizedBox(width: 16),
-                            Flexible(
-                              fit: FlexFit.loose,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        locations[i].addressName,
-                                        style: const TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                          fontFamily: 'Lato',
+                              const SizedBox(width: 16),
+                              Flexible(
+                                fit: FlexFit.loose,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          locations[i].addressName,
+                                          style: const TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: 'Lato',
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Text(locations[i].description,
+                                      ],
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      locations[i].description,
                                       style: TextStyle(
                                         color: Colors.grey[600],
                                         fontSize: 12,
                                         fontFamily: 'Lato',
                                       ),
                                       textAlign: TextAlign.justify,
-                                      maxLines: null),
-                                ],
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                       const SizedBox(height: 8),
