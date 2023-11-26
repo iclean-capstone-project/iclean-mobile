@@ -15,6 +15,8 @@ import 'package:iclean_mobile_app/widgets/qr_generator.dart';
 import 'package:iclean_mobile_app/widgets/qr_scan_screen.dart';
 import 'package:iclean_mobile_app/widgets/shimmer_loading.dart';
 
+import '../../map/google_map.dart';
+
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
@@ -27,7 +29,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final ApiAccountRepository apiAccountRepository = ApiAccountRepository();
     try {
       final account = await apiAccountRepository.getAccount(context);
-
       return account;
     } catch (e) {
       throw Exception(e);
@@ -190,7 +191,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                           ProfileInkWell(
                             icon: const Icon(Icons.location_on_outlined),
-                            text: "Vị trí",
+                            text: "Google Map",
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const GoogleMapTrackingPage(
+                                            latitude: 37.33500926,
+                                            longitude: -122.03272188,
+                                          )));
+                            },
+                          ),
+                          ProfileInkWell(
+                            icon: const Icon(Icons.location_on_outlined),
+                            text: "QR Generator",
                             onTap: () {
                               Navigator.push(
                                   context,

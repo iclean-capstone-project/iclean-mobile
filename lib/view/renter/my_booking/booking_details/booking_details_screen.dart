@@ -11,6 +11,7 @@ import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 import 'package:iclean_mobile_app/widgets/note_content.dart';
 import 'package:iclean_mobile_app/widgets/timeline_content.dart';
 
+import '../../../../models/booking_status.dart';
 import 'components/address_content.dart';
 import 'components/detail_content.dart';
 import 'components/employee_content.dart';
