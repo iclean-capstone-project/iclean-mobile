@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/cart.dart';
+import 'package:iclean_mobile_app/provider/checkout_provider.dart';
 import 'package:iclean_mobile_app/services/api_checkout_repo.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
+import 'package:iclean_mobile_app/widgets/auto_assign.dart';
 import 'package:iclean_mobile_app/widgets/checkout_success_dialog.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 import 'package:iclean_mobile_app/widgets/my_bottom_app_bar.dart';
+import 'package:iclean_mobile_app/widgets/renter_info.dart';
+import 'package:iclean_mobile_app/widgets/use_point.dart';
+import 'package:provider/provider.dart';
 
-import 'components/auto_assign.dart';
-import 'components/use_point.dart';
-import 'components/renter_info.dart';
-import 'components/service_info.dart';
+import 'components/service_info_cart.dart';
 
 class CheckoutCartScreen extends StatefulWidget {
   const CheckoutCartScreen({super.key});
@@ -24,23 +26,27 @@ class _CheckoutCartScreenState extends State<CheckoutCartScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var checkoutProvider =
+        Provider.of<CheckoutProvider>(context, listen: false);
     Future<Cart> fetchCart() async {
       final ApiCheckoutRepository repository = ApiCheckoutRepository();
       try {
-        final account = await repository.getCart(context);
-        return account;
+        final cart = await repository.getCart(context);
+        return cart;
       } catch (e) {
         throw Exception(e);
       }
     }
 
-    void checkoutCart(int id, bool isUsePoint, bool isAutoAssign) {
+    void checkoutCart(bool isUsePoint, bool isAutoAssign) {
       final ApiCheckoutRepository repository = ApiCheckoutRepository();
-      repository.checkout(id, isUsePoint, isAutoAssign, context).then((_) {
-        // Navigator.of(context).pushReplacement(
-        //   MaterialPageRoute(builder: (context) => const CheckoutCartScreen()),
-        // );
+      repository.checkout(isUsePoint, isAutoAssign, context).then((_) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) => const CheckoutSuccessDialog(),
+        );
       }).catchError((error) {
+        // ignore: avoid_print
         print('Failed to choose location: $error');
       });
     }
@@ -93,7 +99,8 @@ class _CheckoutCartScreenState extends State<CheckoutCartScreen> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 8),
-                            child: ServiceInfo(cartItem: cart.cartItem[i]),
+                            child:
+                                ServiceInfoForCart(cartItem: cart.cartItem[i]),
                           ),
                         ],
                       ),
@@ -150,10 +157,9 @@ class _CheckoutCartScreenState extends State<CheckoutCartScreen> {
       bottomNavigationBar: MyBottomAppBar(
         text: "Đăng tin",
         onTap: () {
-          //checkoutCart(id, isUsePoint, isAutoAssign);
-          showDialog(
-            context: context,
-            builder: (BuildContext context) => const CheckoutSuccessDialog(),
+          checkoutCart(
+            checkoutProvider.usePoint,
+            checkoutProvider.autoAssign,
           );
         },
       ),

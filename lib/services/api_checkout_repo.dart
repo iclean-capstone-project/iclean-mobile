@@ -49,7 +49,7 @@ class ApiCheckoutRepository implements CheckoutRepository {
 
   @override
   Future<void> checkout(
-      int id, bool isUsePoint, bool isAutoAssign, BuildContext context) async {
+      bool isUsePoint, bool isAutoAssign, BuildContext context) async {
     final uri = Uri.parse(urlConstant);
     final accessToken = await UserPreferences.getAccessToken();
 
@@ -59,7 +59,6 @@ class ApiCheckoutRepository implements CheckoutRepository {
     };
 
     final Map<String, dynamic> data = {
-      "addressId": id,
       "usingPoint": isUsePoint,
       "autoAssign": isAutoAssign
     };

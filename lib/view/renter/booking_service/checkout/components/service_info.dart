@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
-
-import 'package:iclean_mobile_app/services/api_price_repo.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:iclean_mobile_app/utils/time.dart';
 import 'package:iclean_mobile_app/models/service.dart';
+import 'package:iclean_mobile_app/services/api_price_repo.dart';
 import 'package:iclean_mobile_app/widgets/details_fields.dart';
 import 'package:iclean_mobile_app/provider/booking_details_provider.dart';
 
@@ -58,7 +58,7 @@ class ServiceInfo extends StatelessWidget {
               text2: context
                   .watch<BookingDetailsProvider>()
                   .selectedTime
-                  .toString()),
+                  .to24hours()),
           const SizedBox(height: 8),
           const Text(
             "Chi tiết công việc",

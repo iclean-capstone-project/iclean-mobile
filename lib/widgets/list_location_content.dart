@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
 import 'package:iclean_mobile_app/models/address.dart';
 import 'package:iclean_mobile_app/provider/checkout_provider.dart';
 import 'package:iclean_mobile_app/services/api_checkout_repo.dart';
 import 'package:iclean_mobile_app/services/api_location_repo.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/view/renter/checkout/checkout_cart_screen.dart';
-import 'package:provider/provider.dart';
 
 class ListLocationContent extends StatelessWidget {
   const ListLocationContent({
@@ -35,6 +34,7 @@ class ListLocationContent extends StatelessWidget {
           MaterialPageRoute(builder: (context) => const CheckoutCartScreen()),
         );
       }).catchError((error) {
+        // ignore: avoid_print
         print('Failed to choose location: $error');
       });
     }

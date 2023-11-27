@@ -4,8 +4,8 @@ import 'package:intl/intl.dart';
 import 'package:iclean_mobile_app/models/cart_item.dart';
 import 'package:iclean_mobile_app/widgets/details_fields.dart';
 
-class ServiceInfo extends StatelessWidget {
-  const ServiceInfo({
+class ServiceInfoForCart extends StatelessWidget {
+  const ServiceInfoForCart({
     super.key,
     required this.cartItem,
   });

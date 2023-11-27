@@ -123,36 +123,39 @@ class CartScreen extends StatelessWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            "Total",
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontFamily: 'Lato',
-                              fontWeight: FontWeight.bold,
+                      if (cart.cartItem.isNotEmpty)
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              "Total",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontFamily: 'Lato',
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          Text(
-                            cart.formatTotalPriceInVND(),
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontFamily: 'Lato',
-                              fontWeight: FontWeight.bold,
-                              color: ColorPalette.mainColor,
+                            Text(
+                              cart.formatTotalPriceInVND(),
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontFamily: 'Lato',
+                                fontWeight: FontWeight.bold,
+                                color: ColorPalette.mainColor,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
+                          ],
+                        ),
                       const SizedBox(height: 8),
                       MainColorInkWellFullSize(
                         onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const CheckoutCartScreen()));
+                          if (cart.cartItem.isNotEmpty) {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const CheckoutCartScreen()));
+                          }
                         },
                         text: "Đặt địch vụ",
                       ),

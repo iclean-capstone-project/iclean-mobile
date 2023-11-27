@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:iclean_mobile_app/widgets/auto_assign.dart';
+import 'package:iclean_mobile_app/widgets/use_point.dart';
 import 'package:iclean_mobile_app/models/service.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 import 'package:iclean_mobile_app/widgets/my_bottom_app_bar.dart';
 import 'package:iclean_mobile_app/provider/booking_details_provider.dart';
 
-import 'components/point_button.dart';
-import 'components/renter_info.dart';
 import 'components/service_info.dart';
 
 class CheckoutScreen extends StatelessWidget {
@@ -41,7 +41,7 @@ class CheckoutScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 8),
-                const RenterInfo(),
+                //RenterInfo(text: cart.locationDescription!),
                 const Padding(
                   padding: EdgeInsets.only(top: 16.0),
                   child: Text(
@@ -56,7 +56,8 @@ class CheckoutScreen extends StatelessWidget {
                 const SizedBox(height: 8),
                 ServiceInfo(service: service),
                 const SizedBox(height: 16),
-                const PointButton(),
+                const UsePointButton(),
+                const AutoAssignButton(),
                 const SizedBox(height: 16),
                 Row(
                   children: const [

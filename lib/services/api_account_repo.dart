@@ -19,7 +19,7 @@ class ApiAccountRepository implements AccountRepository {
   Future<Account> getAccount(BuildContext context) async {
     final uri = Uri.parse(urlConstant);
     final accessToken = await UserPreferences.getAccessToken();
-
+    print(accessToken);
     Map<String, String> headers = {
       "Authorization": "Bearer $accessToken",
       "Content-Type": "application/json",
@@ -82,6 +82,49 @@ class ApiAccountRepository implements AccountRepository {
       } else {
         throw Exception(
             'Failed to update profile. Status: ${response.statusCode}');
+      }
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+    }
+  }
+
+  @override
+  Future<void> helperRegistration(String email, File frontIdCard,
+      File backIdCard, File avatar, String service) async {
+    const url = '${BaseConstant.baseUrl}/helper-registration';
+    final uri = Uri.parse(url);
+
+    final accessToken = await UserPreferences.getAccessToken();
+    var request = http.MultipartRequest(
+      'POST',
+      uri,
+    );
+
+    request.headers.addAll({
+      'Authorization': 'Bearer $accessToken',
+    });
+
+    request.fields['email'] = email;
+    request.files.add(
+      await http.MultipartFile.fromPath('frontIdCard', frontIdCard.path),
+    );
+    request.files.add(
+      await http.MultipartFile.fromPath('backIdCard', backIdCard.path),
+    );
+    request.files.add(
+      await http.MultipartFile.fromPath('avatar', avatar.path),
+    );
+    request.fields['others'] = '';
+    request.fields['service'] = '';
+
+    try {
+      var response = await request.send();
+
+      if (response.statusCode == 200) {
+      } else {
+        throw Exception(
+            'Failed to registration. Status: ${response.statusCode}');
       }
     } catch (e) {
       // ignore: avoid_print

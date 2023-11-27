@@ -6,9 +6,9 @@ import 're_usable_select_photo_button.dart';
 class SelectPhotoOptionsScreen extends StatelessWidget {
   final Function(ImageSource source) onTap;
   const SelectPhotoOptionsScreen({
-    Key? key,
+    super.key,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +53,7 @@ class SelectPhotoOptionsScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                height: 10,
+                height: 8,
               ),
               SelectPhoto(
                 onTap: () => onTap(ImageSource.camera),

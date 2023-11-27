@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-
-import '../../../../../provider/booking_details_provider.dart';
+import 'package:iclean_mobile_app/provider/booking_details_provider.dart';
 
 class MyCalendar extends StatelessWidget {
   MyCalendar({super.key, required this.bookingDetailsProvider});
@@ -17,7 +16,7 @@ class MyCalendar extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
       ),
       child: TableCalendar(
-        firstDay: DateTime.utc(2023),
+        firstDay: _today,
         focusedDay: _today,
         lastDay: DateTime.utc(2024),
         headerStyle: HeaderStyle(
@@ -51,6 +50,10 @@ class MyCalendar extends StatelessWidget {
             )),
         availableGestures: AvailableGestures.all,
         onDaySelected: (DateTime selectedDay, DateTime focusedDay) {
+          if (selectedDay.isBefore(_today)) {
+            // Do not allow selection of past days
+            return;
+          }
           // Update the selected day in the provider
           bookingDetailsProvider.selectedDay = selectedDay;
         },
