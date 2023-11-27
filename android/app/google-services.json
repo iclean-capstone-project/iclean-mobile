@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "475804456084",
+    "project_id": "iclean-59a5b",
+    "storage_bucket": "iclean-59a5b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:475804456084:android:ba968c850949a686b35081",
+        "android_client_info": {
+          "package_name": "com.example.iclean_mobile_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "475804456084-440rlbfe4dd28uog6quvmf5hie8a4cai.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAA0D958KymMzClyAUFi9wB-l5CbPRLlMg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "475804456084-440rlbfe4dd28uog6quvmf5hie8a4cai.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "475804456084-igvtc4urjo1ev0r86qd32snm5md35col.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.icleanMobileApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:475804456084:android:c66f4012981b54feb35081",
+        "android_client_info": {
+          "package_name": "iclean.gfa23se46.icleanmobie"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "475804456084-440rlbfe4dd28uog6quvmf5hie8a4cai.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAA0D958KymMzClyAUFi9wB-l5CbPRLlMg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "475804456084-440rlbfe4dd28uog6quvmf5hie8a4cai.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "475804456084-igvtc4urjo1ev0r86qd32snm5md35col.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.icleanMobileApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
