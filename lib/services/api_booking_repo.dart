@@ -151,4 +151,61 @@ class ApiBookingRepository implements BookingRepository {
       throw Exception(e.toString());
     }
   }
+
+  @override
+  Future<String> getOTPCode(BuildContext context, int id) async {
+    final url = '$urlConstant/validate/$id';
+    final uri = Uri.parse(url);
+    final accessToken = await UserPreferences.getAccessToken();
+    print(accessToken);
+    Map<String, String> headers = {
+      "Authorization": "Bearer $accessToken",
+      "Content-Type": "application/json",
+    };
+
+    try {
+      final response = await http.get(uri, headers: headers);
+
+      if (response.statusCode == 200) {
+        final jsonMap = json.decode(utf8.decode(response.bodyBytes));
+        final data = jsonMap['data'];
+
+        final value = data['value'] as String;
+        return value;
+      } else {
+        throw Exception(
+            'Status: ${response.statusCode}, Body: ${response.body}');
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
+  Future<bool> validateOTPCode(
+      BuildContext context, String qrCode, int id) async {
+    final url = '$urlConstant/validate/$id';
+    final uri = Uri.parse(url);
+    final accessToken = await UserPreferences.getAccessToken();
+    print(accessToken);
+    Map<String, String> headers = {
+      "Authorization": "Bearer $accessToken",
+      "Content-Type": "application/json",
+    };
+
+    final Map<String, dynamic> data = {"qrCode": qrCode};
+
+    try {
+      final response =
+          await http.post(uri, headers: headers, body: jsonEncode(data));
+
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
 }

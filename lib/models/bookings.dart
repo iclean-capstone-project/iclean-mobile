@@ -73,6 +73,8 @@ class Booking {
       note: json['note'] ?? "",
       serviceUnit: ServiceUnit.fromJson(json),
       price: json['price'],
+      latitude: json['latitude'],
+      longitude: json['longitude'],
       status: mappedStatus,
     );
   }

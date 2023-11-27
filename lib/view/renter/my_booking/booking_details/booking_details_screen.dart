@@ -11,7 +11,6 @@ import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 import 'package:iclean_mobile_app/widgets/note_content.dart';
 import 'package:iclean_mobile_app/widgets/timeline_content.dart';
 
-import '../../../../models/booking_status.dart';
 import 'components/address_content.dart';
 import 'components/detail_content.dart';
 import 'components/employee_content.dart';
@@ -50,14 +49,14 @@ class BookingDetailsScreen extends StatelessWidget {
             if (booking.status == BookingStatus.finished)
               Container(
                 color: ColorPalette.mainColor,
-                child: Row(
+                child: const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(24),
+                      padding: EdgeInsets.all(24),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
+                        children: [
                           Text(
                             "Dịch vụ đã hoàn thành",
                             style: TextStyle(
@@ -77,7 +76,7 @@ class BookingDetailsScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const Padding(
+                    Padding(
                       padding: EdgeInsets.all(24),
                       child: Icon(
                         Icons.domain_verification_rounded,

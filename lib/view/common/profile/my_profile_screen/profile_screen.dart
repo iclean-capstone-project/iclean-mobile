@@ -190,42 +190,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             },
                           ),
                           ProfileInkWell(
-                            icon: const Icon(Icons.location_on_outlined),
-                            text: "Google Map",
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const GoogleMapTrackingPage(
-                                            latitude: 37.33500926,
-                                            longitude: -122.03272188,
-                                          )));
-                            },
-                          ),
-                          ProfileInkWell(
-                            icon: const Icon(Icons.location_on_outlined),
-                            text: "QR Generator",
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const QrGenerator()));
-                            },
-                          ),
-                          ProfileInkWell(
-                            icon: const Icon(Icons.location_on_outlined),
-                            text: "QR Scanner",
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const QRViewExample()));
-                            },
-                          ),
-                          ProfileInkWell(
                             icon: const Icon(Icons.wallet),
                             text: "Ví IcleanPay",
                             onTap: () {
@@ -282,11 +246,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             onPressed: () =>
                                 showLogoutConfirmationDialog(context),
-                            child: Row(
+                            child: const Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Row(
-                                  children: const [
+                                  children: [
                                     Icon(
                                       Icons.logout,
                                       color: Colors.red,

@@ -12,4 +12,9 @@ abstract class BookingRepository {
 
   Future<BookingDetail> getBookingDetailsByIdForHelper(
       BuildContext context, int bookingId);
+
+  Future<String> getOTPCode(BuildContext context, int bookingId);
+
+  Future<bool> validateOTPCode(
+      BuildContext context, String qrCode, int bookingId);
 }
