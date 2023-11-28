@@ -61,11 +61,14 @@ class BookingSlider extends StatelessWidget {
               );
             }
           }
-          return const Text(
-            "Chưa có đơn nào xung quanh bạn",
-            style: TextStyle(
-              fontSize: 16,
-              fontFamily: 'Lato',
+          return const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text(
+              "Chưa có đơn nào xung quanh bạn",
+              style: TextStyle(
+                fontSize: 16,
+                fontFamily: 'Lato',
+              ),
             ),
           );
         } else {

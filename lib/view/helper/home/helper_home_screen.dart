@@ -62,7 +62,7 @@ class HeplerHomeScreen extends StatelessWidget {
               ),
 
               const Padding(
-                padding: EdgeInsets.only(top: 16.0, left: 24),
+                padding: EdgeInsets.symmetric(horizontal: 24),
                 child: Text(
                   "áđsad",
                   style: TextStyle(

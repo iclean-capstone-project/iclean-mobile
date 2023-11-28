@@ -7,14 +7,15 @@ import 'package:iclean_mobile_app/services/api_booking_repo.dart';
 import 'package:iclean_mobile_app/widgets/avatar_widget.dart';
 import 'package:iclean_mobile_app/widgets/info_booking.dart';
 
-class ScheduleScreen extends StatefulWidget {
-  const ScheduleScreen({super.key});
+class ScheduleForHelperScreen extends StatefulWidget {
+  const ScheduleForHelperScreen({super.key});
 
   @override
-  State<ScheduleScreen> createState() => _ScheduleScreenState();
+  State<ScheduleForHelperScreen> createState() =>
+      _ScheduleForHelperScreenState();
 }
 
-class _ScheduleScreenState extends State<ScheduleScreen> {
+class _ScheduleForHelperScreenState extends State<ScheduleForHelperScreen> {
   List<Booking> upcomingBookings = [];
 
   CalendarFormat _calendarFormat = CalendarFormat.month;
@@ -45,7 +46,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   Future<List<Booking>> fetchBookingUpcoming() async {
     final ApiBookingRepository repository = ApiBookingRepository();
     try {
-      final bookings = await repository.getBooking(1, "WAITING", false);
+      final bookings = await repository.getBooking(1, "WAITING", true);
       return bookings;
     } catch (e) {
       // ignore: avoid_print
@@ -124,7 +125,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                     child: TableCalendar(
                       firstDay: today,
                       focusedDay: _today,
-                      lastDay: DateTime.utc(2025),
+                      lastDay: DateTime.utc(2024),
                       headerStyle: HeaderStyle(
                         leftChevronIcon: Icon(
                           Icons.arrow_back_ios,
@@ -146,15 +147,14 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                         ),
                       ),
                       daysOfWeekStyle: const DaysOfWeekStyle(
-                        weekdayStyle: TextStyle(
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.bold,
-                        ),
-                        weekendStyle: TextStyle(
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                          weekdayStyle: TextStyle(
+                            fontFamily: 'Lato',
+                            fontWeight: FontWeight.bold,
+                          ),
+                          weekendStyle: TextStyle(
+                            fontFamily: 'Lato',
+                            fontWeight: FontWeight.bold,
+                          )),
                       availableGestures: AvailableGestures.all,
                       calendarStyle: CalendarStyle(
                         outsideDaysVisible: false,

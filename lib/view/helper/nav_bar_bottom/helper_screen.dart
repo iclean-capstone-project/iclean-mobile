@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:iclean_mobile_app/view/helper/home/helper_home_screen.dart';
 import 'package:iclean_mobile_app/view/helper/my_booking/my_booking_screen/my_booking_for_helper_screen.dart';
-import 'package:iclean_mobile_app/view/renter/schedule/schedule_screen.dart';
+import 'package:iclean_mobile_app/view/helper/schedule_for_helper/schedule_for_helper_screen.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/view/common/profile/my_profile_screen/profile_screen.dart';
 
@@ -35,7 +35,7 @@ class _HelperScreensState extends State<HelperScreens> {
     _screenOptions = <Widget>[
       const HeplerHomeScreen(),
       const MyBookingsForHelperScreen(),
-      const ScheduleScreen(),
+      const ScheduleForHelperScreen(),
       const ProfileScreen(),
     ];
   }

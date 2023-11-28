@@ -5,6 +5,7 @@ import 'package:iclean_mobile_app/provider/booking_details_provider.dart';
 class MyCalendar extends StatelessWidget {
   MyCalendar({super.key, required this.bookingDetailsProvider});
 
+  final DateTime today = DateTime.now();
   final DateTime _today = DateTime.now();
   final BookingDetailsProvider bookingDetailsProvider;
 
@@ -16,9 +17,9 @@ class MyCalendar extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
       ),
       child: TableCalendar(
-        firstDay: _today,
-        focusedDay: _today,
-        lastDay: DateTime.utc(2024),
+        firstDay: today,
+        focusedDay: bookingDetailsProvider.selectedDay,
+        lastDay: DateTime.utc(2025),
         headerStyle: HeaderStyle(
           leftChevronIcon: Icon(
             Icons.arrow_back_ios,
@@ -40,27 +41,15 @@ class MyCalendar extends StatelessWidget {
           ),
         ),
         daysOfWeekStyle: const DaysOfWeekStyle(
-            weekdayStyle: TextStyle(
-              fontFamily: 'Lato',
-              fontWeight: FontWeight.bold,
-            ),
-            weekendStyle: TextStyle(
-              fontFamily: 'Lato',
-              fontWeight: FontWeight.bold,
-            )),
-        availableGestures: AvailableGestures.all,
-        onDaySelected: (DateTime selectedDay, DateTime focusedDay) {
-          if (selectedDay.isBefore(_today)) {
-            // Do not allow selection of past days
-            return;
-          }
-          // Update the selected day in the provider
-          bookingDetailsProvider.selectedDay = selectedDay;
-        },
-        selectedDayPredicate: (DateTime today) {
-          // Provide a callback to check if a day is selected
-          return isSameDay(bookingDetailsProvider.selectedDay, today);
-        },
+          weekdayStyle: TextStyle(
+            fontFamily: 'Lato',
+            fontWeight: FontWeight.bold,
+          ),
+          weekendStyle: TextStyle(
+            fontFamily: 'Lato',
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         calendarStyle: CalendarStyle(
           outsideDaysVisible: false,
           weekendTextStyle: TextStyle(
@@ -76,6 +65,13 @@ class MyCalendar extends StatelessWidget {
             shape: BoxShape.circle,
           ),
         ),
+        availableGestures: AvailableGestures.all,
+        onDaySelected: (DateTime selectedDay, DateTime focusedDay) {
+          bookingDetailsProvider.selectedDay = selectedDay;
+        },
+        selectedDayPredicate: (DateTime today) {
+          return isSameDay(bookingDetailsProvider.selectedDay, today);
+        },
       ),
     );
   }
