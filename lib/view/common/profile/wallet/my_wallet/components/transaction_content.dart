@@ -26,10 +26,10 @@ class TransactionContent extends StatelessWidget {
             },
             child: ListTile(
               leading: Icon(
-                transactions[i].type == TransactionType.withdraw
+                transactions[i].type == TransactionType.deposit
                     ? Icons.add_circle
                     : Icons.remove_circle,
-                color: transactions[i].type == TransactionType.withdraw
+                color: transactions[i].type == TransactionType.deposit
                     ? Colors.green
                     : Colors.red,
               ),
@@ -47,7 +47,7 @@ class TransactionContent extends StatelessWidget {
                 ),
               ),
               trailing: Text(
-                transactions[i].type == TransactionType.withdraw
+                transactions[i].type == TransactionType.deposit
                     ? '+ ${transactions[i].formatAmountInVND()}'
                     : '- ${transactions[i].formatAmountInVND()}',
                 style: const TextStyle(

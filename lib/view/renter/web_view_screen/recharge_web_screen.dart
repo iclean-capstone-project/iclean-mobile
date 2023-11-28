@@ -4,7 +4,7 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 class RechargeWebViewScreen extends StatefulWidget {
   final String url;
 
-  const RechargeWebViewScreen(this.url);
+  const RechargeWebViewScreen(this.url, {super.key});
 
   @override
   State<RechargeWebViewScreen> createState() => _RechargeWebViewScreenState();

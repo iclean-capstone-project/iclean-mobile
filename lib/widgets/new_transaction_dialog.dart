@@ -2,86 +2,107 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:iclean_mobile_app/models/transaction.dart';
-import 'package:iclean_mobile_app/services/api_transaction_repo.dart';
-import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 import 'package:intl/intl.dart';
 
-import '../../../../../services/api_payment_repo.dart';
-import '../../../../../services/api_wallet_repo.dart';
-import '../../../../../widgets/my_bottom_app_bar.dart';
-import '../../../../renter/web_view_screen/recharge_web_screen.dart';
-import 'components/account_balance.dart';
-import 'components/list_transaction_loading.dart';
-import 'components/transaction_content.dart';
+import '../services/api_wallet_repo.dart';
+import '../view/renter/web_view_screen/recharge_web_screen.dart';
 
-class MyWalletScreen extends StatelessWidget {
-  MyWalletScreen({super.key});
+class TransactionScreen extends StatefulWidget {
+  const TransactionScreen({Key? key}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() => _TransactionScreenState();
+}
+
+class _TransactionScreenState extends State<TransactionScreen> {
+  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   final TextEditingController _inputMoneyController = TextEditingController();
   final NumberFormat currencyFormat = NumberFormat("#,###");
   final ApiWalletRepository apiWalletRepository = ApiWalletRepository();
-  final ApiPaymentRepository apiPaymentRepository = ApiPaymentRepository();
+  double fem = 1;
+  double ffem = 0.1;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  Widget showDialogMessage(BuildContext context, String message) {
+    return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      child: Container(
+        width: 310,
+        padding: const EdgeInsets.all(24.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(
+              width: double.infinity,
+              child: Image.asset(
+                "assets/images/Confirmed.png",
+                fit: BoxFit.cover,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: Text(
+                message,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontFamily: 'Lato',
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    Future<List<Transaction>> fetchTransactionMoney(int page) async {
-      final ApiTransactionRepository apiTransactionRepository =
-          ApiTransactionRepository();
-      try {
-        final newNotifications =
-            await apiTransactionRepository.getTransactionMoney(context, page);
-        return newNotifications;
-      } catch (e) {
-        // ignore: avoid_print
-        print(e);
-        return <Transaction>[];
-      }
-    }
-
     return Scaffold(
-      appBar: const MyAppBar(text: "Ví của tôi"),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+      body: Container(
+        padding: EdgeInsets.fromLTRB(24.5 * fem, 14 * fem, 23 * fem, 15 * fem),
+        width: 160 * fem,
+        height: 52 * fem,
+        decoration: BoxDecoration(
+          color: const Color(0xff000000),
+          borderRadius: BorderRadius.circular(9 * fem),
+        ),
+        child: InkWell(
+          onTap: () {
+            _showAddNewTransactionDialog(context);
+          },
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Padding(
-                padding: EdgeInsets.only(top: 24.0),
-                child: AccountBalance(),
-              ),
-              const SizedBox(height: 16),
-              const Text(
-                "Giao dịch gần đây",
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Lato',
+              Container(
+                margin:
+                    EdgeInsets.fromLTRB(0 * fem, 0 * fem, 12 * fem, 8 * fem),
+                width: 22 * fem,
+                height: 18 * fem,
+                child: const Icon(
+                  Icons.wallet,
+                  color: Colors.white,
+                  size: 25,
                 ),
               ),
-              FutureBuilder(
-                future: fetchTransactionMoney(1),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const ListTransactionLoading();
-                  } else if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
-                  } else if (snapshot.hasData) {
-                    final transactions = snapshot.data!;
-                    return TransactionContent(transactions: transactions);
-                  }
-                  return const Text('No Transaction found.');
-                },
+              Text(
+                'Nạp tiền',
+                style: TextStyle(
+                  fontSize: 25 * ffem,
+                  fontWeight: FontWeight.w600,
+                  height: 1.175 * ffem / fem,
+                  color: const Color(0xffffffff),
+                ),
               ),
             ],
           ),
         ),
-      ),
-      bottomNavigationBar: MyBottomAppBar(
-        text: "Nạp tiền",
-        onTap: () {
-          _showAddNewTransactionDialog(context);
-        },
       ),
     );
   }
@@ -117,7 +138,7 @@ class MyWalletScreen extends StatelessWidget {
                     ),
                     decoration: BoxDecoration(
                       color: const Color(0xfff5f5f5),
-                      borderRadius: BorderRadius.circular(9),
+                      borderRadius: BorderRadius.circular(9 * fem),
                     ),
                     child: TextFormField(
                       controller: _inputMoneyController,
@@ -287,7 +308,7 @@ class MyWalletScreen extends StatelessWidget {
                               double amount = double.parse(_inputMoneyController
                                   .text
                                   .replaceAll(RegExp(r'[^\d]'), ''));
-                              String url = await apiPaymentRepository
+                              String url = await apiWalletRepository
                                   .createPayment(amount);
                               Navigator.push(
                                 context,
@@ -317,5 +338,10 @@ class MyWalletScreen extends StatelessWidget {
         );
       },
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

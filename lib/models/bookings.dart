@@ -63,6 +63,7 @@ class Booking {
 
     return Booking(
       id: json['bookingDetailId'],
+      renterName: json['renterName'] ?? "",
       bookingCode: json['bookingCode'] ?? "",
       orderDate: DateTime.parse(json['orderDate'] ?? ""),
       serviceId: json['serviceId'],

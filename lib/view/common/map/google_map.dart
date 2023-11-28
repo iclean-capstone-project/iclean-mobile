@@ -1,11 +1,11 @@
 // ignore_for_file: null_argument_to_non_null_type
-
 import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:iclean_mobile_app/services/components/constant.dart';
+import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 import 'package:location/location.dart';
 
 class GoogleMapTrackingPage extends StatefulWidget {
@@ -50,12 +50,12 @@ class GoogleMapTrackingPageState extends State<GoogleMapTrackingPage> {
         return;
       }
     }
-
-    getCurrentLocation();
+    currentLocation = await location.getLocation();
     loadMarkerIcons();
     sourceLocation =
         LatLng(currentLocation!.latitude!, currentLocation!.latitude!);
     getPolyPoints();
+    getCurrentLocation();
   }
 
   Future<void> getCurrentLocation() async {
@@ -143,11 +143,8 @@ class GoogleMapTrackingPageState extends State<GoogleMapTrackingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Track order",
-          style: TextStyle(color: Colors.black, fontSize: 16),
-        ),
+      appBar: const MyAppBar(
+        text: "Chỉ đường",
       ),
       body: currentLocation == null
           ? const Center(child: Text("Loading..."))

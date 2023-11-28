@@ -11,11 +11,7 @@ import 'package:iclean_mobile_app/view/common/profile/update_profile_screen/upda
 import 'package:iclean_mobile_app/view/common/profile/wallet/my_wallet/wallet_screen.dart';
 import 'package:iclean_mobile_app/view/helper/time_working/time_working_screen.dart';
 import 'package:iclean_mobile_app/widgets/confirm_dialog.dart';
-import 'package:iclean_mobile_app/widgets/qr_generator.dart';
-import 'package:iclean_mobile_app/widgets/qr_scan_screen.dart';
 import 'package:iclean_mobile_app/widgets/shimmer_loading.dart';
-
-import '../../map/google_map.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -70,10 +66,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: Column(
               children: [
                 //Tittle
-                Padding(
-                  padding: const EdgeInsets.only(top: 16),
+                const Padding(
+                  padding: EdgeInsets.only(top: 16),
                   child: Row(
-                    children: const [
+                    children: [
                       Text(
                         "Hồ sơ",
                         style: TextStyle(
@@ -100,8 +96,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           const SizedBox(height: 24),
                           Column(
                             children: List.generate(10, (index) {
-                              return Column(
-                                children: const [
+                              return const Column(
+                                children: [
                                   ShimmerLoadingWidget.rectangular(height: 16),
                                   SizedBox(height: 24),
                                 ],
@@ -196,8 +192,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          const MyWalletScreen()));
+                                      builder: (context) => MyWalletScreen()));
                             },
                           ),
 

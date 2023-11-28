@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/widgets/welcome_content.dart';
 import 'package:iclean_mobile_app/view/helper/receive_booking/booking_for_helper/booking_for_helper_screen.dart';
 
+import '../receive_booking/booking_for_helper/current_booking.dart';
 import 'components/booking_slider.dart';
 
 class HeplerHomeScreen extends StatelessWidget {
@@ -64,13 +65,16 @@ class HeplerHomeScreen extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.only(top: 16.0, left: 24),
                 child: Text(
-                  "áđsad",
+                  "Dịch vụ hiện tại",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Lato',
                     fontSize: 18,
                   ),
                 ),
+              ),
+              const Center(
+                child: CurrentBooking(),
               ),
             ],
           ),

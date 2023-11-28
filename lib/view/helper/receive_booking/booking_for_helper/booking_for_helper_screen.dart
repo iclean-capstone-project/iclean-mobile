@@ -35,8 +35,8 @@ class BookingForHelperScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: Column(
                   children: List.generate(5, (index) {
-                    return Column(
-                      children: const [
+                    return const Column(
+                      children: [
                         BookingForHelperLoading(),
                       ],
                     );

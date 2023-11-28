@@ -5,4 +5,6 @@ abstract class WalletRepository {
   Future<Wallet> getMoney(BuildContext context);
 
   Future<Wallet> getPoint(BuildContext context);
+
+  Future<String> createPayment(double amount);
 }
