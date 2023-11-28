@@ -1,10 +1,10 @@
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/transaction.dart';
-import 'package:iclean_mobile_app/view/common/profile/wallet/money_details/money_details_screen.dart';
-import 'package:intl/intl.dart';
+import 'package:iclean_mobile_app/view/common/profile/point/point_details/point_details_screen.dart';
 
-class TransactionContent extends StatelessWidget {
-  const TransactionContent({
+class PointsContent extends StatelessWidget {
+  const PointsContent({
     super.key,
     required this.transactions,
   });
@@ -22,7 +22,7 @@ class TransactionContent extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          MoneyDetailsScreen(transaction: transactions[i])));
+                          PointDetailsScreen(transaction: transactions[i])));
             },
             child: ListTile(
               leading: Icon(
@@ -48,8 +48,8 @@ class TransactionContent extends StatelessWidget {
               ),
               trailing: Text(
                 transactions[i].type == TransactionType.withdraw
-                    ? '+ ${transactions[i].formatAmountInVND()}'
-                    : '- ${transactions[i].formatAmountInVND()}',
+                    ? '+ ${transactions[i].formatAmountToPoint()}'
+                    : '- ${transactions[i].formatAmountToPoint()}',
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontFamily: 'Lato',

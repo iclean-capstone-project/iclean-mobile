@@ -3,8 +3,8 @@ import 'package:intl/intl.dart';
 import 'package:iclean_mobile_app/models/transaction.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
 
-class DetailsTransaction extends StatelessWidget {
-  const DetailsTransaction({
+class DetailsMoney extends StatelessWidget {
+  const DetailsMoney({
     super.key,
     required this.transaction,
   });
@@ -13,6 +13,10 @@ class DetailsTransaction extends StatelessWidget {
 
   String _getStatusString(TransactionStatus status) {
     switch (status) {
+      case TransactionStatus.success:
+        return "Hoàn thành";
+      case TransactionStatus.fail:
+        return "Thất bại";
       case TransactionStatus.paid:
         return "Đã thanh toán";
       case TransactionStatus.unPaid:
@@ -22,10 +26,13 @@ class DetailsTransaction extends StatelessWidget {
 
   Color _getStatusColor(TransactionStatus status) {
     switch (status) {
+      case TransactionStatus.success:
       case TransactionStatus.paid:
         return Colors.green;
       case TransactionStatus.unPaid:
         return Colors.orange;
+      case TransactionStatus.fail:
+        return Colors.red;
     }
   }
 
@@ -64,7 +71,7 @@ class DetailsTransaction extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  transaction.status == TransactionStatus.paid
+                  transaction.status == TransactionStatus.success
                       ? Icons.check_circle
                       : Icons.cancel_rounded,
                   color: _getStatusColor(transaction.status),

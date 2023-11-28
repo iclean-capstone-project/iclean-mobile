@@ -4,12 +4,12 @@ import 'package:iclean_mobile_app/services/api_transaction_repo.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 import 'package:iclean_mobile_app/widgets/shimmer_loading.dart';
 
-import 'components/details_transaction.dart';
-import 'components/funds_transaction.dart';
-import 'components/information_transaction.dart';
+import 'components/details_point.dart';
+import 'components/funds_point.dart';
+import 'components/information_point.dart';
 
-class TransactionDetailsScreen extends StatelessWidget {
-  const TransactionDetailsScreen({super.key, required this.transaction});
+class PointDetailsScreen extends StatelessWidget {
+  const PointDetailsScreen({super.key, required this.transaction});
 
   final Transaction transaction;
 
@@ -67,13 +67,12 @@ class TransactionDetailsScreen extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(top: 24.0),
-                      child:
-                          DetailsTransaction(transaction: transactionDetails),
+                      child: DetailsPoint(transaction: transactionDetails),
                     ),
                     const SizedBox(height: 16),
-                    FundsTransaction(transaction: transactionDetails),
+                    FundsPoint(transaction: transactionDetails),
                     const SizedBox(height: 16),
-                    InformationTransaction(transaction: transactionDetails),
+                    InformationPoint(transaction: transactionDetails),
                   ],
                 );
               }

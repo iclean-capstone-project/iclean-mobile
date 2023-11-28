@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/transaction.dart';
 
-class FundsTransaction extends StatelessWidget {
-  const FundsTransaction({
+class FundsMoney extends StatelessWidget {
+  const FundsMoney({
     super.key,
     required this.transaction,
   });

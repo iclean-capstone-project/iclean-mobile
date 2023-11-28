@@ -1,6 +1,8 @@
 import 'package:intl/intl.dart';
 
 enum TransactionStatus {
+  success,
+  fail,
   paid,
   unPaid,
 }
@@ -128,6 +130,10 @@ class Transaction {
 
   static TransactionStatus _mapStrToTransactionStatus(String value) {
     switch (value) {
+      case "SUCCESS":
+        return TransactionStatus.success;
+      case "FAIL":
+        return TransactionStatus.fail;
       case "PAID":
         return TransactionStatus.paid;
       case "UNPAID":
@@ -150,5 +156,10 @@ class Transaction {
   String formatDiscountInVND() {
     final vndFormat = NumberFormat.currency(locale: 'vi_VN', symbol: 'đ');
     return vndFormat.format(discount);
+  }
+
+  String formatAmountToPoint() {
+    final vndFormat = NumberFormat.currency(locale: 'vi_VN', symbol: '');
+    return vndFormat.format(amount);
   }
 }

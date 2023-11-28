@@ -18,6 +18,10 @@ class PaymentContent extends StatelessWidget {
   Widget build(BuildContext context) {
     String getStatusString(TransactionStatus status) {
       switch (status) {
+        case TransactionStatus.success:
+          return "Hoàn thành";
+        case TransactionStatus.fail:
+          return "Thất bại";
         case TransactionStatus.paid:
           return "Đã thanh toán";
         case TransactionStatus.unPaid:

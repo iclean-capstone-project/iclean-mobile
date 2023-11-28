@@ -8,6 +8,7 @@ import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/view/common/profile/location/location_screen.dart';
 import 'package:iclean_mobile_app/view/common/profile/my_profile_screen/components/dark_mode.dart';
 import 'package:iclean_mobile_app/view/common/profile/my_profile_screen/components/profile_inkwell.dart';
+import 'package:iclean_mobile_app/view/common/profile/point/point_screen/point_screen.dart';
 import 'package:iclean_mobile_app/view/common/profile/regis_become_helper/regis_become_helper_screen.dart';
 import 'package:iclean_mobile_app/view/common/profile/update_profile_screen/update_profile_screen.dart';
 import 'package:iclean_mobile_app/view/common/profile/wallet/my_wallet/wallet_screen.dart';
@@ -278,6 +279,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   MaterialPageRoute(
                                       builder: (context) =>
                                           const MyWalletScreen()));
+                            },
+                          ),
+                          ProfileInkWell(
+                            icon: const Icon(Icons.wallet),
+                            text: "Iclean Point",
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const MyPointScreen()));
                             },
                           ),
                           ProfileInkWell(

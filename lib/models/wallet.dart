@@ -39,4 +39,9 @@ class Wallet {
     final vndFormat = NumberFormat.currency(locale: 'vi_VN', symbol: 'đ');
     return vndFormat.format(balance);
   }
+
+  String formatBalanceToPoint() {
+    final vndFormat = NumberFormat.currency(locale: 'vi_VN', symbol: '');
+    return vndFormat.format(balance);
+  }
 }

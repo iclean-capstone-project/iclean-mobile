@@ -3,8 +3,8 @@ import 'package:iclean_mobile_app/models/transaction.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/widgets/details_fields.dart';
 
-class InformationTransaction extends StatelessWidget {
-  const InformationTransaction({
+class InformationPoint extends StatelessWidget {
+  const InformationPoint({
     super.key,
     required this.transaction,
   });

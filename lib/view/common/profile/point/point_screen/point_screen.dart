@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/transaction.dart';
 import 'package:iclean_mobile_app/services/api_transaction_repo.dart';
+import 'package:iclean_mobile_app/widgets/list_transaction_loading.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 
-import 'components/account_balance.dart';
-import '../../../../../widgets/list_transaction_loading.dart';
-import 'components/transaction_content.dart';
+import 'components/account_balance_point.dart';
+import 'components/points_content.dart';
 
-class MyWalletScreen extends StatelessWidget {
-  const MyWalletScreen({super.key});
+class MyPointScreen extends StatelessWidget {
+  const MyPointScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    Future<List<Transaction>> fetchTransactionMoney(int page) async {
+    Future<List<Transaction>> fetchTransactionPoint(int page) async {
       final ApiTransactionRepository apiTransactionRepository =
           ApiTransactionRepository();
       try {
         final newNotifications =
-            await apiTransactionRepository.getTransactionMoney(context, page);
+            await apiTransactionRepository.getTransactionPoint(context, page);
         return newNotifications;
       } catch (e) {
         // ignore: avoid_print
@@ -36,7 +36,7 @@ class MyWalletScreen extends StatelessWidget {
             children: [
               const Padding(
                 padding: EdgeInsets.only(top: 24.0),
-                child: AccountBalance(),
+                child: AccountBalancePoint(),
               ),
               const SizedBox(height: 16),
               const Text(
@@ -48,7 +48,7 @@ class MyWalletScreen extends StatelessWidget {
                 ),
               ),
               FutureBuilder(
-                future: fetchTransactionMoney(1),
+                future: fetchTransactionPoint(1),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const ListTransactionLoading();
@@ -56,7 +56,7 @@ class MyWalletScreen extends StatelessWidget {
                     return Text('Error: ${snapshot.error}');
                   } else if (snapshot.hasData) {
                     final transactions = snapshot.data!;
-                    return TransactionContent(transactions: transactions);
+                    return PointsContent(transactions: transactions);
                   }
                   return const Text('No Transaction found.');
                 },
