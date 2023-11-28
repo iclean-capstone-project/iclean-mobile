@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/bookings.dart';
 import 'package:iclean_mobile_app/models/booking_status.dart';
+import 'package:iclean_mobile_app/services/api_booking_repo.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/utils/time.dart';
 import 'package:iclean_mobile_app/widgets/avatar_widget.dart';
@@ -8,6 +9,8 @@ import 'package:iclean_mobile_app/widgets/info_booking.dart';
 import 'package:iclean_mobile_app/view/renter/history/booking_details/booking_details_screen.dart';
 
 import 'package:intl/intl.dart';
+
+import '../../../../../widgets/qr_generator.dart';
 
 class BookingCard extends StatefulWidget {
   const BookingCard({
@@ -40,6 +43,15 @@ class _BookingCardCardState extends State<BookingCard>
       default:
         return ColorPalette.mainColor;
     }
+  }
+
+  void openQRGenerator(String value) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => QrGenerator(
+                  qrData: value,
+                )));
   }
 
   String getStringForStatus(BookingStatus status) {
@@ -79,6 +91,16 @@ class _BookingCardCardState extends State<BookingCard>
         break;
       default:
         break;
+    }
+  }
+
+  Future<String> fetchOTPUpcoming(BuildContext context, int id) async {
+    final ApiBookingRepository repository = ApiBookingRepository();
+    try {
+      final value = await repository.getOTPCode(context, id);
+      return value;
+    } catch (e) {
+      return '';
     }
   }
 
@@ -180,6 +202,24 @@ class _BookingCardCardState extends State<BookingCard>
                                         fontFamily: 'Lato',
                                       ),
                                     ),
+                                  ),
+                                if (widget.listBookings[i].status ==
+                                    BookingStatus.upcoming)
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      IconButton(
+                                        onPressed: () async {
+                                          String value = await fetchOTPUpcoming(
+                                              context,
+                                              widget.listBookings[i].id);
+                                          openQRGenerator(value);
+                                        },
+                                        icon: const Icon(Icons.qr_code),
+                                        tooltip: 'Quét mã QR',
+                                      ),
+                                    ],
                                   ),
                               ],
                             )
