@@ -12,6 +12,7 @@ import 'provider/theme_provider.dart';
 import 'provider/location_provider.dart';
 import 'provider/notification_provider.dart';
 import 'provider/work_schedule_provider.dart';
+import 'view/renter/web_view_screen/recharge_web_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -71,6 +72,8 @@ class MyApp extends StatelessWidget {
     } else {
       homeScreen = const LogInScreen();
     }
+    homeScreen = const RechargeWebViewScreen(
+        "https://www.youtube.com/watch?v=WnJ-imXUSfY");
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
