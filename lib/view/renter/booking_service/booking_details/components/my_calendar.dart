@@ -6,7 +6,6 @@ class MyCalendar extends StatelessWidget {
   MyCalendar({super.key, required this.bookingDetailsProvider});
 
   final DateTime today = DateTime.now();
-  final DateTime _today = DateTime.now();
   final BookingDetailsProvider bookingDetailsProvider;
 
   @override

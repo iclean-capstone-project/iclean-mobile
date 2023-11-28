@@ -172,10 +172,21 @@ class _HistoryScreenScreenState extends State<HistoryScreen>
                     height: MediaQuery.of(context).size.height,
                     child: TabBarView(
                       children: [
-                        BookingCard(listBookings: requests),
-                        BookingCard(listBookings: approvedBookings),
-                        BookingCard(listBookings: upcomingBookings),
-                        BookingCard(listBookings: finishedBookings),
+                        BookingCard(
+                          listBookings: requests,
+                          title: 'Đang yêu cầu',
+                        ),
+                        BookingCard(
+                            listBookings: approvedBookings,
+                            title: 'Chọn người làm'),
+                        BookingCard(
+                          listBookings: upcomingBookings,
+                          title: 'Sắp tới',
+                        ),
+                        BookingCard(
+                          listBookings: finishedBookings,
+                          title: 'Lịch sử',
+                        )
                       ],
                     ),
                   ),

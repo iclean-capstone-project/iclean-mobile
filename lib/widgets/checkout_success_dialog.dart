@@ -50,6 +50,7 @@ class CheckoutSuccessDialog extends StatelessWidget {
                   fontFamily: 'Lato',
                   color: ColorPalette.mainColor,
                 ),
+                textAlign: TextAlign.center,
               ),
             ),
             Padding(

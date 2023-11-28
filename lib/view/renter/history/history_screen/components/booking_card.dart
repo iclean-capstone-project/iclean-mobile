@@ -10,12 +10,14 @@ import 'package:iclean_mobile_app/view/renter/history/booking_details/booking_de
 import 'package:intl/intl.dart';
 
 class BookingCard extends StatefulWidget {
-  final List<Booking> listBookings;
-
   const BookingCard({
     super.key,
     required this.listBookings,
+    required this.title,
   });
+
+  final List<Booking> listBookings;
+  final String title;
 
   @override
   State<BookingCard> createState() => _BookingCardCardState();
@@ -82,6 +84,19 @@ class _BookingCardCardState extends State<BookingCard>
 
   @override
   Widget build(BuildContext context) {
+    if (widget.listBookings.isEmpty) {
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text(
+          "Bạn không có đơn nào ở trạng thái ${widget.title}!",
+          style: const TextStyle(
+            fontSize: 18,
+            fontFamily: 'Lato',
+          ),
+          textAlign: TextAlign.justify,
+        ),
+      );
+    }
     return ListView(
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
