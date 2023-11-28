@@ -17,7 +17,7 @@ class ScheduleScreen extends StatefulWidget {
 class _ScheduleScreenState extends State<ScheduleScreen> {
   List<Booking> upcomingBookings = [];
 
-  CalendarFormat _calendarFormat = CalendarFormat.month;
+  final CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime today = DateTime.now();
   DateTime _today = DateTime.now();
   DateTime? _selectedDay;
@@ -175,13 +175,6 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                       selectedDayPredicate: (day) =>
                           isSameDay(_selectedDay, day),
                       calendarFormat: _calendarFormat,
-                      onFormatChanged: (format) {
-                        if (_calendarFormat != format) {
-                          setState(() {
-                            _calendarFormat = format;
-                          });
-                        }
-                      },
                       onPageChanged: (today) {
                         _today = today;
                         _updateSelectedEvents(today);
