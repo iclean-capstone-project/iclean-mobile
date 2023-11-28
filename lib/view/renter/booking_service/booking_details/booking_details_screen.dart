@@ -7,7 +7,7 @@ import 'package:iclean_mobile_app/widgets/my_textfield.dart';
 import 'package:iclean_mobile_app/provider/booking_details_provider.dart';
 import 'package:iclean_mobile_app/widgets/my_bottom_app_bar_with_two_inkwell.dart';
 import 'package:iclean_mobile_app/view/renter/nav_bar_bottom/renter_screen.dart';
-import 'package:iclean_mobile_app/view/renter/booking_service/checkout/checkout_screen.dart';
+import 'package:iclean_mobile_app/view/renter/checkout/checkout/checkout_screen.dart';
 
 import 'components/my_calendar.dart';
 import 'components/start_time_option.dart';

@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
-import 'package:iclean_mobile_app/view/renter/nav_bar_bottom/renter_screen.dart';
 
 class CheckoutSuccessDialog extends StatelessWidget {
-  const CheckoutSuccessDialog({super.key});
+  const CheckoutSuccessDialog({
+    super.key,
+    required this.title,
+    required this.description,
+    required this.onTap,
+  });
+
+  final String title;
+  final String description;
+  final void Function() onTap;
 
   @override
   Widget build(BuildContext context) {
     void navigateScreen() {
-      Future.delayed(const Duration(seconds: 2), () {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) {
-              return const RenterScreens();
-            },
-          ),
-        );
-      });
+      Future.delayed(const Duration(seconds: 2), onTap);
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -40,11 +40,11 @@ class CheckoutSuccessDialog extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.only(top: 16),
+            Padding(
+              padding: const EdgeInsets.only(top: 16),
               child: Text(
-                "Gửi đơn thành công",
-                style: TextStyle(
+                title,
+                style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                   fontFamily: 'Lato',
@@ -52,11 +52,11 @@ class CheckoutSuccessDialog extends StatelessWidget {
                 ),
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.only(top: 8),
+            Padding(
+              padding: const EdgeInsets.only(top: 8),
               child: Text(
-                "Đơn của bạn đã được đặt thành công. Vui lòng đợi hệ thống xét duyệt..",
-                style: TextStyle(
+                description,
+                style: const TextStyle(
                   fontSize: 16,
                   fontFamily: 'Lato',
                 ),

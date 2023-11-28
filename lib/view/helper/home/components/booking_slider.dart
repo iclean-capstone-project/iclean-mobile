@@ -35,20 +35,37 @@ class BookingSlider extends StatelessWidget {
           return Text('Error: ${snapshot.error}');
         } else if (snapshot.hasData) {
           final bookings = snapshot.data!;
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: CarouselSlider(
-              options: CarouselOptions(
-                height: 256,
-                autoPlay: true,
-                autoPlayInterval: const Duration(seconds: 3),
-                enableInfiniteScroll: true,
-                viewportFraction: 1.0,
-              ),
-              items: bookings.asMap().entries.map((entry) {
-                int index = entry.key;
-                return BookingCardForHelper(bookings: bookings, i: index);
-              }).toList(),
+          if (bookings.isNotEmpty) {
+            if (bookings.length == 1) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: BookingCardForHelper(booking: bookings[0]),
+              );
+            } else {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: CarouselSlider(
+                  options: CarouselOptions(
+                    height: 256,
+                    autoPlay: true,
+                    autoPlayInterval: const Duration(seconds: 3),
+                    enableInfiniteScroll: true,
+                    viewportFraction: 1.0,
+                  ),
+                  items: bookings.asMap().entries.map((entry) {
+                    int index = entry.key;
+                    Booking booking = bookings[index];
+                    return BookingCardForHelper(booking: booking);
+                  }).toList(),
+                ),
+              );
+            }
+          }
+          return const Text(
+            "Chưa có đơn nào xung quanh bạn",
+            style: TextStyle(
+              fontSize: 16,
+              fontFamily: 'Lato',
             ),
           );
         } else {

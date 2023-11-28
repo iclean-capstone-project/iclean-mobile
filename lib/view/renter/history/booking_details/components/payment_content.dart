@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/booking_detail.dart';
+import 'package:iclean_mobile_app/models/transaction.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/widgets/details_fields.dart';
 
@@ -15,6 +16,15 @@ class PaymentContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String getStatusString(TransactionStatus status) {
+      switch (status) {
+        case TransactionStatus.paid:
+          return "Đã thanh toán";
+        case TransactionStatus.unPaid:
+          return "Chưa thanh toán";
+      }
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -105,7 +115,7 @@ class PaymentContent extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
-                      booking.transaction!.status.name,
+                      getStatusString(booking.transaction!.status),
                       style: TextStyle(
                         color: Colors.deepPurple.shade400,
                         fontSize: 15,

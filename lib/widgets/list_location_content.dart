@@ -5,7 +5,7 @@ import 'package:iclean_mobile_app/provider/checkout_provider.dart';
 import 'package:iclean_mobile_app/services/api_checkout_repo.dart';
 import 'package:iclean_mobile_app/services/api_location_repo.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
-import 'package:iclean_mobile_app/view/renter/checkout/checkout_cart_screen.dart';
+import 'package:iclean_mobile_app/view/renter/checkout/checkout_cart/checkout_cart_screen.dart';
 
 class ListLocationContent extends StatelessWidget {
   const ListLocationContent({

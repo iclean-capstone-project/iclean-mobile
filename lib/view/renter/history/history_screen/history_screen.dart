@@ -2,21 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/bookings.dart';
 import 'package:iclean_mobile_app/services/api_booking_repo.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
-import 'package:iclean_mobile_app/view/renter/my_booking/my_booking_screen/components/booking_card.dart';
+import 'package:iclean_mobile_app/view/renter/history/history_screen/components/booking_card.dart';
 
-class MyBookingsScreen extends StatefulWidget {
-  const MyBookingsScreen({super.key});
+class HistoryScreen extends StatefulWidget {
+  const HistoryScreen({super.key, this.initialIndex});
+  final int? initialIndex;
 
   @override
-  State<MyBookingsScreen> createState() => _MyBookingsScreenState();
+  State<HistoryScreen> createState() => _HistoryScreenScreenState();
 }
 
-class _MyBookingsScreenState extends State<MyBookingsScreen>
+class _HistoryScreenScreenState extends State<HistoryScreen>
     with SingleTickerProviderStateMixin {
+  late int _selectedIndex;
   late TabController _tabController;
   List<Booking> requests = [];
 
   List<Booking> rejectedBookings = [];
+
+  List<Booking> approvedBookings = [];
 
   List<Booking> upcomingBookings = [];
 
@@ -24,12 +28,29 @@ class _MyBookingsScreenState extends State<MyBookingsScreen>
 
   @override
   void initState() {
-    _tabController = TabController(length: 4, vsync: this, initialIndex: 0);
-    _tabController.addListener((_handleTabSelection));
     super.initState();
+
+    if (widget.initialIndex != null) {
+      _selectedIndex = widget.initialIndex!;
+    } else {
+      _selectedIndex = 0;
+    }
+
+    _tabController = TabController(
+      length: 4,
+      vsync: this,
+      initialIndex: _selectedIndex,
+    );
+
+    _tabController.addListener((_handleTabSelection));
     fetchBookingNotYet().then((bookings) {
       setState(() {
         requests = bookings;
+      });
+    });
+    fetchBookingApproved().then((bookings) {
+      setState(() {
+        approvedBookings = bookings;
       });
     });
     fetchBookingUpcoming().then((bookings) {
@@ -48,6 +69,18 @@ class _MyBookingsScreenState extends State<MyBookingsScreen>
     final ApiBookingRepository repository = ApiBookingRepository();
     try {
       final bookings = await repository.getBooking(1, "NOT_YET", false);
+      return bookings;
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+      return <Booking>[];
+    }
+  }
+
+  Future<List<Booking>> fetchBookingApproved() async {
+    final ApiBookingRepository repository = ApiBookingRepository();
+    try {
+      final bookings = await repository.getBooking(1, "APPROVED", false);
       return bookings;
     } catch (e) {
       // ignore: avoid_print
@@ -136,11 +169,11 @@ class _MyBookingsScreenState extends State<MyBookingsScreen>
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24),
                   child: SizedBox(
-                    height: MediaQuery.of(context).size.height - 200,
+                    height: MediaQuery.of(context).size.height,
                     child: TabBarView(
                       children: [
                         BookingCard(listBookings: requests),
-                        BookingCard(listBookings: rejectedBookings),
+                        BookingCard(listBookings: approvedBookings),
                         BookingCard(listBookings: upcomingBookings),
                         BookingCard(listBookings: finishedBookings),
                       ],

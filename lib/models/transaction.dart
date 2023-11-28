@@ -1,8 +1,8 @@
 import 'package:intl/intl.dart';
 
 enum TransactionStatus {
-  success,
-  failed,
+  paid,
+  unPaid,
 }
 
 enum TransactionType {
@@ -57,8 +57,8 @@ class Transaction {
     const typeStr = 'DEPOSIT';
     TransactionType mappedType = _mapStrToTransactionType(typeStr);
 
-    //status: json['status'],
-    const status = 'SUCCESS';
+    final status = json['status'];
+    //onst status = 'SUCCESS';
     TransactionStatus mappedStatus = _mapStrToTransactionStatus(status);
 
     List<dynamic> details = json['servicePrice'] as List;
@@ -128,10 +128,10 @@ class Transaction {
 
   static TransactionStatus _mapStrToTransactionStatus(String value) {
     switch (value) {
-      case "SUCCESS":
-        return TransactionStatus.success;
-      case "FAIL":
-        return TransactionStatus.failed;
+      case "PAID":
+        return TransactionStatus.paid;
+      case "UNPAID":
+        return TransactionStatus.unPaid;
       default:
         throw Exception('Invalid transaction status value');
     }

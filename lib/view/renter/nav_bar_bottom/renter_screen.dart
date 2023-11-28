@@ -4,16 +4,18 @@ import 'package:iclean_mobile_app/view/renter/cart/cart_screen.dart';
 import 'package:iclean_mobile_app/view/renter/home/renter_home_screen.dart';
 import 'package:iclean_mobile_app/view/renter/schedule/schedule_screen.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
-import 'package:iclean_mobile_app/view/renter/my_booking/my_booking_screen/my_booking_screen.dart';
+import 'package:iclean_mobile_app/view/renter/history/history_screen/history_screen.dart';
 import 'package:iclean_mobile_app/view/common/profile/my_profile_screen/profile_screen.dart';
 
 class RenterScreens extends StatefulWidget {
   const RenterScreens({
     super.key,
     this.selectedIndex,
+    this.initialIndex,
   });
 
   final int? selectedIndex;
+  final int? initialIndex;
 
   @override
   State<RenterScreens> createState() => _RenterScreensState();
@@ -21,6 +23,7 @@ class RenterScreens extends StatefulWidget {
 
 class _RenterScreensState extends State<RenterScreens> {
   late int _selectedIndex;
+  late int _initIndex;
   late List<Widget> _screenOptions;
 
   @override
@@ -33,9 +36,15 @@ class _RenterScreensState extends State<RenterScreens> {
       _selectedIndex = 0;
     }
 
+    if (widget.initialIndex != null) {
+      _initIndex = widget.selectedIndex!;
+    } else {
+      _initIndex = 0;
+    }
+
     _screenOptions = <Widget>[
       const RenterHomeScreen(),
-      const MyBookingsScreen(),
+      HistoryScreen(initialIndex: _initIndex),
       const ScheduleScreen(),
       const CartScreen(),
       const ProfileScreen(),

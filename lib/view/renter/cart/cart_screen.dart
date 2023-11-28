@@ -6,7 +6,7 @@ import 'package:iclean_mobile_app/models/cart_item.dart';
 import 'package:iclean_mobile_app/provider/cart_provider.dart';
 import 'package:iclean_mobile_app/services/api_cart_repo.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
-import 'package:iclean_mobile_app/view/renter/checkout/checkout_cart_screen.dart';
+import 'package:iclean_mobile_app/view/renter/checkout/checkout_cart/checkout_cart_screen.dart';
 import 'package:iclean_mobile_app/view/renter/nav_bar_bottom/renter_screen.dart';
 import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
 import 'package:iclean_mobile_app/widgets/title_content.dart';
@@ -158,6 +158,9 @@ class CartScreen extends StatelessWidget {
                           }
                         },
                         text: "Đặt địch vụ",
+                        backgroundColor: cart.cartItem.isNotEmpty
+                            ? ColorPalette.mainColor
+                            : ColorPalette.greyColor,
                       ),
                       const SizedBox(height: 8),
                     ],

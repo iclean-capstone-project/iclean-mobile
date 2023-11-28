@@ -47,16 +47,24 @@ class BookingForHelperScreen extends StatelessWidget {
               return Text('Error: ${snapshot.error}');
             } else if (snapshot.hasData) {
               final bookings = snapshot.data!;
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: Column(
-                  children: [
-                    for (int i = 0; i < bookings.length; i++)
-                      BookingCardForHelper(
-                        bookings: bookings,
-                        i: i,
-                      ),
-                  ],
+              if (bookings.isNotEmpty) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Column(
+                    children: [
+                      for (int i = 0; i < bookings.length; i++)
+                        BookingCardForHelper(
+                          booking: bookings[i],
+                        ),
+                    ],
+                  ),
+                );
+              }
+              return const Text(
+                "Chưa có đơn nào xung quanh bạn",
+                style: TextStyle(
+                  fontSize: 16,
+                  fontFamily: 'Lato',
                 ),
               );
             } else {

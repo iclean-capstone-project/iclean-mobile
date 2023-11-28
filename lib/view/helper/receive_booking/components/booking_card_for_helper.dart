@@ -1,3 +1,5 @@
+import 'package:iclean_mobile_app/services/api_booking_repo.dart';
+import 'package:iclean_mobile_app/widgets/checkout_success_dialog.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/utils/time.dart';
@@ -10,15 +12,33 @@ import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
 class BookingCardForHelper extends StatelessWidget {
   const BookingCardForHelper({
     super.key,
-    required this.bookings,
-    required this.i,
+    required this.booking,
   });
 
-  final List<Booking> bookings;
-  final int i;
+  final Booking booking;
 
   @override
   Widget build(BuildContext context) {
+    void applyBooking(int bookingId) {
+      final ApiBookingRepository repository = ApiBookingRepository();
+      repository.helperApplyBooking(bookingId).then((_) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) => CheckoutSuccessDialog(
+            title: "Gửi yêu cầu thành công",
+            description:
+                "Vui lòng đợi khách hàng chấp nhận để có thể làm dịch vụ này!",
+            onTap: () {
+              Navigator.pop(context);
+            },
+          ),
+        );
+      }).catchError((error) {
+        // ignore: avoid_print
+        print('Failed to choose location: $error');
+      });
+    }
+
     return Container(
       margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(
@@ -31,7 +51,7 @@ class BookingCardForHelper extends StatelessWidget {
               context,
               MaterialPageRoute(
                   builder: (context) =>
-                      BookingDetailsReceiveScreen(booking: bookings[i])));
+                      BookingDetailsReceiveScreen(booking: booking)));
         },
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -42,14 +62,14 @@ class BookingCardForHelper extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Khách hàng: ${bookings[i].renterName}",
+                    "Khách hàng: ${booking.renterName}",
                     style: const TextStyle(
                       fontSize: 16,
                       fontFamily: 'Lato',
                     ),
                   ),
                   Text(
-                    bookings[i].formatPriceInVND(),
+                    booking.formatPriceInVND(),
                     style: const TextStyle(
                       fontSize: 18,
                       fontFamily: 'Lato',
@@ -66,7 +86,7 @@ class BookingCardForHelper extends StatelessWidget {
                 children: [
                   //avatar
                   AvatarWidget(
-                    imagePath: bookings[i].serviceIcon,
+                    imagePath: booking.serviceIcon,
                   ),
                   const SizedBox(width: 16),
                   Container(
@@ -77,7 +97,7 @@ class BookingCardForHelper extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          bookings[i].serviceName,
+                          booking.serviceName,
                           style: const TextStyle(
                             fontSize: 18,
                             fontFamily: 'Lato',
@@ -92,7 +112,7 @@ class BookingCardForHelper extends StatelessWidget {
                             const SizedBox(width: 4),
                             Flexible(
                               child: Text(
-                                bookings[i].location!,
+                                booking.location!,
                                 style: const TextStyle(
                                   fontSize: 16,
                                   fontFamily: 'Lato',
@@ -110,8 +130,7 @@ class BookingCardForHelper extends StatelessWidget {
                             const Icon(Icons.date_range_rounded),
                             const SizedBox(width: 4),
                             Text(
-                              DateFormat('d/MM/yyyy')
-                                  .format(bookings[i].workDate),
+                              DateFormat('d/MM/yyyy').format(booking.workDate),
                               style: const TextStyle(
                                 fontSize: 16,
                                 fontFamily: 'Lato',
@@ -125,7 +144,7 @@ class BookingCardForHelper extends StatelessWidget {
                             const Icon(Icons.timer_sharp),
                             const SizedBox(width: 4),
                             Text(
-                              "${bookings[i].workTime.to24hours()} - ${bookings[i].workTime.addHour(bookings[i].serviceUnit.equivalent.toInt()).to24hours()}",
+                              "${booking.workTime.to24hours()} - ${booking.workTime.addHour(booking.serviceUnit.equivalent.toInt()).to24hours()}",
                               style: const TextStyle(
                                 fontSize: 16,
                                 fontFamily: 'Lato',
@@ -141,7 +160,11 @@ class BookingCardForHelper extends StatelessWidget {
               const Divider(
                 color: ColorPalette.greyColor,
               ),
-              MainColorInkWellFullSize(onTap: () {}, text: "Nhận đơn")
+              MainColorInkWellFullSize(
+                  onTap: () {
+                    applyBooking(booking.id);
+                  },
+                  text: "Nhận đơn")
             ],
           ),
         ),

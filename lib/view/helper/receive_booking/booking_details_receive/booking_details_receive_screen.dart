@@ -1,12 +1,13 @@
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-// ignore: depend_on_referenced_packages
-import 'package:http/http.dart' as http;
 import 'package:iclean_mobile_app/models/bookings.dart';
 import 'package:iclean_mobile_app/utils/time.dart';
 import 'package:iclean_mobile_app/widgets/avatar_widget.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 import 'package:iclean_mobile_app/widgets/my_bottom_app_bar.dart';
-import 'package:intl/intl.dart';
+import 'package:iclean_mobile_app/widgets/checkout_success_dialog.dart';
+import 'package:iclean_mobile_app/services/api_booking_repo.dart';
+import 'package:iclean_mobile_app/view/helper/receive_booking/booking_for_helper/booking_for_helper_screen.dart';
 
 class BookingDetailsReceiveScreen extends StatelessWidget {
   const BookingDetailsReceiveScreen({super.key, required this.booking});
@@ -14,14 +15,27 @@ class BookingDetailsReceiveScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future<bool> isNetworkImageValid(String imageUrl) async {
-      try {
-        final response = await http.head(Uri.parse(imageUrl));
-        return response.statusCode >= 200 && response.statusCode < 300;
-      } catch (e) {
-        // Handle any exceptions, such as network errors
-        return false;
-      }
+    void applyBooking(int bookingId) {
+      final ApiBookingRepository repository = ApiBookingRepository();
+      repository.helperApplyBooking(bookingId).then((_) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) => CheckoutSuccessDialog(
+            title: "Gửi yêu cầu thành công",
+            description:
+                "Vui lòng đợi khách hàng chấp nhận để có thể làm dịch vụ này!",
+            onTap: () {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const BookingForHelperScreen()));
+            },
+          ),
+        );
+      }).catchError((error) {
+        // ignore: avoid_print
+        print('Failed to apply booking: $error');
+      });
     }
 
     return Scaffold(
@@ -76,45 +90,22 @@ class BookingDetailsReceiveScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    // FutureBuilder<bool>(
-                    //   future: isNetworkImageValid(booking.Avatar!),
-                    //   builder: (context, snapshot) {
-                    //     if (snapshot.hasError || !(snapshot.data ?? false)) {
-                    //       // If the network image is invalid or there's an error, display the fallback asset image
-                    //       return const CircleAvatar(
-                    //         backgroundImage:
-                    //             AssetImage('assets/images/default_profile.png'),
-                    //         radius: 36,
-                    //       );
-                    //     } else {
-                    //       return CircleAvatar(
-                    //         backgroundImage: NetworkImage(booking.customerAvatar!),
-                    //         radius: 36,
-                    //       );
-                    //     }
-                    //   },
-                    // ),
-                    const SizedBox(width: 16),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          booking.renterName!,
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontFamily: 'Lato',
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        // Text(
-                        //   booking.!,
-                        //   style: const TextStyle(
-                        //     fontFamily: 'Lato',
-                        //   ),
-                        // ),
-                      ],
+                    const Text(
+                      'Tên khách hàng',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontFamily: 'Lato',
+                      ),
+                    ),
+                    Text(
+                      booking.renterName!,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontFamily: 'Lato',
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ],
                 ),
@@ -203,9 +194,17 @@ class BookingDetailsReceiveScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    const Text(
+                      'Thu nhập từ dịch vụ',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontFamily: 'Lato',
+                      ),
+                    ),
                     Text(
-                      booking.note!,
+                      booking.formatPriceInVND(),
                       style: const TextStyle(
                         fontSize: 18,
                         fontFamily: 'Lato',
@@ -227,21 +226,18 @@ class BookingDetailsReceiveScreen extends StatelessWidget {
               const SizedBox(height: 4),
               Container(
                 padding: const EdgeInsets.all(16),
+                width: double.infinity,
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.primary,
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Row(
-                  children: [
-                    Text(
-                      booking.note!,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontFamily: 'Lato',
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
+                child: Text(
+                  booking.note!,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontFamily: 'Lato',
+                  ),
+                  textAlign: TextAlign.justify,
                 ),
               ),
             ],
@@ -249,7 +245,9 @@ class BookingDetailsReceiveScreen extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: MyBottomAppBar(
-        onTap: () {},
+        onTap: () {
+          applyBooking(booking.id);
+        },
         text: "Nhận đơn",
       ),
     );

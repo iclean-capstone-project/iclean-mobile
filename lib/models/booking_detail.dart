@@ -13,6 +13,10 @@ class BookingDetail {
       locationDescription;
   DateTime orderDate, workDate;
   TimeOfDay workTime;
+  ServiceUnit serviceUnit;
+  double price, latitude, longitude;
+  BookingStatus status;
+  List<StatusHistory> listStatus;
   String? note,
       rejectionReasonContent,
       rejectionReasonDescription,
@@ -21,10 +25,6 @@ class BookingDetail {
       phoneNumber,
       feedback;
   Transaction? transaction;
-  ServiceUnit serviceUnit;
-  double price, latitude, longitude;
-  BookingStatus status;
-  List<StatusHistory> listStatus;
   double? rate;
   int? customerId, numberOfFeedback;
 
@@ -82,6 +82,7 @@ class BookingDetail {
 
     final address = json['address'];
     final helper = json['helper'] as Map<String, dynamic>?;
+
     final transaction = json['transaction'];
 
     List<dynamic> statuses = json['statuses'];

@@ -5,7 +5,7 @@ import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/utils/time.dart';
 import 'package:iclean_mobile_app/widgets/avatar_widget.dart';
 import 'package:iclean_mobile_app/widgets/info_booking.dart';
-import 'package:iclean_mobile_app/view/renter/my_booking/booking_details/booking_details_screen.dart';
+import 'package:iclean_mobile_app/view/renter/history/booking_details/booking_details_screen.dart';
 
 import 'package:intl/intl.dart';
 
@@ -27,6 +27,8 @@ class _BookingCardCardState extends State<BookingCard>
     switch (status) {
       case BookingStatus.notYet:
         return ColorPalette.mainColor;
+      case BookingStatus.approved:
+        return Colors.teal;
       case BookingStatus.rejected:
         return Colors.red;
       case BookingStatus.upcoming:
@@ -44,6 +46,8 @@ class _BookingCardCardState extends State<BookingCard>
         return "Đang đợi duyệt đơn";
       case BookingStatus.rejected:
         return "Bị từ chối";
+      case BookingStatus.approved:
+        return "Bạn cần chọn người làm";
       case BookingStatus.upcoming:
         return "Sắp đến";
       case BookingStatus.finished:
@@ -57,6 +61,11 @@ class _BookingCardCardState extends State<BookingCard>
     BookingStatus status = booking.status!;
     switch (status) {
       case BookingStatus.finished:
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+          return BookingDetailsScreen(booking: booking);
+        }));
+        break;
+      case BookingStatus.approved:
         Navigator.of(context).push(MaterialPageRoute(builder: (context) {
           return BookingDetailsScreen(booking: booking);
         }));

@@ -3,6 +3,7 @@ import 'package:iclean_mobile_app/models/cart.dart';
 import 'package:iclean_mobile_app/provider/checkout_provider.dart';
 import 'package:iclean_mobile_app/services/api_checkout_repo.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
+import 'package:iclean_mobile_app/view/renter/nav_bar_bottom/renter_screen.dart';
 import 'package:iclean_mobile_app/widgets/auto_assign.dart';
 import 'package:iclean_mobile_app/widgets/checkout_success_dialog.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
@@ -43,7 +44,20 @@ class _CheckoutCartScreenState extends State<CheckoutCartScreen> {
       repository.checkout(isUsePoint, isAutoAssign, context).then((_) {
         showDialog(
           context: context,
-          builder: (BuildContext context) => const CheckoutSuccessDialog(),
+          builder: (BuildContext context) => CheckoutSuccessDialog(
+            title: "Gửi đơn thành công",
+            description:
+                "Đơn của bạn đã được đặt thành công. Vui lòng đợi hệ thống xét duyệt..",
+            onTap: () {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return const RenterScreens();
+                  },
+                ),
+              );
+            },
+          ),
         );
       }).catchError((error) {
         // ignore: avoid_print

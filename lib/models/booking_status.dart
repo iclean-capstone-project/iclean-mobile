@@ -1,10 +1,10 @@
 enum BookingStatus {
   rejected,
+  cancelBySystem,
   notYet,
   approved,
-  employeeAccepted,
-  renterCanceled,
-  employeeCanceled,
+  cancelByRenter,
+  cancelByHelper,
   upcoming,
   inProcessing,
   finished,
@@ -17,16 +17,16 @@ BookingStatus mapStrBookingStatus(String value) {
   switch (value) {
     case "REJECTED":
       return BookingStatus.rejected;
+    case "CANCEL_BY_SYSTEM":
+      return BookingStatus.rejected;
     case "NOT_YET":
       return BookingStatus.notYet;
     case "APPROVED":
       return BookingStatus.approved;
-    case "EMPLOYEE_ACCEPTED":
-      return BookingStatus.employeeAccepted;
-    case "RENTER_CANCELED":
-      return BookingStatus.renterCanceled;
-    case "EMPLOYEE_CANCELED":
-      return BookingStatus.employeeCanceled;
+    case "CANCEL_BY_RENTER":
+      return BookingStatus.cancelByRenter;
+    case "CANCEL_BY_HELPER":
+      return BookingStatus.cancelByHelper;
     case "WAITING":
       return BookingStatus.upcoming;
     case "IN_PROCESS":

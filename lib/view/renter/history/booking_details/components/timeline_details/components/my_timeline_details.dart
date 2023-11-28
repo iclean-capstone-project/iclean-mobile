@@ -32,11 +32,9 @@ class MyTimeline extends StatelessWidget {
           return "Đang làm việc";
         case BookingStatus.finished:
           return "Đã hoàn thành";
-        case BookingStatus.employeeAccepted:
-          return "Bạn đã chọn người giúp việc thành công";
-        case BookingStatus.employeeCanceled:
+        case BookingStatus.cancelByHelper:
           return "Đơn bị hủy từ phía người làm";
-        case BookingStatus.renterCanceled:
+        case BookingStatus.cancelByRenter:
           return "Bạn đã hủy đơn hàng";
         default:
           return "Trạng thái đơn hàng";

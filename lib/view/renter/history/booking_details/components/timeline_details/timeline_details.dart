@@ -14,31 +14,6 @@ class TimelineDetails extends StatefulWidget {
 class _TimelineDetailsState extends State<TimelineDetails> {
   bool isVisible = false;
 
-  String getStringForStatus(BookingStatus status) {
-    switch (status) {
-      case BookingStatus.notYet:
-        return "Đặt đơn";
-      case BookingStatus.rejected:
-        return "Đơn bị từ chối";
-      case BookingStatus.approved:
-        return "Đơn đã được duyệt";
-      case BookingStatus.upcoming:
-        return "Đơn sắp đến";
-      case BookingStatus.inProcessing:
-        return "Đang làm việc";
-      case BookingStatus.finished:
-        return "Đã hoàn thành";
-      case BookingStatus.employeeAccepted:
-        return "Đơn bị hủy từ phía người làm";
-      case BookingStatus.employeeCanceled:
-        return "Đơn bị hủy từ phía người làm";
-      case BookingStatus.renterCanceled:
-        return "Bạn đã hủy đơn hàng";
-      default:
-        return "Trạng thái đơn hàng";
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
