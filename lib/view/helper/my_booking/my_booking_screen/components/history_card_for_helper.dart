@@ -3,9 +3,11 @@ import 'package:iclean_mobile_app/models/bookings.dart';
 import 'package:iclean_mobile_app/models/booking_status.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/utils/time.dart';
+import 'package:iclean_mobile_app/view/common/map/google_map.dart';
 import 'package:iclean_mobile_app/view/helper/my_booking/booking_details/booking_details_for_helper_screen.dart';
 import 'package:iclean_mobile_app/widgets/avatar_widget.dart';
 import 'package:iclean_mobile_app/widgets/info_booking.dart';
+import 'package:iclean_mobile_app/widgets/qr_scan_screen.dart';
 
 import 'package:intl/intl.dart';
 
@@ -36,6 +38,25 @@ class _HistoryCardForHelperState extends State<HistoryCardForHelper>
       default:
         return ColorPalette.mainColor;
     }
+  }
+
+  void openQRScanner(int id) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => ValidateBookingCode(
+                  bookingDetailId: id,
+                )));
+  }
+
+  void navigateToDirection(double latitude, double longitude) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => GoogleMapTrackingPage(
+                  latitude: latitude,
+                  longitude: longitude,
+                )));
   }
 
   String getStringForStatus(BookingStatus status) {
@@ -156,6 +177,34 @@ class _HistoryCardForHelperState extends State<HistoryCardForHelper>
                                         fontFamily: 'Lato',
                                       ),
                                     ),
+                                  ),
+                                if (widget.listBookings[i].status ==
+                                    BookingStatus.upcoming)
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      // Nút quét mã QR
+                                      IconButton(
+                                        onPressed: () {
+                                          openQRScanner(
+                                              widget.listBookings[i].id);
+                                        },
+                                        icon: const Icon(Icons.qr_code),
+                                        tooltip: 'Quét mã QR',
+                                      ),
+                                      // Nút chỉ đường
+                                      IconButton(
+                                        onPressed: () {
+                                          navigateToDirection(
+                                              widget.listBookings[i].latitude!,
+                                              widget
+                                                  .listBookings[i].longitude!);
+                                        },
+                                        icon: const Icon(Icons.directions),
+                                        tooltip: 'Chỉ đường',
+                                      ),
+                                    ],
                                   ),
                               ],
                             )

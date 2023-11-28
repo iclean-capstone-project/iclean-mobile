@@ -72,8 +72,7 @@ class _WalletContentState extends State<WalletContent> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) =>
-                                        const MyWalletScreen()));
+                                    builder: (context) => MyWalletScreen()));
                           },
                           child: Text(
                             money.formatBalanceInVND(),
@@ -144,8 +143,7 @@ class _WalletContentState extends State<WalletContent> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) =>
-                                        const MyWalletScreen()));
+                                    builder: (context) => MyWalletScreen()));
                           },
                           child: Text(
                             point.formatBalanceInVND(),

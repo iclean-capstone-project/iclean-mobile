@@ -79,4 +79,27 @@ class ApiWalletRepository implements WalletRepository {
       throw Exception(e);
     }
   }
+
+  @override
+  Future<String> createPayment(double amount) async {
+    const url = '$urlConstant?type=point';
+    final uri = Uri.parse(url);
+    final accessToken = await UserPreferences.getAccessToken();
+
+    Map<String, String> headers = {
+      "Authorization": "Bearer $accessToken",
+      "Content-Type": "application/json",
+    };
+
+    try {
+      final response = await http.get(uri, headers: headers);
+      if (response.statusCode == 200) {
+        return '';
+      } else {
+        throw Exception('Failed to get account: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 }
