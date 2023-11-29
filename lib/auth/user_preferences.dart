@@ -7,6 +7,7 @@ class UserPreferences {
   static const _role = 'role';
   static const _accessToken = 'accessToken';
   static const _refreshToken = 'refreshToken';
+  static const _fcmToken = '_fcmToken';
 
   static Future init() async {
     _preferences = await SharedPreferences.getInstance();
@@ -43,9 +44,19 @@ class UserPreferences {
     await storage.write(key: _refreshToken, value: value);
   }
 
+  static Future setFcmToken(String value) async {
+    const storage = FlutterSecureStorage();
+    await storage.write(key: _fcmToken, value: value);
+  }
+
   static Future<String?> getRefreshToken() async {
     const storage = FlutterSecureStorage();
     return await storage.read(key: _refreshToken);
+  }
+
+  static Future<String?> getFcmToken() async {
+    const storage = FlutterSecureStorage();
+    return await storage.read(key: _fcmToken);
   }
 
   static Future logout() async {

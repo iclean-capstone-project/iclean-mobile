@@ -21,8 +21,9 @@ class GoogleMapTrackingPage extends StatefulWidget {
 
 class GoogleMapTrackingPageState extends State<GoogleMapTrackingPage> {
   final Completer<GoogleMapController> _controller = Completer();
-  late LatLng destination = const LatLng(0.0, 0.0);
-  late LatLng sourceLocation = const LatLng(0.0, 0.0);
+  late LatLng destination =
+      const LatLng(10.837167851789406, 106.83900985399156);
+  late LatLng sourceLocation;
   double zoom = 13.5;
   List<LatLng> polylineCoordinates = [];
   LocationData? currentLocation;
@@ -53,7 +54,7 @@ class GoogleMapTrackingPageState extends State<GoogleMapTrackingPage> {
     currentLocation = await location.getLocation();
     loadMarkerIcons();
     sourceLocation =
-        LatLng(currentLocation!.latitude!, currentLocation!.latitude!);
+        LatLng(currentLocation!.latitude!, currentLocation!.longitude!);
     getPolyPoints();
     getCurrentLocation();
   }
@@ -99,6 +100,8 @@ class GoogleMapTrackingPageState extends State<GoogleMapTrackingPage> {
               .map((point) => LatLng(point.latitude, point.longitude))
               .toList();
         });
+      } else {
+        print('Result Poly: ' + result.errorMessage!);
       }
     } catch (e) {
       print('Error fetching polyline points: $e');

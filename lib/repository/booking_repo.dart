@@ -25,4 +25,8 @@ abstract class BookingRepository {
 
   Future<bool> validateOTPCode(
       BuildContext context, String qrCode, int bookingId);
+
+  Future<Booking?> getCurrentBooking();
+
+  Future<bool> checkoutBookingForHelper(int id);
 }

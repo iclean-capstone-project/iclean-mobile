@@ -53,8 +53,7 @@ class BookingCardForHelper extends StatelessWidget {
                   builder: (context) =>
                       BookingDetailsReceiveScreen(booking: booking)));
         },
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: Flexible(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -160,11 +159,16 @@ class BookingCardForHelper extends StatelessWidget {
               const Divider(
                 color: ColorPalette.greyColor,
               ),
-              MainColorInkWellFullSize(
-                  onTap: () {
-                    applyBooking(booking.id);
-                  },
-                  text: "Nhận đơn")
+              if (!booking.isApplied!)
+                MainColorInkWellFullSize(
+                    onTap: () {
+                      applyBooking(booking.id);
+                    },
+                    text: "Nhận đơn")
+              else
+                const Center(
+                  child: Text("Đã nhận đơn"),
+                )
             ],
           ),
         ),

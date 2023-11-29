@@ -49,6 +49,28 @@ class ApiAccountRepository implements AccountRepository {
   }
 
   @override
+  Future<void> deleteFcmToken() async {
+    final uri = Uri.parse("${BaseConstant.baseUrl}/auth/logout");
+    final accessToken = await UserPreferences.getAccessToken();
+    final refreshToken = await UserPreferences.getRefreshToken();
+    final fcmToken = await UserPreferences.getFcmToken();
+    Map<String, String> headers = {
+      "Authorization": "Bearer $accessToken",
+      "Content-Type": "application/json",
+    };
+
+    final Map<String, dynamic> data = {
+      "fcmToken": fcmToken,
+      "refreshToken": refreshToken
+    };
+    try {
+      await http.delete(uri, headers: headers, body: jsonEncode(data));
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  @override
   Future<void> updateAccount(String fullName, String dateOfBirth, File? image,
       BuildContext context) async {
     final uri = Uri.parse(urlConstant);

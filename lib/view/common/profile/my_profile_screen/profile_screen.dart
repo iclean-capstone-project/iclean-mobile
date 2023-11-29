@@ -53,6 +53,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     builder: (BuildContext context) => const LogInScreen()),
                 (Route<dynamic> route) => false,
               );
+              ApiAccountRepository apiAccount = ApiAccountRepository();
+              await apiAccount.deleteFcmToken();
               await UserPreferences.logout();
             });
       },
@@ -178,8 +180,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               builder: (context) =>
                                                   const RegisBecomeHelperScreen()));
                                     },
-                                    child: Row(
-                                      children: const [
+                                    child: const Row(
+                                      children: [
                                         SizedBox(width: 8),
                                         Icon(
                                           Icons.add_circle_rounded,

@@ -15,6 +15,7 @@ class Booking {
   String? bookingCode, renterName, location, note;
   BookingStatus? status;
   double? longitude, latitude;
+  bool? isApplied;
 
   Booking({
     required this.id,
@@ -33,6 +34,7 @@ class Booking {
     this.latitude,
     this.longitude,
     this.note,
+    this.isApplied,
   });
 
   static BookingStatus _mapStrBookingStatus(String value) {
@@ -62,22 +64,21 @@ class Booking {
     BookingStatus mappedStatus = _mapStrBookingStatus(status);
 
     return Booking(
-      id: json['bookingDetailId'],
-      renterName: json['renterName'] ?? "",
-      bookingCode: json['bookingCode'] ?? "",
-      orderDate: DateTime.parse(json['orderDate'] ?? ""),
-      serviceId: json['serviceId'],
-      serviceName: json['serviceName'] ?? "",
-      serviceIcon: json['serviceIcon'] ?? "",
-      workDate: DateTime(year, month, day),
-      workTime: TimeOfDay(hour: hour, minute: minute),
-      note: json['note'] ?? "",
-      serviceUnit: ServiceUnit.fromJson(json),
-      price: json['price'],
-      latitude: json['latitude'],
-      longitude: json['longitude'],
-      status: mappedStatus,
-    );
+        id: json['bookingDetailId'],
+        renterName: json['renterName'] ?? "",
+        bookingCode: json['bookingCode'] ?? "",
+        orderDate: DateTime.parse(json['orderDate'] ?? ""),
+        serviceId: json['serviceId'],
+        serviceName: json['serviceName'] ?? "",
+        serviceIcon: json['serviceIcon'] ?? "",
+        workDate: DateTime(year, month, day),
+        workTime: TimeOfDay(hour: hour, minute: minute),
+        note: json['note'] ?? "",
+        serviceUnit: ServiceUnit.fromJson(json),
+        price: json['price'],
+        latitude: json['latitude'],
+        longitude: json['longitude'],
+        status: mappedStatus);
   }
 
   factory Booking.fromJsonForHelper(Map<String, dynamic> json) {
@@ -100,19 +101,19 @@ class Booking {
     final minute = int.parse(timeParts[1]);
 
     return Booking(
-      id: json['bookingDetailId'],
-      renterName: json['renterName'] ?? "",
-      serviceName: json['serviceName'] ?? "",
-      serviceIcon: json['serviceImages'] ?? "",
-      workDate: DateTime(year, month, day),
-      workTime: TimeOfDay(hour: hour, minute: minute),
-      location: json['locationDescription'] ?? "",
-      longitude: json['longitude'],
-      latitude: json['latitude'],
-      serviceUnit: ServiceUnit.fromJson(json),
-      price: json['amount'],
-      note: json['noteMessage'] ?? "",
-    );
+        id: json['bookingDetailId'],
+        renterName: json['renterName'] ?? "",
+        serviceName: json['serviceName'] ?? "",
+        serviceIcon: json['serviceImages'] ?? "",
+        workDate: DateTime(year, month, day),
+        workTime: TimeOfDay(hour: hour, minute: minute),
+        location: json['locationDescription'] ?? "",
+        longitude: json['longitude'],
+        latitude: json['latitude'],
+        serviceUnit: ServiceUnit.fromJson(json),
+        price: json['amount'],
+        note: json['noteMessage'] ?? "",
+        isApplied: json['isApplied'] ?? false);
   }
 
   String formatPriceInVND() {
