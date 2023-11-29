@@ -51,7 +51,7 @@ dependencies:
   shimmer: ^3.0.0
   another_carousel_pro: ^1.0.0
   permission_handler: ^11.0.1
-  barcode_widget: ^2.0.4
+  barcode_widget: ^1.0.0
   qr_flutter: ^4.0.0
   qr_code_scanner: ^1.0.1
   firebase_core: ^2.23.0

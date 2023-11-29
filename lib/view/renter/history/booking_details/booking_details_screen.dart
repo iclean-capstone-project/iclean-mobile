@@ -50,14 +50,14 @@ class BookingDetailsScreen extends StatelessWidget {
             if (booking.status == BookingStatus.finished)
               Container(
                 color: ColorPalette.mainColor,
-                child: const Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Padding(
-                      padding: EdgeInsets.all(24),
+                      padding: const EdgeInsets.all(24),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
+                        children: const [
                           Text(
                             "Dịch vụ đã hoàn thành",
                             style: TextStyle(
@@ -77,7 +77,7 @@ class BookingDetailsScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Padding(
+                    const Padding(
                       padding: EdgeInsets.all(24),
                       child: Icon(
                         Icons.domain_verification_rounded,

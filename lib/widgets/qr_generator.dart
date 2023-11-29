@@ -30,7 +30,7 @@ class QrGenerator extends StatelessWidget {
                 border: Border.all(width: 1, color: Colors.grey),
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: QrImageView(
+              child: QrImage(
                 data: qrData,
                 version: QrVersions.auto,
                 size: 300.0,

@@ -90,8 +90,8 @@ class ApiAccountRepository implements AccountRepository {
   }
 
   @override
-  Future<void> helperRegistration(String email, File frontIdCard,
-      File backIdCard, File avatar, String service) async {
+  Future<void> helperRegistration(
+      String email, File frontIdCard, File backIdCard, String service) async {
     const url = '${BaseConstant.baseUrl}/helper-registration';
     final uri = Uri.parse(url);
 
@@ -112,15 +112,16 @@ class ApiAccountRepository implements AccountRepository {
     request.files.add(
       await http.MultipartFile.fromPath('backIdCard', backIdCard.path),
     );
-    request.files.add(
-      await http.MultipartFile.fromPath('avatar', avatar.path),
-    );
+    // request.files.add(
+    //   await http.MultipartFile.fromPath('avatar', ''),
+    // );
+    request.fields['avatar'] = '';
     request.fields['others'] = '';
-    request.fields['service'] = '';
+    request.fields['service'] = service;
 
     try {
-      var response = await request.send();
-
+      final response = await request.send();
+      print(response.statusCode);
       if (response.statusCode == 200) {
       } else {
         throw Exception(

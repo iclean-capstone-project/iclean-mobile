@@ -1,12 +1,8 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'package:iclean_mobile_app/utils/time.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
-import 'package:iclean_mobile_app/view/helper/receive_booking/booking_details_receive/booking_details_receive_screen.dart';
 import 'package:iclean_mobile_app/widgets/avatar_widget.dart';
 import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
-
 import '../../../../models/bookings.dart';
 import '../../../../services/api_booking_repo.dart';
 import '../components/booking_for_helper_loading.dart';
@@ -143,9 +139,9 @@ class CurrentBooking extends StatelessWidget {
                                     ),
                                     const SizedBox(height: 4),
                                     Row(
-                                      children: [
-                                        const Icon(Icons.timer_sharp),
-                                        const SizedBox(width: 4),
+                                      children: const [
+                                        Icon(Icons.timer_sharp),
+                                        SizedBox(width: 4),
                                         // Text(
                                         //   "${bookings[0].workTime.to24hours()} - ${bookings[0].workTime.addHour(bookings[0].serviceUnit.equivalent.toInt()).to24hours()}",
                                         //   style: const TextStyle(
