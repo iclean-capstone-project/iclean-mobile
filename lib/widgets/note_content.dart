@@ -32,7 +32,7 @@ class NoteContent extends StatelessWidget {
           child: Row(
             children: [
               Text(
-                booking.note!,
+                booking.note ?? '<<Trống>>',
                 style: const TextStyle(
                   fontSize: 18,
                   fontFamily: 'Lato',

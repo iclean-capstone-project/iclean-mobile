@@ -48,7 +48,7 @@ class ApiCheckoutRepository implements CheckoutRepository {
   }
 
   @override
-  Future<void> checkout(
+  Future<bool> checkout(
       bool isUsePoint, bool isAutoAssign, BuildContext context) async {
     final uri = Uri.parse(urlConstant);
     final accessToken = await UserPreferences.getAccessToken();
@@ -64,10 +64,17 @@ class ApiCheckoutRepository implements CheckoutRepository {
     };
 
     try {
-      await http.post(uri, headers: headers, body: jsonEncode(data));
+      final response =
+          await http.post(uri, headers: headers, body: jsonEncode(data));
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        throw Exception('not enough money');
+      }
     } catch (e) {
       print(e);
     }
+    return false;
   }
 
   @override

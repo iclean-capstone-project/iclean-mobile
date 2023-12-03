@@ -53,7 +53,8 @@ class BookingCardForHelper extends StatelessWidget {
                   builder: (context) =>
                       BookingDetailsReceiveScreen(booking: booking)));
         },
-        child: Flexible(
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -90,7 +91,7 @@ class BookingCardForHelper extends StatelessWidget {
                   const SizedBox(width: 16),
                   Container(
                     constraints: const BoxConstraints(
-                      maxWidth: 216, // Set your maximum width
+                      maxWidth: 180, // Set your maximum width
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

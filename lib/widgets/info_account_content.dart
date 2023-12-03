@@ -30,34 +30,36 @@ class InfoAccountContent extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: SizedBox(
-                  width: 288,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          ShimmerLoadingWidget.rectangular(
-                            width: MediaQuery.of(context).size.width * 0.3,
-                            height: 16,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 8),
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.location_on,
-                            size: 16,
-                            color: Colors.white,
-                          ),
-                          const SizedBox(width: 8),
-                          ShimmerLoadingWidget.rectangular(
-                            width: MediaQuery.of(context).size.width * 0.6,
-                            height: 16,
-                          ),
-                        ],
-                      ),
-                    ],
+                  width: 240,
+                  child: Flexible(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            ShimmerLoadingWidget.rectangular(
+                              width: MediaQuery.of(context).size.width * 0.3,
+                              height: 16,
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 8),
+                        Row(
+                          children: [
+                            const Icon(
+                              Icons.location_on,
+                              size: 16,
+                              color: Colors.white,
+                            ),
+                            const SizedBox(width: 8),
+                            ShimmerLoadingWidget.rectangular(
+                              width: MediaQuery.of(context).size.width * 0.6,
+                              height: 16,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -80,7 +82,7 @@ class InfoAccountContent extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: SizedBox(
-                  width: 288,
+                  width: 250,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

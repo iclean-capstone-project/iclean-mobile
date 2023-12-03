@@ -109,7 +109,7 @@ class ApiLocationRepository implements LocationRepository {
   Future<void> addLocation(BuildContext context, Address newLocation) async {
     final Map<String, dynamic> data = {
       "longitude": newLocation.latitude,
-      "latitude": newLocation.latitude,
+      "latitude": newLocation.longitude,
       "description": newLocation.description,
       "street": null,
       "locationName": newLocation.addressName,

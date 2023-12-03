@@ -1,13 +1,12 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:iclean_mobile_app/utils/time.dart';
 import 'package:iclean_mobile_app/widgets/confirm_dialog.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'package:iclean_mobile_app/utils/time.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/widgets/avatar_widget.dart';
 import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
-
 import '../../../../models/bookings.dart';
 import '../../../../services/api_booking_repo.dart';
 import '../components/booking_for_helper_loading.dart';

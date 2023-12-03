@@ -232,7 +232,7 @@ class BookingDetailsReceiveScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Text(
-                  booking.note!,
+                  booking.note ?? '<<Trống>>',
                   style: const TextStyle(
                     fontSize: 16,
                     fontFamily: 'Lato',

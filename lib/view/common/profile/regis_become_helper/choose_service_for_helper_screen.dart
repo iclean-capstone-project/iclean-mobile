@@ -1,12 +1,25 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/service.dart';
+import 'package:iclean_mobile_app/services/api_account_repo.dart';
 import 'package:iclean_mobile_app/services/api_service_repo.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
+import 'package:iclean_mobile_app/view/renter/nav_bar_bottom/renter_screen.dart';
+import 'package:iclean_mobile_app/widgets/checkout_success_dialog.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 import 'package:iclean_mobile_app/widgets/my_bottom_app_bar.dart';
 
 class ChooseServiceForHelperScreen extends StatefulWidget {
-  const ChooseServiceForHelperScreen({super.key});
+  const ChooseServiceForHelperScreen({
+    super.key,
+    required this.image1,
+    required this.image2,
+    required this.email,
+  });
+
+  final String email;
+  final File image1, image2;
 
   @override
   State<ChooseServiceForHelperScreen> createState() =>
@@ -49,6 +62,33 @@ class _ChooseServiceForHelperScreenState
       },
     );
     return servicesMap;
+  }
+
+  void regisHelper(
+      String email, File frontIdCard, File backIdCard, String service) {
+    final ApiAccountRepository repository = ApiAccountRepository();
+    repository
+        .helperRegistration(email, frontIdCard, backIdCard, service)
+        .then((_) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) => CheckoutSuccessDialog(
+          title: "Gửi yêu cầu thành công",
+          description:
+              "Hệ thống sẽ gửi cho bạn thông báo qua email bạn vừa đăng ký!",
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        const RenterScreens(selectedIndex: 4)));
+          },
+        ),
+      );
+    }).catchError((error) {
+      // ignore: avoid_print
+      print('Failed to choose location: $error');
+    });
   }
 
   @override
@@ -160,8 +200,9 @@ class _ChooseServiceForHelperScreenState
       bottomNavigationBar: MyBottomAppBar(
         text: "Đăng ký",
         onTap: () {
-          String selectedIds = selectedServiceIds.join(", ");
+          String selectedIds = selectedServiceIds.join("&service=");
           print("Selected Service IDs: $selectedIds");
+          regisHelper(widget.email, widget.image1, widget.image2, selectedIds);
         },
       ),
     );

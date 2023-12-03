@@ -39,9 +39,10 @@ class _CheckoutCartScreenState extends State<CheckoutCartScreen> {
       }
     }
 
-    void checkoutCart(bool isUsePoint, bool isAutoAssign) {
+    Future<void> checkoutCart(bool isUsePoint, bool isAutoAssign) async {
       final ApiCheckoutRepository repository = ApiCheckoutRepository();
-      repository.checkout(isUsePoint, isAutoAssign, context).then((_) {
+      bool check = await repository.checkout(isUsePoint, isAutoAssign, context);
+      if (check) {
         showDialog(
           context: context,
           builder: (BuildContext context) => CheckoutSuccessDialog(
@@ -59,10 +60,27 @@ class _CheckoutCartScreenState extends State<CheckoutCartScreen> {
             },
           ),
         );
-      }).catchError((error) {
+      } else {
         // ignore: avoid_print
-        print('Failed to choose location: $error');
-      });
+        showDialog(
+          context: context,
+          builder: (BuildContext context) => CheckoutSuccessDialog(
+            title: "Gửi đơn thất bại",
+            description:
+                "Đơn của bạn thực hiện không thành công do không đủ số dư. Vui lòng kiểm tra lại...",
+            onTap: () {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return const RenterScreens();
+                  },
+                ),
+              );
+            },
+          ),
+        );
+      }
+      ;
     }
 
     return Scaffold(

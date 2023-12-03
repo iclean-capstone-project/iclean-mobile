@@ -23,6 +23,7 @@ class _RegisBecomeHelperScreenState extends State<RegisBecomeHelperScreen> {
   final emailController = TextEditingController();
   File? _image1, _image2;
   bool isFirstImage = false;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   Future _pickImage(ImageSource source, bool isFirstImage) async {
     try {
@@ -78,9 +79,16 @@ class _RegisBecomeHelperScreenState extends State<RegisBecomeHelperScreen> {
     );
   }
 
+  bool _validateInputs() {
+    return emailController.text.isNotEmpty &&
+        _image1 != null &&
+        _image2 != null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: const MyAppBar(text: ""),
       body: SingleChildScrollView(
         child: Padding(
@@ -210,10 +218,22 @@ class _RegisBecomeHelperScreenState extends State<RegisBecomeHelperScreen> {
       bottomNavigationBar: MyBottomAppBar(
         text: "Tiếp tục",
         onTap: () {
-          Navigator.push(
+          if (_validateInputs()) {
+            Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => const ChooseServiceForHelperScreen()));
+                builder: (context) => ChooseServiceForHelperScreen(
+                  image1: _image1!,
+                  image2: _image2!,
+                  email: emailController.text,
+                ),
+              ),
+            );
+          } else {
+            // Show an error message or perform other actions for invalid inputs.
+            // For example, you can display a SnackBar.
+
+          }
         },
       ),
     );
