@@ -47,38 +47,35 @@ class _ValidateBookingCodeState extends State<ValidateBookingCode> {
     }
   }
 
-  Widget showDialogMessage(BuildContext context, String message) {
-    return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      child: Container(
-        width: 310,
-        padding: const EdgeInsets.all(24.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(
-              width: double.infinity,
-              child: Image.asset(
-                "assets/images/Confirmed.png",
-                fit: BoxFit.cover,
-              ),
+  Future<Widget> showDialogMessage(BuildContext context, String message) async {
+    return await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            message,
+            style: const TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 8),
-              child: Text(
-                message,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontFamily: 'Lato',
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text(
+                'OK',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
                 ),
-                textAlign: TextAlign.center,
               ),
+              onPressed: () {
+                Navigator.of(context).popUntil((route) => route.isFirst);
+              },
             ),
           ],
-        ),
-      ),
+        );
+      },
     );
   }
 
@@ -168,12 +165,12 @@ class _ValidateBookingCodeState extends State<ValidateBookingCode> {
       setState(() {
         result = scanData;
         if (result != null) {
-          validateBookingDetail(context, result!.code, widget.bookingDetailId);
+          // validateBookingDetail(context, result!.code, widget.bookingDetailId);
           controller.pauseCamera();
-          Future.delayed(Duration.zero, () {
-            Navigator.of(context).pop(); // Trở về màn hình trước
-            validateBookingDetail(
+          Future.delayed(Duration.zero, () async {
+            await validateBookingDetail(
                 context, result!.code, widget.bookingDetailId);
+            // Navigator.of(context).pop(); // Trở về màn hình trước
           });
         }
       });

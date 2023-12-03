@@ -1,5 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:iclean_mobile_app/auth/user_preferences.dart';
 import 'package:iclean_mobile_app/models/account.dart';
+import 'package:http/http.dart' as http;
+import 'package:iclean_mobile_app/services/api_firebase.dart';
+import 'package:iclean_mobile_app/services/components/constant.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/view/helper/nav_bar_bottom/helper_screen.dart';
 import 'package:iclean_mobile_app/view/renter/nav_bar_bottom/renter_screen.dart';
@@ -16,10 +22,30 @@ class VerifyDialog extends StatelessWidget {
   final Account account;
   final bool isNew;
 
+  Future<void> handleFcmToken(BuildContext context) async {
+    String? fcmToken = await FirebaseApi().initNotifications();
+    if (fcmToken != null) {
+      await UserPreferences.setFcmToken(fcmToken);
+    }
+    final accessToken = await UserPreferences.getAccessToken();
+
+    Map<String, String> headers = {
+      "Authorization": "Bearer $accessToken",
+      "Content-Type": "application/json",
+    };
+    String? refreshToken = await UserPreferences.getRefreshToken();
+    await http.post(
+      Uri.parse("${BaseConstant.baseUrl}/auth/fcm-token"),
+      headers: headers,
+      body: json.encode({'fcmToken': fcmToken, 'refreshToken': refreshToken}),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     if (!isNew) {
       Future.delayed(const Duration(seconds: 2), () async {
+        handleFcmToken(context);
         if (account.roleName == "employee") {
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(

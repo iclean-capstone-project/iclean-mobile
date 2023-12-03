@@ -53,6 +53,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     builder: (BuildContext context) => const LogInScreen()),
                 (Route<dynamic> route) => false,
               );
+              ApiAccountRepository apiAccount = ApiAccountRepository();
+              await apiAccount.deleteFcmToken();
               await UserPreferences.logout();
             });
       },

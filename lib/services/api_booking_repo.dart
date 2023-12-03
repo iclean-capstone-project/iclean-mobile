@@ -269,7 +269,6 @@ class ApiBookingRepository implements BookingRepository {
     final url = '$urlConstant/validate/$id';
     final uri = Uri.parse(url);
     final accessToken = await UserPreferences.getAccessToken();
-    print(accessToken);
     Map<String, String> headers = {
       "Authorization": "Bearer $accessToken",
       "Content-Type": "application/json",
@@ -280,6 +279,54 @@ class ApiBookingRepository implements BookingRepository {
     try {
       final response =
           await http.post(uri, headers: headers, body: jsonEncode(data));
+
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
+  Future<Booking?> getCurrentBooking() async {
+    const url = '$urlConstant/helper/current-booking';
+    final uri = Uri.parse(url);
+    final accessToken = await UserPreferences.getAccessToken();
+    Map<String, String> headers = {
+      "Authorization": "Bearer $accessToken",
+      "Content-Type": "application/json",
+    };
+    try {
+      final response = await http.get(uri, headers: headers);
+
+      if (response.statusCode == 200) {
+        final jsonMap = json.decode(utf8.decode(response.bodyBytes));
+        final data = jsonMap['data'];
+
+        final booking = Booking.fromJsonForHelper(data);
+        return booking;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
+  Future<bool> checkoutBookingForHelper(int id) async {
+    final url = '$urlConstant/helper/checkout/$id';
+    final uri = Uri.parse(url);
+    final accessToken = await UserPreferences.getAccessToken();
+    Map<String, String> headers = {
+      "Authorization": "Bearer $accessToken",
+      "Content-Type": "application/json",
+    };
+    try {
+      final response = await http.post(uri, headers: headers);
 
       if (response.statusCode == 200) {
         return true;

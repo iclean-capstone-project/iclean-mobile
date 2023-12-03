@@ -91,7 +91,7 @@ class BookingCardForHelper extends StatelessWidget {
                   const SizedBox(width: 16),
                   Container(
                     constraints: const BoxConstraints(
-                      maxWidth: 216, // Set your maximum width
+                      maxWidth: 180, // Set your maximum width
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -160,11 +160,16 @@ class BookingCardForHelper extends StatelessWidget {
               const Divider(
                 color: ColorPalette.greyColor,
               ),
-              MainColorInkWellFullSize(
-                  onTap: () {
-                    applyBooking(booking.id);
-                  },
-                  text: "Nhận đơn")
+              if (!booking.isApplied!)
+                MainColorInkWellFullSize(
+                    onTap: () {
+                      applyBooking(booking.id);
+                    },
+                    text: "Nhận đơn")
+              else
+                const Center(
+                  child: Text("Đã nhận đơn"),
+                )
             ],
           ),
         ),

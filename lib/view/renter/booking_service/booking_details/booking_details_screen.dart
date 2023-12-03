@@ -123,20 +123,6 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
                 hintText: 'Thêm ghi chú',
               ),
               const SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text(
-                    "Tùy chọn",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Lato',
-                    ),
-                  ),
-                  Icon(Icons.online_prediction_outlined)
-                ],
-              ),
             ],
           ),
         ),
@@ -147,7 +133,8 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
           addToCart(bookingDetailsProvider);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('${widget.service.name} đã được thêm vào giỏ hàng'),
+              content: Text(
+                  'Dịch vụ ${widget.service.name} đã được thêm vào giỏ hàng'),
               duration: const Duration(seconds: 1),
             ),
           );
