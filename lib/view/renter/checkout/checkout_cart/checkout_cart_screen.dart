@@ -29,6 +29,7 @@ class _CheckoutCartScreenState extends State<CheckoutCartScreen> {
   Widget build(BuildContext context) {
     var checkoutProvider =
         Provider.of<CheckoutProvider>(context, listen: false);
+
     Future<Cart> fetchCart() async {
       final ApiCheckoutRepository repository = ApiCheckoutRepository();
       try {
@@ -41,7 +42,8 @@ class _CheckoutCartScreenState extends State<CheckoutCartScreen> {
 
     Future<void> checkoutCart(bool isUsePoint, bool isAutoAssign) async {
       final ApiCheckoutRepository repository = ApiCheckoutRepository();
-      bool check = await repository.checkout(isUsePoint, isAutoAssign, context);
+      bool check =
+          await repository.checkoutCart(isUsePoint, isAutoAssign, context);
       if (check) {
         showDialog(
           context: context,

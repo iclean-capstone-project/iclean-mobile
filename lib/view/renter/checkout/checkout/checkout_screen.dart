@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/cart.dart';
 import 'package:iclean_mobile_app/provider/booking_details_provider.dart';
+import 'package:iclean_mobile_app/provider/checkout_provider.dart';
 import 'package:iclean_mobile_app/services/api_checkout_repo.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
+import 'package:iclean_mobile_app/view/renter/nav_bar_bottom/renter_screen.dart';
+import 'package:iclean_mobile_app/widgets/checkout_success_dialog.dart';
 import 'package:iclean_mobile_app/widgets/service_info.dart';
 import 'package:iclean_mobile_app/widgets/auto_assign.dart';
 
@@ -29,6 +32,10 @@ class CheckoutScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     BookingDetailsProvider bookingDetailsProvider =
         Provider.of<BookingDetailsProvider>(context);
+
+    CheckoutProvider checkoutProvider =
+        Provider.of<CheckoutProvider>(context, listen: false);
+
     Future<Cart> getCartWithOutAddToCart(bookingDetailsProvider, String note,
         int? addressId, bool? isUsePoint, bool? isAutoAssign) async {
       final selectedDate = bookingDetailsProvider.selectedDay;
@@ -50,8 +57,62 @@ class CheckoutScreen extends StatelessWidget {
         cart = await repository.getCartWithOutAddToCart(
             startTime, serviceUnitId, note, 0, false, false, context);
       }
-
       return cart;
+    }
+
+    Future<void> checkout(bookingDetailsProvider, String? note, int addressId,
+        bool isUsePoint, bool isAutoAssign) async {
+      final selectedDate = bookingDetailsProvider.selectedDay;
+      final selectedTime = bookingDetailsProvider.selectedTime;
+      final startTime = DateTime(
+        selectedDate.year,
+        selectedDate.month,
+        selectedDate.day,
+        selectedTime.hour,
+        0,
+      );
+      final serviceUnitId = bookingDetailsProvider.selectedServiceUnit.id;
+      final ApiCheckoutRepository repository = ApiCheckoutRepository();
+      bool check = await repository.checkout(startTime, serviceUnitId, note,
+          addressId, isUsePoint, isAutoAssign, context);
+      if (check) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) => CheckoutSuccessDialog(
+            title: "Gửi đơn thành công",
+            description:
+                "Đơn của bạn đã được đặt thành công. Vui lòng đợi hệ thống xét duyệt..",
+            onTap: () {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return const RenterScreens();
+                  },
+                ),
+              );
+            },
+          ),
+        );
+      } else {
+        // ignore: avoid_print
+        showDialog(
+          context: context,
+          builder: (BuildContext context) => CheckoutSuccessDialog(
+            title: "Gửi đơn thất bại",
+            description:
+                "Đơn của bạn thực hiện không thành công do không đủ số dư. Vui lòng kiểm tra lại...",
+            onTap: () {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return const RenterScreens();
+                  },
+                ),
+              );
+            },
+          ),
+        );
+      }
     }
 
     return Scaffold(
@@ -160,10 +221,13 @@ class CheckoutScreen extends StatelessWidget {
       bottomNavigationBar: MyBottomAppBar(
         text: "Đăng tin",
         onTap: () {
-          // checkoutCart(
-          //   checkoutProvider.usePoint,
-          //   checkoutProvider.autoAssign,
-          // );
+          checkout(
+            bookingDetailsProvider,
+            note,
+            addressId!,
+            checkoutProvider.usePoint,
+            checkoutProvider.autoAssign,
+          );
         },
       ),
     );

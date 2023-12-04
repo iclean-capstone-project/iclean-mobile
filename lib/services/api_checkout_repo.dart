@@ -80,6 +80,48 @@ class ApiCheckoutRepository implements CheckoutRepository {
   }
 
   @override
+  Future<bool> checkout(
+    DateTime startTime,
+    int serviceUnitId,
+    String? note,
+    int addressId,
+    bool isUsePoint,
+    bool isAutoAssign,
+    BuildContext context,
+  ) async {
+    const url = "${BaseConstant.baseUrl}/booking/checkout-now";
+    final uri = Uri.parse(url);
+    final accessToken = await UserPreferences.getAccessToken();
+
+    Map<String, String> headers = {
+      "Authorization": "Bearer $accessToken",
+      "Content-Type": "application/json",
+    };
+
+    final Map<String, dynamic> data = {
+      "startTime": startTime.toIso8601String(),
+      "serviceUnitId": serviceUnitId,
+      "note": note,
+      "addressId": addressId,
+      "usingPoint": isUsePoint,
+      "autoAssign": isAutoAssign
+    };
+
+    try {
+      final response =
+          await http.post(uri, headers: headers, body: jsonEncode(data));
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        throw Exception('not enough money');
+      }
+    } catch (e) {
+      print(e);
+    }
+    return false;
+  }
+
+  @override
   Future<Cart> getCart(BuildContext context) async {
     final uri = Uri.parse(urlConstant);
     final accessToken = await UserPreferences.getAccessToken();
@@ -113,7 +155,7 @@ class ApiCheckoutRepository implements CheckoutRepository {
   }
 
   @override
-  Future<bool> checkout(
+  Future<bool> checkoutCart(
       bool isUsePoint, bool isAutoAssign, BuildContext context) async {
     final uri = Uri.parse(urlConstant);
     final accessToken = await UserPreferences.getAccessToken();

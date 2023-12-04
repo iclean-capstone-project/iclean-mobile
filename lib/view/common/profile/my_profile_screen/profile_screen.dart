@@ -6,6 +6,7 @@ import 'package:iclean_mobile_app/auth/user_preferences.dart';
 import 'package:iclean_mobile_app/models/account.dart';
 import 'package:iclean_mobile_app/services/api_account_repo.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
+import 'package:iclean_mobile_app/view/common/notification/notification_screen.dart';
 import 'package:iclean_mobile_app/view/common/profile/location/location_screen.dart';
 import 'package:iclean_mobile_app/view/common/profile/my_profile_screen/components/dark_mode.dart';
 import 'package:iclean_mobile_app/view/common/profile/my_profile_screen/components/profile_inkwell.dart';
@@ -249,6 +250,44 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         ],
                                       ),
                                     ),
+                                  if (account.roleName == 'renter' &&
+                                      isHelper == true)
+                                    GestureDetector(
+                                      onTap: () async {
+                                        // await setIsHelper(false);
+                                        // await UserPreferences.setIsHelper(
+                                        //     false);
+                                        // setState(() {
+                                        //   isHelper = UserPreferences.isHelper();
+                                        // });
+                                        // Navigator.pushReplacement(
+                                        //     context,
+                                        //     MaterialPageRoute(
+                                        //         builder: (context) =>
+                                        //             const RenterScreens()));
+                                      },
+                                      child: Row(
+                                        children: const [
+                                          SizedBox(width: 8),
+                                          Icon(
+                                            Icons.add_circle_rounded,
+                                            color: ColorPalette.greyColor,
+                                            size: 24,
+                                          ),
+                                          SizedBox(width: 8),
+                                          Flexible(
+                                            child: Text(
+                                              'Đăng ký để trở thành người giúp việc',
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                color: ColorPalette.greyColor,
+                                                fontFamily: 'Lato',
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                 ],
                               ),
                             ),
@@ -301,18 +340,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ProfileInkWell(
                             icon: const Icon(Icons.notifications_outlined),
                             text: "Thông báo",
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const NotificationScreen()));
+                            },
                           ),
-                          ProfileInkWell(
-                            icon: const Icon(Icons.payment_outlined),
-                            text: "Thanh toán",
-                            onTap: () {},
-                          ),
-                          ProfileInkWell(
-                            icon: const Icon(Icons.language_outlined),
-                            text: "Ngôn ngữ",
-                            onTap: () {},
-                          ),
+                          // ProfileInkWell(
+                          //   icon: const Icon(Icons.payment_outlined),
+                          //   text: "Thanh toán",
+                          //   onTap: () {},
+                          // ),
+                          // ProfileInkWell(
+                          //   icon: const Icon(Icons.language_outlined),
+                          //   text: "Ngôn ngữ",
+                          //   onTap: () {},
+                          // ),
                           const DarkModeButton(),
                           ProfileInkWell(
                             icon: const Icon(Icons.policy_outlined),

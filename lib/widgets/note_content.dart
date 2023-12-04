@@ -24,22 +24,18 @@ class NoteContent extends StatelessWidget {
         ),
         const SizedBox(height: 4),
         Container(
+          width: double.infinity,
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.primary,
             borderRadius: BorderRadius.circular(10),
           ),
-          child: Row(
-            children: [
-              Text(
-                booking.note ?? '<<Trống>>',
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontFamily: 'Lato',
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
+          child: Text(
+            booking.note ?? '<<Trống>>',
+            style: const TextStyle(
+              fontSize: 16,
+              fontFamily: 'Lato',
+            ),
           ),
         ),
       ],

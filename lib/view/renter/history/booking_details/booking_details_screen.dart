@@ -134,12 +134,32 @@ class BookingDetailsScreen extends StatelessWidget {
                         const SizedBox(height: 16),
                         PaymentContent(booking: bookingDetail),
                         const SizedBox(height: 16),
-                        for (int i = 0;
-                            i < bookingDetail.listStatus.length;
-                            i++)
-                          if (bookingDetail.listStatus[i].bookingStatus.name ==
-                                  "finished" &&
-                              daysBetween(bookingDetail.listStatus[i].createAt,
+                        //đơn chưa hoàn thành và chưa làm có thể hủy
+                        if (booking.status == BookingStatus.notYet ||
+                            booking.status == BookingStatus.approved)
+                          MainColorInkWellFullSize(
+                            onTap: () {},
+                            text: "Hủy đơn",
+                          ),
+                        //đơn sắp đến ngày làm nhưng không thể hủy nếu như cách ngày làm < 24h
+                        if (booking.status != BookingStatus.notYet)
+                          if (bookingDetail.listStatus.last.bookingStatus ==
+                              BookingStatus.upcoming)
+                            if (daysBetween(
+                                    bookingDetail.workDate, DateTime.now()) >
+                                1)
+                              MainColorInkWellFullSize(
+                                onTap: () {
+                                  // Your onTap logic here
+                                },
+                                text: "Hủy đơn",
+                              ),
+                        //đơn đã hoàn thành thì có thể đặt lại
+                        if (booking.status != BookingStatus.notYet)
+                          if (bookingDetail.listStatus.last.bookingStatus ==
+                                  BookingStatus.finished &&
+                              daysBetween(
+                                      bookingDetail.listStatus.last.createAt,
                                       DateTime.now()) >
                                   3)
                             MainColorInkWellFullSize(
@@ -148,12 +168,12 @@ class BookingDetailsScreen extends StatelessWidget {
                               },
                               text: "Đặt lại",
                             ),
-                        for (int i = 0;
-                            i < bookingDetail.listStatus.length;
-                            i++)
-                          if (bookingDetail.listStatus[i].bookingStatus.name ==
-                                  "finished" &&
-                              daysBetween(bookingDetail.listStatus[i].createAt,
+                        //đơn đã hoàn thành thì có thể feedback trong vòng 3 ngày
+                        if (booking.status != BookingStatus.notYet)
+                          if (bookingDetail.listStatus.last.bookingStatus ==
+                                  BookingStatus.finished &&
+                              daysBetween(
+                                      bookingDetail.listStatus.last.createAt,
                                       DateTime.now()) <
                                   3)
                             Row(

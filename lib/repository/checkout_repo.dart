@@ -10,9 +10,11 @@ abstract class CheckoutRepository {
       bool? isUsePoint,
       bool? isAutoAssign,
       BuildContext context);
+  Future<bool> checkout(DateTime startTime, int serviceUnitId, String? note,
+      int addressId, bool isUsePoint, bool isAutoAssign, BuildContext context);
 
   Future<Cart> getCart(BuildContext context);
-  Future<bool> checkout(
+  Future<bool> checkoutCart(
       bool isUsePoint, bool isAutoAssign, BuildContext context);
   Future<void> updateCart(
       int id, bool isUsePoint, bool isAutoAssign, BuildContext context);

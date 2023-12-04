@@ -28,20 +28,13 @@ class BookingCard extends StatefulWidget {
 
 class _BookingCardCardState extends State<BookingCard>
     with TickerProviderStateMixin {
-  Color getColorForStatus(BookingStatus status) {
-    switch (status) {
-      case BookingStatus.notYet:
-        return ColorPalette.mainColor;
-      case BookingStatus.approved:
-        return Colors.teal;
-      case BookingStatus.rejected:
-        return Colors.red;
-      case BookingStatus.upcoming:
-        return Colors.lightBlue;
-      case BookingStatus.finished:
-        return Colors.green;
-      default:
-        return ColorPalette.mainColor;
+  Future<String> fetchOTPUpcoming(BuildContext context, int id) async {
+    final ApiBookingRepository repository = ApiBookingRepository();
+    try {
+      final value = await repository.getOTPCode(context, id);
+      return value;
+    } catch (e) {
+      return '';
     }
   }
 
@@ -71,36 +64,20 @@ class _BookingCardCardState extends State<BookingCard>
     }
   }
 
-  void navigateToScreenBasedOnStatus(Booking booking) {
-    BookingStatus status = booking.status!;
+  Color getColorForStatus(BookingStatus status) {
     switch (status) {
-      case BookingStatus.finished:
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-          return BookingDetailsScreen(booking: booking);
-        }));
-        break;
+      case BookingStatus.notYet:
+        return ColorPalette.mainColor;
       case BookingStatus.approved:
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-          return BookingDetailsScreen(booking: booking);
-        }));
-        break;
+        return Colors.teal;
+      case BookingStatus.rejected:
+        return Colors.red;
       case BookingStatus.upcoming:
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-          return BookingDetailsScreen(booking: booking);
-        }));
-        break;
+        return Colors.lightBlue;
+      case BookingStatus.finished:
+        return Colors.green;
       default:
-        break;
-    }
-  }
-
-  Future<String> fetchOTPUpcoming(BuildContext context, int id) async {
-    final ApiBookingRepository repository = ApiBookingRepository();
-    try {
-      final value = await repository.getOTPCode(context, id);
-      return value;
-    } catch (e) {
-      return '';
+        return ColorPalette.mainColor;
     }
   }
 
@@ -136,7 +113,11 @@ class _BookingCardCardState extends State<BookingCard>
                   children: [
                     InkWell(
                       onTap: () {
-                        navigateToScreenBasedOnStatus(widget.listBookings[i]);
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) {
+                          return BookingDetailsScreen(
+                              booking: widget.listBookings[i]);
+                        }));
                       },
                       child: Container(
                         padding: const EdgeInsets.all(16),
