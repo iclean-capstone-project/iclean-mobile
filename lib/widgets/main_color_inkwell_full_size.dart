@@ -4,12 +4,18 @@ import '../utils/color_palette.dart';
 
 class MainColorInkWellFullSize extends StatelessWidget {
   const MainColorInkWellFullSize({
-    Key? key,
+    super.key,
     required this.onTap,
     required this.text,
-  }) : super(key: key);
+    this.backgroundColor,
+    this.textColor,
+    this.width,
+  });
+
   final void Function() onTap;
   final String text;
+  final Color? backgroundColor, textColor;
+  final double? width;
 
   @override
   Widget build(BuildContext context) {
@@ -17,14 +23,18 @@ class MainColorInkWellFullSize extends StatelessWidget {
       onTap: onTap,
       child: Container(
         height: 48,
+        width: width,
         decoration: BoxDecoration(
-          color: ColorPalette.mainColor,
-          borderRadius: BorderRadius.circular(50),
+          color: backgroundColor ?? ColorPalette.mainColor,
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(
+            color: ColorPalette.mainColor,
+          ),
           boxShadow: const [
             BoxShadow(
               color: ColorPalette.mainColor,
               offset: Offset(0, 2),
-              blurRadius: 3.0,
+              blurRadius: 6.0,
               spreadRadius: 0.0,
             ),
           ],
@@ -32,8 +42,8 @@ class MainColorInkWellFullSize extends StatelessWidget {
         child: Center(
           child: Text(
             text,
-            style: const TextStyle(
-              color: Colors.white,
+            style: TextStyle(
+              color: textColor ?? Colors.white,
               fontFamily: 'Lato',
               fontSize: 16,
               fontWeight: FontWeight.bold,

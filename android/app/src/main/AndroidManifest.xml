@@ -1,7 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.iclean_mobile_app">
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
    <application
-        android:label="iclean_mobile_app"
+        android:label="iClean"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
@@ -35,6 +37,6 @@
             android:name="flutterEmbedding"
             android:value="2" />
         <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBVDt9l1pW7A0mmNvaQStnd5OGEQcyrBHY"/>
+            android:value="AIzaSyDp8qEE0fo8Koaab-G9lJ5OcyVfUXnu-sk"/>
     </application>
 </manifest>

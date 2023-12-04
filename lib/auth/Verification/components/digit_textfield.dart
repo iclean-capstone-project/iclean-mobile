@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-
-import '../../../utils/color_palette.dart';
+import 'package:iclean_mobile_app/utils/color_palette.dart';
 
 class DigitTextField extends StatefulWidget {
   const DigitTextField({
-    Key? key,
+    super.key,
     required this.codeControllers,
-  }) : super(key: key);
+  });
 
   final List<TextEditingController> codeControllers;
 
@@ -15,6 +14,7 @@ class DigitTextField extends StatefulWidget {
 }
 
 class _DigitTextFieldState extends State<DigitTextField> {
+  List<FocusNode> focusNodes = List.generate(4, (index) => FocusNode());
   late List<bool> isFocused;
 
   @override
@@ -45,7 +45,9 @@ class _DigitTextFieldState extends State<DigitTextField> {
                     : ColorPalette.textFieldColorLight,
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(
-                  color: ColorPalette.greyColor,
+                  color: isFocused[index]
+                      ? ColorPalette.mainColor
+                      : ColorPalette.greyColor,
                 ),
               ),
               child: TextFormField(
@@ -61,19 +63,19 @@ class _DigitTextFieldState extends State<DigitTextField> {
                   ),
                   enabledBorder: InputBorder.none,
                   focusedBorder: InputBorder.none,
-                  filled: true,
-                  fillColor: Colors.transparent,
                 ),
                 style: const TextStyle(
                   fontSize: 16,
+                  color: Colors.black,
                   fontFamily: 'Lato',
                 ),
                 cursorColor: Colors.black,
+                focusNode: focusNodes[index],
                 onChanged: (value) {
                   if (value.isNotEmpty && index < 3) {
-                    FocusScope.of(context).nextFocus();
+                    FocusScope.of(context).requestFocus(focusNodes[index + 1]);
                   } else if (value.isEmpty && index > 0) {
-                    FocusScope.of(context).previousFocus();
+                    FocusScope.of(context).requestFocus(focusNodes[index - 1]);
                   }
                 },
                 onTap: () {

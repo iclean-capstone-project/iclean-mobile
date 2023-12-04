@@ -1,30 +1,71 @@
-import 'package:flutter/material.dart';
-import 'package:iclean_mobile_app/utils/color_palette.dart';
-import 'package:iclean_mobile_app/view/user/home/home_screen.dart';
+// ignore_for_file: depend_on_referenced_packages
 
-import '../../../view/user/set_up_new_account/update_new_proflie/update_new_profile_screen.dart';
-import '../../../widgets/main_color_inkwell_full_size.dart';
+import 'dart:convert';
+
+import 'package:http/http.dart' as http;
+import 'package:flutter/material.dart';
+import 'package:iclean_mobile_app/auth/user_preferences.dart';
+import 'package:iclean_mobile_app/models/account.dart';
+import 'package:iclean_mobile_app/services/api_firebase.dart';
+import 'package:iclean_mobile_app/services/components/constant.dart';
+import 'package:iclean_mobile_app/utils/color_palette.dart';
+import 'package:iclean_mobile_app/view/helper/nav_bar_bottom/helper_screen.dart';
+import 'package:iclean_mobile_app/view/renter/nav_bar_bottom/renter_screen.dart';
+import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
+import 'package:iclean_mobile_app/view/common/set_up_new_account/set_role/set_role_screen.dart';
 
 class VerifyDialog extends StatelessWidget {
-  const VerifyDialog({super.key, required this.isNew});
+  const VerifyDialog({
+    super.key,
+    required this.account,
+    required this.isNew,
+  });
+
+  final Account account;
   final bool isNew;
+
+  Future<void> handleFcmToken(BuildContext context) async {
+    String? fcmToken = await FirebaseApi().initNotifications();
+    if (fcmToken != null) {
+      await UserPreferences.setFcmToken(fcmToken);
+    }
+    final accessToken = await UserPreferences.getAccessToken();
+
+    Map<String, String> headers = {
+      "Authorization": "Bearer $accessToken",
+      "Content-Type": "application/json",
+    };
+    String? refreshToken = await UserPreferences.getRefreshToken();
+    await http.post(
+      Uri.parse("${BaseConstant.baseUrl}/auth/fcm-token"),
+      headers: headers,
+      body: json.encode({'fcmToken': fcmToken, 'refreshToken': refreshToken}),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    void navigateScreen() {
-      Future.delayed(const Duration(seconds: 1), () {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) {
-              return const HomeScreen();
-            },
-          ),
-        );
-      });
-    }
-
     if (!isNew) {
-      navigateScreen();
+      Future.delayed(const Duration(seconds: 2), () async {
+        handleFcmToken(context);
+        if (account.roleName == "employee") {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) {
+                return const HelperScreens();
+              },
+            ),
+          );
+        } else if (account.roleName == "renter") {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) {
+                return const RenterScreens();
+              },
+            ),
+          );
+        }
+      });
     }
 
     return Dialog(
@@ -77,8 +118,7 @@ class VerifyDialog extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    const UpdateNewProfileScreen()));
+                                builder: (context) => const SetRoleScreen()));
                       },
                       text: "Cập nhập hồ sơ",
                     ),
