@@ -1,4 +1,4 @@
-// ignore_for_file: null_argument_to_non_null_type
+// ignore_for_file: null_argument_to_non_null_type, use_build_context_synchronously, avoid_print
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -101,7 +101,7 @@ class GoogleMapTrackingPageState extends State<GoogleMapTrackingPage> {
               .toList();
         });
       } else {
-        print('Result Poly: ' + result.errorMessage!);
+        print('Result Poly: ${result.errorMessage!}');
       }
     } catch (e) {
       print('Error fetching polyline points: $e');

@@ -146,7 +146,7 @@ class _WalletContentState extends State<WalletContent> {
                                     builder: (context) => MyWalletScreen()));
                           },
                           child: Text(
-                            point.formatBalanceInVND(),
+                            point.formatBalanceToPoint(),
                             style: TextStyle(
                               fontSize: 16,
                               fontFamily: 'Lato',

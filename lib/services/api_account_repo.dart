@@ -114,8 +114,7 @@ class ApiAccountRepository implements AccountRepository {
   @override
   Future<void> helperRegistration(
       String email, File frontIdCard, File backIdCard, String service) async {
-    String url =
-        '${BaseConstant.baseUrl}/helper-registration?service=' + service;
+    String url = '${BaseConstant.baseUrl}/helper-registration?service=$service';
     final uri = Uri.parse(url);
 
     final accessToken = await UserPreferences.getAccessToken();
@@ -141,7 +140,6 @@ class ApiAccountRepository implements AccountRepository {
 
     try {
       final response = await request.send();
-      print(response.statusCode);
       if (response.statusCode == 200) {
       } else {
         throw Exception(

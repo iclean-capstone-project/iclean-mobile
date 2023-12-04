@@ -80,7 +80,6 @@ class _CheckoutCartScreenState extends State<CheckoutCartScreen> {
           ),
         );
       }
-      ;
     }
 
     return Scaffold(

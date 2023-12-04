@@ -152,7 +152,7 @@ class _UpdateLocationScreenState extends State<UpdateLocationScreen> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                 ),
-                height: 320,
+                height: MediaQuery.of(context).size.height * 0.5,
                 child: GoogleMap(
                   initialCameraPosition: CameraPosition(
                     target: LatLng(latitude, longitude),
