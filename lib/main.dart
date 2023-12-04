@@ -39,20 +39,22 @@ class MyApp extends StatelessWidget {
     super.key,
     required this.isLoggedIn,
     required this.role,
+    required this.isHelper,
   });
 
-  final bool isLoggedIn;
+  final bool isLoggedIn, isHelper;
   final String role;
-
   static Future<MyApp> launch() async {
     await UserPreferences.init();
 
     final isLoggedIn = UserPreferences.isLoggedIn();
     final role = await UserPreferences.getRole() ?? '';
+    final isHelper = UserPreferences.isHelper();
 
     return MyApp(
       isLoggedIn: isLoggedIn,
       role: role,
+      isHelper: isHelper,
     );
   }
 
@@ -63,8 +65,10 @@ class MyApp extends StatelessWidget {
     if (isLoggedIn) {
       if (role == 'renter') {
         homeScreen = const RenterScreens();
-      } else if (role == 'employee') {
+      } else if (role == 'employee' && isHelper == true) {
         homeScreen = const HelperScreens();
+      } else if (role == 'employee' && isHelper == false) {
+        homeScreen = const RenterScreens();
       } else {
         homeScreen = const SplashScreen();
       }

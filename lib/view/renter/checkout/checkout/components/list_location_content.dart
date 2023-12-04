@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:iclean_mobile_app/view/renter/checkout/checkout/checkout_screen.dart';
 import 'package:iclean_mobile_app/models/address.dart';
-import 'package:iclean_mobile_app/provider/checkout_provider.dart';
-import 'package:iclean_mobile_app/services/api_checkout_repo.dart';
 import 'package:iclean_mobile_app/services/api_location_repo.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
-import 'package:iclean_mobile_app/view/renter/checkout/checkout_cart/checkout_cart_screen.dart';
 
 class ListLocationContent extends StatelessWidget {
   const ListLocationContent({
     super.key,
     required this.text,
+    required this.note,
   });
 
-  final String text;
+  final String text, note;
 
   @override
   Widget build(BuildContext context) {
@@ -27,20 +25,18 @@ class ListLocationContent extends StatelessWidget {
       }
     }
 
-    void updateCart(int id, bool isUsePoint, bool isAutoAssign) {
-      final ApiCheckoutRepository repository = ApiCheckoutRepository();
-      repository.updateCart(id, isUsePoint, isAutoAssign, context).then((_) {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => const CheckoutCartScreen()),
-        );
-      }).catchError((error) {
-        // ignore: avoid_print
-        print('Failed to choose location: $error');
-      });
+    void updateCart(int id) {
+      Navigator.pop(context);
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+            builder: (context) => CheckoutScreen(
+                  isUpdated: true,
+                  addressId: id,
+                  note: note,
+                )),
+      );
     }
 
-    var checkoutProvider =
-        Provider.of<CheckoutProvider>(context, listen: false);
     return FutureBuilder<List<Address>>(
       future: fetchLocations(),
       builder: (context, snapshot) {
@@ -67,8 +63,6 @@ class ListLocationContent extends StatelessWidget {
                           onTap: () {
                             updateCart(
                               locations[i].id!,
-                              checkoutProvider.usePoint,
-                              checkoutProvider.autoAssign,
                             );
                           },
                           child: Row(

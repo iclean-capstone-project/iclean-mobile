@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/account.dart';
 import 'package:iclean_mobile_app/services/api_account_repo.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
-import 'edit_location_dialog.dart';
 
-class RenterInfo extends StatelessWidget {
-  const RenterInfo({super.key, required this.text});
+import 'edit_location_dialog_for_cart.dart';
+
+class RenterInfoForCart extends StatelessWidget {
+  const RenterInfoForCart({super.key, required this.text});
 
   final String text;
 
@@ -30,7 +31,10 @@ class RenterInfo extends StatelessWidget {
             top: Radius.circular(25.0),
           ),
         ),
-        builder: (context) => EditLocationDialog(account: account, text: text),
+        builder: (context) => EditLocationDialogForCart(
+          account: account,
+          text: text,
+        ),
       );
     }
 

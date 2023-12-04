@@ -4,8 +4,8 @@ import 'package:intl/intl.dart';
 import 'package:iclean_mobile_app/models/cart_item.dart';
 import 'package:iclean_mobile_app/widgets/details_fields.dart';
 
-class ServiceInfoForCart extends StatelessWidget {
-  const ServiceInfoForCart({
+class ServiceInfo extends StatelessWidget {
+  const ServiceInfo({
     super.key,
     required this.cartItem,
   });
@@ -53,7 +53,14 @@ class ServiceInfoForCart extends StatelessWidget {
           DetailsContentField(
               text: "Tên công việc", text2: cartItem.serviceName),
           const SizedBox(height: 4),
+          DetailsContentField(
+            text: "Khối lượng công việc",
+            text2: cartItem.serviceUnit.value.toString(),
+          ),
+          const SizedBox(height: 4),
           DetailsContentField(text: "Giá", text2: cartItem.formatPriceInVND()),
+          const SizedBox(height: 4),
+          DetailsContentField(text: "Ghi chú", text2: cartItem.note),
         ],
       ),
     );

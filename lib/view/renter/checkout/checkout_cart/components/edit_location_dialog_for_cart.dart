@@ -3,10 +3,10 @@ import 'package:iclean_mobile_app/models/account.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
 
-import 'list_location_content.dart';
+import 'list_location_content_for_cart.dart';
 
-class EditLocationDialog extends StatelessWidget {
-  const EditLocationDialog({
+class EditLocationDialogForCart extends StatelessWidget {
+  const EditLocationDialogForCart({
     super.key,
     required this.account,
     required this.text,
@@ -40,7 +40,7 @@ class EditLocationDialog extends StatelessWidget {
                   thickness: 0.5,
                   color: ColorPalette.greyColor,
                 ),
-                ListLocationContent(text: text),
+                ListLocationContentForCart(text: text),
                 const Divider(
                   thickness: 0.5,
                   color: ColorPalette.greyColor,

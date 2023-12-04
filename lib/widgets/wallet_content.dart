@@ -45,7 +45,7 @@ class _WalletContentState extends State<WalletContent> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Expanded(
+          Flexible(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -116,7 +116,7 @@ class _WalletContentState extends State<WalletContent> {
               color: ColorPalette.greyColor,
             ),
           ),
-          Expanded(
+          Flexible(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

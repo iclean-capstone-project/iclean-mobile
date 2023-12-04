@@ -116,7 +116,7 @@ class InfoAccountContent extends StatelessWidget {
                               color: Colors.white,
                             ),
                             const SizedBox(width: 8),
-                            Expanded(
+                            Flexible(
                               child: Text(
                                 (account.defaultAddress == '')
                                     ? "Bạn vẫn chưa cập nhật vị trí"

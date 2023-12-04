@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:iclean_mobile_app/services/components/constant.dart';
+import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 import 'package:location/location.dart';
 
@@ -89,7 +90,7 @@ class GoogleMapTrackingPageState extends State<GoogleMapTrackingPage> {
     try {
       PolylinePoints polylinePoints = PolylinePoints();
       PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-        BaseConstant.google_api_key,
+        BaseConstant.googleApiKey,
         PointLatLng(sourceLocation.latitude, sourceLocation.longitude),
         PointLatLng(destination.latitude, destination.longitude),
       );
@@ -161,7 +162,7 @@ class GoogleMapTrackingPageState extends State<GoogleMapTrackingPage> {
                 Polyline(
                     polylineId: const PolylineId("route"),
                     points: polylineCoordinates,
-                    color: BaseConstant.primaryColor,
+                    color: ColorPalette.primaryColor,
                     width: 6)
               },
               markers: {

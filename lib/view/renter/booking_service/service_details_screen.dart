@@ -3,7 +3,7 @@ import 'package:iclean_mobile_app/models/service.dart';
 import 'package:iclean_mobile_app/services/api_service_repo.dart';
 import 'package:iclean_mobile_app/view/renter/nav_bar_bottom/renter_screen.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
-import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
+import 'package:iclean_mobile_app/widgets/my_bottom_app_bar.dart';
 import 'booking_details/booking_details_screen.dart';
 import 'package:another_carousel_pro/another_carousel_pro.dart';
 
@@ -101,25 +101,21 @@ class ServiceDetailsScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 16),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: MainColorInkWellFullSize(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    BookingDetailsScreen(service: service)));
-                      },
-                      text: "Đặt dịch vụ",
-                    ),
-                  ),
                 ],
               );
             }
           },
         ),
+      ),
+      bottomNavigationBar: MyBottomAppBar(
+        text: "Đặt dịch vụ",
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      BookingDetailsScreen(service: service)));
+        },
       ),
     );
   }

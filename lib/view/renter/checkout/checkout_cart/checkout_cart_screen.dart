@@ -8,11 +8,11 @@ import 'package:iclean_mobile_app/widgets/auto_assign.dart';
 import 'package:iclean_mobile_app/widgets/checkout_success_dialog.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 import 'package:iclean_mobile_app/widgets/my_bottom_app_bar.dart';
-import 'package:iclean_mobile_app/widgets/renter_info.dart';
 import 'package:iclean_mobile_app/widgets/use_point.dart';
 import 'package:provider/provider.dart';
 
-import 'components/service_info_cart.dart';
+import 'components/renter_info_for_cart.dart';
+import '../../../../widgets/service_info.dart';
 
 class CheckoutCartScreen extends StatefulWidget {
   const CheckoutCartScreen({super.key});
@@ -115,7 +115,7 @@ class _CheckoutCartScreenState extends State<CheckoutCartScreen> {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    RenterInfo(text: cart.locationDescription!),
+                    RenterInfoForCart(text: cart.locationDescription!),
                     const SizedBox(height: 16),
                     const Text(
                       "Thông tin công việc",
@@ -130,8 +130,7 @@ class _CheckoutCartScreenState extends State<CheckoutCartScreen> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 8),
-                            child:
-                                ServiceInfoForCart(cartItem: cart.cartItem[i]),
+                            child: ServiceInfo(cartItem: cart.cartItem[i]),
                           ),
                         ],
                       ),

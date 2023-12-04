@@ -195,70 +195,69 @@ class CurrentBooking extends StatelessWidget {
           confirm: "Xác nhận",
           onTap: () async {
             final ApiBookingRepository repository = ApiBookingRepository();
-            try {
-              final check = await repository.checkoutBookingForHelper(id);
-              if (check) {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: const Text(
-                        'Xác nhận hoàn thành dịch vụ thành công',
-                        style: TextStyle(
-                          fontSize: 16,
-                        ),
+
+            final check = await repository.checkoutBookingForHelper(id);
+            if (check) {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text(
+                      'Xác nhận hoàn thành dịch vụ thành công',
+                      style: TextStyle(
+                        fontSize: 16,
                       ),
-                      actions: <Widget>[
-                        TextButton(
-                          child: const Text(
-                            'OK',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                            ),
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                        child: const Text(
+                          'OK',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
                           ),
-                          onPressed: () {
-                            Navigator.pop(context);
-                            Navigator.pop(context);
-                          },
                         ),
-                      ],
-                    );
-                  },
-                );
-              } else {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: const Text(
-                        'Bạn cần phải hoàn thành xong công việc',
-                        style: TextStyle(
-                          fontSize: 16,
-                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                        },
                       ),
-                      actions: <Widget>[
-                        TextButton(
-                          child: const Text(
-                            'OK',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                            ),
+                    ],
+                  );
+                },
+              );
+            } else {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text(
+                      'Bạn cần phải hoàn thành xong công việc',
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                        child: const Text(
+                          'OK',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
                           ),
-                          onPressed: () {
-                            Navigator.pop(context);
-                            Navigator.pop(context);
-                          },
                         ),
-                      ],
-                    );
-                  },
-                );
-              }
-            } catch (e) {}
+                        onPressed: () {
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            }
           },
         );
       },

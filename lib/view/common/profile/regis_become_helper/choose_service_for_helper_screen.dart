@@ -201,7 +201,6 @@ class _ChooseServiceForHelperScreenState
         text: "Đăng ký",
         onTap: () {
           String selectedIds = selectedServiceIds.join("&service=");
-          print("Selected Service IDs: $selectedIds");
           regisHelper(widget.email, widget.image1, widget.image2, selectedIds);
         },
       ),

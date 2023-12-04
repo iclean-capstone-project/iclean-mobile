@@ -145,7 +145,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
               context,
               MaterialPageRoute(
                   builder: (context) => CheckoutScreen(
-                        service: widget.service,
+                        note: noteController.text,
                       )));
         },
       ),

@@ -99,7 +99,7 @@ class PaymentContent extends StatelessWidget {
               DetailsContentField(
                 text: "Thời gian",
                 text2:
-                    DateFormat('d/MM/yyyy | HH:mm ').format(booking.orderDate),
+                    DateFormat('d/MM/yyyy | HH:mm').format(booking.orderDate),
               ),
               const SizedBox(height: 4),
               Row(

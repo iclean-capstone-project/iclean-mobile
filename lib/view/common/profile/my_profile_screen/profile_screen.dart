@@ -1,18 +1,20 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/auth/log_in/log_in_screen.dart';
 import 'package:iclean_mobile_app/auth/user_preferences.dart';
 import 'package:iclean_mobile_app/models/account.dart';
 import 'package:iclean_mobile_app/services/api_account_repo.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
-
 import 'package:iclean_mobile_app/view/common/profile/location/location_screen.dart';
 import 'package:iclean_mobile_app/view/common/profile/my_profile_screen/components/dark_mode.dart';
 import 'package:iclean_mobile_app/view/common/profile/my_profile_screen/components/profile_inkwell.dart';
 import 'package:iclean_mobile_app/view/common/profile/point/point_screen/point_screen.dart';
-import 'package:iclean_mobile_app/view/common/profile/regis_become_helper/regis_become_helper_screen.dart';
 import 'package:iclean_mobile_app/view/common/profile/update_profile_screen/update_profile_screen.dart';
 import 'package:iclean_mobile_app/view/common/profile/wallet/my_wallet/wallet_screen.dart';
+import 'package:iclean_mobile_app/view/helper/nav_bar_bottom/helper_screen.dart';
 import 'package:iclean_mobile_app/view/helper/time_working/time_working_screen.dart';
+import 'package:iclean_mobile_app/view/renter/nav_bar_bottom/renter_screen.dart';
 import 'package:iclean_mobile_app/widgets/confirm_dialog.dart';
 import 'package:iclean_mobile_app/widgets/shimmer_loading.dart';
 
@@ -24,6 +26,8 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  var isHelper = UserPreferences.isHelper();
+
   Future<Account> fetchAccount() async {
     final ApiAccountRepository apiAccountRepository = ApiAccountRepository();
     try {
@@ -34,9 +38,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
-  Future<String> getRole() async {
-    final role = await UserPreferences.getRole();
-    return role!;
+  setIsHelper(bool value) async {
+    await UserPreferences.setIsHelper(value);
   }
 
   void showLogoutConfirmationDialog(BuildContext context) {
@@ -172,70 +175,97 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       color: ColorPalette.greyColor,
                                     ),
                                   ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const RegisBecomeHelperScreen()));
-                                    },
-                                    child: Row(
-                                      children: const [
-                                        SizedBox(width: 8),
-                                        Icon(
-                                          Icons.add_circle_rounded,
-                                          color: ColorPalette.greyColor,
-                                          size: 32,
-                                        ),
-                                        SizedBox(width: 16),
-                                        Text(
-                                          'Đăng ký trở thành người giúp việc',
-                                          style: TextStyle(
-                                            fontSize: 16,
+                                  if (account.roleName == 'employee' &&
+                                      isHelper == false)
+                                    GestureDetector(
+                                      onTap: () async {
+                                        await UserPreferences.setIsHelper(true);
+                                        setState(() {
+                                          isHelper = UserPreferences.isHelper();
+                                        });
+                                        Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const HelperScreens()));
+                                      },
+                                      child: Row(
+                                        children: const [
+                                          SizedBox(width: 8),
+                                          Icon(
+                                            Icons.transfer_within_a_station,
                                             color: ColorPalette.greyColor,
-                                            fontFamily: 'Lato',
+                                            size: 24,
                                           ),
-                                        ),
-                                      ],
+                                          SizedBox(width: 8),
+                                          Flexible(
+                                            child: Text(
+                                              'Chuyển đến màn hình của người giúp việc',
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                color: ColorPalette.greyColor,
+                                                fontFamily: 'Lato',
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  )
+                                  if (account.roleName == 'employee' &&
+                                      isHelper == true)
+                                    GestureDetector(
+                                      onTap: () async {
+                                        await setIsHelper(false);
+                                        await UserPreferences.setIsHelper(
+                                            false);
+                                        setState(() {
+                                          isHelper = UserPreferences.isHelper();
+                                        });
+                                        Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const RenterScreens()));
+                                      },
+                                      child: Row(
+                                        children: const [
+                                          SizedBox(width: 8),
+                                          Icon(
+                                            Icons.transfer_within_a_station,
+                                            color: ColorPalette.greyColor,
+                                            size: 24,
+                                          ),
+                                          SizedBox(width: 8),
+                                          Flexible(
+                                            child: Text(
+                                              'Chuyển đến màn hình của người thuê dịch vụ',
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                color: ColorPalette.greyColor,
+                                                fontFamily: 'Lato',
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                 ],
                               ),
                             ),
                           ),
                           const SizedBox(height: 8),
-                          FutureBuilder<String>(
-                            future: getRole(),
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.waiting) {
-                                return const ShimmerLoadingWidget.rectangular(
-                                    height: 16);
-                              } else if (snapshot.hasError) {
-                                return Text('Error: ${snapshot.error}');
-                              } else if (snapshot.hasData) {
-                                final role = snapshot.data!;
-                                if (role == "employee") {
-                                  return ProfileInkWell(
-                                    icon: const Icon(Icons.person_outline),
-                                    text: "Lịch làm việc",
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const TimeWorkingScreen()));
-                                    },
-                                  );
-                                } else {
-                                  return const SizedBox();
-                                }
-                              } else {
-                                return const SizedBox();
-                              }
-                            },
-                          ),
+                          if (account.roleName == "employee")
+                            ProfileInkWell(
+                              icon: const Icon(Icons.person_outline),
+                              text: "Lịch làm việc",
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const TimeWorkingScreen()));
+                              },
+                            ),
                           ProfileInkWell(
                             icon: const Icon(Icons.location_on_outlined),
                             text: "Vị trí",

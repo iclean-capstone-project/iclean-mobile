@@ -15,6 +15,71 @@ class ApiCheckoutRepository implements CheckoutRepository {
   static const String urlConstant = "${BaseConstant.baseUrl}/booking/checkout";
 
   @override
+  Future<Cart> getCartWithOutAddToCart(
+      DateTime startTime,
+      int serviceUnitId,
+      String? note,
+      int? addressId,
+      bool? isUsePoint,
+      bool? isAutoAssign,
+      BuildContext context) async {
+    const url = "${BaseConstant.baseUrl}/booking/request-now";
+    final uri = Uri.parse(url);
+    final accessToken = await UserPreferences.getAccessToken();
+
+    Map<String, String> headers = {
+      "Authorization": "Bearer $accessToken",
+      "Content-Type": "application/json",
+    };
+
+    final Map<String, dynamic> data;
+
+    final Map<String, dynamic> data1 = {
+      "startTime": startTime.toIso8601String(),
+      "serviceUnitId": serviceUnitId,
+      "note": note
+    };
+
+    final Map<String, dynamic> data2 = {
+      "startTime": startTime.toIso8601String(),
+      "serviceUnitId": serviceUnitId,
+      "note": note,
+      "addressId": addressId,
+      "usingPoint": isUsePoint,
+      "autoAssign": isAutoAssign
+    };
+
+    if (addressId == null || addressId == 0) {
+      data = data1;
+    } else {
+      data = data2;
+    }
+
+    try {
+      final response =
+          await http.post(uri, headers: headers, body: jsonEncode(data));
+
+      if (response.statusCode == 200) {
+        final jsonMap = json.decode(utf8.decode(response.bodyBytes));
+        final data = jsonMap['data'];
+        final cart = Cart.fromJsonCheckout(data);
+        return cart;
+      } else {
+        final jsonMap = json.decode(utf8.decode(response.bodyBytes));
+        final responseObject = ResponseObject.fromJson(jsonMap);
+        showDialog(
+          context: context,
+          builder: (BuildContext context) =>
+              ErrorDialog(responseObject: responseObject),
+        );
+        throw Exception('Failed to get cart: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  @override
   Future<Cart> getCart(BuildContext context) async {
     final uri = Uri.parse(urlConstant);
     final accessToken = await UserPreferences.getAccessToken();
@@ -40,7 +105,7 @@ class ApiCheckoutRepository implements CheckoutRepository {
           builder: (BuildContext context) =>
               ErrorDialog(responseObject: responseObject),
         );
-        throw Exception('Failed to get account: ${response.statusCode}');
+        throw Exception('Failed to get cart: ${response.statusCode}');
       }
     } catch (e) {
       throw Exception(e);

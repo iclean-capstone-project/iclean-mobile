@@ -5,6 +5,6 @@ class ColorPalette {
   static const Color mainColorDark = Color.fromRGBO(46, 46, 46, 1);
   static const Color greyColor = Color.fromRGBO(108, 112, 114, 1);
   static const Color textFieldColorLight = Color.fromRGBO(250, 250, 250, 1);
-  //static const Color textFieldColorDark = Color.fromRGBO(158, 158, 158, 1);
+  static const Color primaryColor = Color(0xFF7B61FF);
   static const Color textFieldColorFocused = Color.fromRGBO(244, 236, 255, 1);
 }

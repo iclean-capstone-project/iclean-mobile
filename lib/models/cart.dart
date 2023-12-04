@@ -39,7 +39,7 @@ class Cart {
     List<CartItem> cartItems =
         details.map((detail) => CartItem.fromJson(detail)).toList();
     return Cart(
-      cartId: json['cartId'],
+      cartId: json['cartId'] ?? 0,
       locationDescription: json['locationDescription'],
       locationName: json['locationName'],
       longitude: json['longitude'],

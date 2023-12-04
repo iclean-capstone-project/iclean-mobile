@@ -44,7 +44,7 @@ class CartItem {
     final minute = int.parse(timeParts[1]);
 
     return CartItem(
-      cartItemId: json['cartItemId'],
+      cartItemId: json['cartItemId'] ?? 0,
       serviceId: json['serviceId'],
       serviceUnitId: json['serviceUnitId'] ?? "",
       serviceName: json['serviceName'] ?? "",

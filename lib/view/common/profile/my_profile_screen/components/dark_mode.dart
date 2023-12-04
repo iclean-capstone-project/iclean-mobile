@@ -13,7 +13,8 @@ class DarkModeButton extends StatefulWidget {
 class _DarkModeButtonState extends State<DarkModeButton> {
   @override
   Widget build(BuildContext context) {
-    ThemeProvider themeProvider = Provider.of<ThemeProvider>(context);
+    ThemeProvider themeProvider =
+        Provider.of<ThemeProvider>(context, listen: false);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -34,8 +35,8 @@ class _DarkModeButtonState extends State<DarkModeButton> {
           value: themeProvider.isDarkMode,
           onChanged: (value) {
             setState(() {
-              themeProvider.isDarkMode = value;
               themeProvider.toggleTheme();
+              themeProvider.isDarkMode = value;
             });
           },
         ),
