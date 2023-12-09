@@ -251,8 +251,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         ],
                                       ),
                                     ),
-                                  if (account.roleName == 'renter' &&
-                                      isHelper == true)
+                                  if (account.roleName == 'renter')
                                     GestureDetector(
                                       onTap: () async {
                                         Navigator.push(
