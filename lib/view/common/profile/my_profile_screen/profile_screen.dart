@@ -11,6 +11,7 @@ import 'package:iclean_mobile_app/view/common/profile/location/location_screen.d
 import 'package:iclean_mobile_app/view/common/profile/my_profile_screen/components/dark_mode.dart';
 import 'package:iclean_mobile_app/view/common/profile/my_profile_screen/components/profile_inkwell.dart';
 import 'package:iclean_mobile_app/view/common/profile/point/point_screen/point_screen.dart';
+import 'package:iclean_mobile_app/view/common/profile/regis_become_helper/regis_become_helper_screen.dart';
 import 'package:iclean_mobile_app/view/common/profile/update_profile_screen/update_profile_screen.dart';
 import 'package:iclean_mobile_app/view/common/profile/wallet/my_wallet/wallet_screen.dart';
 import 'package:iclean_mobile_app/view/helper/nav_bar_bottom/helper_screen.dart';
@@ -254,17 +255,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       isHelper == true)
                                     GestureDetector(
                                       onTap: () async {
-                                        // await setIsHelper(false);
-                                        // await UserPreferences.setIsHelper(
-                                        //     false);
-                                        // setState(() {
-                                        //   isHelper = UserPreferences.isHelper();
-                                        // });
-                                        // Navigator.pushReplacement(
-                                        //     context,
-                                        //     MaterialPageRoute(
-                                        //         builder: (context) =>
-                                        //             const RenterScreens()));
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const RegisBecomeHelperScreen()));
                                       },
                                       child: Row(
                                         children: const [

@@ -63,7 +63,7 @@ class WelcomeScreen extends StatelessWidget {
                   const Padding(
                     padding: EdgeInsets.only(top: 24),
                     child: Text(
-                      "Welcome to iClean",
+                      "Chào mừng đến với iClean",
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -113,42 +113,42 @@ class WelcomeScreen extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 16),
                     child: InkWell(
                       onTap: () {},
-                      child: Container(
+                      child: SizedBox(
                         height: 48,
-                        decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 24, 119, 242),
-                          borderRadius: BorderRadius.circular(50),
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Color.fromARGB(255, 24, 119, 242),
-                              offset: Offset(0, 3),
-                              blurRadius: 3.0,
-                              spreadRadius: 0.0,
-                            ),
-                          ],
-                        ),
+                        // decoration: BoxDecoration(
+                        //   color: const Color.fromARGB(255, 24, 119, 242),
+                        //   borderRadius: BorderRadius.circular(50),
+                        //   boxShadow: const [
+                        //     BoxShadow(
+                        //       color: Color.fromARGB(255, 24, 119, 242),
+                        //       offset: Offset(0, 3),
+                        //       blurRadius: 3.0,
+                        //       spreadRadius: 0.0,
+                        //     ),
+                        //   ],
+                        // ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              height: 28,
-                              width: 28,
-                              child: Image.asset(
-                                "assets/images/fb_logo_white.png",
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            const SizedBox(width: 8),
-                            const Text(
-                              "Đăng nhập với Facebook",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'Lato',
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 1,
-                              ),
-                            ),
+                          children: const [
+                            // SizedBox(
+                            //   height: 28,
+                            //   width: 28,
+                            //   child: Image.asset(
+                            //     "assets/images/fb_logo_white.png",
+                            //     fit: BoxFit.cover,
+                            //   ),
+                            // ),
+                            // const SizedBox(width: 8),
+                            // const Text(
+                            //   "Đăng nhập với Facebook",
+                            //   style: TextStyle(
+                            //     color: Colors.white,
+                            //     fontFamily: 'Lato',
+                            //     fontSize: 16,
+                            //     fontWeight: FontWeight.bold,
+                            //     letterSpacing: 1,
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),
@@ -158,42 +158,42 @@ class WelcomeScreen extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 16),
                     child: InkWell(
                       onTap: () {},
-                      child: Container(
+                      child: SizedBox(
                         height: 48,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(50),
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Colors.grey,
-                              offset: Offset(0, 3),
-                              blurRadius: 3.0,
-                              spreadRadius: 0.0,
-                            ),
-                          ],
-                        ),
+                        // decoration: BoxDecoration(
+                        //   color: Colors.white,
+                        //   borderRadius: BorderRadius.circular(50),
+                        //   boxShadow: const [
+                        //     BoxShadow(
+                        //       color: Colors.grey,
+                        //       offset: Offset(0, 3),
+                        //       blurRadius: 3.0,
+                        //       spreadRadius: 0.0,
+                        //     ),
+                        //   ],
+                        // ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              height: 28,
-                              width: 28,
-                              child: Image.asset(
-                                "assets/images/google_logo.png",
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            const SizedBox(width: 8),
-                            const Text(
-                              "Đăng nhập với Facebook",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontFamily: 'Lato',
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 1,
-                              ),
-                            ),
+                          children: const [
+                            // SizedBox(
+                            //   height: 28,
+                            //   width: 28,
+                            //   child: Image.asset(
+                            //     "assets/images/google_logo.png",
+                            //     fit: BoxFit.cover,
+                            //   ),
+                            // ),
+                            // const SizedBox(width: 8),
+                            // const Text(
+                            //   "Đăng nhập với Facebook",
+                            //   style: TextStyle(
+                            //     color: Colors.black,
+                            //     fontFamily: 'Lato',
+                            //     fontSize: 16,
+                            //     fontWeight: FontWeight.bold,
+                            //     letterSpacing: 1,
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),

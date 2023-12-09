@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 
 import 'components/login_content.dart';
-import 'components/logo_inkwell.dart';
-import 'components/or_divider.dart';
 
 class LogInScreen extends StatelessWidget {
   const LogInScreen({super.key});
@@ -34,31 +32,31 @@ class LogInScreen extends StatelessWidget {
               const LoginContent(),
 
               //Or Divider
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 32),
-                child: Center(
-                  child: OrDivider(),
-                ),
-              ),
+              // const Padding(
+              //   padding: EdgeInsets.symmetric(vertical: 32),
+              //   child: Center(
+              //     child: OrDivider(),
+              //   ),
+              // ),
 
               //FB or GG option
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    LogoInkWell(
-                      onTap: () {},
-                      logoPath: "assets/images/google_logo.png",
-                    ),
-                    LogoInkWell(
-                      onTap: () {},
-                      logoPath: "assets/images/fb_logo.png",
-                    ),
-                  ],
-                ),
-              ),
+              // Padding(
+              //   padding:
+              //       const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+              //     children: [
+              //       LogoInkWell(
+              //         onTap: () {},
+              //         logoPath: "assets/images/google_logo.png",
+              //       ),
+              //       LogoInkWell(
+              //         onTap: () {},
+              //         logoPath: "assets/images/fb_logo.png",
+              //       ),
+              //     ],
+              //   ),
+              // ),
 
               Padding(
                 padding: EdgeInsets.only(
