@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/bookings.dart';
 import 'package:iclean_mobile_app/models/booking_status.dart';
@@ -38,12 +39,18 @@ class _BookingCardCardState extends State<BookingCard>
     }
   }
 
-  void openQRGenerator(String value) {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  void openQRGenerator(int id, String value) {
     Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => QrGenerator(
                   qrData: value,
+                  bookingDetailId: id,
                 )));
   }
 
@@ -195,7 +202,8 @@ class _BookingCardCardState extends State<BookingCard>
                                           String value = await fetchOTPUpcoming(
                                               context,
                                               widget.listBookings[i].id);
-                                          openQRGenerator(value);
+                                          openQRGenerator(
+                                              widget.listBookings[i].id, value);
                                         },
                                         icon: const Icon(Icons.qr_code),
                                         tooltip: 'Quét mã QR',

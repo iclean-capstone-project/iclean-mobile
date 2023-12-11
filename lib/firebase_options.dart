@@ -23,9 +23,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        return ios;
       case TargetPlatform.macOS:
-        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -48,6 +46,8 @@ class DefaultFirebaseOptions {
       authDomain: "iclean-59a5b.firebaseapp.com",
       projectId: "iclean-59a5b",
       storageBucket: "iclean-59a5b.appspot.com",
+      databaseURL:
+          "https://iclean-59a5b-default-rtdb.asia-southeast1.firebasedatabase.app",
       messagingSenderId: "475804456084",
       appId: "1:475804456084:web:07074e4182be1cb8b35081",
       measurementId: "G-BB4KX8W7VN");
@@ -56,29 +56,9 @@ class DefaultFirebaseOptions {
     apiKey: "AIzaSyDrnxpG6_nsssAq2NO5H19tccLInsHiEG4",
     projectId: "iclean-59a5b",
     storageBucket: "iclean-59a5b.appspot.com",
+    databaseURL:
+        "https://iclean-59a5b-default-rtdb.asia-southeast1.firebasedatabase.app",
     messagingSenderId: "475804456084",
     appId: "1:475804456084:web:07074e4182be1cb8b35081",
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDDW_gmXEeLfaP9rMrfI4ps-TJcf_xyrVA',
-    appId: '1:81955253683:ios:3dc0e6cb2bda28d4332fc6',
-    messagingSenderId: '81955253683',
-    projectId: 'iclean-project-76967',
-    storageBucket: 'iclean-project-76967.appspot.com',
-    iosClientId:
-        '81955253683-t5s83amg9fcd6ep8cn8iq44plq3c8d3g.apps.googleusercontent.com',
-    iosBundleId: 'com.example.swdProjectClatt',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyDDW_gmXEeLfaP9rMrfI4ps-TJcf_xyrVA',
-    appId: '1:81955253683:ios:3dc0e6cb2bda28d4332fc6',
-    messagingSenderId: '81955253683',
-    projectId: 'iclean-project-76967',
-    storageBucket: 'iclean-project-76967.appspot.com',
-    iosClientId:
-        '81955253683-t5s83amg9fcd6ep8cn8iq44plq3c8d3g.apps.googleusercontent.com',
-    iosBundleId: 'com.example.swdProjectClatt',
   );
 }
