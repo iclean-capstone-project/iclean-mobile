@@ -60,6 +60,8 @@ dependencies:
   flutter_polyline_points: ^1.0.0
   location: ^5.0.3
   flutter_inappwebview: ^5.8.0
+  firebase_database: ^10.0.6
+  quickalert: ^1.0.2
 
 dev_dependencies:
   flutter_test:
