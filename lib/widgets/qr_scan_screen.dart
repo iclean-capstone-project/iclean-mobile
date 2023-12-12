@@ -10,8 +10,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
-import '../view/helper/nav_bar_bottom/helper_screen.dart';
-
 class ValidateBookingCode extends StatefulWidget {
   const ValidateBookingCode({Key? key, required this.bookingDetailId})
       : super(key: key);

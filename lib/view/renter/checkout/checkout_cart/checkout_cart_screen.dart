@@ -72,15 +72,7 @@ class _CheckoutCartScreenState extends State<CheckoutCartScreen> {
             title: "Gửi đơn thất bại",
             description:
                 "Đơn của bạn thực hiện không thành công do không đủ số dư. Vui lòng kiểm tra lại...",
-            onTap: () {
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (context) {
-                    return const RenterScreens();
-                  },
-                ),
-              );
-            },
+            onTap: () {},
           ),
         );
       }
@@ -191,10 +183,10 @@ class _CheckoutCartScreenState extends State<CheckoutCartScreen> {
       ),
       bottomNavigationBar: MyBottomAppBar(
         text: "Đăng tin",
-        onTap: () {
+        onTap: () async{
           loadingState.setLoading(true);
           try {
-            checkoutCart(
+            await checkoutCart(
               checkoutProvider.usePoint,
               checkoutProvider.autoAssign,
             );

@@ -224,10 +224,10 @@ class CheckoutScreen extends StatelessWidget {
       ),
       bottomNavigationBar: MyBottomAppBar(
         text: "Đăng tin",
-        onTap: () {
+        onTap: () async{
           loadingState.setLoading(true);
           try {
-            checkout(
+            await checkout(
               bookingDetailsProvider,
               note,
               addressId!,

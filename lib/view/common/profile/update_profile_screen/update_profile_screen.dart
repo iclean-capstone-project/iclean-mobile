@@ -70,7 +70,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
             builder: (context) => const RenterScreens(selectedIndex: 4)),
       );
     }).catchError((error) {
-      print('Failed to update location: $error');
+      print('Failed to update profile: $error');
     });
   }
 

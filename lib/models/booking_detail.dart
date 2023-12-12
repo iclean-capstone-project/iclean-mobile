@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/booking_status.dart';
+import 'package:iclean_mobile_app/models/feedback.dart';
 import 'package:iclean_mobile_app/models/service_unit.dart';
 import 'package:iclean_mobile_app/models/transaction.dart';
 import 'package:intl/intl.dart';
@@ -22,11 +23,12 @@ class BookingDetail {
       rejectionReasonDescription,
       customerName,
       customerAvatar,
-      phoneNumber,
-      feedback;
+      phoneNumber;
+  FeedbackModel? feedback;
   Transaction? transaction;
   double? rate;
   int? customerId, numberOfFeedback;
+  bool reported;
 
   BookingDetail({
     required this.id,
@@ -45,6 +47,7 @@ class BookingDetail {
     required this.locationDescription,
     required this.longitude,
     required this.latitude,
+    required this.reported,
     this.rejectionReasonContent,
     this.rejectionReasonDescription,
     this.customerId,
@@ -82,6 +85,13 @@ class BookingDetail {
 
     final address = json['address'];
     final helper = json['helper'] as Map<String, dynamic>?;
+    final feedback = json['feedback'] as Map<String, dynamic>?;
+    FeedbackModel? feedbackData;
+    if (feedback == null) {
+      feedbackData = null;
+    } else {
+      feedbackData = FeedbackModel.fromJson(feedback);
+    }
 
     final transaction = json['transaction'];
 
@@ -115,8 +125,9 @@ class BookingDetail {
       rate: helper?['rate'],
       numberOfFeedback: helper?['numberOfFeedback'],
       transaction: Transaction.fromJsonForBookingDetails(transaction),
-      feedback: json['feedback'] ?? "",
+      feedback: feedbackData,
       listStatus: statusHistory,
+      reported: json['reported'] ?? false,
     );
   }
 
@@ -170,6 +181,7 @@ class BookingDetail {
       phoneNumber: renter?['phoneNumber'] ?? "",
       feedback: json['feedback'] ?? "",
       listStatus: statusHistory,
+      reported: json['reported'] ?? false,
     );
   }
 

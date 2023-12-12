@@ -10,12 +10,8 @@ class MyBottomAppBar extends StatelessWidget {
     super.key,
     required this.text,
     required this.onTap,
-    this.widget1,
-    this.widget2,
   });
 
-  final Widget? widget1;
-  final Widget? widget2;
   final String text;
   final void Function() onTap;
 
@@ -33,16 +29,15 @@ class MyBottomAppBar extends StatelessWidget {
         ],
       ),
       child: BottomAppBar(
-        child: 
-        loadingState.isLoading
-                ? const InkWellLoading()
-                : Container(
+        child: Container(
           padding: const EdgeInsets.all(16),
           color: Theme.of(context).colorScheme.background,
-          child: MainColorInkWellFullSize(
-            onTap: onTap,
-            text: text,
-          ),
+          child: loadingState.isLoading
+              ? const InkWellLoading()
+              : MainColorInkWellFullSize(
+                  onTap: onTap,
+                  text: text,
+                ),
         ),
       ),
     );

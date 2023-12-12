@@ -5,7 +5,9 @@ import 'package:iclean_mobile_app/models/bookings.dart';
 import 'package:iclean_mobile_app/services/api_booking_repo.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/view/renter/history/booking_details/components/choose_helper_content.dart';
+import 'package:iclean_mobile_app/view/renter/history/booking_details/components/report_screen.dart';
 import 'package:iclean_mobile_app/view/renter/history/booking_details/components/timeline_details/timeline_details.dart';
+import 'package:iclean_mobile_app/view/renter/history/booking_details/components/view_feedback_dialog.dart';
 import 'package:iclean_mobile_app/widgets/details_fields.dart';
 import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
@@ -14,6 +16,7 @@ import 'package:iclean_mobile_app/widgets/timeline_content.dart';
 
 import 'components/address_content.dart';
 import 'components/detail_content.dart';
+import 'components/feedback_dialog.dart';
 import 'components/helper_content.dart';
 import 'components/payment_content.dart';
 
@@ -40,6 +43,42 @@ class BookingDetailsScreen extends StatelessWidget {
       from = DateTime(from.year, from.month, from.day);
       to = DateTime(to.year, to.month, to.day);
       return (to.difference(from).inHours / 24).round();
+    }
+
+    void showFeedbackDialog(BuildContext context, BookingDetail bookingDetail) {
+      showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(25.0),
+          ),
+        ),
+        builder: (context) => FeedbackDialog(
+          id: bookingDetail.id,
+          helperImage: bookingDetail.customerAvatar!,
+          helperName: bookingDetail.customerName!,
+          booking: booking,
+        ),
+      );
+    }
+
+    void showViewFeedbackDialog(
+        BuildContext context, BookingDetail bookingDetail) {
+      showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(25.0),
+          ),
+        ),
+        builder: (context) => ViewFeedbackDialog(
+          helperImage: bookingDetail.customerAvatar!,
+          helperName: bookingDetail.customerName!,
+          feedback: bookingDetail.feedback!,
+        ),
+      );
     }
 
     return Scaffold(
@@ -142,50 +181,30 @@ class BookingDetailsScreen extends StatelessWidget {
                             text: "Hủy đơn",
                           ),
                         //đơn sắp đến ngày làm nhưng không thể hủy nếu như cách ngày làm < 24h
-                        if (booking.status != BookingStatus.notYet)
-                          if (bookingDetail.listStatus.last.bookingStatus ==
-                              BookingStatus.upcoming)
-                            if (daysBetween(
-                                    bookingDetail.workDate, DateTime.now()) >
-                                1)
-                              MainColorInkWellFullSize(
-                                onTap: () {
-                                  // Your onTap logic here
-                                },
-                                text: "Hủy đơn",
-                              ),
-                        //đơn đã hoàn thành thì có thể đặt lại
-                        if (booking.status != BookingStatus.notYet)
-                          if (bookingDetail.listStatus.last.bookingStatus ==
-                                  BookingStatus.finished &&
-                              daysBetween(
-                                      bookingDetail.listStatus.last.createAt,
-                                      DateTime.now()) >
-                                  3)
+                        if (booking.status == BookingStatus.upcoming)
+                          if (daysBetween(
+                                  bookingDetail.workDate, DateTime.now()) >
+                              1)
                             MainColorInkWellFullSize(
                               onTap: () {
                                 // Your onTap logic here
                               },
-                              text: "Đặt lại",
+                              text: "Hủy đơn",
                             ),
-                        //đơn đã hoàn thành thì có thể feedback trong vòng 3 ngày
-                        if (booking.status != BookingStatus.notYet)
-                          if (bookingDetail.listStatus.last.bookingStatus ==
-                                  BookingStatus.finished &&
-                              daysBetween(
-                                      bookingDetail.listStatus.last.createAt,
-                                      DateTime.now()) <
-                                  3)
+                        //đơn đã hoàn thành thì trong vòng 3 ngày neu chua feedback hoac report  thi có thể feedback hoac report
+                        if (booking.status == BookingStatus.finished &&
+                            bookingDetail.feedback == null &&
+                            !bookingDetail.reported)
+                          if (daysBetween(
+                                  bookingDetail.listStatus.last.createAt,
+                                  DateTime.now()) <
+                              3)
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 MainColorInkWellFullSize(
                                   onTap: () {
-                                    // Navigator.push(
-                                    //     context,
-                                    //     MaterialPageRoute(
-                                    //         builder: (context) =>
-                                    //             const UpdateNewLocationScreen()));
+                                    showFeedbackDialog(context, bookingDetail);
                                   },
                                   text: "Đánh giá",
                                   backgroundColor:
@@ -196,18 +215,85 @@ class BookingDetailsScreen extends StatelessWidget {
                                 ),
                                 MainColorInkWellFullSize(
                                   onTap: () {
-                                    // Navigator.push(
-                                    //     context,
-                                    //     MaterialPageRoute(
-                                    //         builder: (context) =>
-                                    //             const UpdateNewLocationScreen()));
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(builder: (context) {
+                                      return ReportScreen(
+                                        id: bookingDetail.id,
+                                        helperImage:
+                                            bookingDetail.customerAvatar!,
+                                        helperName: bookingDetail.customerName!,
+                                        booking: booking,
+                                      );
+                                    }));
                                   },
-                                  text: "Đặt lại",
+                                  text: "Báo cáo",
                                   width:
                                       MediaQuery.of(context).size.width * 0.43,
                                 ),
                               ],
                             ),
+                        //đơn đã hoàn thành và đã fb
+                        if (booking.status == BookingStatus.finished &&
+                            bookingDetail.feedback != null)
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              MainColorInkWellFullSize(
+                                onTap: () {
+                                  showViewFeedbackDialog(
+                                      context, bookingDetail);
+                                },
+                                text: "Đã Đánh giá",
+                                backgroundColor:
+                                    Theme.of(context).colorScheme.background,
+                                textColor: ColorPalette.mainColor,
+                                width: MediaQuery.of(context).size.width * 0.43,
+                              ),
+                              MainColorInkWellFullSize(
+                                onTap: () {},
+                                text: "Đặt lại",
+                                width: MediaQuery.of(context).size.width * 0.43,
+                              ),
+                            ],
+                          ),
+                        if (booking.status == BookingStatus.finished &&
+                            bookingDetail.reported)
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              MainColorInkWellFullSize(
+                                onTap: () {},
+                                text: "Đã báo cáo",
+                                backgroundColor:
+                                    Theme.of(context).colorScheme.background,
+                                textColor: ColorPalette.mainColor,
+                                width: MediaQuery.of(context).size.width * 0.43,
+                              ),
+                              MainColorInkWellFullSize(
+                                onTap: () {},
+                                text: "Đặt lại",
+                                width: MediaQuery.of(context).size.width * 0.43,
+                              ),
+                            ],
+                          ),
+
+                        if (booking.status != BookingStatus.notYet)
+                          if (bookingDetail.listStatus.last.bookingStatus ==
+                                  BookingStatus.finished &&
+                              daysBetween(
+                                      bookingDetail.listStatus.last.createAt,
+                                      DateTime.now()) <
+                                  3)
+                            const SizedBox(height: 16),
+                        //đơn đã hoàn thành thì có thể đặt lại
+                        if (booking.status == BookingStatus.finished &&
+                            bookingDetail.feedback == null)
+                          MainColorInkWellFullSize(
+                            onTap: () {
+                              // Your onTap logic here
+                            },
+                            text: "Đặt lại",
+                          ),
                       ],
                     );
                   }
