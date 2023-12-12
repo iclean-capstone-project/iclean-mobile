@@ -251,7 +251,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         ],
                                       ),
                                     ),
-                                  if (account.roleName == 'renter')
+                                  if (account.roleName == 'renter' &&
+                                      !account.isRegistration!)
                                     GestureDetector(
                                       onTap: () async {
                                         Navigator.push(
@@ -281,6 +282,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           ),
                                         ],
                                       ),
+                                    ),
+                                  if (account.roleName == 'renter' &&
+                                      account.isRegistration!)
+                                    Row(
+                                      children: const [
+                                        SizedBox(width: 8),
+                                        Icon(
+                                          Icons.add_circle_rounded,
+                                          color: ColorPalette.greyColor,
+                                          size: 24,
+                                        ),
+                                        SizedBox(width: 8),
+                                        Flexible(
+                                          child: Text(
+                                            'Bạn đã đăng ký, vui lòng đợi phản hồi của chúng tôi',
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              color: ColorPalette.greyColor,
+                                              fontFamily: 'Lato',
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                 ],
                               ),

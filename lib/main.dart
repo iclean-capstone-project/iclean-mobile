@@ -8,6 +8,7 @@ import 'auth/user_preferences.dart';
 import 'provider/booking_details_provider.dart';
 import 'provider/cart_provider.dart';
 import 'provider/checkout_provider.dart';
+import 'provider/loading_state_provider.dart';
 import 'provider/theme_provider.dart';
 import 'provider/location_provider.dart';
 import 'provider/notification_provider.dart';
@@ -28,6 +29,7 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (_) => BookingDetailsProvider()),
         ChangeNotifierProvider(create: (_) => CheckoutProvider()),
         ChangeNotifierProvider(create: (_) => WorkScheduleProvider()),
+        ChangeNotifierProvider(create: (_) => LoadingStateProvider()),
       ],
       child: myApp,
     ),

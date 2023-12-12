@@ -53,7 +53,7 @@ class InfoAccountContent extends StatelessWidget {
                             ),
                             const SizedBox(width: 8),
                             ShimmerLoadingWidget.rectangular(
-                              width: MediaQuery.of(context).size.width * 0.6,
+                              width: MediaQuery.of(context).size.width * 0.55,
                               height: 16,
                             ),
                           ],

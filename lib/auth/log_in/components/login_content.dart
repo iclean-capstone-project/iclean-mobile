@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:iclean_mobile_app/provider/loading_state_provider.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
+import 'package:iclean_mobile_app/widgets/inkwell_loading.dart';
 import 'package:iclean_mobile_app/widgets/my_textfield.dart';
 import 'package:iclean_mobile_app/services/api_login_repo.dart';
 import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
 import 'package:iclean_mobile_app/auth/verification/verification_screen.dart';
+import 'package:provider/provider.dart';
 
 class LoginContent extends StatelessWidget {
   const LoginContent({super.key});
@@ -26,6 +29,7 @@ class LoginContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loadingState = Provider.of<LoadingStateProvider>(context);
     GlobalKey<FormState> formKey = GlobalKey<FormState>();
     final phoneNumberController = TextEditingController();
     return Form(
@@ -69,15 +73,23 @@ class LoginContent extends StatelessWidget {
           //InkWell Login
           Padding(
             padding: const EdgeInsets.only(top: 16),
-            child: MainColorInkWellFullSize(
-              onTap: () {
-                if (formKey.currentState!.validate()) {
-                  fectchPhoneNumber(
-                      phoneNumberController.text.toString(), context);
-                }
-              },
-              text: "Đăng nhập với số điện thoại",
-            ),
+            child: loadingState.isLoading
+                ? const InkWellLoading()
+                : MainColorInkWellFullSize(
+                    onTap: () async {
+                      if (formKey.currentState!.validate()) {
+                        loadingState.setLoading(true); // Set loading to true
+                        try {
+                          await fectchPhoneNumber(
+                              phoneNumberController.text.toString(), context);
+                        } finally {
+                          loadingState
+                              .setLoading(false); // Set loading to false
+                        }
+                      }
+                    },
+                    text: "Đăng nhập với số điện thoại",
+                  ),
           ),
         ],
       ),

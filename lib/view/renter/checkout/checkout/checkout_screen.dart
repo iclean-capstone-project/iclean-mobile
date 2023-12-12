@@ -1,7 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/cart.dart';
 import 'package:iclean_mobile_app/provider/booking_details_provider.dart';
 import 'package:iclean_mobile_app/provider/checkout_provider.dart';
+import 'package:iclean_mobile_app/provider/loading_state_provider.dart';
 import 'package:iclean_mobile_app/services/api_checkout_repo.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/view/renter/nav_bar_bottom/renter_screen.dart';
@@ -115,6 +118,7 @@ class CheckoutScreen extends StatelessWidget {
       }
     }
 
+    final loadingState = Provider.of<LoadingStateProvider>(context);
     return Scaffold(
       appBar: const MyAppBar(text: "Xác nhận và thanh toán"),
       body: SingleChildScrollView(
@@ -221,13 +225,18 @@ class CheckoutScreen extends StatelessWidget {
       bottomNavigationBar: MyBottomAppBar(
         text: "Đăng tin",
         onTap: () {
-          checkout(
-            bookingDetailsProvider,
-            note,
-            addressId!,
-            checkoutProvider.usePoint,
-            checkoutProvider.autoAssign,
-          );
+          loadingState.setLoading(true);
+          try {
+            checkout(
+              bookingDetailsProvider,
+              note,
+              addressId!,
+              checkoutProvider.usePoint,
+              checkoutProvider.autoAssign,
+            );
+          } finally {
+            loadingState.setLoading(false);
+          }
         },
       ),
     );

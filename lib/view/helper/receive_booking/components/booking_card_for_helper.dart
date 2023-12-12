@@ -1,3 +1,4 @@
+import 'package:iclean_mobile_app/provider/loading_state_provider.dart';
 import 'package:iclean_mobile_app/services/api_booking_repo.dart';
 import 'package:iclean_mobile_app/widgets/checkout_success_dialog.dart';
 import 'package:intl/intl.dart';
@@ -8,6 +9,7 @@ import 'package:iclean_mobile_app/models/bookings.dart';
 import 'package:iclean_mobile_app/view/helper/receive_booking/booking_details_receive/booking_details_receive_screen.dart';
 import 'package:iclean_mobile_app/widgets/avatar_widget.dart';
 import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
+import 'package:provider/provider.dart';
 
 class BookingCardForHelper extends StatelessWidget {
   const BookingCardForHelper({
@@ -38,6 +40,8 @@ class BookingCardForHelper extends StatelessWidget {
         print('Failed to choose location: $error');
       });
     }
+
+    final loadingState = Provider.of<LoadingStateProvider>(context);
 
     return Container(
       margin: const EdgeInsets.all(8),
@@ -162,10 +166,16 @@ class BookingCardForHelper extends StatelessWidget {
               ),
               if (!booking.isApplied!)
                 MainColorInkWellFullSize(
-                    onTap: () {
+                  onTap: () {
+                    loadingState.setLoading(true);
+                    try {
                       applyBooking(booking.id);
-                    },
-                    text: "Nhận đơn")
+                    } finally {
+                      loadingState.setLoading(false);
+                    }
+                  },
+                  text: "Nhận đơn",
+                )
               else
                 const Center(
                   child: Text("Đã nhận đơn"),

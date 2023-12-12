@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/foundation.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:iclean_mobile_app/auth/user_preferences.dart';
 import 'package:iclean_mobile_app/view/renter/cart/cart_screen.dart';
@@ -93,6 +95,41 @@ class _RenterScreensState extends State<RenterScreens> {
       const ProfileScreen(),
     ];
   }
+
+  void listenToChangesFromFirebase(BuildContext context) async {
+  final phoneNumberValue = await UserPreferences.getPhoneNumber();
+  DatabaseReference databaseReference =
+      FirebaseDatabase.instance.ref().child('notificationBooking');
+  databaseReference.onChildAdded.listen((event) {
+    final dynamicValue = event.snapshot.value;
+    String phoneNumber = '';
+    String message = '';
+    if (dynamicValue is Map<dynamic, dynamic>) {
+      Map<dynamic, dynamic> jsonMap = dynamicValue;
+
+      phoneNumber = jsonMap['phoneNumber'];
+      message = jsonMap['message'];
+    } else if (dynamicValue is String) {
+      try {
+        Map<dynamic, dynamic> jsonMap = json.decode(dynamicValue);
+
+        phoneNumber = jsonMap['phoneNumber'];
+        message = jsonMap['message'];
+      } catch (e) {
+        if (kDebugMode) {}
+      }
+    }
+
+    if (phoneNumber == phoneNumberValue) {
+      QuickAlert.show(
+          context: context,
+          type: QuickAlertType.success,
+          text: message,
+          headerBackgroundColor: ColorPalette.mainColor,
+          confirmBtnColor: ColorPalette.mainColor);
+    }
+  });
+}
 
   @override
   Widget build(BuildContext context) {

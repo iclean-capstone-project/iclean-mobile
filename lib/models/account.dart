@@ -1,11 +1,8 @@
 class Account {
-  int? id;
-  String fullName, avatar, phoneNumber, defaultAddress, roleName;
-  String email;
+  String fullName, email, avatar, phoneNumber, defaultAddress, roleName;
   DateTime dateOfBirth;
-
+  bool? isRegistration;
   Account({
-    required this.id,
     required this.fullName,
     required this.avatar,
     required this.dateOfBirth,
@@ -13,6 +10,7 @@ class Account {
     required this.email,
     required this.roleName,
     required this.defaultAddress,
+    this.isRegistration,
   });
 
   factory Account.fromJson(Map<String, dynamic> json) {
@@ -28,24 +26,37 @@ class Account {
     final month = int.parse(dateParts[1]);
     final day = int.parse(dateParts[0]);
 
-    final id = json['userId'] as int?;
-    final fullName = json['fullName'] as String? ?? "";
-    final avatar = json['avatar'] as String? ?? "";
-    final dateOfBirth = DateTime(year, month, day);
-    final phoneNumber = json['phoneNumber'] as String;
-    final email = json['email'] as String? ?? "";
-    final roleName = json['roleName'] as String? ?? "";
-    final defaultAddress = json['defaultAddress'] as String? ?? "";
-
+    final role = json['roleName'] as String? ?? '';
+    if (role == "renter") {
+      return Account(
+        fullName: json['fullName'] ?? '',
+        avatar: json['avatar'] ?? '',
+        dateOfBirth: DateTime(year, month, day),
+        phoneNumber: json['phoneNumber'] ?? '',
+        email: json['email'] ?? '',
+        roleName: json['roleName'] ?? '',
+        defaultAddress: json['defaultAddress'] ?? '',
+        isRegistration: json['isRegistration'],
+      );
+    } else if (role == "helper") {
+      return Account(
+        fullName: json['fullName'] ?? '',
+        avatar: json['avatar'] ?? '',
+        dateOfBirth: DateTime(year, month, day),
+        phoneNumber: json['phoneNumber'] ?? '',
+        email: json['email'] ?? '',
+        roleName: json['roleName'] ?? '',
+        defaultAddress: json['defaultAddress'] ?? '',
+      );
+    }
     return Account(
-      id: id,
-      fullName: fullName,
-      avatar: avatar,
-      dateOfBirth: dateOfBirth,
-      phoneNumber: phoneNumber,
-      email: email,
-      roleName: roleName,
-      defaultAddress: defaultAddress,
+      fullName: json['fullName'] ?? '',
+      avatar: json['avatar'] ?? '',
+      dateOfBirth: DateTime(year, month, day),
+      phoneNumber: json['phoneNumber'] ?? '',
+      email: json['email'] ?? '',
+      roleName: json['roleName'] ?? '',
+      defaultAddress: json['defaultAddress'] ?? '',
     );
   }
 }

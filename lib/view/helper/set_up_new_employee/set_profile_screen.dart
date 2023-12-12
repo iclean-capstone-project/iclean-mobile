@@ -142,17 +142,7 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
       final account = await apiAccountRepository.getAccount(context);
       return account;
     } catch (e) {
-      print(e);
-      return Account(
-          id: 1,
-          fullName: "Quang Linh",
-          avatar: "assets/images/bp.png",
-          dateOfBirth: DateTime.now(),
-          phoneNumber: "0123456789",
-          email: "linhlt28@gmail.com",
-          roleName: "renter",
-          defaultAddress:
-              "S102 Vinhomes Grand Park, Nguyễn Xiễn, P. Long Thạnh Mỹ, Tp. Thủ Đức");
+      throw Exception(e);
     }
   }
 
