@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:iclean_mobile_app/auth/user_preferences.dart';
 import 'package:iclean_mobile_app/models/cart.dart';
-import 'package:iclean_mobile_app/models/common_response.dart';
 import 'package:iclean_mobile_app/repository/checkout_repo.dart';
 import 'package:iclean_mobile_app/widgets/error_dialog.dart';
 
+import '../models/api_exception.dart';
 import 'components/constant.dart';
 
 class ApiCheckoutRepository implements CheckoutRepository {
@@ -65,15 +65,8 @@ class ApiCheckoutRepository implements CheckoutRepository {
         final cart = Cart.fromJsonCheckout(data);
         return cart;
       } else {
-        final jsonMap = json.decode(utf8.decode(response.bodyBytes));
-        final responseObject = ResponseObject.fromJson(jsonMap);
-        // ignore: use_build_context_synchronously
-        showDialog(
-          context: context,
-          builder: (BuildContext context) =>
-              ErrorDialog(responseObject: responseObject),
-        );
-        throw Exception('Failed to get cart: ${response.statusCode}');
+        ResponseHandler.handleResponse(response);
+        throw ApiException(response.statusCode, 'Unhandled error occurred');
       }
     } catch (e) {
       throw Exception(e);

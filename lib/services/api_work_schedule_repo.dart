@@ -38,12 +38,7 @@ class ApiWorkScheduleRepository implements WorkScheduleRepository {
       } else {
         final jsonMap = json.decode(utf8.decode(response.bodyBytes));
         final responseObject = ResponseObject.fromJson(jsonMap);
-        showDialog(
-          context: context,
-          builder: (BuildContext context) =>
-              ErrorDialog(responseObject: responseObject),
-        );
-        throw Exception('Failed to get WorkSchedule: ${response.statusCode}');
+        throw Exception(responseObject);
       }
     } catch (e) {
       throw Exception(e);

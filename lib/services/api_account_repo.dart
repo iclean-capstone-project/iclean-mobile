@@ -6,10 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:iclean_mobile_app/auth/user_preferences.dart';
 import 'package:iclean_mobile_app/models/account.dart';
+import 'package:iclean_mobile_app/models/api_exception.dart';
 import 'package:iclean_mobile_app/repository/account_repo.dart';
 
-import '../models/common_response.dart';
-import '../widgets/error_dialog.dart';
 import 'components/constant.dart';
 
 class ApiAccountRepository implements AccountRepository {
@@ -34,17 +33,11 @@ class ApiAccountRepository implements AccountRepository {
         final account = Account.fromJson(data);
         return account;
       } else {
-        final jsonMap = json.decode(utf8.decode(response.bodyBytes));
-        final responseObject = ResponseObject.fromJson(jsonMap);
-        showDialog(
-          context: context,
-          builder: (BuildContext context) =>
-              ErrorDialog(responseObject: responseObject),
-        );
-        throw Exception('Failed to get account: ${response.statusCode}');
+        ResponseHandler.handleResponse(response);
+        throw ApiException(response.statusCode, 'Unhandled error occurred');
       }
     } catch (e) {
-      throw Exception(e);
+      rethrow;
     }
   }
 
@@ -102,8 +95,8 @@ class ApiAccountRepository implements AccountRepository {
 
       if (response.statusCode == 200) {
       } else {
-        throw Exception(
-            'Failed to update profile. Status: ${response.statusCode}');
+        ResponseHandler.handleResponse(response);
+        throw ApiException(response.statusCode, 'Unhandled error occurred');
       }
     } catch (e) {
       // ignore: avoid_print
@@ -142,8 +135,8 @@ class ApiAccountRepository implements AccountRepository {
       final response = await request.send();
       if (response.statusCode == 200) {
       } else {
-        throw Exception(
-            'Failed to registration. Status: ${response.statusCode}');
+        ResponseHandler.handleResponse(response);
+        throw ApiException(response.statusCode, 'Unhandled error occurred');
       }
     } catch (e) {
       // ignore: avoid_print

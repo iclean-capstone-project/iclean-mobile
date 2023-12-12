@@ -11,6 +11,7 @@ import 'package:iclean_mobile_app/models/helper.dart';
 import 'package:iclean_mobile_app/repository/booking_repo.dart';
 import 'package:iclean_mobile_app/widgets/error_dialog.dart';
 
+import '../models/api_exception.dart';
 import 'components/constant.dart';
 
 class ApiBookingRepository implements BookingRepository {
@@ -72,14 +73,8 @@ class ApiBookingRepository implements BookingRepository {
 
         return bookingDetail;
       } else {
-        final jsonMap = json.decode(utf8.decode(response.bodyBytes));
-        final responseObject = ResponseObject.fromJson(jsonMap);
-        showDialog(
-          context: context,
-          builder: (BuildContext context) =>
-              ErrorDialog(responseObject: responseObject),
-        );
-        throw Exception('Failed to get bookingdetail: ${response.statusCode}');
+        ResponseHandler.handleResponse(response);
+        throw ApiException(response.statusCode, 'Unhandled error occurred');
       }
     } catch (e) {
       throw Exception(e.toString());
@@ -109,14 +104,8 @@ class ApiBookingRepository implements BookingRepository {
 
         return bookingDetail;
       } else {
-        final jsonMap = json.decode(utf8.decode(response.bodyBytes));
-        final responseObject = ResponseObject.fromJson(jsonMap);
-        showDialog(
-          context: context,
-          builder: (BuildContext context) =>
-              ErrorDialog(responseObject: responseObject),
-        );
-        throw Exception('Failed to get bookingdetail: ${response.statusCode}');
+        ResponseHandler.handleResponse(response);
+        throw ApiException(response.statusCode, 'Unhandled error occurred');
       }
     } catch (e) {
       throw Exception(e.toString());
@@ -199,14 +188,8 @@ class ApiBookingRepository implements BookingRepository {
         }).toList();
         return helpers;
       } else {
-        final jsonMap = json.decode(utf8.decode(response.bodyBytes));
-        final responseObject = ResponseObject.fromJson(jsonMap);
-        showDialog(
-          context: context,
-          builder: (BuildContext context) =>
-              ErrorDialog(responseObject: responseObject),
-        );
-        throw Exception('Failed to get helpers: ${response.statusCode}');
+        ResponseHandler.handleResponse(response);
+        throw ApiException(response.statusCode, 'Unhandled error occurred');
       }
     } catch (e) {
       throw Exception(e);
