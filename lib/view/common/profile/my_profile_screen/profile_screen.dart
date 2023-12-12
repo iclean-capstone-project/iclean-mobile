@@ -5,6 +5,7 @@ import 'package:iclean_mobile_app/auth/log_in/log_in_screen.dart';
 import 'package:iclean_mobile_app/auth/user_preferences.dart';
 import 'package:iclean_mobile_app/models/account.dart';
 import 'package:iclean_mobile_app/services/api_account_repo.dart';
+import 'package:iclean_mobile_app/services/handle_exception_api.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/view/common/notification/notification_screen.dart';
 import 'package:iclean_mobile_app/view/common/profile/location/location_screen.dart';
@@ -36,7 +37,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
       final account = await apiAccountRepository.getAccount(context);
       return account;
     } catch (e) {
-      throw Exception(e);
+      await HandleExceptionApi.handleException(
+          context, e); // Handle the exception
+      // Return a default or null value, depending on your implementation
+      rethrow;
     }
   }
 

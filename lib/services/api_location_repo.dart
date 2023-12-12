@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:iclean_mobile_app/auth/user_preferences.dart';
 import 'package:iclean_mobile_app/models/address.dart';
+import 'package:iclean_mobile_app/models/api_exception.dart';
 import 'package:iclean_mobile_app/repository/location_repo.dart';
 
 import '../models/common_response.dart';
@@ -36,14 +37,8 @@ class ApiLocationRepository implements LocationRepository {
         }).toList();
         return locations;
       } else {
-        final jsonMap = json.decode(utf8.decode(response.bodyBytes));
-        final responseObject = ResponseObject.fromJson(jsonMap);
-        showDialog(
-          context: context,
-          builder: (BuildContext context) =>
-              ErrorDialog(responseObject: responseObject),
-        );
-        throw Exception('Failed to get account: ${response.statusCode}');
+        ResponseHandler.handleResponse(response);
+        throw ApiException(response.statusCode, 'Unhandled error occurred');
       }
     } catch (e) {
       print(e);
@@ -72,14 +67,8 @@ class ApiLocationRepository implements LocationRepository {
 
         return location;
       } else {
-        final jsonMap = json.decode(utf8.decode(response.bodyBytes));
-        final responseObject = ResponseObject.fromJson(jsonMap);
-        showDialog(
-          context: context,
-          builder: (BuildContext context) =>
-              ErrorDialog(responseObject: responseObject),
-        );
-        throw Exception('Failed to get account: ${response.statusCode}');
+        ResponseHandler.handleResponse(response);
+        throw ApiException(response.statusCode, 'Unhandled error occurred');
       }
     } catch (e) {
       print(e);

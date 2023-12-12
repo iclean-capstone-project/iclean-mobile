@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:iclean_mobile_app/models/common_response.dart';
-import 'package:iclean_mobile_app/utils/color_palette.dart';
+
+import '../models/api_exception.dart';
+import '../utils/color_palette.dart';
 
 class ErrorDialog extends StatelessWidget {
   const ErrorDialog({
     super.key,
     required this.responseObject,
+    this.onTap,
   });
 
+  final void Function()? onTap;
   final ResponseObject responseObject;
 
   @override
@@ -25,21 +28,8 @@ class ErrorDialog extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: Image.asset(
-                "assets/images/Confirmed.png",
+                "assets/images/error.png",
                 fit: BoxFit.cover,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 16),
-              child: Text(
-                responseObject.status,
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Lato',
-                  color: ColorPalette.mainColor,
-                ),
-                textAlign: TextAlign.center,
               ),
             ),
             Padding(
@@ -51,6 +41,23 @@ class ErrorDialog extends StatelessWidget {
                   fontFamily: 'Lato',
                 ),
                 textAlign: TextAlign.center,
+              ),
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(
+                  ColorPalette.mainColor,
+                ),
+              ),
+              onPressed: onTap ?? () => Navigator.pop(context),
+              child: const Text(
+                'OK',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  fontFamily: 'Lato',
+                ),
               ),
             ),
           ],

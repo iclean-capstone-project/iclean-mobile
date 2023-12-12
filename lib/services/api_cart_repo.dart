@@ -7,6 +7,7 @@ import 'package:iclean_mobile_app/auth/user_preferences.dart';
 import 'package:iclean_mobile_app/models/cart.dart';
 import 'package:iclean_mobile_app/repository/cart_repo.dart';
 
+import '../models/api_exception.dart';
 import '../models/common_response.dart';
 import '../widgets/error_dialog.dart';
 import 'components/constant.dart';
@@ -33,14 +34,8 @@ class ApiCartRepository implements CartRepository {
         final cart = Cart.fromJson(data);
         return cart;
       } else {
-        final jsonMap = json.decode(utf8.decode(response.bodyBytes));
-        final responseObject = ResponseObject.fromJson(jsonMap);
-        showDialog(
-          context: context,
-          builder: (BuildContext context) =>
-              ErrorDialog(responseObject: responseObject),
-        );
-        throw Exception('Failed to get account: ${response.statusCode}');
+        ResponseHandler.handleResponse(response);
+        throw ApiException(response.statusCode, 'Unhandled error occurred');
       }
     } catch (e) {
       throw Exception(e);
