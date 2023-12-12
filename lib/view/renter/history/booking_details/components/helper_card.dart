@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/helper.dart';
+import 'package:iclean_mobile_app/provider/loading_state_provider.dart';
 import 'package:iclean_mobile_app/services/api_booking_repo.dart';
 import 'package:iclean_mobile_app/view/renter/nav_bar_bottom/renter_screen.dart';
 import 'package:iclean_mobile_app/widgets/checkout_success_dialog.dart';
 import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
+import 'package:provider/provider.dart';
 
 class HelperCard extends StatelessWidget {
   const HelperCard({
@@ -40,6 +42,7 @@ class HelperCard extends StatelessWidget {
       });
     }
 
+    final loadingState = Provider.of<LoadingStateProvider>(context);
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -104,7 +107,12 @@ class HelperCard extends StatelessWidget {
           const SizedBox(height: 8),
           MainColorInkWellFullSize(
             onTap: () {
-              chooseHelper(bookingId, helper.id);
+              loadingState.setLoading(true);
+              try {
+                chooseHelper(bookingId, helper.id);
+              } finally {
+                loadingState.setLoading(false);
+              }
             },
             text: "Chọn người này",
           ),

@@ -67,6 +67,7 @@ class ApiCheckoutRepository implements CheckoutRepository {
       } else {
         final jsonMap = json.decode(utf8.decode(response.bodyBytes));
         final responseObject = ResponseObject.fromJson(jsonMap);
+        // ignore: use_build_context_synchronously
         showDialog(
           context: context,
           builder: (BuildContext context) =>
@@ -142,6 +143,7 @@ class ApiCheckoutRepository implements CheckoutRepository {
       } else {
         final jsonMap = json.decode(utf8.decode(response.bodyBytes));
         final responseObject = ResponseObject.fromJson(jsonMap);
+        // ignore: use_build_context_synchronously
         showDialog(
           context: context,
           builder: (BuildContext context) =>

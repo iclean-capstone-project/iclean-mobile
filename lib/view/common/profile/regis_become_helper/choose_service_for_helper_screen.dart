@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/service.dart';
+import 'package:iclean_mobile_app/provider/loading_state_provider.dart';
 import 'package:iclean_mobile_app/services/api_account_repo.dart';
 import 'package:iclean_mobile_app/services/api_service_repo.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
@@ -9,6 +10,7 @@ import 'package:iclean_mobile_app/view/renter/nav_bar_bottom/renter_screen.dart'
 import 'package:iclean_mobile_app/widgets/checkout_success_dialog.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 import 'package:iclean_mobile_app/widgets/my_bottom_app_bar.dart';
+import 'package:provider/provider.dart';
 
 class ChooseServiceForHelperScreen extends StatefulWidget {
   const ChooseServiceForHelperScreen({
@@ -103,6 +105,7 @@ class _ChooseServiceForHelperScreenState
 
   @override
   Widget build(BuildContext context) {
+    final loadingState = Provider.of<LoadingStateProvider>(context);
     return Scaffold(
       appBar: const MyAppBar(text: ""),
       body: SingleChildScrollView(
@@ -200,8 +203,14 @@ class _ChooseServiceForHelperScreenState
       bottomNavigationBar: MyBottomAppBar(
         text: "Đăng ký",
         onTap: () {
-          String selectedIds = selectedServiceIds.join("&service=");
-          regisHelper(widget.email, widget.image1, widget.image2, selectedIds);
+          loadingState.setLoading(true);
+          try {
+            String selectedIds = selectedServiceIds.join("&service=");
+            regisHelper(
+                widget.email, widget.image1, widget.image2, selectedIds);
+          } finally {
+            loadingState.setLoading(false);
+          }
         },
       ),
     );

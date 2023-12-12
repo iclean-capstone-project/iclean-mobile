@@ -1,6 +1,9 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/cart.dart';
 import 'package:iclean_mobile_app/provider/checkout_provider.dart';
+import 'package:iclean_mobile_app/provider/loading_state_provider.dart';
 import 'package:iclean_mobile_app/services/api_checkout_repo.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/view/renter/nav_bar_bottom/renter_screen.dart';
@@ -63,7 +66,6 @@ class _CheckoutCartScreenState extends State<CheckoutCartScreen> {
           ),
         );
       } else {
-        // ignore: avoid_print
         showDialog(
           context: context,
           builder: (BuildContext context) => CheckoutSuccessDialog(
@@ -84,6 +86,7 @@ class _CheckoutCartScreenState extends State<CheckoutCartScreen> {
       }
     }
 
+    final loadingState = Provider.of<LoadingStateProvider>(context);
     return Scaffold(
       appBar: const MyAppBar(text: "Xác nhận và thanh toán"),
       body: SingleChildScrollView(
@@ -189,10 +192,15 @@ class _CheckoutCartScreenState extends State<CheckoutCartScreen> {
       bottomNavigationBar: MyBottomAppBar(
         text: "Đăng tin",
         onTap: () {
-          checkoutCart(
-            checkoutProvider.usePoint,
-            checkoutProvider.autoAssign,
-          );
+          loadingState.setLoading(true);
+          try {
+            checkoutCart(
+              checkoutProvider.usePoint,
+              checkoutProvider.autoAssign,
+            );
+          } finally {
+            loadingState.setLoading(false);
+          }
         },
       ),
     );

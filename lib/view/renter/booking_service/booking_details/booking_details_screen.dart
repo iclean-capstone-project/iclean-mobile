@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iclean_mobile_app/provider/loading_state_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:iclean_mobile_app/models/service.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
@@ -46,8 +47,8 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    BookingDetailsProvider bookingDetailsProvider =
-        Provider.of<BookingDetailsProvider>(context);
+    final loadingState = Provider.of<LoadingStateProvider>(context);
+    final bookingDetailsProvider = Provider.of<BookingDetailsProvider>(context);
     return Scaffold(
       appBar: MyAppBar(
         text: widget.service.name,
@@ -130,14 +131,19 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
       bottomNavigationBar: MyBottomAppBarTwoInkWell(
         text1: "Thêm vào giỏ",
         onTap1: () {
-          addToCart(bookingDetailsProvider);
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                  'Dịch vụ ${widget.service.name} đã được thêm vào giỏ hàng'),
-              duration: const Duration(seconds: 1),
-            ),
-          );
+          loadingState.setLoading(true);
+          try {
+            addToCart(bookingDetailsProvider);
+          } finally {
+            loadingState.setLoading(false);
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                    'Dịch vụ ${widget.service.name} đã được thêm vào giỏ hàng'),
+                duration: const Duration(seconds: 1),
+              ),
+            );
+          }
         },
         text2: "Đặt dịch vụ",
         onTap2: () {

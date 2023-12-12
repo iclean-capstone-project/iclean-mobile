@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:iclean_mobile_app/utils/time.dart';
+import 'package:iclean_mobile_app/view/helper/nav_bar_bottom/helper_screen.dart';
 import 'package:iclean_mobile_app/widgets/confirm_dialog.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
@@ -219,8 +220,10 @@ class CurrentBooking extends StatelessWidget {
                           ),
                         ),
                         onPressed: () {
-                          Navigator.pop(context);
-                          Navigator.pop(context);
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const HelperScreens()));
                         },
                       ),
                     ],

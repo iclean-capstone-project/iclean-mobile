@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/work_schedule.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/utils/time.dart';
-
 import 'select_time.dart';
 
 class DayOfWeekContent extends StatefulWidget {

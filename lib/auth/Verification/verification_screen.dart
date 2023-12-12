@@ -7,11 +7,13 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/account.dart';
 import 'package:iclean_mobile_app/models/common_response.dart';
+import 'package:iclean_mobile_app/provider/loading_state_provider.dart';
 import 'package:iclean_mobile_app/services/components/constant.dart';
 import 'package:iclean_mobile_app/widgets/error_dialog.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 import 'package:iclean_mobile_app/auth/user_preferences.dart';
 import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
+import 'package:provider/provider.dart';
 
 import 'components/digit_textfield.dart';
 import 'components/resend_code_content.dart';
@@ -28,6 +30,7 @@ class VerificationScreen extends StatelessWidget {
     await UserPreferences.setAccessToken(accessToken);
     await UserPreferences.setRefreshToken(refreshToken);
     await UserPreferences.setRole(role);
+    await UserPreferences.setPhoneNumber(phone);
   }
 
   Future<void> handleLogin(
@@ -80,6 +83,7 @@ class VerificationScreen extends StatelessWidget {
       return combinedString;
     }
 
+    final loadingState = Provider.of<LoadingStateProvider>(context);
     return Scaffold(
       appBar: const MyAppBar(text: "Xác minh"),
       body: SingleChildScrollView(
@@ -131,8 +135,13 @@ class VerificationScreen extends StatelessWidget {
                     );
 
                     if (allFieldsHaveDigits) {
-                      handleLogin(phoneNumber,
-                          combineControllerValues(codeControllers), context);
+                      loadingState.setLoading(true);
+                      try {
+                        handleLogin(phoneNumber,
+                            combineControllerValues(codeControllers), context);
+                      } finally {
+                        loadingState.setLoading(false);
+                      }
                     }
                   },
                   text: "Tiếp tục",
