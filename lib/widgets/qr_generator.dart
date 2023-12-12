@@ -58,6 +58,7 @@ void listenToChangesFromFirebase(
           text: 'Nhân viên đã check in thành công!',
           headerBackgroundColor: ColorPalette.mainColor,
           confirmBtnColor: ColorPalette.mainColor);
+      event.snapshot.ref.remove();
     }
   });
 }
