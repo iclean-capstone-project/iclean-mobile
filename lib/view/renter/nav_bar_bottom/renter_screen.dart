@@ -1,10 +1,7 @@
 import 'dart:convert';
-
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/foundation.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:iclean_mobile_app/auth/user_preferences.dart';
 import 'package:iclean_mobile_app/view/renter/cart/cart_screen.dart';
@@ -15,6 +12,7 @@ import 'package:iclean_mobile_app/view/renter/history/history_screen/history_scr
 import 'package:iclean_mobile_app/view/common/profile/my_profile_screen/profile_screen.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
+
 
 class RenterScreens extends StatefulWidget {
   const RenterScreens({
