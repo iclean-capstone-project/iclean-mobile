@@ -28,6 +28,7 @@ class VerificationScreen extends StatelessWidget {
     await UserPreferences.setAccessToken(accessToken);
     await UserPreferences.setRefreshToken(refreshToken);
     await UserPreferences.setRole(role);
+    await UserPreferences.setPhoneNumber(phone);
   }
 
   Future<void> handleLogin(

@@ -6,6 +6,7 @@ class UserPreferences {
   static const _keyLoggedIn = 'loggedIn';
   static const _isHelper = 'isHelper';
   static const _role = 'role';
+  static const _phoneNumber = 'phoneNumber';
   static const _accessToken = 'accessToken';
   static const _refreshToken = 'refreshToken';
   static const _fcmToken = '_fcmToken';
@@ -34,6 +35,16 @@ class UserPreferences {
   static Future<String?> getRole() async {
     const storage = FlutterSecureStorage();
     return await storage.read(key: _role);
+  }
+
+  static Future setPhoneNumber(String value) async {
+    const storage = FlutterSecureStorage();
+    await storage.write(key: _phoneNumber, value: value);
+  }
+
+  static Future<String?> getPhoneNumber() async {
+    const storage = FlutterSecureStorage();
+    return await storage.read(key: _phoneNumber);
   }
 
   static Future setAccessToken(String value) async {
