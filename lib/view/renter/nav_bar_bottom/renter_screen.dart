@@ -13,7 +13,6 @@ import 'package:iclean_mobile_app/view/common/profile/my_profile_screen/profile_
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
 
-
 class RenterScreens extends StatefulWidget {
   const RenterScreens({
     super.key,
@@ -28,46 +27,10 @@ class RenterScreens extends StatefulWidget {
   State<RenterScreens> createState() => _RenterScreensState();
 }
 
-void listenToChangesFromFirebase(BuildContext context) async {
-  final phoneNumberValue = await UserPreferences.getPhoneNumber();
-  DatabaseReference databaseReference =
-      FirebaseDatabase.instance.ref().child('notificationBooking');
-  databaseReference.onChildAdded.listen((event) {
-    final dynamicValue = event.snapshot.value;
-    String phoneNumber = '';
-    String message = '';
-    if (dynamicValue is Map<dynamic, dynamic>) {
-      Map<dynamic, dynamic> jsonMap = dynamicValue;
-
-      phoneNumber = jsonMap['phoneNumber'];
-      message = jsonMap['message'];
-    } else if (dynamicValue is String) {
-      try {
-        Map<dynamic, dynamic> jsonMap = json.decode(dynamicValue);
-
-        phoneNumber = jsonMap['phoneNumber'];
-        message = jsonMap['message'];
-      } catch (e) {
-        if (kDebugMode) {}
-      }
-    }
-
-    if (phoneNumber == phoneNumberValue) {
-      QuickAlert.show(
-          context: context,
-          type: QuickAlertType.success,
-          text: message,
-          headerBackgroundColor: ColorPalette.mainColor,
-          confirmBtnColor: ColorPalette.mainColor);
-    }
-  });
-}
-
 class _RenterScreensState extends State<RenterScreens> {
   late int _selectedIndex;
   late int _initIndex;
   late List<Widget> _screenOptions;
-
   @override
   void initState() {
     listenToChangesFromFirebase(context);
@@ -95,39 +58,42 @@ class _RenterScreensState extends State<RenterScreens> {
   }
 
   void listenToChangesFromFirebase(BuildContext context) async {
-  final phoneNumberValue = await UserPreferences.getPhoneNumber();
-  DatabaseReference databaseReference =
-      FirebaseDatabase.instance.ref().child('notificationBooking');
-  databaseReference.onChildAdded.listen((event) {
-    final dynamicValue = event.snapshot.value;
-    String phoneNumber = '';
-    String message = '';
-    if (dynamicValue is Map<dynamic, dynamic>) {
-      Map<dynamic, dynamic> jsonMap = dynamicValue;
-
-      phoneNumber = jsonMap['phoneNumber'];
-      message = jsonMap['message'];
-    } else if (dynamicValue is String) {
-      try {
-        Map<dynamic, dynamic> jsonMap = json.decode(dynamicValue);
+    final phoneNumberValue = await UserPreferences.getPhoneNumber();
+    DatabaseReference databaseReference =
+        FirebaseDatabase.instance.ref().child('notificationBooking');
+    databaseReference.onChildAdded.listen((event) {
+      final dynamicValue = event.snapshot.value;
+      String phoneNumber = '';
+      String bookingDetailId = '';
+      String message = '';
+      if (dynamicValue is Map<dynamic, dynamic>) {
+        Map<dynamic, dynamic> jsonMap = dynamicValue;
 
         phoneNumber = jsonMap['phoneNumber'];
+        bookingDetailId = jsonMap['bookingDetailId'];
         message = jsonMap['message'];
-      } catch (e) {
-        if (kDebugMode) {}
+      } else if (dynamicValue is String) {
+        try {
+          Map<dynamic, dynamic> jsonMap = json.decode(dynamicValue);
+          bookingDetailId = jsonMap['bookingDetailId'];
+          phoneNumber = jsonMap['phoneNumber'];
+          message = jsonMap['message'];
+        } catch (e) {
+          if (kDebugMode) {}
+        }
       }
-    }
 
-    if (phoneNumber == phoneNumberValue) {
-      QuickAlert.show(
-          context: context,
-          type: QuickAlertType.success,
-          text: message,
-          headerBackgroundColor: ColorPalette.mainColor,
-          confirmBtnColor: ColorPalette.mainColor);
-    }
-  });
-}
+      if (phoneNumber == phoneNumberValue) {
+        QuickAlert.show(
+            context: context,
+            type: QuickAlertType.success,
+            text: message,
+            headerBackgroundColor: ColorPalette.mainColor,
+            confirmBtnColor: ColorPalette.mainColor);
+      }
+      event.snapshot.ref.remove();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
