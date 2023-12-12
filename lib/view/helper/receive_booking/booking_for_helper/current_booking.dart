@@ -9,6 +9,7 @@ import 'package:iclean_mobile_app/widgets/avatar_widget.dart';
 import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
 import '../../../../models/bookings.dart';
 import '../../../../services/api_booking_repo.dart';
+import '../../nav_bar_bottom/helper_screen.dart';
 import '../components/booking_for_helper_loading.dart';
 
 class CurrentBooking extends StatelessWidget {
@@ -219,8 +220,10 @@ class CurrentBooking extends StatelessWidget {
                           ),
                         ),
                         onPressed: () {
-                          Navigator.pop(context);
-                          Navigator.pop(context);
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const HelperScreens()));
                         },
                       ),
                     ],

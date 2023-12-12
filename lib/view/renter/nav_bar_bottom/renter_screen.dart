@@ -1,11 +1,18 @@
+import 'dart:convert';
+
+import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:iclean_mobile_app/auth/user_preferences.dart';
 import 'package:iclean_mobile_app/view/renter/cart/cart_screen.dart';
 import 'package:iclean_mobile_app/view/renter/home/renter_home_screen.dart';
 import 'package:iclean_mobile_app/view/renter/schedule/schedule_screen.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/view/renter/history/history_screen/history_screen.dart';
 import 'package:iclean_mobile_app/view/common/profile/my_profile_screen/profile_screen.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 
 class RenterScreens extends StatefulWidget {
   const RenterScreens({
@@ -21,6 +28,41 @@ class RenterScreens extends StatefulWidget {
   State<RenterScreens> createState() => _RenterScreensState();
 }
 
+void listenToChangesFromFirebase(BuildContext context) async {
+  final phoneNumberValue = await UserPreferences.getPhoneNumber();
+  DatabaseReference databaseReference =
+      FirebaseDatabase.instance.ref().child('notificationBooking');
+  databaseReference.onChildAdded.listen((event) {
+    final dynamicValue = event.snapshot.value;
+    String phoneNumber = '';
+    String message = '';
+    if (dynamicValue is Map<dynamic, dynamic>) {
+      Map<dynamic, dynamic> jsonMap = dynamicValue;
+
+      phoneNumber = jsonMap['phoneNumber'];
+      message = jsonMap['message'];
+    } else if (dynamicValue is String) {
+      try {
+        Map<dynamic, dynamic> jsonMap = json.decode(dynamicValue);
+
+        phoneNumber = jsonMap['phoneNumber'];
+        message = jsonMap['message'];
+      } catch (e) {
+        if (kDebugMode) {}
+      }
+    }
+
+    if (phoneNumber == phoneNumberValue) {
+      QuickAlert.show(
+          context: context,
+          type: QuickAlertType.success,
+          text: message,
+          headerBackgroundColor: ColorPalette.mainColor,
+          confirmBtnColor: ColorPalette.mainColor);
+    }
+  });
+}
+
 class _RenterScreensState extends State<RenterScreens> {
   late int _selectedIndex;
   late int _initIndex;
@@ -28,6 +70,7 @@ class _RenterScreensState extends State<RenterScreens> {
 
   @override
   void initState() {
+    listenToChangesFromFirebase(context);
     super.initState();
 
     if (widget.selectedIndex != null) {
