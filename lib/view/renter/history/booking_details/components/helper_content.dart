@@ -95,11 +95,17 @@ class HelperContent extends StatelessWidget {
                         Row(
                           children: List.generate(
                             booking.rate!.toInt(), // assuming rate is a double
-                            (index) => const Icon(Icons.star),
+                            (index) => const Icon(
+                              Icons.star,
+                              color: Colors.orange,
+                            ),
                           ),
                         ),
                       if (booking.rate != null && booking.rate! % 1 != 0)
-                        const Icon(Icons.star_half), // Half star
+                        const Icon(
+                          Icons.star_half,
+                          color: Colors.orange,
+                        ), // Half star
                       Text(
                         "(${booking.rate?.toString() ?? 'N/A'})",
                         style: const TextStyle(

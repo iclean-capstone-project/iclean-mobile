@@ -66,8 +66,8 @@ class _ChooseServiceForHelperScreenState
     return servicesMap;
   }
 
-  void regisHelper(
-      String email, File frontIdCard, File backIdCard, String service) {
+  Future<void> regisHelper(
+      String email, File frontIdCard, File backIdCard, String service) async {
     final ApiAccountRepository repository = ApiAccountRepository();
     repository
         .helperRegistration(email, frontIdCard, backIdCard, service)
@@ -202,11 +202,11 @@ class _ChooseServiceForHelperScreenState
       ),
       bottomNavigationBar: MyBottomAppBar(
         text: "Đăng ký",
-        onTap: () {
+        onTap: () async {
           loadingState.setLoading(true);
           try {
             String selectedIds = selectedServiceIds.join("&service=");
-            regisHelper(
+            await regisHelper(
                 widget.email, widget.image1, widget.image2, selectedIds);
           } finally {
             loadingState.setLoading(false);

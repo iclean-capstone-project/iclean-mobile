@@ -10,6 +10,7 @@ import 'package:iclean_mobile_app/models/common_response.dart';
 import 'package:iclean_mobile_app/provider/loading_state_provider.dart';
 import 'package:iclean_mobile_app/services/components/constant.dart';
 import 'package:iclean_mobile_app/widgets/error_dialog.dart';
+import 'package:iclean_mobile_app/widgets/inkwell_loading.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 import 'package:iclean_mobile_app/auth/user_preferences.dart';
 import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
@@ -127,25 +128,29 @@ class VerificationScreen extends StatelessWidget {
               //InkWell
               Padding(
                 padding: const EdgeInsets.only(top: 40.0),
-                child: MainColorInkWellFullSize(
-                  onTap: () {
-                    //Check if all fields have 4 digits
-                    final allFieldsHaveDigits = codeControllers.every(
-                      (controller) => controller.text.length == 1,
-                    );
+                child: loadingState.isLoading
+                    ? const InkWellLoading()
+                    : MainColorInkWellFullSize(
+                        onTap: () async {
+                          //Check if all fields have 4 digits
+                          final allFieldsHaveDigits = codeControllers.every(
+                            (controller) => controller.text.length == 1,
+                          );
 
-                    if (allFieldsHaveDigits) {
-                      loadingState.setLoading(true);
-                      try {
-                        handleLogin(phoneNumber,
-                            combineControllerValues(codeControllers), context);
-                      } finally {
-                        loadingState.setLoading(false);
-                      }
-                    }
-                  },
-                  text: "Tiếp tục",
-                ),
+                          if (allFieldsHaveDigits) {
+                            loadingState.setLoading(true);
+                            try {
+                              await handleLogin(
+                                  phoneNumber,
+                                  combineControllerValues(codeControllers),
+                                  context);
+                            } finally {
+                              loadingState.setLoading(false);
+                            }
+                          }
+                        },
+                        text: "Tiếp tục",
+                      ),
               ),
 
               Padding(
