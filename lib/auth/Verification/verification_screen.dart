@@ -6,7 +6,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/account.dart';
-import 'package:iclean_mobile_app/models/common_response.dart';
+import 'package:iclean_mobile_app/models/api_exception.dart';
 import 'package:iclean_mobile_app/provider/loading_state_provider.dart';
 import 'package:iclean_mobile_app/services/components/constant.dart';
 import 'package:iclean_mobile_app/widgets/error_dialog.dart';
