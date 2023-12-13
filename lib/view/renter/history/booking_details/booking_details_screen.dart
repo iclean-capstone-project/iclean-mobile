@@ -277,14 +277,6 @@ class BookingDetailsScreen extends StatelessWidget {
                             ],
                           ),
 
-                        if (booking.status != BookingStatus.notYet)
-                          if (bookingDetail.listStatus.last.bookingStatus ==
-                                  BookingStatus.finished &&
-                              daysBetween(
-                                      bookingDetail.listStatus.last.createAt,
-                                      DateTime.now()) <
-                                  3)
-                            const SizedBox(height: 16),
                         //đơn đã hoàn thành thì có thể đặt lại
                         if (booking.status == BookingStatus.finished &&
                             bookingDetail.feedback == null &&

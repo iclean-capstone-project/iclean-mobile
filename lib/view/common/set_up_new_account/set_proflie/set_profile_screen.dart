@@ -2,15 +2,12 @@
 
 import 'dart:io';
 import 'package:http/http.dart' as http;
+import 'package:iclean_mobile_app/provider/loading_state_provider.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
-import 'package:iclean_mobile_app/models/account.dart';
-import 'package:iclean_mobile_app/models/wallet.dart';
-import 'package:iclean_mobile_app/services/api_account_repo.dart';
-import 'package:iclean_mobile_app/services/api_wallet_repo.dart';
 import 'package:iclean_mobile_app/auth/user_preferences.dart';
 import 'package:iclean_mobile_app/services/components/constant.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
@@ -18,13 +15,12 @@ import 'package:iclean_mobile_app/widgets/my_bottom_app_bar.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/widgets/my_textfield.dart';
 import 'package:iclean_mobile_app/widgets/select_photo_options_screen.dart';
+import 'package:provider/provider.dart';
 
 import 'components/success_dialog.dart';
 
 class SetProfileScreen extends StatefulWidget {
-  const SetProfileScreen({super.key, required this.role});
-
-  final String role;
+  const SetProfileScreen({super.key});
 
   @override
   State<SetProfileScreen> createState() => _SetProfileScreenState();
@@ -141,29 +137,8 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
     }
   }
 
-  Future<Account> fetchAccount() async {
-    final ApiAccountRepository apiAccountRepository = ApiAccountRepository();
-
-    try {
-      final account = await apiAccountRepository.getAccount(context);
-      return account;
-    } catch (e) {
-      throw Exception(e);
-    }
-  }
-
-  Future<Wallet> fetchMoney() async {
-    final ApiWalletRepository apiWalletRepository = ApiWalletRepository();
-    try {
-      final money = await apiWalletRepository.getMoney(context);
-      return money;
-    } catch (e) {
-      throw Exception(e);
-    }
-  }
-
   Future<void> setNewAccount(String fullName, DateTime dateOfBirth, File image,
-      String role, BuildContext context) async {
+      BuildContext context) async {
     final uri = Uri.parse('${BaseConstant.baseUrl}/auth/register');
 
     final accessToken = await UserPreferences.getAccessToken();
@@ -183,7 +158,7 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
     request.files.add(
       await http.MultipartFile.fromPath('fileImage', image.path),
     );
-    request.fields['role'] = role;
+
     try {
       var response = await request.send();
 
@@ -204,6 +179,7 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final loadingState = Provider.of<LoadingStateProvider>(context);
     return Scaffold(
       appBar: const MyAppBar(text: "Cập nhập hồ sơ"),
       body: SingleChildScrollView(
@@ -301,9 +277,14 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
       ),
       bottomNavigationBar: MyBottomAppBar(
         text: "Tiếp tục",
-        onTap: () {
-          setNewAccount(nameController.text, _selectedDate!, _image!,
-              widget.role, context);
+        onTap: () async {
+          loadingState.setLoading(true);
+          try {
+            await setNewAccount(
+                nameController.text, _selectedDate!, _image!, context);
+          } finally {
+            loadingState.setLoading(false);
+          }
         },
       ),
     );

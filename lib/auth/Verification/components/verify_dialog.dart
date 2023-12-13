@@ -9,10 +9,10 @@ import 'package:iclean_mobile_app/models/account.dart';
 import 'package:iclean_mobile_app/services/api_firebase.dart';
 import 'package:iclean_mobile_app/services/components/constant.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
+import 'package:iclean_mobile_app/view/common/set_up_new_account/set_proflie/set_profile_screen.dart';
 import 'package:iclean_mobile_app/view/helper/nav_bar_bottom/helper_screen.dart';
 import 'package:iclean_mobile_app/view/renter/nav_bar_bottom/renter_screen.dart';
 import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
-import 'package:iclean_mobile_app/view/common/set_up_new_account/set_role/set_role_screen.dart';
 
 class VerifyDialog extends StatelessWidget {
   const VerifyDialog({
@@ -119,7 +119,8 @@ class VerifyDialog extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const SetRoleScreen()));
+                                builder: (context) =>
+                                    const SetProfileScreen()));
                       },
                       text: "Cập nhập hồ sơ",
                     ),

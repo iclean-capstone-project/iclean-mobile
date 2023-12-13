@@ -48,7 +48,7 @@ class VerificationScreen extends StatelessWidget {
       final accessToken = data['accessToken'];
       final refreshToken = data['refreshToken'];
       final dataAccount = data['userInformationDto'];
-      final account = Account.fromJson(dataAccount);
+      final account = Account.fromJsonForLogin(dataAccount);
       final role = account.roleName;
       await setToken(phone, accessToken, refreshToken, role);
       final isNewAccount = dataAccount['isNewUser'];

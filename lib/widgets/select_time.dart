@@ -25,10 +25,12 @@ class SelectTime extends StatefulWidget {
 }
 
 class _SelectTimeState extends State<SelectTime> {
-  late TimeOfDay endTimeExchange;
+  late TimeOfDay startTimeExchange, endTimeExchange;
+
   @override
   void initState() {
     endTimeExchange = widget.endTime;
+    startTimeExchange = widget.startTime;
     super.initState();
   }
 
@@ -63,7 +65,7 @@ class _SelectTimeState extends State<SelectTime> {
             ),
             icon: const Icon(Icons.keyboard_arrow_down),
             iconEnabledColor: ColorPalette.mainColor,
-            value: widget.startTime,
+            value: startTimeExchange,
             onChanged: (TimeOfDay? newValue) {
               if (newValue != null) {
                 timeProvider.selectedStartTime = newValue;

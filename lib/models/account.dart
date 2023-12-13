@@ -59,4 +59,36 @@ class Account {
       defaultAddress: json['defaultAddress'] ?? '',
     );
   }
+
+  factory Account.fromJsonForLogin(Map<String, dynamic> json) {
+    final dateOfBirthStr = json['dateOfBirth'] as String? ?? "";
+    int year, month, day;
+
+    if (dateOfBirthStr.isNotEmpty) {
+      // Split the date and time parts
+      final dateAndTimeParts = dateOfBirthStr.split('T');
+      final datePart = dateAndTimeParts[0];
+
+      // Parse the date part
+      final dateParts = datePart.split('-');
+      year = int.parse(dateParts[2]);
+      month = int.parse(dateParts[1]);
+      day = int.parse(dateParts[0]);
+    } else {
+      final defaultDate = DateTime.now(); // Use current date as default
+      year = defaultDate.year;
+      month = defaultDate.month;
+      day = defaultDate.day;
+    }
+
+    return Account(
+      fullName: json['fullName'] ?? '',
+      avatar: json['avatar'] ?? '',
+      dateOfBirth: DateTime(year, month, day),
+      phoneNumber: json['phoneNumber'] ?? '',
+      email: json['email'] ?? '',
+      roleName: json['roleName'] ?? '',
+      defaultAddress: json['defaultAddress'] ?? '',
+    );
+  }
 }

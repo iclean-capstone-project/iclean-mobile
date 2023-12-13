@@ -104,7 +104,7 @@ class _HistoryScreenScreenState extends State<HistoryScreen>
   Future<List<Booking>> fetchBookingFinished() async {
     final ApiBookingRepository repository = ApiBookingRepository();
     try {
-      final bookings = await repository.getBooking(1, "FINISHED", false);
+      final bookings = await repository.getBookingHistory(false);
       return bookings;
     } catch (e) {
       // ignore: avoid_print

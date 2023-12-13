@@ -64,6 +64,14 @@ class _BookingCardCardState extends State<BookingCard>
         return "Bạn cần chọn người làm";
       case BookingStatus.upcoming:
         return "Sắp đến";
+      case BookingStatus.cancelByHelper:
+        return "Bị người giúp việc hủy";
+      case BookingStatus.cancelByRenter:
+        return "Bạn đã hủy đơn";
+      case BookingStatus.cancelBySystem:
+        return "Bị hủy bởi hệ thống";
+      case BookingStatus.reported:
+        return "Báo cáo";
       case BookingStatus.finished:
         return "Hoàn thành";
       default:
@@ -78,6 +86,9 @@ class _BookingCardCardState extends State<BookingCard>
       case BookingStatus.approved:
         return Colors.teal;
       case BookingStatus.rejected:
+      case BookingStatus.cancelByHelper:
+      case BookingStatus.cancelByRenter:
+      case BookingStatus.cancelBySystem:
         return Colors.red;
       case BookingStatus.upcoming:
         return Colors.lightBlue;

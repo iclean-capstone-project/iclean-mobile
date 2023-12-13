@@ -53,7 +53,7 @@ class _MyBookingsForHelperScreenState extends State<MyBookingsForHelperScreen>
   Future<List<Booking>> fetchBookingFinished() async {
     final ApiBookingRepository repository = ApiBookingRepository();
     try {
-      final bookings = await repository.getBooking(1, "FINISHED", true);
+      final bookings = await repository.getBookingHistory(true);
       return bookings;
     } catch (e) {
       // ignore: avoid_print
