@@ -287,7 +287,8 @@ class BookingDetailsScreen extends StatelessWidget {
                             const SizedBox(height: 16),
                         //đơn đã hoàn thành thì có thể đặt lại
                         if (booking.status == BookingStatus.finished &&
-                            bookingDetail.feedback == null)
+                            bookingDetail.feedback == null &&
+                            !bookingDetail.reported)
                           MainColorInkWellFullSize(
                             onTap: () {
                               // Your onTap logic here
