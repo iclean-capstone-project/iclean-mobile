@@ -6,6 +6,8 @@ import 'package:iclean_mobile_app/models/helper.dart';
 abstract class BookingRepository {
   Future<List<Booking>> getBooking(int page, String status, bool isHelper);
 
+  Future<List<Booking>> getBookingHistory(bool isHelper);
+
   Future<BookingDetail> getBookingDetailsById(
       BuildContext context, int bookingId);
 

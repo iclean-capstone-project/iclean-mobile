@@ -51,6 +51,39 @@ class ApiBookingRepository implements BookingRepository {
   }
 
   @override
+  Future<List<Booking>> getBookingHistory(bool isHelper) async {
+    final url =
+        '$urlConstant?page=1&size=50&statuses=FINISHED&statuses=REPORTED&statuses=CANCEL_BY_RENTER&statuses=CANCEL_BY_HELPER&statuses=CANCEL_BY_SYSTEM&statuses=REJECTED&isHelper=$isHelper';
+    final uri = Uri.parse(url);
+    final accessToken = await UserPreferences.getAccessToken();
+
+    Map<String, String> headers = {
+      "Authorization": "Bearer $accessToken",
+      "Content-Type": "application/json",
+    };
+
+    try {
+      final response = await http.get(uri, headers: headers);
+
+      if (response.statusCode == 200) {
+        final jsonMap = json.decode(utf8.decode(response.bodyBytes));
+        final data = jsonMap['data'];
+        final content = data['content'] as List;
+
+        final bookings = content.map((e) {
+          return Booking.fromJson(e);
+        }).toList();
+        return bookings;
+      } else {
+        throw Exception(
+            'Status: ${response.statusCode}, Body: ${response.body}');
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
   Future<BookingDetail> getBookingDetailsById(
       BuildContext context, int bookingId) async {
     final url = '$urlConstant/$bookingId';

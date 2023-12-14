@@ -131,7 +131,9 @@ class _DayOfWeekContentState extends State<DayOfWeekContent> {
                             icon: isAddButton
                                 ? Icons.add_circle_outline
                                 : Icons.highlight_remove_rounded,
-                            iconColor: isAddButton ? Colors.black : Colors.red,
+                            iconColor: isAddButton
+                                ? Theme.of(context).colorScheme.secondary
+                                : Colors.red,
                             onTap: () {
                               setState(
                                 () {

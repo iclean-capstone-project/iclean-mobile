@@ -64,7 +64,7 @@ class SetTimeWorkingScreen extends StatelessWidget {
                     padding:
                         const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
                     child: DayOfWeekContent(
-                        isEditable: false,
+                        isEditable: true,
                         isEnable: isEnable,
                         day: day,
                         dayData: dayData),

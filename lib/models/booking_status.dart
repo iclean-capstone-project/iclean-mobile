@@ -18,7 +18,7 @@ BookingStatus mapStrBookingStatus(String value) {
     case "REJECTED":
       return BookingStatus.rejected;
     case "CANCEL_BY_SYSTEM":
-      return BookingStatus.rejected;
+      return BookingStatus.cancelBySystem;
     case "NOT_YET":
       return BookingStatus.notYet;
     case "APPROVED":

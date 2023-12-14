@@ -45,22 +45,6 @@ class ListService extends StatelessWidget {
                 for (int i = 0; i < services.length; i++)
                   InkWell(
                     onTap: () {
-                      // if (account.defaultAddress != '') {
-                      //   Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //       builder: (context) => ServiceDetailsScreen(
-                      //         account: account,
-                      //         service: services[i],
-                      //       ),
-                      //     ),
-                      //   );
-                      // } else {
-                      //   showDialog(
-                      //     context: context,
-                      //     builder: (BuildContext context) => const LocationDialog(),
-                      //   );
-                      // }
                       Navigator.push(
                         context,
                         MaterialPageRoute(

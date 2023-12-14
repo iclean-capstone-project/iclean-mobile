@@ -203,9 +203,9 @@ class _ChooseServiceForHelperScreenState
       bottomNavigationBar: MyBottomAppBar(
         text: "Đăng ký",
         onTap: () async {
+          String selectedIds = selectedServiceIds.join("&service=");
           loadingState.setLoading(true);
           try {
-            String selectedIds = selectedServiceIds.join("&service=");
             await regisHelper(
                 widget.email, widget.image1, widget.image2, selectedIds);
           } finally {

@@ -3,6 +3,7 @@ import 'package:iclean_mobile_app/models/account.dart';
 import 'package:iclean_mobile_app/services/api_account_repo.dart';
 import 'package:iclean_mobile_app/view/common/notification/notification_screen.dart';
 import 'package:iclean_mobile_app/view/common/profile/location/location_screen.dart';
+import 'package:iclean_mobile_app/widgets/location_dialog.dart';
 import 'package:iclean_mobile_app/widgets/shimmer_loading.dart';
 
 class InfoAccountContent extends StatelessWidget {
@@ -18,6 +19,13 @@ class InfoAccountContent extends StatelessWidget {
       } catch (e) {
         throw Exception(e);
       }
+    }
+
+    void showLocationDialog(BuildContext context) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) => const LocationDialog(),
+      );
     }
 
     return FutureBuilder(
@@ -73,6 +81,12 @@ class InfoAccountContent extends StatelessWidget {
           return Text('Error: ${snapshot.error}');
         } else if (snapshot.hasData) {
           final account = snapshot.data!;
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (account.defaultAddress == '') {
+              showLocationDialog(context);
+            }
+          });
+
           return Row(
             children: [
               CircleAvatar(
