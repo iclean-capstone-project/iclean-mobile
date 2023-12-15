@@ -64,6 +64,7 @@ class _RenterScreensState extends State<RenterScreens> {
     databaseReference.onChildAdded.listen((event) {
       final dynamicValue = event.snapshot.value;
       String phoneNumber = '';
+      // ignore: unused_local_variable
       String bookingDetailId = '';
       String message = '';
       if (dynamicValue is Map<dynamic, dynamic>) {

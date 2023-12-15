@@ -42,7 +42,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
     final serviceUnitId = bookingDetailsProvider.selectedServiceUnit.id;
     final note = noteController.text;
     final ApiCartRepository repository = ApiCartRepository();
-    repository.addToCart(context, startTime, serviceUnitId, note);
+    await repository.addToCart(context, startTime, serviceUnitId, note);
   }
 
   @override

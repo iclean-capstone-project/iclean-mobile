@@ -1,3 +1,4 @@
+import 'package:iclean_mobile_app/provider/loading_state_provider.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/bookings.dart';
@@ -8,6 +9,7 @@ import 'package:iclean_mobile_app/widgets/my_bottom_app_bar.dart';
 import 'package:iclean_mobile_app/widgets/checkout_success_dialog.dart';
 import 'package:iclean_mobile_app/services/api_booking_repo.dart';
 import 'package:iclean_mobile_app/view/helper/receive_booking/booking_for_helper/booking_for_helper_screen.dart';
+import 'package:provider/provider.dart';
 
 class BookingDetailsReceiveScreen extends StatelessWidget {
   const BookingDetailsReceiveScreen({super.key, required this.booking});
@@ -15,16 +17,18 @@ class BookingDetailsReceiveScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void applyBooking(int bookingId) {
+    Future<void> applyBooking(int bookingId) async {
       final ApiBookingRepository repository = ApiBookingRepository();
-      repository.helperApplyBooking(bookingId).then((_) {
+      await repository.helperApplyBooking(bookingId).then((_) {
         showDialog(
           context: context,
           builder: (BuildContext context) => CheckoutSuccessDialog(
             title: "Gửi yêu cầu thành công",
             description:
                 "Vui lòng đợi khách hàng chấp nhận để có thể làm dịch vụ này!",
+            image: 'assets/images/success.png',
             onTap: () {
+              Navigator.pop(context);
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
@@ -38,6 +42,7 @@ class BookingDetailsReceiveScreen extends StatelessWidget {
       });
     }
 
+    final loadingState = Provider.of<LoadingStateProvider>(context);
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: const MyAppBar(text: "Chi tiết yêu cầu"),
@@ -47,39 +52,15 @@ class BookingDetailsReceiveScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 16.0),
-                child: Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primary,
-                    borderRadius: BorderRadius.circular(10),
+              const Padding(
+                padding: EdgeInsets.only(top: 16.0),
+                child: Text(
+                  "Vị trí làm việc",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontFamily: 'Lato',
+                    fontWeight: FontWeight.bold,
                   ),
-                  child: Row(
-                    children: [
-                      const Icon(Icons.location_on_rounded),
-                      const SizedBox(width: 16),
-                      Flexible(
-                        child: Text(
-                          booking.location!,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontFamily: 'Lato',
-                          ),
-                          textAlign: TextAlign.justify,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-              const Text(
-                "Thông tin khách hàng",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontFamily: 'Lato',
-                  fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(height: 4),
@@ -90,24 +71,46 @@ class BookingDetailsReceiveScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      'Tên khách hàng',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontFamily: 'Lato',
-                      ),
-                    ),
-                    Text(
-                      booking.renterName!,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontFamily: 'Lato',
-                        fontWeight: FontWeight.bold,
+                    const Icon(Icons.location_on_rounded),
+                    const SizedBox(width: 16),
+                    Flexible(
+                      child: Text(
+                        booking.location!,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontFamily: 'Lato',
+                        ),
+                        textAlign: TextAlign.justify,
                       ),
                     ),
                   ],
+                ),
+              ),
+              const SizedBox(height: 16),
+              const Text(
+                "Tên khách hàng",
+                style: TextStyle(
+                  fontSize: 16,
+                  fontFamily: 'Lato',
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.primary,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Text(
+                  booking.renterName!,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontFamily: 'Lato',
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
               const SizedBox(height: 16),
@@ -179,39 +182,28 @@ class BookingDetailsReceiveScreen extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               const Text(
-                "Hóa đơn",
+                'Thu nhập từ dịch vụ',
                 style: TextStyle(
+                  fontWeight: FontWeight.bold,
                   fontSize: 16,
                   fontFamily: 'Lato',
-                  fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(height: 4),
               Container(
                 padding: const EdgeInsets.all(16),
+                width: double.infinity,
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.primary,
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      'Thu nhập từ dịch vụ',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontFamily: 'Lato',
-                      ),
-                    ),
-                    Text(
-                      booking.formatPriceInVND(),
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontFamily: 'Lato',
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
+                child: Text(
+                  booking.formatPriceInVND(),
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontFamily: 'Lato',
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
               const SizedBox(height: 16),
@@ -245,8 +237,13 @@ class BookingDetailsReceiveScreen extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: MyBottomAppBar(
-        onTap: () {
-          applyBooking(booking.id);
+        onTap: () async {
+          loadingState.setLoading(true);
+          try {
+            await applyBooking(booking.id);
+          } finally {
+            loadingState.setLoading(false);
+          }
         },
         text: "Nhận đơn",
       ),

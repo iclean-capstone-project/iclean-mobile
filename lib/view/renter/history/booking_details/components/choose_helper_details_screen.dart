@@ -26,12 +26,15 @@ class ChooseHelperDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Future<void> chooseHelper(int bookingId, int helperId) async {
       final ApiBookingRepository repository = ApiBookingRepository();
-      repository.chooseHelperForBooking(bookingId, helperId, context).then((_) {
+      await repository
+          .chooseHelperForBooking(bookingId, helperId, context)
+          .then((_) {
         showDialog(
           context: context,
           builder: (BuildContext context) => CheckoutSuccessDialog(
             title: "Chọn người giúp việc thành công",
             description: "Dịch vụ của bạn sắp được hoàn thành!",
+            image: 'assets/images/success.png',
             onTap: () {
               Navigator.pushReplacement(
                   context,

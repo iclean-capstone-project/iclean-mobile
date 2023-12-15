@@ -14,11 +14,14 @@ class HistoryScreen extends StatefulWidget {
 
 class _HistoryScreenScreenState extends State<HistoryScreen>
     with SingleTickerProviderStateMixin {
+  bool isLoading1 = false;
+  bool isLoading2 = false;
+  bool isLoading3 = false;
+  bool isLoading4 = false;
+
   late int _selectedIndex;
   late TabController _tabController;
   List<Booking> requests = [];
-
-  List<Booking> rejectedBookings = [];
 
   List<Booking> approvedBookings = [];
 
@@ -29,7 +32,12 @@ class _HistoryScreenScreenState extends State<HistoryScreen>
   @override
   void initState() {
     super.initState();
-
+    setState(() {
+      isLoading1 = true;
+      isLoading2 = true;
+      isLoading3 = true;
+      isLoading4 = true;
+    });
     if (widget.initialIndex != null) {
       _selectedIndex = widget.initialIndex!;
     } else {
@@ -46,21 +54,25 @@ class _HistoryScreenScreenState extends State<HistoryScreen>
     fetchBookingNotYet().then((bookings) {
       setState(() {
         requests = bookings;
+        isLoading1 = false;
       });
     });
     fetchBookingApproved().then((bookings) {
       setState(() {
         approvedBookings = bookings;
+        isLoading2 = false;
       });
     });
     fetchBookingUpcoming().then((bookings) {
       setState(() {
         upcomingBookings = bookings;
+        isLoading3 = false;
       });
     });
     fetchBookingFinished().then((bookings) {
       setState(() {
         finishedBookings = bookings;
+        isLoading4 = false;
       });
     });
   }
@@ -172,21 +184,30 @@ class _HistoryScreenScreenState extends State<HistoryScreen>
                     height: MediaQuery.of(context).size.height,
                     child: TabBarView(
                       children: [
-                        BookingCard(
-                          listBookings: requests,
-                          title: 'Đang yêu cầu',
-                        ),
-                        BookingCard(
-                            listBookings: approvedBookings,
-                            title: 'Chọn người làm'),
-                        BookingCard(
-                          listBookings: upcomingBookings,
-                          title: 'Sắp tới',
-                        ),
-                        BookingCard(
-                          listBookings: finishedBookings,
-                          title: 'Lịch sử',
-                        )
+                        isLoading1
+                            ? const Center(
+                                child: CircularProgressIndicator.adaptive())
+                            : BookingCard(
+                                listBookings: requests,
+                                title: 'Đang yêu cầu',
+                              ),
+                        isLoading2
+                            ? const CircularProgressIndicator.adaptive()
+                            : BookingCard(
+                                listBookings: approvedBookings,
+                                title: 'Chọn người làm'),
+                        isLoading3
+                            ? const CircularProgressIndicator.adaptive()
+                            : BookingCard(
+                                listBookings: upcomingBookings,
+                                title: 'Sắp tới',
+                              ),
+                        isLoading4
+                            ? const CircularProgressIndicator.adaptive()
+                            : BookingCard(
+                                listBookings: finishedBookings,
+                                title: 'Lịch sử',
+                              )
                       ],
                     ),
                   ),
