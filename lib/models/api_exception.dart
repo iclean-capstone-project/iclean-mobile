@@ -1,3 +1,27 @@
+import 'dart:convert';
+
+class ApiException implements Exception {
+  final int statusCode;
+  final String message;
+
+  ApiException(this.statusCode, this.message);
+}
+
+class ResponseHandler {
+  static void handleResponse(dynamic response) {
+    final Map<String, dynamic> jsonMap =
+        json.decode(utf8.decode(response.bodyBytes));
+
+    if (response.statusCode == 401 && jsonMap.containsKey('error')) {
+      throw ApiException(
+          401, 'Tài khoản của bạn đã bị khóa, vui lòng thử lại sau!');
+    }
+
+    final responseObject = ResponseObject.fromJson(jsonMap);
+    throw ApiException(response.statusCode, responseObject.message);
+  }
+}
+
 class ResponseObject {
   String status;
   String message;

@@ -5,11 +5,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:iclean_mobile_app/auth/user_preferences.dart';
-import 'package:iclean_mobile_app/models/common_response.dart';
 import 'package:iclean_mobile_app/models/report_type.dart';
 import 'package:iclean_mobile_app/repository/report_repo.dart';
 import 'package:iclean_mobile_app/widgets/error_dialog.dart';
 
+import '../models/api_exception.dart';
 import 'components/constant.dart';
 
 class ApiReportRepository implements ReportRepository {
