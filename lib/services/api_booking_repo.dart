@@ -6,10 +6,8 @@ import 'package:http/http.dart' as http;
 import 'package:iclean_mobile_app/auth/user_preferences.dart';
 import 'package:iclean_mobile_app/models/booking_detail.dart';
 import 'package:iclean_mobile_app/models/bookings.dart';
-import 'package:iclean_mobile_app/models/common_response.dart';
 import 'package:iclean_mobile_app/models/helper.dart';
 import 'package:iclean_mobile_app/repository/booking_repo.dart';
-import 'package:iclean_mobile_app/widgets/error_dialog.dart';
 
 import '../models/api_exception.dart';
 import 'components/constant.dart';

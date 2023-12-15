@@ -5,10 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:iclean_mobile_app/auth/user_preferences.dart';
-import 'package:iclean_mobile_app/models/common_response.dart';
+import 'package:iclean_mobile_app/models/api_exception.dart';
 import 'package:iclean_mobile_app/models/work_schedule.dart';
 import 'package:iclean_mobile_app/repository/work_schedule_repo.dart';
-import 'package:iclean_mobile_app/widgets/error_dialog.dart';
 
 import 'components/constant.dart';
 
