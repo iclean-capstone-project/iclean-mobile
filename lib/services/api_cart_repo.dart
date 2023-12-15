@@ -8,8 +8,6 @@ import 'package:iclean_mobile_app/models/cart.dart';
 import 'package:iclean_mobile_app/repository/cart_repo.dart';
 
 import '../models/api_exception.dart';
-import '../models/common_response.dart';
-import '../widgets/error_dialog.dart';
 import 'components/constant.dart';
 
 class ApiCartRepository implements CartRepository {
