@@ -29,7 +29,7 @@ class BookingDetailsScreen extends StatefulWidget {
 class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
   final noteController = TextEditingController();
 
-  void addToCart(bookingDetailsProvider) {
+  Future<void> addToCart(bookingDetailsProvider) async {
     final selectedDate = bookingDetailsProvider.selectedDay;
     final selectedTime = bookingDetailsProvider.selectedTime;
     final startTime = DateTime(
@@ -130,10 +130,10 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
       ),
       bottomNavigationBar: MyBottomAppBarTwoInkWell(
         text1: "Thêm vào giỏ",
-        onTap1: () {
+        onTap1: () async {
           loadingState.setLoading(true);
           try {
-            addToCart(bookingDetailsProvider);
+            await addToCart(bookingDetailsProvider);
           } finally {
             loadingState.setLoading(false);
             ScaffoldMessenger.of(context).showSnackBar(

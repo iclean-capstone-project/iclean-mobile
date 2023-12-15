@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:iclean_mobile_app/provider/loading_state_provider.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
+import 'package:provider/provider.dart';
 
+import 'inkwell_loading.dart';
 import 'main_color_inkwell_full_size.dart';
 
 class MyBottomAppBarTwoInkWell extends StatelessWidget {
@@ -19,6 +22,7 @@ class MyBottomAppBarTwoInkWell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loadingState = Provider.of<LoadingStateProvider>(context);
     return Container(
       decoration: const BoxDecoration(
         boxShadow: [
@@ -37,13 +41,16 @@ class MyBottomAppBarTwoInkWell extends StatelessWidget {
             children: [
               Container(
                 color: Theme.of(context).colorScheme.background,
-                child: MainColorInkWellFullSize(
-                  backgroundColor: Theme.of(context).colorScheme.background,
-                  textColor: ColorPalette.mainColor,
-                  width: MediaQuery.of(context).size.width * 0.44,
-                  onTap: onTap1,
-                  text: text1,
-                ),
+                child: loadingState.isLoading
+                    ? const InkWellLoading()
+                    : MainColorInkWellFullSize(
+                        backgroundColor:
+                            Theme.of(context).colorScheme.background,
+                        textColor: ColorPalette.mainColor,
+                        width: MediaQuery.of(context).size.width * 0.44,
+                        onTap: onTap1,
+                        text: text1,
+                      ),
               ),
               Container(
                 color: Theme.of(context).colorScheme.background,
