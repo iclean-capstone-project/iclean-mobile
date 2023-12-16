@@ -42,12 +42,12 @@ class BookingForHelperLoading extends StatelessWidget {
                   children: [
                     ShimmerLoadingWidget.rectangular(
                       height: 18,
-                      width: MediaQuery.of(context).size.width * 0.5,
+                      width: MediaQuery.of(context).size.width * 0.3,
                     ),
                     const SizedBox(height: 4),
                     ShimmerLoadingWidget.rectangular(
                       height: 16,
-                      width: MediaQuery.of(context).size.width * 0.6,
+                      width: MediaQuery.of(context).size.width * 0.5,
                     ),
                     const SizedBox(height: 4),
                     ShimmerLoadingWidget.rectangular(

@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/provider/loading_state_provider.dart';
 import 'package:provider/provider.dart';
@@ -42,7 +44,24 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
     final serviceUnitId = bookingDetailsProvider.selectedServiceUnit.id;
     final note = noteController.text;
     final ApiCartRepository repository = ApiCartRepository();
-    await repository.addToCart(context, startTime, serviceUnitId, note);
+    bool check =
+        await repository.addToCart(context, startTime, serviceUnitId, note);
+    if (check) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content:
+              Text('Dịch vụ ${widget.service.name} đã được thêm vào giỏ hàng'),
+          duration: const Duration(seconds: 1),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Bạn không thể đặt đơn với thời gian trong quá khứ'),
+          duration: Duration(seconds: 1),
+        ),
+      );
+    }
   }
 
   @override
@@ -136,13 +155,6 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
             await addToCart(bookingDetailsProvider);
           } finally {
             loadingState.setLoading(false);
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                    'Dịch vụ ${widget.service.name} đã được thêm vào giỏ hàng'),
-                duration: const Duration(seconds: 1),
-              ),
-            );
           }
         },
         text2: "Đặt dịch vụ",

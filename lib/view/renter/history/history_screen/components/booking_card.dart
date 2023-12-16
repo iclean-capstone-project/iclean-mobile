@@ -198,24 +198,6 @@ class _BookingCardCardState extends State<BookingCard>
                                   ),
                                 ),
                                 if (widget.listBookings[i].status ==
-                                    BookingStatus.finished)
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 8, horizontal: 16),
-                                    decoration: BoxDecoration(
-                                      color: ColorPalette.mainColor,
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    child: const Text(
-                                      "Đặt lại",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 14,
-                                        fontFamily: 'Lato',
-                                      ),
-                                    ),
-                                  ),
-                                if (widget.listBookings[i].status ==
                                     BookingStatus.upcoming)
                                   Row(
                                     mainAxisAlignment:

@@ -12,12 +12,14 @@ import 'package:iclean_mobile_app/widgets/qr_scan_screen.dart';
 import 'package:intl/intl.dart';
 
 class HistoryCardForHelper extends StatefulWidget {
-  final List<Booking> listBookings;
-
   const HistoryCardForHelper({
     super.key,
     required this.listBookings,
+    required this.title,
   });
+
+  final List<Booking> listBookings;
+  final String title;
 
   @override
   State<HistoryCardForHelper> createState() => _HistoryCardForHelperState();
@@ -25,21 +27,6 @@ class HistoryCardForHelper extends StatefulWidget {
 
 class _HistoryCardForHelperState extends State<HistoryCardForHelper>
     with TickerProviderStateMixin {
-  Color getColorForStatus(BookingStatus status) {
-    switch (status) {
-      case BookingStatus.notYet:
-        return ColorPalette.mainColor;
-      case BookingStatus.rejected:
-        return Colors.red;
-      case BookingStatus.upcoming:
-        return Colors.lightBlue;
-      case BookingStatus.finished:
-        return Colors.green;
-      default:
-        return ColorPalette.mainColor;
-    }
-  }
-
   void openQRScanner(int id) {
     Navigator.push(
         context,
@@ -65,8 +52,18 @@ class _HistoryCardForHelperState extends State<HistoryCardForHelper>
         return "Đang đợi duyệt đơn";
       case BookingStatus.rejected:
         return "Bị từ chối";
+      case BookingStatus.approved:
+        return "Bạn cần chọn người làm";
       case BookingStatus.upcoming:
         return "Sắp đến";
+      case BookingStatus.cancelByHelper:
+        return "Bị người giúp việc hủy";
+      case BookingStatus.cancelByRenter:
+        return "Bạn đã hủy đơn";
+      case BookingStatus.cancelBySystem:
+        return "Bị hủy bởi hệ thống";
+      case BookingStatus.reported:
+        return "Bị báo cáo";
       case BookingStatus.finished:
         return "Hoàn thành";
       default:
@@ -74,26 +71,54 @@ class _HistoryCardForHelperState extends State<HistoryCardForHelper>
     }
   }
 
-  void navigateToScreenBasedOnStatus(Booking booking) {
-    BookingStatus status = booking.status!;
+  Color getColorForStatus(BookingStatus status) {
     switch (status) {
-      case BookingStatus.finished:
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-          return BookingDetailsForHelperScreen(booking: booking);
-        }));
-        break;
+      case BookingStatus.notYet:
+        return ColorPalette.mainColor;
+      case BookingStatus.approved:
+        return Colors.teal;
+      case BookingStatus.rejected:
+      case BookingStatus.cancelByHelper:
+      case BookingStatus.cancelByRenter:
+      case BookingStatus.cancelBySystem:
+        return Colors.red;
       case BookingStatus.upcoming:
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-          return BookingDetailsForHelperScreen(booking: booking);
-        }));
-        break;
+        return Colors.lightBlue;
+      case BookingStatus.finished:
+        return Colors.green;
+      case BookingStatus.reported:
+        return Colors.pink;
       default:
-        break;
+        return ColorPalette.mainColor;
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    if (widget.listBookings.isEmpty) {
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            SizedBox(
+              width: double.infinity,
+              child: Image.asset(
+                "assets/images/Dropshipping.png",
+                fit: BoxFit.cover,
+              ),
+            ),
+            Text(
+              "Bạn không có đơn nào ở trạng thái ${widget.title}!",
+              style: const TextStyle(
+                fontSize: 18,
+                fontFamily: 'Lato',
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      );
+    }
     return ListView(
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
@@ -111,7 +136,11 @@ class _HistoryCardForHelperState extends State<HistoryCardForHelper>
                   children: [
                     InkWell(
                       onTap: () {
-                        navigateToScreenBasedOnStatus(widget.listBookings[i]);
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) {
+                          return BookingDetailsForHelperScreen(
+                              booking: widget.listBookings[i]);
+                        }));
                       },
                       child: Container(
                         padding: const EdgeInsets.all(16),
@@ -160,24 +189,6 @@ class _HistoryCardForHelperState extends State<HistoryCardForHelper>
                                     ),
                                   ),
                                 ),
-                                if (widget.listBookings[i].status ==
-                                    BookingStatus.finished)
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 8, horizontal: 16),
-                                    decoration: BoxDecoration(
-                                      color: ColorPalette.mainColor,
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    child: const Text(
-                                      "Đặt lại",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 14,
-                                        fontFamily: 'Lato',
-                                      ),
-                                    ),
-                                  ),
                                 if (widget.listBookings[i].status ==
                                     BookingStatus.upcoming)
                                   Row(

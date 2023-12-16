@@ -41,7 +41,7 @@ class ApiCartRepository implements CartRepository {
   }
 
   @override
-  Future<void> addToCart(BuildContext context, DateTime startTime,
+  Future<bool> addToCart(BuildContext context, DateTime startTime,
       int serviceUnitId, String note) async {
     final uri = Uri.parse(urlConstant);
     final accessToken = await UserPreferences.getAccessToken();
@@ -58,10 +58,17 @@ class ApiCartRepository implements CartRepository {
     };
 
     try {
-      await http.post(uri, headers: headers, body: jsonEncode(data));
+      final response =
+          await http.post(uri, headers: headers, body: jsonEncode(data));
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        throw Exception('không thể đặt đơn trong quá khứ');
+      }
     } catch (e) {
       print(e);
     }
+    return false;
   }
 
   @override

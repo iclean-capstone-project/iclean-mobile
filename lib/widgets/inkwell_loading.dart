@@ -34,7 +34,9 @@ class InkWellLoading extends StatelessWidget {
         ],
       ),
       child: const Center(
-        child: CircularProgressIndicator.adaptive(),
+        child: CircularProgressIndicator.adaptive(
+            //valueColor: textColor?? AlwaysStoppedAnimation<Color>(textColor!),
+            ),
       ),
     );
   }

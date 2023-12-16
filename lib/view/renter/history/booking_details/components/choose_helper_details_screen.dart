@@ -148,16 +148,27 @@ class ChooseHelperDetailsScreen extends StatelessWidget {
                   } else {
                     final feedbacks = snapshot.data!;
                     if (feedbacks.isEmpty) {
-                      return const Padding(
-                        padding: EdgeInsets.all(16.0),
+                      return Padding(
+                        padding: const EdgeInsets.all(16.0),
                         child: Center(
-                          child: Text(
-                            "Chưa có đánh giá của người này cho dịch vụ bạn đã đặt!",
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontFamily: 'Lato',
-                            ),
-                            textAlign: TextAlign.center,
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                width: double.infinity,
+                                child: Image.asset(
+                                  "assets/images/Feedback.png",
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              const Text(
+                                "Chưa có đánh giá của người này cho dịch vụ bạn đã đặt!",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontFamily: 'Lato',
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
                           ),
                         ),
                       );

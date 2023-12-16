@@ -29,6 +29,9 @@ class FeedbackDialog extends StatefulWidget {
 class _FeedbackDialogState extends State<FeedbackDialog> {
   double _rating = 0;
   final TextEditingController _commentController = TextEditingController();
+  final FocusNode _commentFocusNode = FocusNode();
+  double maxSheetHeight = 0.6;
+  bool isListenerAdded = false;
 
   Future<bool> isNetworkImageValid(String imageUrl) async {
     try {
@@ -102,13 +105,27 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
   @override
   Widget build(BuildContext context) {
     final loadingState = Provider.of<LoadingStateProvider>(context);
+
+    if (!isListenerAdded) {
+      _commentFocusNode.addListener(() {
+        if (_commentFocusNode.hasFocus) {
+          setState(() {
+            maxSheetHeight = 0.87;
+          });
+        }
+      });
+      isListenerAdded = true;
+    }
     return DraggableScrollableSheet(
+      initialChildSize: maxSheetHeight,
+      maxChildSize: maxSheetHeight,
+      minChildSize: 0.1,
       expand: false,
       builder: (BuildContext context, ScrollController scrollController) {
         return SingleChildScrollView(
           controller: scrollController,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
+            padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -168,6 +185,7 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
                 const SizedBox(height: 4),
                 TextField(
                   controller: _commentController,
+                  focusNode: _commentFocusNode,
                   maxLines: 4,
                   decoration: const InputDecoration(
                     hintText: 'Đánh giá của bạn...',
@@ -195,6 +213,10 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
                   },
                   text: "Gửi đánh giá",
                 ),
+                // Padding(
+                //   padding: EdgeInsets.only(
+                //       bottom: MediaQuery.of(context).viewInsets.bottom * 0.1),
+                // ),
               ],
             ),
           ),

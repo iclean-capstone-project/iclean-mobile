@@ -55,7 +55,7 @@ class ListService extends StatelessWidget {
                       );
                     },
                     child: Container(
-                      margin: const EdgeInsets.all(16),
+                      margin: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
                         color: Theme.of(context).colorScheme.background,
                         borderRadius: BorderRadius.circular(10),
@@ -89,7 +89,7 @@ class ListService extends StatelessWidget {
                                   services[i].name,
                                   style: const TextStyle(
                                     fontSize: 12,
-                                    fontFamily: 'Poppins',
+                                    fontFamily: 'Lato',
                                     fontWeight: FontWeight.w600,
                                   ),
                                   maxLines: 3,

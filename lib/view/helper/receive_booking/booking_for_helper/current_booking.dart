@@ -65,7 +65,7 @@ class CurrentBooking extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "Khách hàng: ${booking.renterName ?? ''}",
+                                booking.renterName!,
                                 style: const TextStyle(
                                   fontSize: 16,
                                   fontFamily: 'Lato',
@@ -94,7 +94,7 @@ class CurrentBooking extends StatelessWidget {
                               const SizedBox(width: 16),
                               Container(
                                 constraints: const BoxConstraints(
-                                  maxWidth: 216, // Set your maximum width
+                                  maxWidth: 180, // Set your maximum width
                                 ),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -115,7 +115,7 @@ class CurrentBooking extends StatelessWidget {
                                         const SizedBox(width: 4),
                                         Flexible(
                                           child: Text(
-                                            booking.location ?? '',
+                                            booking.location!,
                                             style: const TextStyle(
                                               fontSize: 16,
                                               fontFamily: 'Lato',
@@ -181,7 +181,28 @@ class CurrentBooking extends StatelessWidget {
             return const Text('Booking data is incomplete.');
           }
         } else {
-          return const Text('Hiện đang không có booking đang làm việc');
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                SizedBox(
+                  width: double.infinity,
+                  child: Image.asset(
+                    "assets/images/Date picker.png",
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                const Text(
+                  "Hiện đang không có booking đang làm việc!",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontFamily: 'Lato',
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          );
         }
       },
     );

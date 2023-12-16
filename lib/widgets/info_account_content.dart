@@ -33,43 +33,50 @@ class InfoAccountContent extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const ShimmerLoadingWidget.circular(height: 48, width: 48),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.7,
-                  child: Flexible(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
+              Row(
+                children: [
+                  const ShimmerLoadingWidget.circular(height: 48, width: 48),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.65,
+                      child: Flexible(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            ShimmerLoadingWidget.rectangular(
-                              width: MediaQuery.of(context).size.width * 0.3,
-                              height: 16,
+                            Row(
+                              children: [
+                                ShimmerLoadingWidget.rectangular(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.3,
+                                  height: 16,
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 8),
+                            Row(
+                              children: [
+                                const Icon(
+                                  Icons.location_on,
+                                  size: 16,
+                                  color: Colors.white,
+                                ),
+                                const SizedBox(width: 8),
+                                ShimmerLoadingWidget.rectangular(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.55,
+                                  height: 16,
+                                ),
+                              ],
                             ),
                           ],
                         ),
-                        const SizedBox(height: 8),
-                        Row(
-                          children: [
-                            const Icon(
-                              Icons.location_on,
-                              size: 16,
-                              color: Colors.white,
-                            ),
-                            const SizedBox(width: 8),
-                            ShimmerLoadingWidget.rectangular(
-                              width: MediaQuery.of(context).size.width * 0.55,
-                              height: 16,
-                            ),
-                          ],
-                        ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
+                ],
               ),
               const Icon(
                 Icons.notifications_sharp,
@@ -88,19 +95,20 @@ class InfoAccountContent extends StatelessWidget {
           });
 
           return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              CircleAvatar(
-                backgroundImage: NetworkImage(account.avatar),
-                radius: 24,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.7,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
+              Row(
+                children: [
+                  CircleAvatar(
+                    backgroundImage: NetworkImage(account.avatar),
+                    radius: 24,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.65,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             account.fullName,
@@ -111,46 +119,46 @@ class InfoAccountContent extends StatelessWidget {
                               color: Colors.white,
                             ),
                           ),
+                          const SizedBox(height: 8),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const LocationScreen()));
+                            },
+                            child: Row(
+                              children: [
+                                const Icon(
+                                  Icons.location_on,
+                                  size: 16,
+                                  color: Colors.white,
+                                ),
+                                const SizedBox(width: 8),
+                                Flexible(
+                                  child: Text(
+                                    (account.defaultAddress == '')
+                                        ? "Bạn vẫn chưa cập nhật vị trí"
+                                        : account.defaultAddress,
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontFamily: 'Lato',
+                                      color: (account.defaultAddress == '')
+                                          ? Colors.red
+                                          : Colors.white,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
-                      const SizedBox(height: 8),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const LocationScreen()));
-                        },
-                        child: Row(
-                          children: [
-                            const Icon(
-                              Icons.location_on,
-                              size: 16,
-                              color: Colors.white,
-                            ),
-                            const SizedBox(width: 8),
-                            Flexible(
-                              child: Text(
-                                (account.defaultAddress == '')
-                                    ? "Bạn vẫn chưa cập nhật vị trí"
-                                    : account.defaultAddress,
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontFamily: 'Lato',
-                                  color: (account.defaultAddress == '')
-                                      ? Colors.red
-                                      : Colors.white,
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                ),
+                ],
               ),
               InkWell(
                 onTap: () {

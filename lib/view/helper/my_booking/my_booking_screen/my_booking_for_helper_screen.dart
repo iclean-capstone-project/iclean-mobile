@@ -16,6 +16,8 @@ class MyBookingsForHelperScreen extends StatefulWidget {
 class _MyBookingsForHelperScreenState extends State<MyBookingsForHelperScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  bool isLoading1 = false;
+  bool isLoading2 = false;
 
   List<Booking> upcomingBookings = [];
 
@@ -29,11 +31,13 @@ class _MyBookingsForHelperScreenState extends State<MyBookingsForHelperScreen>
     fetchBookingUpcoming().then((bookings) {
       setState(() {
         upcomingBookings = bookings;
+        isLoading1 = false;
       });
     });
     fetchBookingFinished().then((bookings) {
       setState(() {
         finishedBookings = bookings;
+        isLoading2 = false;
       });
     });
   }
@@ -119,8 +123,20 @@ class _MyBookingsForHelperScreenState extends State<MyBookingsForHelperScreen>
                     height: MediaQuery.of(context).size.height - 200,
                     child: TabBarView(
                       children: [
-                        HistoryCardForHelper(listBookings: upcomingBookings),
-                        HistoryCardForHelper(listBookings: finishedBookings),
+                        isLoading1
+                            ? const Center(
+                                child: CircularProgressIndicator.adaptive())
+                            : HistoryCardForHelper(
+                                listBookings: upcomingBookings,
+                                title: 'Sắp tới',
+                              ),
+                        isLoading2
+                            ? const Center(
+                                child: CircularProgressIndicator.adaptive())
+                            : HistoryCardForHelper(
+                                listBookings: finishedBookings,
+                                title: 'Lịch sử',
+                              ),
                       ],
                     ),
                   ),

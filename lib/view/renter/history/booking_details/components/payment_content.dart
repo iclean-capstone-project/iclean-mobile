@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/booking_detail.dart';
+import 'package:iclean_mobile_app/models/booking_status.dart';
 import 'package:iclean_mobile_app/models/transaction.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/widgets/details_fields.dart';
@@ -126,9 +127,16 @@ class PaymentContent extends StatelessWidget {
                         fontFamily: 'Lato',
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
+              if (booking.status == BookingStatus.reported)
+                const SizedBox(height: 4),
+              if (booking.status == BookingStatus.reported)
+                DetailsContentField(
+                  text: "Đã hoàn trả",
+                  text2: booking.formatRefundMoneyInVND(),
+                ),
             ],
           ),
         ),
