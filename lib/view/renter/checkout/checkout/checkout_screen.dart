@@ -85,6 +85,7 @@ class CheckoutScreen extends StatelessWidget {
             title: "Gửi đơn thành công",
             description:
                 "Đơn của bạn đã được đặt thành công. Vui lòng đợi hệ thống xét duyệt..",
+            image: 'assets/images/Successful purchase.png',
             onTap: () {
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
@@ -104,6 +105,7 @@ class CheckoutScreen extends StatelessWidget {
             title: "Gửi đơn thất bại",
             description:
                 "Đơn của bạn thực hiện không thành công do không đủ số dư. Vui lòng kiểm tra lại...",
+            image: 'assets/images/sorry.png',
             onTap: () {
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
@@ -224,7 +226,7 @@ class CheckoutScreen extends StatelessWidget {
       ),
       bottomNavigationBar: MyBottomAppBar(
         text: "Đăng tin",
-        onTap: () async{
+        onTap: () async {
           loadingState.setLoading(true);
           try {
             await checkout(

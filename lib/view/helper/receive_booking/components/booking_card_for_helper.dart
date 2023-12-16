@@ -21,15 +21,16 @@ class BookingCardForHelper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void applyBooking(int bookingId) {
+    Future<void> applyBooking(int bookingId) async {
       final ApiBookingRepository repository = ApiBookingRepository();
-      repository.helperApplyBooking(bookingId).then((_) {
+      await repository.helperApplyBooking(bookingId).then((_) {
         showDialog(
           context: context,
           builder: (BuildContext context) => CheckoutSuccessDialog(
             title: "Gửi yêu cầu thành công",
             description:
                 "Vui lòng đợi khách hàng chấp nhận để có thể làm dịch vụ này!",
+            image: 'assets/images/success.png',
             onTap: () {
               Navigator.pop(context);
             },
@@ -66,7 +67,7 @@ class BookingCardForHelper extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Khách hàng: ${booking.renterName}",
+                    booking.renterName!,
                     style: const TextStyle(
                       fontSize: 16,
                       fontFamily: 'Lato',

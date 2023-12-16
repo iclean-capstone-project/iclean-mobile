@@ -207,6 +207,7 @@ class CurrentBooking extends StatelessWidget {
                       'Xác nhận hoàn thành dịch vụ thành công',
                       style: TextStyle(
                         fontSize: 16,
+                        fontFamily: 'Lato',
                       ),
                     ),
                     actions: <Widget>[
@@ -217,6 +218,7 @@ class CurrentBooking extends StatelessWidget {
                             fontSize: 16,
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
+                            fontFamily: 'Lato',
                           ),
                         ),
                         onPressed: () {
@@ -239,6 +241,7 @@ class CurrentBooking extends StatelessWidget {
                       'Bạn cần phải hoàn thành xong công việc',
                       style: TextStyle(
                         fontSize: 16,
+                        fontFamily: 'Lato',
                       ),
                     ),
                     actions: <Widget>[
@@ -249,6 +252,7 @@ class CurrentBooking extends StatelessWidget {
                             fontSize: 16,
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
+                            fontFamily: 'Lato',
                           ),
                         ),
                         onPressed: () {

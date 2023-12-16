@@ -3,9 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iclean_mobile_app/models/transaction.dart';
+import 'package:iclean_mobile_app/provider/loading_state_provider.dart';
 import 'package:iclean_mobile_app/services/api_transaction_repo.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../services/api_payment_repo.dart';
 import '../../../../../services/api_wallet_repo.dart';
@@ -38,6 +40,7 @@ class MyWalletScreen extends StatelessWidget {
       }
     }
 
+    final loadingState = Provider.of<LoadingStateProvider>(context);
     return Scaffold(
       appBar: const MyAppBar(text: "Ví của tôi"),
       body: SingleChildScrollView(
@@ -79,8 +82,13 @@ class MyWalletScreen extends StatelessWidget {
       ),
       bottomNavigationBar: MyBottomAppBar(
         text: "Nạp tiền",
-        onTap: () {
-          _showAddNewTransactionDialog(context);
+        onTap: () async {
+          loadingState.setLoading(true);
+          try {
+            await _showAddNewTransactionDialog(context);
+          } finally {
+            loadingState.setLoading(false);
+          }
         },
       ),
     );
@@ -106,6 +114,7 @@ class MyWalletScreen extends StatelessWidget {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
+                      fontFamily: 'Lato',
                     ),
                   ),
                 ),
@@ -162,6 +171,7 @@ class MyWalletScreen extends StatelessWidget {
                                 fontSize: 20,
                                 fontWeight: FontWeight.w600,
                                 color: Color(0xff5767f5),
+                                fontFamily: 'Lato',
                               ),
                             ),
                           ),
@@ -195,6 +205,7 @@ class MyWalletScreen extends StatelessWidget {
                                 fontSize: 20,
                                 fontWeight: FontWeight.w600,
                                 color: Color(0xffff3737),
+                                fontFamily: 'Lato',
                               ),
                             ),
                           ),
@@ -235,6 +246,7 @@ class MyWalletScreen extends StatelessWidget {
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 22,
+                        fontFamily: 'Lato',
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -259,6 +271,7 @@ class MyWalletScreen extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w600,
+                                fontFamily: 'Lato',
                                 color: Color(0xff5767f5),
                               ),
                             ),
@@ -303,6 +316,7 @@ class MyWalletScreen extends StatelessWidget {
                                 fontSize: 20,
                                 fontWeight: FontWeight.w600,
                                 color: Color(0xffff3737),
+                                fontFamily: 'Lato',
                               ),
                             ),
                           ),

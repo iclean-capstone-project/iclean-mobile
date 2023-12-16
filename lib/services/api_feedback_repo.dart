@@ -72,7 +72,6 @@ class ApiFeedbackRepository implements FeedbackRepository {
         throw Exception('Failed to get reportType: ${response.statusCode}');
       }
     } catch (e) {
-      print(e);
       return <FeedbackModel>[];
     }
   }

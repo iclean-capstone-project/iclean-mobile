@@ -69,7 +69,7 @@ class _ChooseServiceForHelperScreenState
   Future<void> regisHelper(
       String email, File frontIdCard, File backIdCard, String service) async {
     final ApiAccountRepository repository = ApiAccountRepository();
-    repository
+    await repository
         .helperRegistration(email, frontIdCard, backIdCard, service)
         .then((_) {
       showDialog(
@@ -78,6 +78,7 @@ class _ChooseServiceForHelperScreenState
           title: "Gửi yêu cầu thành công",
           description:
               "Hệ thống sẽ gửi cho bạn thông báo qua email bạn vừa đăng ký!",
+          image: 'assets/images/Confirmed.png',
           onTap: () {
             Navigator.push(
                 context,

@@ -4,6 +4,7 @@ import 'package:iclean_mobile_app/provider/loading_state_provider.dart';
 import 'package:iclean_mobile_app/services/api_booking_repo.dart';
 import 'package:iclean_mobile_app/view/renter/nav_bar_bottom/renter_screen.dart';
 import 'package:iclean_mobile_app/widgets/checkout_success_dialog.dart';
+import 'package:iclean_mobile_app/widgets/inkwell_loading.dart';
 import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
 import 'package:provider/provider.dart';
 
@@ -23,12 +24,15 @@ class HelperCard extends StatelessWidget {
   Widget build(BuildContext context) {
     Future<void> chooseHelper(int bookingId, int helperId) async {
       final ApiBookingRepository repository = ApiBookingRepository();
-      repository.chooseHelperForBooking(bookingId, helperId, context).then((_) {
+      await repository
+          .chooseHelperForBooking(bookingId, helperId, context)
+          .then((_) {
         showDialog(
           context: context,
           builder: (BuildContext context) => CheckoutSuccessDialog(
             title: "Chọn người giúp việc thành công",
             description: "Dịch vụ của bạn sắp được hoàn thành!",
+            image: 'assets/images/success.png',
             onTap: () {
               Navigator.pushReplacement(
                   context,
@@ -122,17 +126,21 @@ class HelperCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 8),
-            MainColorInkWellFullSize(
-              onTap: () async {
-                loadingState.setLoading(true);
-                try {
-                  await chooseHelper(bookingId, helper.id);
-                } finally {
-                  loadingState.setLoading(false);
-                }
-              },
-              text: "Chọn người này",
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: loadingState.isLoading
+                  ? const InkWellLoading()
+                  : MainColorInkWellFullSize(
+                      onTap: () async {
+                        loadingState.setLoading(true);
+                        try {
+                          await chooseHelper(bookingId, helper.id);
+                        } finally {
+                          loadingState.setLoading(false);
+                        }
+                      },
+                      text: "Chọn người này",
+                    ),
             ),
           ],
         ),

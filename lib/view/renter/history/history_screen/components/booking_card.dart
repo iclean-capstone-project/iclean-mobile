@@ -71,7 +71,7 @@ class _BookingCardCardState extends State<BookingCard>
       case BookingStatus.cancelBySystem:
         return "Bị hủy bởi hệ thống";
       case BookingStatus.reported:
-        return "Báo cáo";
+        return "Đã báo cáo";
       case BookingStatus.finished:
         return "Hoàn thành";
       default:
@@ -94,6 +94,8 @@ class _BookingCardCardState extends State<BookingCard>
         return Colors.lightBlue;
       case BookingStatus.finished:
         return Colors.green;
+      case BookingStatus.reported:
+        return Colors.pink;
       default:
         return ColorPalette.mainColor;
     }
@@ -104,13 +106,24 @@ class _BookingCardCardState extends State<BookingCard>
     if (widget.listBookings.isEmpty) {
       return Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Text(
-          "Bạn không có đơn nào ở trạng thái ${widget.title}!",
-          style: const TextStyle(
-            fontSize: 18,
-            fontFamily: 'Lato',
-          ),
-          textAlign: TextAlign.justify,
+        child: Column(
+          children: [
+            SizedBox(
+              width: double.infinity,
+              child: Image.asset(
+                "assets/images/Dropshipping.png",
+                fit: BoxFit.cover,
+              ),
+            ),
+            Text(
+              "Bạn không có đơn nào ở trạng thái ${widget.title}!",
+              style: const TextStyle(
+                fontSize: 18,
+                fontFamily: 'Lato',
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
         ),
       );
     }

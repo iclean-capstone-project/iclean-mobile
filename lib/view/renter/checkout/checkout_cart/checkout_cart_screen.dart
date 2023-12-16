@@ -54,6 +54,7 @@ class _CheckoutCartScreenState extends State<CheckoutCartScreen> {
             title: "Gửi đơn thành công",
             description:
                 "Đơn của bạn đã được đặt thành công. Vui lòng đợi hệ thống xét duyệt..",
+            image: 'assets/images/Successful purchase.png',
             onTap: () {
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
@@ -73,6 +74,7 @@ class _CheckoutCartScreenState extends State<CheckoutCartScreen> {
             description:
                 "Đơn của bạn thực hiện không thành công do không đủ số dư. Vui lòng kiểm tra lại...",
             onTap: () {},
+            image: 'assets/images/sorry.png',
           ),
         );
       }
@@ -183,7 +185,7 @@ class _CheckoutCartScreenState extends State<CheckoutCartScreen> {
       ),
       bottomNavigationBar: MyBottomAppBar(
         text: "Đăng tin",
-        onTap: () async{
+        onTap: () async {
           loadingState.setLoading(true);
           try {
             await checkoutCart(

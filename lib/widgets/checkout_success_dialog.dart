@@ -7,10 +7,10 @@ class CheckoutSuccessDialog extends StatelessWidget {
     required this.title,
     required this.description,
     required this.onTap,
+    required this.image,
   });
 
-  final String title;
-  final String description;
+  final String title, description, image;
   final void Function() onTap;
 
   @override
@@ -36,7 +36,7 @@ class CheckoutSuccessDialog extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: Image.asset(
-                "assets/images/Confirmed.png",
+                image,
                 fit: BoxFit.cover,
               ),
             ),
