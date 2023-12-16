@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
@@ -31,6 +32,7 @@ class _RenterScreensState extends State<RenterScreens> {
   late int _selectedIndex;
   late int _initIndex;
   late List<Widget> _screenOptions;
+  StreamSubscription<DatabaseEvent>? subscription;
   @override
   void initState() {
     listenToChangesFromFirebase(context);
@@ -57,25 +59,26 @@ class _RenterScreensState extends State<RenterScreens> {
     ];
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   void listenToChangesFromFirebase(BuildContext context) async {
     final phoneNumberValue = await UserPreferences.getPhoneNumber();
     DatabaseReference databaseReference =
         FirebaseDatabase.instance.ref().child('notificationBooking');
-    databaseReference.onChildAdded.listen((event) {
+    subscription ??= databaseReference.onChildAdded.listen((event) async {
       final dynamicValue = event.snapshot.value;
       String phoneNumber = '';
-      String bookingDetailId = '';
       String message = '';
       if (dynamicValue is Map<dynamic, dynamic>) {
         Map<dynamic, dynamic> jsonMap = dynamicValue;
-
         phoneNumber = jsonMap['phoneNumber'];
-        bookingDetailId = jsonMap['bookingDetailId'];
         message = jsonMap['message'];
       } else if (dynamicValue is String) {
         try {
           Map<dynamic, dynamic> jsonMap = json.decode(dynamicValue);
-          bookingDetailId = jsonMap['bookingDetailId'];
           phoneNumber = jsonMap['phoneNumber'];
           message = jsonMap['message'];
         } catch (e) {
@@ -85,13 +88,14 @@ class _RenterScreensState extends State<RenterScreens> {
 
       if (phoneNumber == phoneNumberValue) {
         QuickAlert.show(
-            context: context,
-            type: QuickAlertType.success,
-            text: message,
-            headerBackgroundColor: ColorPalette.mainColor,
-            confirmBtnColor: ColorPalette.mainColor);
+          context: context,
+          type: QuickAlertType.success,
+          text: message,
+          headerBackgroundColor: ColorPalette.mainColor,
+          confirmBtnColor: ColorPalette.mainColor,
+        );
+        await event.snapshot.ref.remove();
       }
-      event.snapshot.ref.remove();
     });
   }
 

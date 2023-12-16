@@ -41,7 +41,6 @@ class ApiPaymentRepository implements PaymentRepository {
 
   @override
   Future<void> deleteNoti(BuildContext context, int notiId) {
-    // TODO: implement deleteNoti
     throw UnimplementedError();
   }
 }
