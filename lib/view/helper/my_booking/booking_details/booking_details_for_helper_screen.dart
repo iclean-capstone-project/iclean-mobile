@@ -7,6 +7,7 @@ import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/widgets/details_fields.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 import 'package:iclean_mobile_app/widgets/note_content.dart';
+import 'package:intl/intl.dart';
 
 import 'components/address_content.dart';
 import 'components/detail_content_for_helper.dart';
@@ -38,7 +39,8 @@ class BookingDetailsForHelperScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            if (booking.status == BookingStatus.finished)
+            if (booking.status == BookingStatus.finished ||
+                booking.status == BookingStatus.reported)
               Container(
                 color: ColorPalette.mainColor,
                 child: Row(
@@ -59,7 +61,7 @@ class BookingDetailsForHelperScreen extends StatelessWidget {
                           ),
                           SizedBox(height: 8),
                           Text(
-                            "Cám ơn bạn đã làm việc chăm chỉ!",
+                            "Cám ơn bạn đã hoàn thành công việc!",
                             style: TextStyle(
                               color: Colors.white,
                               fontFamily: 'Lato',
@@ -119,6 +121,50 @@ class BookingDetailsForHelperScreen extends StatelessWidget {
                         DetailContentForHelper(booking: bookingDetail),
                         const SizedBox(height: 16),
                         NoteContent(booking: bookingDetail),
+                        const SizedBox(height: 16),
+                        const Text(
+                          "Hóa đơn",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontFamily: 'Lato',
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.primary,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Column(
+                            children: [
+                              DetailsContentField(
+                                text: "Thu nhập từ dịch vụ",
+                                text2: bookingDetail.formatTotalPriceInVND(),
+                              ),
+                              const SizedBox(height: 8),
+                              DetailsContentField(
+                                text: "Tiền phạt",
+                                text2:
+                                    '- ${bookingDetail.formatPenaltyMoneyInVND()}',
+                              ),
+                              Divider(
+                                thickness: 0.5,
+                                color: Colors.grey[400],
+                              ),
+                              DetailsContentField(
+                                text: "Thu nhập thực tế",
+                                text2: NumberFormat.currency(
+                                        locale: 'vi_VN', symbol: 'đ')
+                                    .format(bookingDetail.price -
+                                        bookingDetail.penaltyMoney!),
+                                color: ColorPalette.mainColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 16),
                       ],
                     );
                   }

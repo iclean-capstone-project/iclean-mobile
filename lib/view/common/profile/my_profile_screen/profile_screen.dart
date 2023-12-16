@@ -9,7 +9,6 @@ import 'package:iclean_mobile_app/services/handle_exception_api.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/view/common/notification/notification_screen.dart';
 import 'package:iclean_mobile_app/view/common/profile/location/location_screen.dart';
-import 'package:iclean_mobile_app/view/common/profile/my_profile_screen/components/dark_mode.dart';
 import 'package:iclean_mobile_app/view/common/profile/my_profile_screen/components/profile_inkwell.dart';
 import 'package:iclean_mobile_app/view/common/profile/point/point_screen/point_screen.dart';
 import 'package:iclean_mobile_app/view/common/profile/regis_become_helper/regis_become_helper_screen.dart';
@@ -20,6 +19,8 @@ import 'package:iclean_mobile_app/view/helper/time_working/time_working_screen.d
 import 'package:iclean_mobile_app/view/renter/nav_bar_bottom/renter_screen.dart';
 import 'package:iclean_mobile_app/widgets/confirm_dialog.dart';
 import 'package:iclean_mobile_app/widgets/shimmer_loading.dart';
+
+import 'components/dark_mode.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -381,11 +382,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           //   onTap: () {},
                           // ),
                           const DarkModeButton(),
-                          ProfileInkWell(
-                            icon: const Icon(Icons.policy_outlined),
-                            text: "Privacy Policy",
-                            onTap: () {},
-                          ),
+                          // ProfileInkWell(
+                          //   icon: const Icon(Icons.policy_outlined),
+                          //   text: "Privacy Policy",
+                          //   onTap: () {},
+                          // ),
                           ProfileInkWell(
                             icon: const Icon(Icons.list_alt_outlined),
                             text: "Điều khoản sử dụng",

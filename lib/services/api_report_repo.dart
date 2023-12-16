@@ -73,7 +73,7 @@ class ApiReportRepository implements ReportRepository {
 
     for (var image in images) {
       var imageFile = await http.MultipartFile.fromPath(
-        'files',
+        'images',
         image.path,
       );
       request.files.add(imageFile);

@@ -14,8 +14,7 @@ class Booking {
   DateTime? orderDate;
   String? bookingCode, renterName, location, note;
   BookingStatus? status;
-  double? longitude, latitude;
-  bool? isApplied;
+  double? longitude, latitude, refundMoney, refundPoint, penaltyMoney;
 
   Booking({
     required this.id,
@@ -34,7 +33,9 @@ class Booking {
     this.latitude,
     this.longitude,
     this.note,
-    this.isApplied,
+    this.refundMoney,
+    this.refundPoint,
+    this.penaltyMoney,
   });
 
   static BookingStatus _mapStrBookingStatus(String value) {
@@ -64,21 +65,25 @@ class Booking {
     BookingStatus mappedStatus = _mapStrBookingStatus(status);
 
     return Booking(
-        id: json['bookingDetailId'],
-        renterName: json['renterName'] ?? "",
-        bookingCode: json['bookingCode'] ?? "",
-        orderDate: DateTime.parse(json['orderDate'] ?? ""),
-        serviceId: json['serviceId'],
-        serviceName: json['serviceName'] ?? "",
-        serviceIcon: json['serviceIcon'] ?? "",
-        workDate: DateTime(year, month, day),
-        workTime: TimeOfDay(hour: hour, minute: minute),
-        note: json['note'] ?? "",
-        serviceUnit: ServiceUnit.fromJson(json),
-        price: json['price'],
-        latitude: json['latitude'],
-        longitude: json['longitude'],
-        status: mappedStatus);
+      id: json['bookingDetailId'],
+      renterName: json['renterName'] ?? "",
+      bookingCode: json['bookingCode'] ?? "",
+      orderDate: DateTime.parse(json['orderDate'] ?? ""),
+      serviceId: json['serviceId'],
+      serviceName: json['serviceName'] ?? "",
+      serviceIcon: json['serviceIcon'] ?? "",
+      workDate: DateTime(year, month, day),
+      workTime: TimeOfDay(hour: hour, minute: minute),
+      note: json['note'] ?? "",
+      serviceUnit: ServiceUnit.fromJson(json),
+      price: json['price'],
+      latitude: json['latitude'],
+      longitude: json['longitude'],
+      status: mappedStatus,
+      refundMoney: json['refundMoney'],
+      refundPoint: json['refundPoint'],
+      penaltyMoney: json['penaltyMoney'],
+    );
   }
 
   factory Booking.fromJsonForHelper(Map<String, dynamic> json) {
@@ -101,19 +106,20 @@ class Booking {
     final minute = int.parse(timeParts[1]);
 
     return Booking(
-        id: json['bookingDetailId'],
-        renterName: json['renterName'] ?? "",
-        serviceName: json['serviceName'] ?? "",
-        serviceIcon: json['serviceImages'] ?? "",
-        workDate: DateTime(year, month, day),
-        workTime: TimeOfDay(hour: hour, minute: minute),
-        location: json['locationDescription'] ?? "",
-        longitude: json['longitude'],
-        latitude: json['latitude'],
-        serviceUnit: ServiceUnit.fromJson(json),
-        price: json['amount'],
-        note: json['noteMessage'] ?? "",
-        isApplied: json['isApplied'] ?? false);
+      id: json['bookingDetailId'],
+      renterName: json['renterName'] ?? "",
+      serviceName: json['serviceName'] ?? "",
+      serviceIcon: json['serviceImages'] ?? "",
+      workDate: DateTime(year, month, day),
+      workTime: TimeOfDay(hour: hour, minute: minute),
+      location: json['locationDescription'] ?? "",
+      longitude: json['longitude'],
+      latitude: json['latitude'],
+      serviceUnit: ServiceUnit.fromJson(json),
+      price: json['amount'],
+      note: json['noteMessage'] ?? "",
+      //isApplied: json['isApplied'] ?? false,
+    );
   }
 
   String formatPriceInVND() {

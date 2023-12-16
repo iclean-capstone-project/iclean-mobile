@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/cart.dart';
+import 'package:iclean_mobile_app/models/cart_item.dart';
 import 'package:iclean_mobile_app/provider/checkout_provider.dart';
 import 'package:iclean_mobile_app/provider/loading_state_provider.dart';
 import 'package:iclean_mobile_app/services/api_checkout_repo.dart';
@@ -39,7 +40,14 @@ class _CheckoutCartScreenState extends State<CheckoutCartScreen> {
         final cart = await repository.getCart(context);
         return cart;
       } catch (e) {
-        throw Exception(e);
+        return Cart(
+          cartId: null,
+          totalPrice: 0,
+          locationName: "",
+          locationDescription: "",
+          totalPriceActual: 0,
+          cartItem: <CartItem>[],
+        );
       }
     }
 

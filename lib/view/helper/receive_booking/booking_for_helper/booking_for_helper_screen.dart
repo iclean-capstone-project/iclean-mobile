@@ -60,11 +60,27 @@ class BookingForHelperScreen extends StatelessWidget {
                   ),
                 );
               }
-              return const Text(
-                "Chưa có đơn nào xung quanh bạn",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontFamily: 'Lato',
+              return Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        width: double.infinity,
+                        child: Image.asset(
+                          "assets/images/Dropshipping.png",
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      const Text(
+                        "Chưa có đơn nào xung quanh bạn!",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontFamily: 'Lato',
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               );
             } else {

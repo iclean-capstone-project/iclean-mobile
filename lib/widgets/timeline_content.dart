@@ -21,7 +21,8 @@ class TimelineContent extends StatelessWidget {
           date: booking.orderDate,
           booking: booking,
         ),
-        if (booking.status != BookingStatus.finished)
+        if (booking.status != BookingStatus.finished &&
+            booking.status != BookingStatus.reported)
           MyTimeline(
             isFirst: false,
             isLast: false,
@@ -31,7 +32,8 @@ class TimelineContent extends StatelessWidget {
             color: ColorPalette.greyColor,
             icon: Icons.circle_outlined,
           ),
-        if (booking.status == BookingStatus.finished)
+        if (booking.status == BookingStatus.finished ||
+            booking.status == BookingStatus.reported)
           MyTimeline(
             isFirst: false,
             isLast: false,
@@ -39,7 +41,8 @@ class TimelineContent extends StatelessWidget {
             date: booking.workDate,
             booking: booking,
           ),
-        if (booking.status != BookingStatus.finished)
+        if (booking.status != BookingStatus.finished &&
+            booking.status != BookingStatus.reported)
           MyTimeline(
             isFirst: false,
             isLast: true,
@@ -49,7 +52,8 @@ class TimelineContent extends StatelessWidget {
             color: ColorPalette.greyColor,
             icon: Icons.circle_outlined,
           ),
-        if (booking.status == BookingStatus.finished)
+        if (booking.status == BookingStatus.finished ||
+            booking.status == BookingStatus.reported)
           MyTimeline(
             isFirst: false,
             isLast: true,

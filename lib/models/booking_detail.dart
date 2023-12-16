@@ -26,7 +26,7 @@ class BookingDetail {
       phoneNumber;
   FeedbackModel? feedback;
   Transaction? transaction;
-  double? rate;
+  double? rate, refundMoney, refundPoint, penaltyMoney;
   int? customerId, numberOfFeedback;
   bool reported;
 
@@ -39,7 +39,6 @@ class BookingDetail {
     required this.orderDate,
     required this.workDate,
     required this.workTime,
-    this.note,
     required this.serviceUnit,
     required this.price,
     required this.status,
@@ -48,6 +47,8 @@ class BookingDetail {
     required this.longitude,
     required this.latitude,
     required this.reported,
+    required this.listStatus,
+    this.note,
     this.rejectionReasonContent,
     this.rejectionReasonDescription,
     this.customerId,
@@ -58,7 +59,9 @@ class BookingDetail {
     this.numberOfFeedback,
     this.transaction,
     this.feedback,
-    required this.listStatus,
+    this.refundMoney,
+    this.refundPoint,
+    this.penaltyMoney,
   });
 
   static BookingStatus _mapStrBookingStatus(String value) {
@@ -128,6 +131,9 @@ class BookingDetail {
       feedback: feedbackData,
       listStatus: statusHistory,
       reported: json['reported'] ?? false,
+      refundMoney: json['refundMoney'] ?? 0,
+      refundPoint: json['refundPoint'] ?? 0,
+      penaltyMoney: json['penaltyMoney'] ?? 0,
     );
   }
 
@@ -151,6 +157,13 @@ class BookingDetail {
 
     final address = json['address'];
     final renter = json['renter'] as Map<String, dynamic>?;
+    final feedback = json['feedback'] as Map<String, dynamic>?;
+    FeedbackModel? feedbackData;
+    if (feedback == null) {
+      feedbackData = null;
+    } else {
+      feedbackData = FeedbackModel.fromJson(feedback);
+    }
 
     List<dynamic> statuses = json['statuses'];
     List<StatusHistory> statusHistory =
@@ -179,14 +192,27 @@ class BookingDetail {
       customerName: renter?['renterName'] ?? "",
       customerAvatar: renter?['renterAvatar'] ?? "",
       phoneNumber: renter?['phoneNumber'] ?? "",
-      feedback: json['feedback'] ?? "",
+      feedback: feedbackData,
       listStatus: statusHistory,
       reported: json['reported'] ?? false,
+      refundMoney: json['refundMoney'] ?? 0,
+      refundPoint: json['refundPoint'] ?? 0,
+      penaltyMoney: json['penaltyMoney'] ?? 0,
     );
   }
 
   String formatTotalPriceInVND() {
     final vndFormat = NumberFormat.currency(locale: 'vi_VN', symbol: 'đ');
     return vndFormat.format(price);
+  }
+
+  String formatRefundMoneyInVND() {
+    final vndFormat = NumberFormat.currency(locale: 'vi_VN', symbol: 'đ');
+    return vndFormat.format(refundMoney);
+  }
+
+  String formatPenaltyMoneyInVND() {
+    final vndFormat = NumberFormat.currency(locale: 'vi_VN', symbol: 'đ');
+    return vndFormat.format(penaltyMoney);
   }
 }

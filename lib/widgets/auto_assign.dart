@@ -22,7 +22,7 @@ class _AutoAssignButtonState extends State<AutoAssignButton> {
             Icon(Icons.assignment_ind_rounded),
             SizedBox(width: 16),
             Text(
-              "Chọn người làm",
+              "Tự chọn người làm",
               style: TextStyle(
                 fontSize: 16,
                 fontFamily: 'Lato',

@@ -86,7 +86,8 @@ class BookingDetailsScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            if (booking.status == BookingStatus.finished)
+            if (booking.status == BookingStatus.finished ||
+                booking.status == BookingStatus.reported)
               Container(
                 color: ColorPalette.mainColor,
                 child: Row(
@@ -232,61 +233,45 @@ class BookingDetailsScreen extends StatelessWidget {
                                 ),
                               ],
                             ),
+                        // if (booking.status == BookingStatus.finished &&
+                        //     bookingDetail.feedback == null &&
+                        //     !bookingDetail.reported)
+                        //   if (daysBetween(
+                        //           bookingDetail.listStatus.last.createAt,
+                        //           DateTime.now()) <
+                        //       3)
+                        //     const SizedBox(height: 16),
                         //đơn đã hoàn thành và đã fb
                         if (booking.status == BookingStatus.finished &&
                             bookingDetail.feedback != null)
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              MainColorInkWellFullSize(
-                                onTap: () {
-                                  showViewFeedbackDialog(
-                                      context, bookingDetail);
-                                },
-                                text: "Đã Đánh giá",
-                                backgroundColor:
-                                    Theme.of(context).colorScheme.background,
-                                textColor: ColorPalette.mainColor,
-                                width: MediaQuery.of(context).size.width * 0.43,
-                              ),
-                              MainColorInkWellFullSize(
-                                onTap: () {},
-                                text: "Đặt lại",
-                                width: MediaQuery.of(context).size.width * 0.43,
-                              ),
-                            ],
+                          MainColorInkWellFullSize(
+                            onTap: () {
+                              showViewFeedbackDialog(context, bookingDetail);
+                            },
+                            text: "Đã Đánh giá",
+                            backgroundColor:
+                                Theme.of(context).colorScheme.background,
+                            textColor: ColorPalette.mainColor,
                           ),
-                        if (booking.status == BookingStatus.finished &&
-                            bookingDetail.reported)
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              MainColorInkWellFullSize(
-                                onTap: () {},
-                                text: "Đã báo cáo",
-                                backgroundColor:
-                                    Theme.of(context).colorScheme.background,
-                                textColor: ColorPalette.mainColor,
-                                width: MediaQuery.of(context).size.width * 0.43,
-                              ),
-                              MainColorInkWellFullSize(
-                                onTap: () {},
-                                text: "Đặt lại",
-                                width: MediaQuery.of(context).size.width * 0.43,
-                              ),
-                            ],
+                        if (booking.status == BookingStatus.reported)
+                          MainColorInkWellFullSize(
+                            onTap: () {},
+                            text: "Đã báo cáo",
+                            backgroundColor:
+                                Theme.of(context).colorScheme.background,
+                            textColor: ColorPalette.mainColor,
                           ),
 
                         //đơn đã hoàn thành thì có thể đặt lại
-                        if (booking.status == BookingStatus.finished &&
-                            bookingDetail.feedback == null &&
-                            !bookingDetail.reported)
-                          MainColorInkWellFullSize(
-                            onTap: () {
-                              // Your onTap logic here
-                            },
-                            text: "Đặt lại",
-                          ),
+                        // if (booking.status == BookingStatus.finished &&
+                        //     bookingDetail.feedback == null &&
+                        //     !bookingDetail.reported)
+                        //   MainColorInkWellFullSize(
+                        //     onTap: () {
+                        //       // Your onTap logic here
+                        //     },
+                        //     text: "Đặt lại",
+                        //   ),
                       ],
                     );
                   }

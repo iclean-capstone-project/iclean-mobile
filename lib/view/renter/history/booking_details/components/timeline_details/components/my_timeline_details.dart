@@ -21,13 +21,13 @@ class MyTimeline extends StatelessWidget {
     String getStringForStatus(BookingStatus status) {
       switch (status) {
         case BookingStatus.notYet:
-          return "Đặt đơn";
+          return "Bạn đã tạo đơn yêu cầu dịch vụ";
         case BookingStatus.rejected:
           return "Đơn bị từ chối";
         case BookingStatus.approved:
           return "Đơn đã được duyệt";
         case BookingStatus.upcoming:
-          return "Đơn sắp tới";
+          return "Bạn đã chọn người giúp việc";
         case BookingStatus.inProcessing:
           return "Đang làm việc";
         case BookingStatus.finished:

@@ -69,6 +69,9 @@ class _ReportScreenState extends State<ReportScreen> {
     BuildContext context,
   ) async {
     String comment = _commentController.text.trim();
+    print(id);
+    print(reportTypeId);
+    print(comment);
 
     if (selectedReportType == null) {
       _showErrorDialog("Bạn chưa chọn loại báo cáo!");
@@ -78,7 +81,9 @@ class _ReportScreenState extends State<ReportScreen> {
       _showErrorDialog("Bạn cần ít nhất một ảnh minh họa.");
     } else {
       final ApiReportRepository repository = ApiReportRepository();
-      repository.report(context, id, reportTypeId, detail, images).then((_) {
+      await repository
+          .report(context, id, reportTypeId, comment, images)
+          .then((_) {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
               builder: (context) => BookingDetailsScreen(
@@ -288,11 +293,16 @@ class _ReportScreenState extends State<ReportScreen> {
                                 items: reportType.map((reportTypeItem) {
                                   return DropdownMenuItem<ReportType>(
                                     value: reportTypeItem,
-                                    child: Text(
-                                      reportTypeItem.reportName,
-                                      style: const TextStyle(
-                                        fontSize: 16,
-                                        fontFamily: 'Lato',
+                                    child: SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.75,
+                                      child: Text(
+                                        reportTypeItem.reportName,
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          fontFamily: 'Lato',
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
                                       ),
                                     ),
                                   );

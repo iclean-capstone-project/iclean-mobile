@@ -116,15 +116,17 @@ class BookingCardForHelper extends StatelessWidget {
                             const Icon(Icons.location_on_rounded),
                             const SizedBox(width: 4),
                             Flexible(
-                              child: Text(
-                                booking.location!,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontFamily: 'Lato',
+                              child: SizedBox(
+                                child: Text(
+                                  booking.location!,
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontFamily: 'Lato',
+                                  ),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.justify,
                                 ),
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                textAlign: TextAlign.justify,
                               ),
                             ),
                           ],
@@ -165,22 +167,17 @@ class BookingCardForHelper extends StatelessWidget {
               const Divider(
                 color: ColorPalette.greyColor,
               ),
-              if (!booking.isApplied!)
-                MainColorInkWellFullSize(
-                  onTap: () {
-                    loadingState.setLoading(true);
-                    try {
-                      applyBooking(booking.id);
-                    } finally {
-                      loadingState.setLoading(false);
-                    }
-                  },
-                  text: "Nhận đơn",
-                )
-              else
-                const Center(
-                  child: Text("Đã nhận đơn"),
-                )
+              MainColorInkWellFullSize(
+                onTap: () {
+                  loadingState.setLoading(true);
+                  try {
+                    applyBooking(booking.id);
+                  } finally {
+                    loadingState.setLoading(false);
+                  }
+                },
+                text: "Nhận đơn",
+              )
             ],
           ),
         ),
