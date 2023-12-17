@@ -81,7 +81,7 @@ class _ReportScreenState extends State<ReportScreen> {
           .report(context, id, reportTypeId, comment, _image1, _image2, _image3)
           .then((_) {
         Navigator.pop(context);
-        Navigator.pop(context);
+
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
               builder: (context) => BookingDetailsScreen(
@@ -387,8 +387,8 @@ class _ReportScreenState extends State<ReportScreen> {
                               ],
                             );
                           }).toList(),
-                          //if (_images.length <= 2)
-                          if (_images.isEmpty)
+                          if (_images.length <= 2)
+                            //if (_images.isEmpty)
                             GestureDetector(
                               onTap: () {
                                 _showSelectPhotoOptions(context);
