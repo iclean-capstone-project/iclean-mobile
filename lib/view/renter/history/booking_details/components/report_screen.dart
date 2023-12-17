@@ -10,6 +10,7 @@ import 'package:iclean_mobile_app/provider/loading_state_provider.dart';
 import 'package:iclean_mobile_app/services/api_report_repo.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/view/renter/history/booking_details/booking_details_screen.dart';
+import 'package:iclean_mobile_app/widgets/inkwell_loading.dart';
 import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 import 'package:iclean_mobile_app/widgets/select_photo_options_screen.dart';
@@ -37,6 +38,7 @@ class ReportScreen extends StatefulWidget {
 class _ReportScreenState extends State<ReportScreen> {
   ReportType? selectedReportType;
   final List<File> _images = [];
+  File? _image1, _image2, _image3;
   final TextEditingController _commentController = TextEditingController();
 
   Future<bool> isNetworkImageValid(String imageUrl) async {
@@ -64,26 +66,22 @@ class _ReportScreenState extends State<ReportScreen> {
   Future<void> _submitReport(
     int id,
     int reportTypeId,
-    String detail,
     List<File> images,
     BuildContext context,
   ) async {
     String comment = _commentController.text.trim();
-    print(id);
-    print(reportTypeId);
-    print(comment);
-
     if (selectedReportType == null) {
       _showErrorDialog("Bạn chưa chọn loại báo cáo!");
     } else if (comment.isEmpty) {
       _showErrorDialog("Bạn chưa nhập nhận xét.");
-    } else if (images.isEmpty) {
-      _showErrorDialog("Bạn cần ít nhất một ảnh minh họa.");
     } else {
       final ApiReportRepository repository = ApiReportRepository();
+
       await repository
-          .report(context, id, reportTypeId, comment, images)
+          .report(context, id, reportTypeId, comment, _image1, _image2, _image3)
           .then((_) {
+        Navigator.pop(context);
+        Navigator.pop(context);
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
               builder: (context) => BookingDetailsScreen(
@@ -141,6 +139,19 @@ class _ReportScreenState extends State<ReportScreen> {
       img = await _cropImage(imageFile: img);
       setState(() {
         _images.add(File(img!.path));
+        for (int i = 0; i < _images.length && i < 3; i++) {
+          switch (i) {
+            case 0:
+              _image1 = _images[i];
+              break;
+            case 1:
+              _image2 = _images[i];
+              break;
+            case 2:
+              _image3 = _images[i];
+              break;
+          }
+        }
         Navigator.of(context).pop();
       });
     } on PlatformException catch (e) {
@@ -185,6 +196,15 @@ class _ReportScreenState extends State<ReportScreen> {
   void _removeImage(int index) {
     setState(() {
       _images.removeAt(index);
+      if (index == 0) {
+        _image1 = null;
+      }
+      if (index == 1) {
+        _image2 = null;
+      }
+      if (index == 2) {
+        _image3 = null;
+      }
     });
   }
 
@@ -367,26 +387,27 @@ class _ReportScreenState extends State<ReportScreen> {
                               ],
                             );
                           }).toList(),
-                          GestureDetector(
-                            onTap: () {
-                              _showSelectPhotoOptions(context);
-                            },
-                            child: Container(
-                              width: (MediaQuery.of(context).size.width) / 5,
-                              height: (MediaQuery.of(context).size.width) / 5,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(
+                          if (_images.length <= 2)
+                            GestureDetector(
+                              onTap: () {
+                                _showSelectPhotoOptions(context);
+                              },
+                              child: Container(
+                                width: (MediaQuery.of(context).size.width) / 5,
+                                height: (MediaQuery.of(context).size.width) / 5,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  border: Border.all(
+                                    color: ColorPalette.mainColor,
+                                  ),
+                                ),
+                                child: const Icon(
+                                  Icons.add,
+                                  size: 40,
                                   color: ColorPalette.mainColor,
                                 ),
                               ),
-                              child: const Icon(
-                                Icons.add,
-                                size: 40,
-                                color: ColorPalette.mainColor,
-                              ),
                             ),
-                          ),
                         ],
                       ),
                     ),
@@ -419,22 +440,26 @@ class _ReportScreenState extends State<ReportScreen> {
                     cursorColor: Theme.of(context).colorScheme.secondary,
                   ),
                   const SizedBox(height: 16),
-                  MainColorInkWellFullSize(
-                    onTap: () async {
-                      loadingState.setLoading(true);
-                      try {
-                        await _submitReport(
-                          widget.booking.id,
-                          selectedReportType!.reportTypeId,
-                          _commentController.text,
-                          _images,
-                          context,
-                        );
-                      } finally {
-                        loadingState.setLoading(false);
-                      }
-                    },
-                    text: "Gửi báo cáo",
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16),
+                    child: loadingState.isLoading
+                        ? const InkWellLoading()
+                        : MainColorInkWellFullSize(
+                            onTap: () async {
+                              loadingState.setLoading(true);
+                              try {
+                                await _submitReport(
+                                  widget.booking.id,
+                                  selectedReportType!.reportTypeId,
+                                  _images,
+                                  context,
+                                );
+                              } finally {
+                                loadingState.setLoading(false);
+                              }
+                            },
+                            text: "Gửi báo cáo",
+                          ),
                   ),
                 ],
               ),

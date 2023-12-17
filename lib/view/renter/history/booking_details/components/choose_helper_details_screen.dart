@@ -127,7 +127,7 @@ class ChooseHelperDetailsScreen extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                "Số lược đánh giá (${helper.numberOfFeedback})",
+                "Số lượt đánh giá (${helper.numberOfFeedback})",
                 style: const TextStyle(
                   fontFamily: 'Lato',
                   fontSize: 16,

@@ -130,9 +130,16 @@ class PaymentContent extends StatelessWidget {
                   ),
                 ],
               ),
-              if (booking.status == BookingStatus.reported)
+              if (booking.status == BookingStatus.finished && booking.reported)
                 const SizedBox(height: 4),
-              if (booking.status == BookingStatus.reported)
+              if (booking.status == BookingStatus.finished && booking.reported)
+                DetailsContentField(
+                  text: "Đã hoàn trả",
+                  text2: booking.transaction!.formatAmountInVND(),
+                  color: ColorPalette.mainColor,
+                  fontWeight: FontWeight.bold,
+                ),
+              if (booking.status == BookingStatus.finished && booking.reported)
                 DetailsContentField(
                   text: "Đã hoàn trả",
                   text2: booking.formatRefundMoneyInVND(),

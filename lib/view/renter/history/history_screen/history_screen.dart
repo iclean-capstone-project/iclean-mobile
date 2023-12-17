@@ -192,18 +192,21 @@ class _HistoryScreenScreenState extends State<HistoryScreen>
                                 title: 'Đang yêu cầu',
                               ),
                         isLoading2
-                            ? const CircularProgressIndicator.adaptive()
+                            ? const Center(
+                                child: CircularProgressIndicator.adaptive())
                             : BookingCard(
                                 listBookings: approvedBookings,
                                 title: 'Chọn người làm'),
                         isLoading3
-                            ? const CircularProgressIndicator.adaptive()
+                            ? const Center(
+                                child: CircularProgressIndicator.adaptive())
                             : BookingCard(
                                 listBookings: upcomingBookings,
                                 title: 'Sắp tới',
                               ),
                         isLoading4
-                            ? const CircularProgressIndicator.adaptive()
+                            ? const Center(
+                                child: CircularProgressIndicator.adaptive())
                             : BookingCard(
                                 listBookings: finishedBookings,
                                 title: 'Lịch sử',

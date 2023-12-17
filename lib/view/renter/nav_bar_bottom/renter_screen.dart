@@ -89,6 +89,7 @@ class _RenterScreensState extends State<RenterScreens> {
             context: context,
             type: QuickAlertType.success,
             text: message,
+            confirmBtnText: 'Xác nhận',
             headerBackgroundColor: ColorPalette.mainColor,
             confirmBtnColor: ColorPalette.mainColor);
       }
