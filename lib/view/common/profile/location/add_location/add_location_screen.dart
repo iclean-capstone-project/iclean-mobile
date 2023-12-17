@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:iclean_mobile_app/models/address.dart';
 import 'package:iclean_mobile_app/services/api_location_repo.dart';
+import 'package:iclean_mobile_app/services/location_service.dart';
 
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 import 'package:iclean_mobile_app/widgets/my_textfield.dart';
@@ -18,10 +21,16 @@ class AddLocationScreen extends StatefulWidget {
 
 class _AddLocationScreenState extends State<AddLocationScreen> {
   final Set<Marker> _markers = {};
+  final Completer<GoogleMapController> _controller = Completer();
+
   late final dynamic nameController;
   late final dynamic descriptionController;
   late final double latitude;
   late final double longitude;
+  final CameraPosition _kGooglePlex = const CameraPosition(
+    target: LatLng(10.837167851789406, 106.83900985399156),
+    zoom: 14.4746,
+  );
 
   @override
   void initState() {
@@ -51,15 +60,17 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
     super.dispose();
   }
 
-  void _onMapTapped(LatLng latLng) {
+  void _setMarker(LatLng point) {
     setState(() {
       _markers.clear();
       _markers.add(
         Marker(
-          markerId: const MarkerId('selected_location'),
-          position: latLng,
+          markerId: const MarkerId('marker'),
+          position: point,
         ),
       );
+      latitude = point.latitude;
+      longitude = point.longitude;
     });
   }
 
@@ -110,15 +121,27 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 16),
-                child: SizedBox(
-                  height: 48,
-                  child: MyTextField(
-                    controller: descriptionController,
-                    hintText: 'Địa chỉ cụ thể',
+              Row(
+                children: [
+                  Expanded(
+                    child: SizedBox(
+                      height: 48,
+                      child: MyTextField(
+                        controller: descriptionController,
+                        hintText: 'Địa chỉ cụ thể',
+                      ),
+                    ),
                   ),
-                ),
+                  IconButton(
+                    onPressed: () async {
+                      var directions = await LocationService().getPlace(
+                        descriptionController.text,
+                      );
+                      _goToPlace(directions);
+                    },
+                    icon: const Icon(Icons.search),
+                  ),
+                ],
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
@@ -133,14 +156,14 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
                 ),
                 height: MediaQuery.of(context).size.height * 0.5,
                 child: GoogleMap(
-                  initialCameraPosition: CameraPosition(
-                    target: LatLng(latitude, longitude),
-                    zoom: 14,
-                  ),
+                  initialCameraPosition: _kGooglePlex,
                   markers: _markers,
-                  onTap: _onMapTapped,
+                  onTap: _setMarker,
+                  onMapCreated: (GoogleMapController controller) {
+                    _controller.complete(controller);
+                  },
                 ),
-              ),
+              )
             ],
           ),
         ),
@@ -150,5 +173,18 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
         onTap: _addNewLocation,
       ),
     );
+  }
+
+  Future<void> _goToPlace(Map<String, dynamic> place) async {
+    final double lat = place['geometry']['location']['lat'];
+    final double lng = place['geometry']['location']['lng'];
+
+    final GoogleMapController controller = await _controller.future;
+    controller.animateCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(target: LatLng(lat, lng), zoom: 12),
+      ),
+    );
+    _setMarker(LatLng(lat, lng));
   }
 }

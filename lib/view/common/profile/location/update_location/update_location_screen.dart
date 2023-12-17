@@ -1,9 +1,12 @@
 // ignore_for_file: avoid_print
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:iclean_mobile_app/models/address.dart';
 import 'package:iclean_mobile_app/services/api_location_repo.dart';
+import 'package:iclean_mobile_app/services/location_service.dart';
 import 'package:iclean_mobile_app/widgets/confirm_dialog.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 import 'package:iclean_mobile_app/widgets/my_textfield.dart';
@@ -25,29 +28,71 @@ class UpdateLocationScreen extends StatefulWidget {
 
 class _UpdateLocationScreenState extends State<UpdateLocationScreen> {
   final Set<Marker> _markers = {};
-  late final dynamic nameController;
-  late final dynamic descriptionController;
-  late final double latitude;
-  late final double longitude;
+  final Completer<GoogleMapController> _controller = Completer();
+  dynamic nameController = TextEditingController();
+  dynamic descriptionController = TextEditingController();
+  Address? _fetchedAddress;
+  double latitude = 10.837167851789406;
+  double longitude = 106.83900985399156;
+
+  CameraPosition _kGooglePlex = const CameraPosition(
+    target: LatLng(10.837167851789406, 106.83900985399156),
+    zoom: 14.4746,
+  );
 
   @override
   void initState() {
     super.initState();
-    latitude = 10.837167851789406;
-    longitude = 106.83900985399156;
-    nameController = TextEditingController(text: widget.address.addressName);
-    descriptionController =
-        TextEditingController(text: widget.address.description);
-    _markers.add(
-      Marker(
-        markerId: const MarkerId('selected_location'),
-        position: LatLng(latitude, longitude),
-        infoWindow: const InfoWindow(
-          title: 'Your Location',
-          snippet: 'This is the initial location',
-        ),
-      ),
-    );
+    fetchAddressById(widget.address.id!).then((address) {
+      if (address != null) {
+        setState(() {
+          _fetchedAddress = address;
+          latitude = _fetchedAddress!.latitude ?? 10.837167851789406;
+          longitude = _fetchedAddress!.longitude ?? 106.83900985399156;
+          _kGooglePlex = CameraPosition(
+            target: LatLng(latitude, longitude),
+            zoom: 14.4746,
+          );
+          nameController = TextEditingController(text: address.addressName);
+          descriptionController =
+              TextEditingController(text: address.description);
+          _markers.add(
+            Marker(
+              markerId: const MarkerId('selected_location'),
+              position: LatLng(latitude, longitude),
+              infoWindow: const InfoWindow(
+                title: 'Your Location',
+                snippet: 'This is the initial location',
+              ),
+            ),
+          );
+        });
+      } else {
+        setState(() {
+          _fetchedAddress = address;
+          latitude = _fetchedAddress!.latitude ?? 10.837167851789406;
+          longitude = _fetchedAddress!.longitude ?? 106.83900985399156;
+          _kGooglePlex = CameraPosition(
+            target: LatLng(latitude, longitude),
+            zoom: 14.4746,
+          );
+          nameController =
+              TextEditingController(text: widget.address.addressName);
+          descriptionController =
+              TextEditingController(text: widget.address.description);
+          _markers.add(
+            Marker(
+              markerId: const MarkerId('selected_location'),
+              position: LatLng(latitude, longitude),
+              infoWindow: const InfoWindow(
+                title: 'Your Location',
+                snippet: 'This is the initial location',
+              ),
+            ),
+          );
+        });
+      }
+    });
   }
 
   @override
@@ -58,16 +103,28 @@ class _UpdateLocationScreenState extends State<UpdateLocationScreen> {
     super.dispose();
   }
 
-  void _onMapTapped(LatLng latLng) {
+  void _setMarker(LatLng point) {
     setState(() {
       _markers.clear();
       _markers.add(
         Marker(
-          markerId: const MarkerId('selected_location'),
-          position: latLng,
+          markerId: const MarkerId('marker'),
+          position: point,
         ),
       );
+      latitude = point.latitude;
+      longitude = point.longitude;
     });
+  }
+
+  Future<Address?> fetchAddressById(int id) async {
+    final ApiLocationRepository repository = ApiLocationRepository();
+    try {
+      final locations = await repository.getLocationById(id, context);
+      return locations;
+    } catch (e) {
+      return null;
+    }
   }
 
   void updateLocation() {
@@ -131,15 +188,27 @@ class _UpdateLocationScreenState extends State<UpdateLocationScreen> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 16),
-                child: SizedBox(
-                  height: 48,
-                  child: MyTextField(
-                    controller: descriptionController,
-                    hintText: 'Địa chỉ cụ thể',
+              Row(
+                children: [
+                  Expanded(
+                    child: SizedBox(
+                      height: 48,
+                      child: MyTextField(
+                        controller: descriptionController,
+                        hintText: 'Địa chỉ cụ thể',
+                      ),
+                    ),
                   ),
-                ),
+                  IconButton(
+                    onPressed: () async {
+                      var directions = await LocationService().getPlace(
+                        descriptionController.text,
+                      );
+                      _goToPlace(directions);
+                    },
+                    icon: const Icon(Icons.search),
+                  ),
+                ],
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
@@ -154,12 +223,12 @@ class _UpdateLocationScreenState extends State<UpdateLocationScreen> {
                 ),
                 height: MediaQuery.of(context).size.height * 0.5,
                 child: GoogleMap(
-                  initialCameraPosition: CameraPosition(
-                    target: LatLng(latitude, longitude),
-                    zoom: 14,
-                  ),
+                  initialCameraPosition: _kGooglePlex,
                   markers: _markers,
-                  onTap: _onMapTapped,
+                  onTap: _setMarker,
+                  onMapCreated: (GoogleMapController controller) {
+                    _controller.complete(controller);
+                  },
                 ),
               ),
               const SizedBox(height: 24),
@@ -195,5 +264,18 @@ class _UpdateLocationScreenState extends State<UpdateLocationScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> _goToPlace(Map<String, dynamic> place) async {
+    final double lat = place['geometry']['location']['lat'];
+    final double lng = place['geometry']['location']['lng'];
+
+    final GoogleMapController controller = await _controller.future;
+    controller.animateCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(target: LatLng(lat, lng), zoom: 12),
+      ),
+    );
+    _setMarker(LatLng(lat, lng));
   }
 }
