@@ -32,7 +32,6 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
   final nameController = TextEditingController();
   bool initDateTime = false;
   DateTime? _selectedDate;
-  String imgPath = '';
 
   @override
   void initState() {

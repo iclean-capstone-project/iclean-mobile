@@ -43,6 +43,7 @@ class BookingDetailsReceiveScreen extends StatelessWidget {
             image: 'assets/images/success.png',
             onTap: () {
               Navigator.pop(context);
+              Navigator.pop(context);
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(

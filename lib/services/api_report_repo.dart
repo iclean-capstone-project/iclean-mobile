@@ -54,7 +54,7 @@ class ApiReportRepository implements ReportRepository {
 
   @override
   Future<void> report(BuildContext context, int id, int reportTypeId,
-      String detail, List<File> images) async {
+      String detail, File? image1, File? image2, File? image3) async {
     final uri = Uri.parse(urlConstant);
 
     final accessToken = await UserPreferences.getAccessToken();
@@ -71,25 +71,42 @@ class ApiReportRepository implements ReportRepository {
     request.fields['reportTypeId'] = reportTypeId.toString();
     request.fields['detail'] = detail;
 
-    for (var image in images) {
-      var imageFile = await http.MultipartFile.fromPath(
-        'images',
-        image.path,
+    if (image1 != null) {
+      request.files.add(
+        await http.MultipartFile.fromPath('image_1', image1.path),
       );
-      request.files.add(imageFile);
+    } else {
+      request.fields['image_1'] = '';
     }
+
+    if (image2 != null) {
+      request.files.add(
+        await http.MultipartFile.fromPath('image_2', image2.path),
+      );
+    } else {
+      request.fields['image_2'] = '';
+    }
+
+    if (image3 != null) {
+      request.files.add(
+        await http.MultipartFile.fromPath('image_3', image3.path),
+      );
+    } else {
+      request.fields['image_3'] = '';
+    }
+
+    print("image1: $image1");
+    print("image2: $image2");
+    print("image3: $image3");
 
     try {
       var response = await request.send();
       if (response.statusCode == 200) {
-        // Handle success
-        print('Success!');
+        print('report successful');
       } else {
-        // Handle error
-        print('Error: ${response.statusCode}');
+        print('Report failed with status ${response.statusCode}');
       }
     } catch (error) {
-      // Handle exception
       print('Error: $error');
     }
   }

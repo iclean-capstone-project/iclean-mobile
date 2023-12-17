@@ -194,7 +194,7 @@ class BookingDetail {
       phoneNumber: renter?['phoneNumber'] ?? "",
       feedback: feedbackData,
       listStatus: statusHistory,
-      reported: json['reported'] ?? false,
+      reported: json['isReported'] ?? false,
       refundMoney: json['refundMoney'] ?? 0,
       refundPoint: json['refundPoint'] ?? 0,
       penaltyMoney: json['penaltyMoney'] ?? 0,

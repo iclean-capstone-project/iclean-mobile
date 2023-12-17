@@ -28,6 +28,10 @@ class _MyBookingsForHelperScreenState extends State<MyBookingsForHelperScreen>
     _tabController = TabController(length: 2, vsync: this, initialIndex: 0);
     _tabController.addListener((_handleTabSelection));
     super.initState();
+    setState(() {
+      isLoading1 = true;
+      isLoading2 = true;
+    });
     fetchBookingUpcoming().then((bookings) {
       setState(() {
         upcomingBookings = bookings;

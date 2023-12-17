@@ -88,12 +88,12 @@ class _RenterScreensState extends State<RenterScreens> {
 
       if (phoneNumber == phoneNumberValue) {
         QuickAlert.show(
-          context: context,
-          type: QuickAlertType.success,
-          text: message,
-          headerBackgroundColor: ColorPalette.mainColor,
-          confirmBtnColor: ColorPalette.mainColor,
-        );
+            context: context,
+            type: QuickAlertType.success,
+            text: message,
+            confirmBtnText: 'Xác nhận',
+            headerBackgroundColor: ColorPalette.mainColor,
+            confirmBtnColor: ColorPalette.mainColor);
         await event.snapshot.ref.remove();
       }
     });

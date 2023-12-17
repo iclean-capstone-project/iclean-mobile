@@ -11,8 +11,11 @@ import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class ValidateBookingCode extends StatefulWidget {
-  const ValidateBookingCode({Key? key, required this.bookingDetailId})
-      : super(key: key);
+  const ValidateBookingCode({
+    super.key,
+    required this.bookingDetailId,
+  });
+
   final int bookingDetailId;
 
   @override
@@ -57,16 +60,19 @@ class _ValidateBookingCodeState extends State<ValidateBookingCode> {
             message,
             style: const TextStyle(
               fontSize: 22,
+              fontFamily: 'Lato',
               fontWeight: FontWeight.bold,
             ),
+            textAlign: TextAlign.justify,
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text(
-                'OK',
+              child: Text(
+                'Xác nhận',
                 style: TextStyle(
-                  color: Colors.black,
+                  color: Theme.of(context).colorScheme.secondary,
                   fontSize: 22,
+                  fontFamily: 'Lato',
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -130,6 +136,7 @@ class _ValidateBookingCodeState extends State<ValidateBookingCode> {
                   child: Text(
                     'Đặt mã QR trong khung quét',
                     style: TextStyle(
+                      fontFamily: 'Lato',
                       fontSize: 18,
                       color: Colors.white,
                     ),

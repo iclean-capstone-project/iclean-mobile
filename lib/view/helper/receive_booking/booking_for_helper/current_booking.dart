@@ -93,8 +93,9 @@ class CurrentBooking extends StatelessWidget {
                               ),
                               const SizedBox(width: 16),
                               Container(
-                                constraints: const BoxConstraints(
-                                  maxWidth: 180, // Set your maximum width
+                                constraints: BoxConstraints(
+                                  maxWidth:
+                                      MediaQuery.of(context).size.width * 0.46,
                                 ),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -114,15 +115,21 @@ class CurrentBooking extends StatelessWidget {
                                         const Icon(Icons.location_on_rounded),
                                         const SizedBox(width: 4),
                                         Flexible(
-                                          child: Text(
-                                            booking.location!,
-                                            style: const TextStyle(
-                                              fontSize: 16,
-                                              fontFamily: 'Lato',
+                                          child: SizedBox(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.46,
+                                            child: Text(
+                                              booking.location!,
+                                              style: const TextStyle(
+                                                fontSize: 16,
+                                                fontFamily: 'Lato',
+                                              ),
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                              textAlign: TextAlign.justify,
                                             ),
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                            textAlign: TextAlign.justify,
                                           ),
                                         ),
                                       ],
@@ -182,25 +189,28 @@ class CurrentBooking extends StatelessWidget {
           }
         } else {
           return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                SizedBox(
-                  width: double.infinity,
-                  child: Image.asset(
-                    "assets/images/Date picker.png",
-                    fit: BoxFit.cover,
+            padding: const EdgeInsets.symmetric(horizontal: 32),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Column(
+                children: [
+                  SizedBox(
+                    width: double.infinity,
+                    child: Image.asset(
+                      "assets/images/Date picker.png",
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                ),
-                const Text(
-                  "Hiện đang không có booking đang làm việc!",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontFamily: 'Lato',
+                  const Text(
+                    "Hiện đang không có booking đang làm việc!",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontFamily: 'Lato',
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  textAlign: TextAlign.center,
-                ),
-              ],
+                ],
+              ),
             ),
           );
         }
@@ -225,19 +235,20 @@ class CurrentBooking extends StatelessWidget {
                 builder: (BuildContext context) {
                   return AlertDialog(
                     title: const Text(
-                      'Xác nhận hoàn thành dịch vụ thành công',
+                      'Chúc mừng bạn đã hoàn thành công việc!',
                       style: TextStyle(
                         fontSize: 16,
                         fontFamily: 'Lato',
                       ),
+                      textAlign: TextAlign.justify,
                     ),
                     actions: <Widget>[
                       TextButton(
-                        child: const Text(
-                          'OK',
+                        child: Text(
+                          'Xác nhận',
                           style: TextStyle(
                             fontSize: 16,
-                            color: Colors.black,
+                            color: Theme.of(context).colorScheme.secondary,
                             fontWeight: FontWeight.bold,
                             fontFamily: 'Lato',
                           ),
@@ -267,11 +278,11 @@ class CurrentBooking extends StatelessWidget {
                     ),
                     actions: <Widget>[
                       TextButton(
-                        child: const Text(
-                          'OK',
+                        child: Text(
+                          'Xác nhận',
                           style: TextStyle(
                             fontSize: 16,
-                            color: Colors.black,
+                            color: Theme.of(context).colorScheme.secondary,
                             fontWeight: FontWeight.bold,
                             fontFamily: 'Lato',
                           ),

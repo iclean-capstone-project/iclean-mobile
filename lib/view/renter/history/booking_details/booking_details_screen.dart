@@ -94,7 +94,7 @@ class BookingDetailsScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(24),
+                      padding: const EdgeInsets.all(16),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: const [
@@ -253,7 +253,7 @@ class BookingDetailsScreen extends StatelessWidget {
                                 Theme.of(context).colorScheme.background,
                             textColor: ColorPalette.mainColor,
                           ),
-                        if (booking.status == BookingStatus.reported)
+                        if (bookingDetail.reported)
                           MainColorInkWellFullSize(
                             onTap: () {},
                             text: "Đã báo cáo",

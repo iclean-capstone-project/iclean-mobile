@@ -71,7 +71,7 @@ class BookingDetailsForHelperScreen extends StatelessWidget {
                       ),
                     ),
                     const Padding(
-                      padding: EdgeInsets.all(24),
+                      padding: EdgeInsets.all(16),
                       child: Icon(
                         Icons.domain_verification_rounded,
                         size: 40,
@@ -142,12 +142,18 @@ class BookingDetailsForHelperScreen extends StatelessWidget {
                                 text: "Thu nhập từ dịch vụ",
                                 text2: bookingDetail.formatTotalPriceInVND(),
                               ),
-                              const SizedBox(height: 8),
-                              DetailsContentField(
-                                text: "Tiền phạt",
-                                text2:
-                                    '- ${bookingDetail.formatPenaltyMoneyInVND()}',
-                              ),
+                              if (bookingDetail.status ==
+                                      BookingStatus.finished &&
+                                  bookingDetail.reported)
+                                const SizedBox(height: 8),
+                              if (bookingDetail.status ==
+                                      BookingStatus.finished &&
+                                  bookingDetail.reported)
+                                DetailsContentField(
+                                  text: "Tiền phạt",
+                                  text2:
+                                      '- ${bookingDetail.formatPenaltyMoneyInVND()}',
+                                ),
                               Divider(
                                 thickness: 0.5,
                                 color: Colors.grey[400],

@@ -25,6 +25,7 @@ class AddressContent extends StatelessWidget {
         const SizedBox(height: 4),
         Container(
           padding: const EdgeInsets.all(16),
+          width: double.infinity,
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.primary,
             borderRadius: BorderRadius.circular(10),

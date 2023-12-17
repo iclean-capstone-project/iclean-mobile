@@ -1,6 +1,7 @@
 import 'package:iclean_mobile_app/provider/loading_state_provider.dart';
 import 'package:iclean_mobile_app/services/api_booking_repo.dart';
 import 'package:iclean_mobile_app/widgets/checkout_success_dialog.dart';
+import 'package:iclean_mobile_app/widgets/inkwell_loading.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/utils/time.dart';
@@ -95,8 +96,8 @@ class BookingCardForHelper extends StatelessWidget {
                   ),
                   const SizedBox(width: 16),
                   Container(
-                    constraints: const BoxConstraints(
-                      maxWidth: 180, // Set your maximum width
+                    constraints: BoxConstraints(
+                      maxWidth: MediaQuery.of(context).size.width * 0.46,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -117,6 +118,7 @@ class BookingCardForHelper extends StatelessWidget {
                             const SizedBox(width: 4),
                             Flexible(
                               child: SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.46,
                                 child: Text(
                                   booking.location!,
                                   style: const TextStyle(
@@ -167,16 +169,20 @@ class BookingCardForHelper extends StatelessWidget {
               const Divider(
                 color: ColorPalette.greyColor,
               ),
-              MainColorInkWellFullSize(
-                onTap: () {
-                  loadingState.setLoading(true);
-                  try {
-                    applyBooking(booking.id);
-                  } finally {
-                    loadingState.setLoading(false);
-                  }
-                },
-                text: "Nhận đơn",
+              Center(
+                child: loadingState.isLoading
+                    ? const InkWellLoading()
+                    : MainColorInkWellFullSize(
+                        onTap: () async {
+                          loadingState.setLoading(true);
+                          try {
+                            await applyBooking(booking.id);
+                          } finally {
+                            loadingState.setLoading(false);
+                          }
+                        },
+                        text: "Nhận đơn",
+                      ),
               )
             ],
           ),
