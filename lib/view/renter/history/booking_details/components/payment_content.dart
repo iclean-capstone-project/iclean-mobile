@@ -132,7 +132,15 @@ class PaymentContent extends StatelessWidget {
               ),
               if (booking.status == BookingStatus.finished && booking.reported)
                 const SizedBox(height: 4),
-              if (booking.status == BookingStatus.finished && booking.reported)
+              if (booking.status == BookingStatus.cancelByHelper ||
+                  booking.status == BookingStatus.cancelByRenter ||
+                  booking.status == BookingStatus.cancelBySystem ||
+                  booking.status == BookingStatus.rejected)
+                const SizedBox(height: 4),
+              if (booking.status == BookingStatus.cancelByHelper ||
+                  booking.status == BookingStatus.cancelByRenter ||
+                  booking.status == BookingStatus.cancelBySystem ||
+                  booking.status == BookingStatus.rejected)
                 DetailsContentField(
                   text: "Đã hoàn trả",
                   text2: booking.transaction!.formatAmountInVND(),
@@ -143,6 +151,8 @@ class PaymentContent extends StatelessWidget {
                 DetailsContentField(
                   text: "Đã hoàn trả",
                   text2: booking.formatRefundMoneyInVND(),
+                  color: ColorPalette.mainColor,
+                  fontWeight: FontWeight.bold,
                 ),
             ],
           ),

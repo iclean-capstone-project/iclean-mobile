@@ -5,12 +5,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:iclean_mobile_app/models/address.dart';
+import 'package:iclean_mobile_app/provider/loading_state_provider.dart';
 import 'package:iclean_mobile_app/services/api_location_repo.dart';
 import 'package:iclean_mobile_app/services/location_service.dart';
 import 'package:iclean_mobile_app/widgets/confirm_dialog.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
+import 'package:iclean_mobile_app/widgets/my_bottom_app_bar_with_two_inkwell.dart';
 import 'package:iclean_mobile_app/widgets/my_textfield.dart';
-import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
+import 'package:provider/provider.dart';
 
 import '../location_screen.dart';
 
@@ -127,7 +129,7 @@ class _UpdateLocationScreenState extends State<UpdateLocationScreen> {
     }
   }
 
-  void updateLocation() {
+  Future<void> updateLocation() async {
     final Map<String, dynamic> dataForUpdate = {
       'locationName': nameController.text,
       'description': descriptionController.text,
@@ -170,6 +172,7 @@ class _UpdateLocationScreenState extends State<UpdateLocationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final loadingState = Provider.of<LoadingStateProvider>(context);
     return Scaffold(
       appBar: const MyAppBar(text: "Chỉnh sửa vị trí"),
       body: SingleChildScrollView(
@@ -188,6 +191,7 @@ class _UpdateLocationScreenState extends State<UpdateLocationScreen> {
                   ),
                 ),
               ),
+              const SizedBox(height: 16),
               Row(
                 children: [
                   Expanded(
@@ -221,7 +225,7 @@ class _UpdateLocationScreenState extends State<UpdateLocationScreen> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                 ),
-                height: MediaQuery.of(context).size.height * 0.5,
+                height: MediaQuery.of(context).size.height * 0.55,
                 child: GoogleMap(
                   initialCameraPosition: _kGooglePlex,
                   markers: _markers,
@@ -231,37 +235,24 @@ class _UpdateLocationScreenState extends State<UpdateLocationScreen> {
                   },
                 ),
               ),
-              const SizedBox(height: 24),
-              MainColorInkWellFullSize(
-                onTap: () => showConfirmationDialog(context, widget.address),
-                text: "Xóa vị trí này",
-                backgroundColor: Colors.white,
-                textColor: Colors.red,
-              ),
             ],
           ),
         ),
       ),
-      bottomNavigationBar: Container(
-        decoration: const BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black,
-              blurRadius: 10,
-              offset: Offset(0.5, 3),
-            )
-          ],
-        ),
-        child: BottomAppBar(
-          child: Container(
-            padding: const EdgeInsets.all(16),
-            color: Theme.of(context).colorScheme.background,
-            child: MainColorInkWellFullSize(
-              onTap: updateLocation,
-              text: "Tiếp tục",
-            ),
-          ),
-        ),
+      bottomNavigationBar: MyBottomAppBarTwoInkWell(
+        onTap1: () {
+          showConfirmationDialog(context, widget.address);
+        },
+        onTap2: () async {
+          loadingState.setLoading(true);
+          try {
+            await updateLocation();
+          } finally {
+            loadingState.setLoading(false);
+          }
+        },
+        text1: "Xóa",
+        text2: "Tiếp tục",
       ),
     );
   }

@@ -48,18 +48,12 @@ class _HistoryCardForHelperState extends State<HistoryCardForHelper>
 
   String getStringForStatus(BookingStatus status) {
     switch (status) {
-      case BookingStatus.notYet:
-        return "Đang đợi duyệt đơn";
-      case BookingStatus.rejected:
-        return "Bị từ chối";
-      case BookingStatus.approved:
-        return "Bạn cần chọn người làm";
       case BookingStatus.upcoming:
         return "Sắp đến";
       case BookingStatus.cancelByHelper:
-        return "Bị người giúp việc hủy";
-      case BookingStatus.cancelByRenter:
         return "Bạn đã hủy đơn";
+      case BookingStatus.cancelByRenter:
+        return "Người thuê đã hủy đơn";
       case BookingStatus.cancelBySystem:
         return "Bị hủy bởi hệ thống";
       case BookingStatus.reported:

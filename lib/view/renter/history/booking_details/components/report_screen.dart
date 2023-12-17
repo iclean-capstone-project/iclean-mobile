@@ -387,7 +387,8 @@ class _ReportScreenState extends State<ReportScreen> {
                               ],
                             );
                           }).toList(),
-                          if (_images.length <= 2)
+                          //if (_images.length <= 2)
+                          if (_images.isEmpty)
                             GestureDetector(
                               onTap: () {
                                 _showSelectPhotoOptions(context);

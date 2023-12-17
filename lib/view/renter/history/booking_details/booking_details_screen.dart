@@ -2,17 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/booking_detail.dart';
 import 'package:iclean_mobile_app/models/booking_status.dart';
 import 'package:iclean_mobile_app/models/bookings.dart';
+import 'package:iclean_mobile_app/provider/loading_state_provider.dart';
 import 'package:iclean_mobile_app/services/api_booking_repo.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
 import 'package:iclean_mobile_app/view/renter/history/booking_details/components/choose_helper_content.dart';
 import 'package:iclean_mobile_app/view/renter/history/booking_details/components/report_screen.dart';
 import 'package:iclean_mobile_app/view/renter/history/booking_details/components/timeline_details/timeline_details.dart';
 import 'package:iclean_mobile_app/view/renter/history/booking_details/components/view_feedback_dialog.dart';
+import 'package:iclean_mobile_app/view/renter/nav_bar_bottom/renter_screen.dart';
+import 'package:iclean_mobile_app/widgets/checkout_success_dialog.dart';
 import 'package:iclean_mobile_app/widgets/details_fields.dart';
 import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 import 'package:iclean_mobile_app/widgets/note_content.dart';
 import 'package:iclean_mobile_app/widgets/timeline_content.dart';
+import 'package:provider/provider.dart';
 
 import 'components/address_content.dart';
 import 'components/detail_content.dart';
@@ -37,6 +41,30 @@ class BookingDetailsScreen extends StatelessWidget {
         print(e);
         throw Exception("Failed to fetch BookingDetail");
       }
+    }
+
+    Future<void> cancelBooking(int id) async {
+      final ApiBookingRepository repository = ApiBookingRepository();
+      await repository.cancelBooking(id).then((_) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) => CheckoutSuccessDialog(
+            title: "Bạn đã hủy dịch vụ thành công!",
+            description: "Bạn sẽ được hoàn tiền theo số tiền của dịch vụ này.",
+            image: 'assets/images/success.png',
+            onTap: () {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const RenterScreens(
+                          selectedIndex: 1, initialIndex: 2)));
+            },
+          ),
+        );
+      }).catchError((error) {
+        // ignore: avoid_print
+        print('Failed to cancel booking: $error');
+      });
     }
 
     int daysBetween(DateTime from, DateTime to) {
@@ -81,6 +109,7 @@ class BookingDetailsScreen extends StatelessWidget {
       );
     }
 
+    final loadingState = Provider.of<LoadingStateProvider>(context);
     return Scaffold(
       appBar: const MyAppBar(text: 'Chi tiết đơn'),
       body: SingleChildScrollView(
@@ -178,17 +207,29 @@ class BookingDetailsScreen extends StatelessWidget {
                         if (booking.status == BookingStatus.notYet ||
                             booking.status == BookingStatus.approved)
                           MainColorInkWellFullSize(
-                            onTap: () {},
+                            onTap: () async {
+                              loadingState.setLoading(true);
+                              try {
+                                await cancelBooking(bookingDetail.id);
+                              } finally {
+                                loadingState.setLoading(false);
+                              }
+                            },
                             text: "Hủy đơn",
                           ),
                         //đơn sắp đến ngày làm nhưng không thể hủy nếu như cách ngày làm < 24h
                         if (booking.status == BookingStatus.upcoming)
                           if (daysBetween(
-                                  bookingDetail.workDate, DateTime.now()) >
+                                  bookingDetail.workDate, DateTime.now()) <
                               1)
                             MainColorInkWellFullSize(
-                              onTap: () {
-                                // Your onTap logic here
+                              onTap: () async {
+                                loadingState.setLoading(true);
+                                try {
+                                  await cancelBooking(bookingDetail.id);
+                                } finally {
+                                  loadingState.setLoading(false);
+                                }
                               },
                               text: "Hủy đơn",
                             ),

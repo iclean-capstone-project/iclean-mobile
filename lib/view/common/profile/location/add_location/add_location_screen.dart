@@ -3,12 +3,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:iclean_mobile_app/models/address.dart';
+import 'package:iclean_mobile_app/provider/loading_state_provider.dart';
 import 'package:iclean_mobile_app/services/api_location_repo.dart';
 import 'package:iclean_mobile_app/services/location_service.dart';
 
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 import 'package:iclean_mobile_app/widgets/my_textfield.dart';
 import 'package:iclean_mobile_app/widgets/my_bottom_app_bar.dart';
+import 'package:provider/provider.dart';
 
 import '../location_screen.dart';
 
@@ -74,7 +76,7 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
     });
   }
 
-  void _addNewLocation() {
+  Future<void> _addNewLocation() async {
     // Get input values from text fields
     String locationName = nameController.text;
     String description = descriptionController.text;
@@ -103,6 +105,7 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final loadingState = Provider.of<LoadingStateProvider>(context);
     return Scaffold(
       appBar: const MyAppBar(text: "Thêm vị trí mới"),
       body: SingleChildScrollView(
@@ -121,6 +124,7 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
                   ),
                 ),
               ),
+              const SizedBox(height: 16),
               Row(
                 children: [
                   Expanded(
@@ -154,7 +158,7 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                 ),
-                height: MediaQuery.of(context).size.height * 0.5,
+                height: MediaQuery.of(context).size.height * 0.55,
                 child: GoogleMap(
                   initialCameraPosition: _kGooglePlex,
                   markers: _markers,
@@ -170,7 +174,14 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
       ),
       bottomNavigationBar: MyBottomAppBar(
         text: "Thêm vị trí mới",
-        onTap: _addNewLocation,
+        onTap: () async {
+          loadingState.setLoading(true);
+          try {
+            await _addNewLocation();
+          } finally {
+            loadingState.setLoading(false);
+          }
+        },
       ),
     );
   }

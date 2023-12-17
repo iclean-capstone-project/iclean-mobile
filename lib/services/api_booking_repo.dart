@@ -351,4 +351,47 @@ class ApiBookingRepository implements BookingRepository {
       throw Exception(e.toString());
     }
   }
+
+  @override
+  Future<void> cancelBooking(int id) async {
+    final url = '$urlConstant/renter-cancellation/$id';
+    final uri = Uri.parse(url);
+    final accessToken = await UserPreferences.getAccessToken();
+    Map<String, String> headers = {
+      "Authorization": "Bearer $accessToken",
+      "Content-Type": "application/json",
+    };
+    try {
+      final response = await http.delete(uri, headers: headers);
+
+      if (response.statusCode == 200) {
+      } else {
+        print(response.statusCode);
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
+  Future<void> cancelBookingForHelper(int id) async {
+    final url = '$urlConstant/helper-cancellation/$id';
+    final uri = Uri.parse(url);
+    final accessToken = await UserPreferences.getAccessToken();
+    Map<String, String> headers = {
+      "Authorization": "Bearer $accessToken",
+      "Content-Type": "application/json",
+    };
+    try {
+      final response = await http.delete(uri, headers: headers);
+
+      if (response.statusCode == 200) {
+        print("success");
+      } else {
+        print(response.statusCode);
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
 }

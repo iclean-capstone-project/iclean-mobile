@@ -2,12 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:iclean_mobile_app/models/booking_detail.dart';
 import 'package:iclean_mobile_app/models/booking_status.dart';
 import 'package:iclean_mobile_app/models/bookings.dart';
+import 'package:iclean_mobile_app/provider/loading_state_provider.dart';
 import 'package:iclean_mobile_app/services/api_booking_repo.dart';
 import 'package:iclean_mobile_app/utils/color_palette.dart';
+import 'package:iclean_mobile_app/view/helper/nav_bar_bottom/helper_screen.dart';
+import 'package:iclean_mobile_app/widgets/checkout_success_dialog.dart';
 import 'package:iclean_mobile_app/widgets/details_fields.dart';
+import 'package:iclean_mobile_app/widgets/main_color_inkwell_full_size.dart';
 import 'package:iclean_mobile_app/widgets/my_app_bar.dart';
 import 'package:iclean_mobile_app/widgets/note_content.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import 'components/address_content.dart';
 import 'components/detail_content_for_helper.dart';
@@ -34,6 +39,37 @@ class BookingDetailsForHelperScreen extends StatelessWidget {
       }
     }
 
+    int daysBetween(DateTime from, DateTime to) {
+      from = DateTime(from.year, from.month, from.day);
+      to = DateTime(to.year, to.month, to.day);
+      return (to.difference(from).inHours / 24).round();
+    }
+
+    Future<void> cancelBooking(int id) async {
+      final ApiBookingRepository repository = ApiBookingRepository();
+      await repository.cancelBookingForHelper(id).then((_) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) => CheckoutSuccessDialog(
+            title: "Bạn đã hủy dịch vụ thành công!",
+            description: "Bạn sẽ được hoàn tiền theo số tiền của dịch vụ này.",
+            image: 'assets/images/success.png',
+            onTap: () {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          const HelperScreens(selectedIndex: 1)));
+            },
+          ),
+        );
+      }).catchError((error) {
+        // ignore: avoid_print
+        print('Failed to cancel booking: $error');
+      });
+    }
+
+    final loadingState = Provider.of<LoadingStateProvider>(context);
     return Scaffold(
       appBar: const MyAppBar(text: 'Chi tiết đơn'),
       body: SingleChildScrollView(
@@ -158,19 +194,48 @@ class BookingDetailsForHelperScreen extends StatelessWidget {
                                 thickness: 0.5,
                                 color: Colors.grey[400],
                               ),
-                              DetailsContentField(
-                                text: "Thu nhập thực tế",
-                                text2: NumberFormat.currency(
-                                        locale: 'vi_VN', symbol: 'đ')
-                                    .format(bookingDetail.price -
-                                        bookingDetail.penaltyMoney!),
-                                color: ColorPalette.mainColor,
-                                fontWeight: FontWeight.bold,
-                              ),
+                              if (booking.status ==
+                                      BookingStatus.cancelByHelper ||
+                                  booking.status ==
+                                      BookingStatus.cancelByRenter ||
+                                  booking.status ==
+                                      BookingStatus.cancelBySystem)
+                                const DetailsContentField(
+                                  text: "Thu nhập thực tế",
+                                  text2: "0 đ",
+                                  color: ColorPalette.mainColor,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              if (booking.status == BookingStatus.finished ||
+                                  booking.status == BookingStatus.reported)
+                                DetailsContentField(
+                                  text: "Thu nhập thực tế",
+                                  text2: NumberFormat.currency(
+                                          locale: 'vi_VN', symbol: 'đ')
+                                      .format(bookingDetail.price -
+                                          bookingDetail.penaltyMoney!),
+                                  color: ColorPalette.mainColor,
+                                  fontWeight: FontWeight.bold,
+                                ),
                             ],
                           ),
                         ),
                         const SizedBox(height: 16),
+                        if (booking.status == BookingStatus.upcoming)
+                          if (daysBetween(
+                                  bookingDetail.workDate, DateTime.now()) <
+                              1)
+                            MainColorInkWellFullSize(
+                              onTap: () async {
+                                loadingState.setLoading(true);
+                                try {
+                                  await cancelBooking(bookingDetail.id);
+                                } finally {
+                                  loadingState.setLoading(false);
+                                }
+                              },
+                              text: "Hủy đơn",
+                            ),
                       ],
                     );
                   }

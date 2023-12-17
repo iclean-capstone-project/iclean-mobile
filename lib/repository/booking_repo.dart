@@ -31,4 +31,6 @@ abstract class BookingRepository {
   Future<Booking?> getCurrentBooking();
 
   Future<bool> checkoutBookingForHelper(int id);
+  Future<void> cancelBooking(int id);
+  Future<void> cancelBookingForHelper(int id);
 }
